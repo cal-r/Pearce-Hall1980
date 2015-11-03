@@ -1,5 +1,0 @@
-Manifest-Version: 1.0
-SplashScreen-Image: simulator/extras/R&W_About.png
-Main-Class: simulator/Simulator
-
-
