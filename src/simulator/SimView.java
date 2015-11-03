@@ -122,11 +122,12 @@ public class SimView extends JFrame {
 	private JButton setVariablesBut, clearBut, runBut, dispGraphBut,
 		addPhaseBut, removePhaseBut, addGroupBut, removeGroupBut;
 	
-	private JScrollPane phasesScroll, CSValuesScroll, USValuesScroll, outputScroll;
-	private JTable phasesTable, CSValuesTable, USValuesTable;
+	private JScrollPane phasesScroll, CSValuesScroll, USValuesScroll, GlobalValuesScroll, outputScroll;
+	private JTable phasesTable, CSValuesTable, USValuesTable, GlobalValuesTable;
 	private PhasesTableModel phasesTableModel;
 	private CSValuesTableModel CSValuesTableModel;
 	private USValuesTableModel USValuesTableModel;
+	private GlobalValuesTableModel GlobalValuesTableModel;
 	private JTextArea outputArea;
 	private JLabel bottomLabel;
 	
@@ -479,8 +480,9 @@ public class SimView extends JFrame {
 	    setVariablesBut.setActionCommand("setVariables");
 	    JPanel varButPanel = new JPanel();
 	    varButPanel.add(setVariablesBut);
-	    addCSValuesTable();
-	    addUSValuesTable();
+		addCSValuesTable();
+		addUSValuesTable();
+		addGlobalValuesTable();
 	    runBut = new JButton(Messages.getString("SimView.run")); //$NON-NLS-1$
 	    runBut.setActionCommand("run");	 
 	    JPanel runButPanel = new JPanel();
@@ -490,6 +492,7 @@ public class SimView extends JFrame {
 	    valuesPanel.setLayout(new GridLayout(2, 1));
 	    valuesPanel.add(CSValuesScroll);
 	    valuesPanel.add(USValuesScroll);
+		valuesPanel.add(GlobalValuesScroll);
 	    
 	    variablePanel.add(varButPanel,BorderLayout.NORTH);
 	    variablePanel.add(valuesPanel, BorderLayout.CENTER);
@@ -848,6 +851,57 @@ public class SimView extends JFrame {
 	    CSValuesTable.requestFocus();
 	    
 	    CSValuesScroll = new JScrollPane(CSValuesTable);
+	}
+
+	private void addGlobalValuesTable(){
+		GlobalValuesTableModel = new GlobalValuesTableModel();
+		GlobalValuesTable = new JTable(GlobalValuesTableModel){
+			public boolean editCellAt(int row, int column, EventObject e) {
+				boolean b = super.editCellAt(row, column, e);
+				if ( b ) {
+					TableCellEditor tce = getCellEditor( row, column);
+					DefaultCellEditor dce = (DefaultCellEditor)tce;
+					Component c = dce.getComponent();
+					JTextComponent jtc = (JTextComponent)c;
+
+					// AF August-2012. Delete previous content
+					jtc.setText("");
+
+					jtc.requestFocus();
+
+					// Alberto Fernandez Oct-2011
+
+					// This avoids to press a double enter
+					// AF July-2012
+					// AF Aug-2012 again
+					InputMap inputMap = jtc.getInputMap();
+					KeyStroke key = KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0);
+					inputMap.put(key, "none"); //$NON-NLS-1$
+
+					jtc.addFocusListener(new java.awt.event.FocusAdapter() {
+						public void focusLost(java.awt.event.FocusEvent evt)  {
+							int col = GlobalValuesTable.getColumnCount();
+							if(col>0) {
+								if (GlobalValuesTable.getCellEditor() != null) {
+									GlobalValuesTable.getCellEditor().stopCellEditing();
+								}
+							}
+							else;  //take care about the other rows if you need to.
+						}
+						public void focusGained(java.awt.event.FocusEvent evt)  {
+							JTextComponent jtc = (JTextComponent)evt.getComponent();
+							jtc.setCaretPosition(jtc.getCaretPosition());
+						}
+					});
+				}
+				return b;
+			}
+		};
+		GlobalValuesTable.setDefaultRenderer(String.class, new GreekRenderer());
+		GlobalValuesTable.setCellSelectionEnabled(false);
+		GlobalValuesTableModel.setInitialValuesTable();
+		GlobalValuesTable.requestFocus();
+		GlobalValuesScroll = new JScrollPane(GlobalValuesTable);
 	}
 
 	/**
@@ -1476,7 +1530,7 @@ public class SimView extends JFrame {
 	    private String[] getColNames() {
 	        String[] s = new String[col];
 	        for (int c = 0; c < col; c++) {
-                if (c == 0) s[c] = Messages.getString("SimView.csAlpha"); //$NON-NLS-1$
+                if (c == 0) s[c] = "CS parameter"; //$NON-NLS-1$
                 else if (col==2) s[c]=Messages.getString("SimView.value"); //$NON-NLS-1$
                 else s[c] = Messages.getString("SimView.phaseSpace") + (c + 1); //$NON-NLS-1$
             }
@@ -1606,7 +1660,47 @@ public class SimView extends JFrame {
 	/********************************************************/
 		
 	
-	
+	class GlobalValuesTableModel extends ValuesTableModel {
+
+		private static final String GAMMA = "gamma"; //$NON-NLS-1$
+
+		private final String[] GlobalsNames = { GAMMA };
+		private final String[] GlobalsValues = { "0.1" };
+
+		private String[] getColNames() {
+			String[] colNames = new String[2];
+			colNames[0] = "parameter";
+			colNames[1] = "value";
+			return  colNames;
+		}
+
+		public void setInitialValuesTable() {
+			Vector data1 = new Vector();
+			col = 2;
+			row = GlobalsNames.length;
+			columnNames = getColNames();
+
+				for (int r = 0; r < row; r++) { // row ser� 4 (betas y lambdas)
+					Object record[] = new Object[col];
+					record[0] = GlobalsNames [r];
+					for (int c = 1; c < col; c++) {
+						// AF July-2012
+						record[c] = GlobalsValues[r];
+//        			if (((String)record[0]).indexOf("lambda+")!=-1 && c==1) record[c]="1";
+//        			else if (((String)record[0]).indexOf("lambda-")!=-1 && c==1) record[c]="0";
+//        			else if (((String)record[0]).indexOf("beta+")!=-1 && c==1)   record[c]="0.5";
+//        			else if (((String)record[0]).indexOf("beta-")!=-1 && c==1)   record[c]="0.45";
+//        			else record[c]="";
+					}
+					data1.addElement(record);
+				}
+				setData(data1);
+				fireTableChanged(null); // notify everyone that we have a new table.
+		}
+
+	}
+
+
 	/** This class is the values' table model */
 	class USValuesTableModel extends ValuesTableModel {
         
@@ -1615,11 +1709,9 @@ public class SimView extends JFrame {
 		 */
 		private static final String LAMBDA_MINUS = "lambda-"; //$NON-NLS-1$
 		private static final String LAMBDA_PLUS = "lambda+"; //$NON-NLS-1$
-		private static final String BETA_MINUS = "beta-"; //$NON-NLS-1$
-		private static final String BETA_PLUS = "beta+"; //$NON-NLS-1$
 
-		private final String[] USnames = {BETA_PLUS,BETA_MINUS,LAMBDA_PLUS, LAMBDA_MINUS};
-		private final String[] USvalues= {"0.5","0.45","1","0"}; //Added beta- value //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+		private final String[] USnames = {LAMBDA_PLUS, LAMBDA_MINUS};
+		private final String[] USvalues= {"1","0"};
 
     	
 		/**
