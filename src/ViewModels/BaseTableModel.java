@@ -13,8 +13,8 @@ public abstract class BaseTableModel implements TableModel {
     protected Object[][] data;
 
     protected BaseTableModel(){
-        this.columnHeaders = getColumnHeaders();
-        this.data = getInitialData();
+        columnHeaders = getColumnHeaders();
+        data = getInitialData();
     }
 
     protected abstract String[] getColumnHeaders();
@@ -22,7 +22,7 @@ public abstract class BaseTableModel implements TableModel {
 
     @Override
     public int getRowCount() {
-        return 1;
+        return data.length;
     }
 
     @Override
