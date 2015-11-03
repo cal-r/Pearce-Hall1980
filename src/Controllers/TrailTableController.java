@@ -12,6 +12,7 @@ public class TrailTableController {
     private JTable table;
 
     public TrailTableController(JTable table) {
+        this.table = table;
         table.setModel(new TrailTableModel());
     }
 }
