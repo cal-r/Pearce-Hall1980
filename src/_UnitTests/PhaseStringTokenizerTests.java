@@ -12,7 +12,7 @@ import static org.junit.Assert.fail;
 /**
  * Created by Rokas on 03/11/2015.
  */
-public class PhaseStringTokenizerTest extends junit.framework.TestCase {
+public class PhaseStringTokenizerTests extends junit.framework.TestCase {
 
     @Test
     public void testParsePhaseDescription1() throws Exception {
