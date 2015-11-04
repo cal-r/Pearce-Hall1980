@@ -1,16 +1,17 @@
 package Models;
 
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Created by Rokas on 03/11/2015.
  */
 public class SimTrail {
-    private boolean usPresent;
-    private List<ConditionalStimulus> cuesPresent;
+    public boolean usPresent;
+    public ArrayList<ConditionalStimulus> cuesPresent;
 
-    public SimTrail(boolean usPresent){
+    public SimTrail(boolean usPresent, ArrayList<ConditionalStimulus> cuesPresent){
         this.usPresent = usPresent;
+        this.cuesPresent = cuesPresent;
     }
 
 
