@@ -24,4 +24,8 @@ public class TrailTableModel extends BaseTableModel {
         };
         return data;
     }
+
+    public String GetPhaseDescription() {
+        return (String) getValueAt(0,1);
+    }
 }

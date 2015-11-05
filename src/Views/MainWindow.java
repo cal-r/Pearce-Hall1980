@@ -1,8 +1,6 @@
 package Views;
 
-import Controllers.CSParamsTableController;
-import Controllers.SetParamsButtonController;
-import Controllers.TrailTableController;
+import Controllers.MainWindowController;
 
 import javax.swing.*;
 
@@ -16,29 +14,20 @@ public class MainWindow extends JFrame{
     private JButton setParamsButton;
     private JTable csParamsTable;
 
-    private TrailTableController trailTableController;
-    private CSParamsTableController csParamsTableController;
-    private SetParamsButtonController setParamsButtonController;
+    private MainWindowController controller;
 
     public MainWindow() {
         super();
         setVisible(true);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-    }
-
-    public void InnitSubElements() {
-        InnitTables();
-        InnitButtons();
         setContentPane(rootPane);
         pack();
     }
 
-    private void InnitTables() {
-        trailTableController = new TrailTableController(trailTable);
-        csParamsTableController = new CSParamsTableController(csParamsTable);
-    }
-
-    private void InnitButtons() {
-        setParamsButtonController = new SetParamsButtonController(setParamsButton);
+    public void InnitSubElements() {
+        controller = new MainWindowController();
+        controller.initCsParamsTable(csParamsTable);
+        controller.initTrailTable(trailTable);
+        controller.initSetParamsButton(setParamsButton);
     }
 }
