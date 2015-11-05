@@ -1,9 +1,9 @@
-package StringConstants;
+package Constants;
 
 /**
  * Created by Rokas on 03/11/2015.
  */
-public class TableConstants {
+public class TableStringConstants {
     public static final String GROUP_NAME = "Group Name";
     public static final String PHASE = "Phase";
     public static final String PARAMETER = "Parameter";

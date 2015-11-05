@@ -1,7 +1,7 @@
 package Controllers;
 
 import Helpers.GuiHelper;
-import StringConstants.GuiConstants;
+import Constants.GuiStringConstants;
 import ViewModels.CSParamsTableModel;
 import ViewModels.TrailTableModel;
 
@@ -21,7 +21,7 @@ public class MainWindowController implements ActionListener {
     public void initSetParamsButton(JButton button) {
         setParamsButton = button;
         setParamsButton.addActionListener(this);
-        setParamsButton.setText(GuiConstants.SET_PARAMETERS);
+        setParamsButton.setText(GuiStringConstants.SET_PARAMETERS);
     }
 
     public void initCsParamsTable(JTable table) {
@@ -36,12 +36,12 @@ public class MainWindowController implements ActionListener {
 
     private void onSetParams(){
         String phaseDescription = GuiHelper.GetPhaseDescription(trailTable);
-        
+
     }
 
     private void processEvent(String cmd){
         switch (cmd){
-            case GuiConstants.SET_PARAMETERS: onSetParams();
+            case GuiStringConstants.SET_PARAMETERS: onSetParams();
                 break;
         }
     }

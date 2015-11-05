@@ -1,10 +1,6 @@
 package ViewModels;
 
-import StringConstants.GuiConstants;
-import StringConstants.TableConstants;
-
-import javax.swing.event.TableModelListener;
-import javax.swing.table.TableModel;
+import Constants.TableStringConstants;
 
 /**
  * Created by Rokas on 03/11/2015.
@@ -13,14 +9,14 @@ public class TrailTableModel extends BaseTableModel {
 
     @Override
     protected String[] getColumnHeaders() {
-        String[] columnHeaders = {TableConstants.GROUP_NAME, TableConstants.PHASE};
+        String[] columnHeaders = {TableStringConstants.GROUP_NAME, TableStringConstants.PHASE};
         return columnHeaders;
     }
 
     @Override
     protected Object[][] getInitialData() {
         Object[][] data = {
-                { TableConstants.GetDefaultGroupName(), TableConstants.DEFAULT_PHASE }
+                { TableStringConstants.GetDefaultGroupName(), TableStringConstants.DEFAULT_PHASE }
         };
         return data;
     }
