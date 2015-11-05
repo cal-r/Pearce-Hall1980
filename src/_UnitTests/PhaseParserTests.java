@@ -46,7 +46,7 @@ public class PhaseParserTests extends junit.framework.TestCase {
         assertTrue(phase.trails.get(1).usPresent);
         assertTrue(phase.GetCues().size() == 2);
         assertTrue(phase.GetCues().get(0).Name == 'A');
-        assertTrue(phase.GetCues().get(0).Name == 'B');
+        assertTrue(phase.GetCues().get(1).Name == 'B');
     }
 
     @org.junit.Test
@@ -64,7 +64,7 @@ public class PhaseParserTests extends junit.framework.TestCase {
         assertTrue(!phase.trails.get(0).usPresent);
         assertTrue(phase.GetCues().size() == 2);
         assertTrue(phase.GetCues().get(0).Name == 'A');
-        assertTrue(phase.GetCues().get(0).Name == 'B');
+        assertTrue(phase.GetCues().get(1).Name == 'B');
     }
 
     @org.junit.Test
@@ -95,6 +95,6 @@ public class PhaseParserTests extends junit.framework.TestCase {
         assertTrue(phase.trails.get(2).cuesPresent.size() == 1);
         assertTrue(phase.GetCues().size() == 2);
         assertTrue(phase.GetCues().get(0).Name == 'A');
-        assertTrue(phase.GetCues().get(0).Name == 'B');
+        assertTrue(phase.GetCues().get(1).Name == 'B');
     }
 }

@@ -11,9 +11,10 @@ public class ConditionalStimulus {
     private double AssociationExcitatory;
     private double AssociationInhibitory;
 
-    public ConditionalStimulus(){
+    public ConditionalStimulus(char name){
         AssociationExcitatory = 0;
         AssociationInhibitory = 0;
+        Name = name;
     }
 
     public double getAssociationNet() {

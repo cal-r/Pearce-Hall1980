@@ -16,15 +16,21 @@ public class SimPhase {
         cues = new HashMap<>();
     }
 
-    public void AddCue(ConditionalStimulus cue) {
-        cues.put(cue.Name, cue);
-    }
-
     public ArrayList<ConditionalStimulus> GetCues() {
         return new ArrayList<>(cues.values());
     }
 
-    public void addTrail(SimTrail trail) {
-        trails.add(trail);
+    public void addTrailType(ArrayList<SimTrail> trailsToAdd) { //all trails in the param are the same (e.g. 'AB+')
+        trails.addAll(trailsToAdd);
+        SimTrail firstOfTheType = trailsToAdd.get(0);
+        for(ConditionalStimulus cue : firstOfTheType.cuesPresent) {
+            AddCue(cue);
+        }
+    }
+
+    private void AddCue(ConditionalStimulus cue) {
+        if(!cues.containsKey(cue.Name)) {
+            cues.put(cue.Name, cue);
+        }
     }
 }
