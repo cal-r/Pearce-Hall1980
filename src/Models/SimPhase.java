@@ -1,7 +1,10 @@
 package Models;
 
+import Models.Parameters.CsParameter;
+
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by Rokas on 03/11/2015.
@@ -16,8 +19,16 @@ public class SimPhase {
         cues = new HashMap<>();
     }
 
-    public ArrayList<ConditionalStimulus> GetCues() {
+    public List<ConditionalStimulus> GetCues() {
         return new ArrayList<>(cues.values());
+    }
+
+    public List<CsParameter> GetAllCsParameters(){
+        List<CsParameter> parameters = new ArrayList<>();
+        for(ConditionalStimulus cs : GetCues()) {
+            parameters.addAll(cs.getAllParameters());
+        }
+        return parameters;
     }
 
     public void addTrailType(ArrayList<SimTrail> trailsToAdd) { //all trails in the param are the same (e.g. 'AB+')

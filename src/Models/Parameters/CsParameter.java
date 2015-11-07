@@ -33,6 +33,6 @@ public abstract class CsParameter {
     }
 
     public String getDisplayName(){
-        return String.format("{0} ({1})", name, cue.Name);
+        return String.format("%s (%s)", name, cue.Name);
     }
 }

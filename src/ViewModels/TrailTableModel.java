@@ -1,6 +1,11 @@
 package ViewModels;
 
+import Constants.GuiStringConstants;
 import Constants.TableStringConstants;
+
+import javax.swing.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Rokas on 03/11/2015.
@@ -14,10 +19,12 @@ public class TrailTableModel extends BaseTableModel {
     }
 
     @Override
-    protected Object[][] getInitialData() {
-        Object[][] data = {
-                { TableStringConstants.GetDefaultGroupName(), TableStringConstants.DEFAULT_PHASE }
-        };
+    protected List<List<Object>> getInitialData() {
+        List<List<Object>> data = new ArrayList<>();
+        List<Object> firsRow = new ArrayList<>();
+        firsRow.add(TableStringConstants.GetDefaultGroupName());
+        firsRow.add(TableStringConstants.DEFAULT_PHASE);
+        data.add(firsRow);
         return data;
     }
 

@@ -2,12 +2,16 @@ package Controllers;
 
 import Helpers.GuiHelper;
 import Constants.GuiStringConstants;
+import Models.ConditionalStimulus;
+import Models.Parameters.CsParameter;
+import Models.Simulator;
 import ViewModels.CSParamsTableModel;
 import ViewModels.TrailTableModel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 /**
  * Created by Rokas on 03/11/2015.
@@ -18,10 +22,17 @@ public class MainWindowController implements ActionListener {
     private JTable trailTable;
     private JButton setParamsButton;
 
+    private Simulator simulator;
+
+    public MainWindowController(){
+        simulator = new Simulator();
+    }
+
     public void initSetParamsButton(JButton button) {
         setParamsButton = button;
         setParamsButton.addActionListener(this);
         setParamsButton.setText(GuiStringConstants.SET_PARAMETERS);
+        setParamsButton.setActionCommand(GuiStringConstants.SET_PARAMETERS);
     }
 
     public void initCsParamsTable(JTable table) {
@@ -36,7 +47,8 @@ public class MainWindowController implements ActionListener {
 
     private void onSetParams(){
         String phaseDescription = GuiHelper.GetPhaseDescription(trailTable);
-
+        List<CsParameter> csParameters = simulator.GetCsParameters(phaseDescription);
+        GuiHelper.SetUpCsParams(csParamsTable, csParameters);
     }
 
     private void processEvent(String cmd){

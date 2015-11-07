@@ -1,16 +1,22 @@
 package ViewModels;
 
+import javax.swing.*;
 import javax.swing.event.TableModelListener;
+import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Rokas on 03/11/2015.
  */
 
-public abstract class BaseTableModel implements TableModel {
+public abstract class BaseTableModel extends AbstractTableModel {
+
+    JTable table;
 
     protected String[] columnHeaders;
-    protected Object[][] data;
+    protected List<List<Object>> data;
 
     protected BaseTableModel(){
         columnHeaders = getColumnHeaders();
@@ -18,11 +24,11 @@ public abstract class BaseTableModel implements TableModel {
     }
 
     protected abstract String[] getColumnHeaders();
-    protected abstract Object[][] getInitialData();
+    protected abstract List<List<Object>> getInitialData();
 
     @Override
     public int getRowCount() {
-        return data.length;
+        return data.size();
     }
 
     @Override
@@ -47,21 +53,22 @@ public abstract class BaseTableModel implements TableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        return data[rowIndex][columnIndex];
+        return data.get(rowIndex).get(columnIndex);
     }
 
     @Override
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-        data[rowIndex][columnIndex] = aValue;
+        if(rowIndex==getRowCount()){
+            addRow();
+        }
+        data.get(rowIndex).set(columnIndex, aValue);
     }
 
-    @Override
-    public void addTableModelListener(TableModelListener l) {
-
-    }
-
-    @Override
-    public void removeTableModelListener(TableModelListener l) {
-
+    private void addRow(){
+        List newRow = new ArrayList<>();
+        for(int col=0;col<getColumnCount();col++){
+            newRow.add(new Object());
+        }
+        data.add(newRow);
     }
 }
