@@ -1,9 +1,7 @@
 package Helpers;
 
-import Models.SimPhase;
-import Models.SimTrail;
-
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -27,9 +25,9 @@ public class PhaseStringTokenizer {
     private static final String TRAIL_TYPE_REGEX = "(\\d*)([a-zA-Z]+)([\\+\\-])";
     private static final String TRAIL_TYPE_SEPARATOR = "/";
 
-    public static ArrayList<TrailTypeTokens> GetPhaseTokens(String phaseDescription) throws IllegalArgumentException {
+    public static List<TrailTypeTokens> getPhaseTokens(String phaseDescription) throws IllegalArgumentException {
 
-        ArrayList<TrailTypeTokens> tokensList = new ArrayList<>();
+        List<TrailTypeTokens> tokensList = new ArrayList<>();
 
         for(String trailTypeDescription : getTrailTypes(phaseDescription)) {
 
@@ -37,9 +35,9 @@ public class PhaseStringTokenizer {
 
             Matcher matcher = matchTrailType(trailTypeDescription);
 
-            trailTokens.numberOfTrails = GetNumberOfTrails(matcher);
-            trailTokens.cueNames = GetCueNames(matcher);
-            trailTokens.reinforcer = GetReinforcer(matcher);
+            trailTokens.numberOfTrails = getNumberOfTrails(matcher);
+            trailTokens.cueNames = getCueNames(matcher);
+            trailTokens.reinforcer = getReinforcer(matcher);
 
             tokensList.add(trailTokens);
         }
@@ -47,7 +45,7 @@ public class PhaseStringTokenizer {
         return tokensList;
     }
 
-    private static int GetNumberOfTrails(Matcher matcher) {
+    private static int getNumberOfTrails(Matcher matcher) {
         String str = matcher.group(1);
         if(str.isEmpty()){
             return 1;
@@ -55,11 +53,11 @@ public class PhaseStringTokenizer {
         return Integer.parseInt(str);
     }
 
-    private static char[] GetCueNames(Matcher matcher){
+    private static char[] getCueNames(Matcher matcher){
         return matcher.group(2).toCharArray();
     }
 
-    private static char GetReinforcer(Matcher matcher){
+    private static char getReinforcer(Matcher matcher){
         return matcher.group(3).charAt(0);
     }
 

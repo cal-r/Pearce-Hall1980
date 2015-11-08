@@ -1,10 +1,10 @@
 package _UnitTests;
 
 import Helpers.PhaseStringTokenizer;
-import Models.SimPhase;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -16,7 +16,7 @@ public class PhaseStringTokenizerTests extends junit.framework.TestCase {
 
     @Test
     public void testParsePhaseDescription1() throws Exception {
-        ArrayList<PhaseStringTokenizer.TrailTypeTokens> tokens = PhaseStringTokenizer.GetPhaseTokens("2A+");
+        List<PhaseStringTokenizer.TrailTypeTokens> tokens = PhaseStringTokenizer.getPhaseTokens("2A+");
         assertTrue(tokens != null);
         assertTrue(tokens.size() == 1);
         assertTrue(tokens.get(0).numberOfTrails == 2);
@@ -27,7 +27,7 @@ public class PhaseStringTokenizerTests extends junit.framework.TestCase {
 
     @Test
     public void testParsePhaseDescription2() throws Exception {
-        ArrayList<PhaseStringTokenizer.TrailTypeTokens> tokens = PhaseStringTokenizer.GetPhaseTokens("2AB+");
+        List<PhaseStringTokenizer.TrailTypeTokens> tokens = PhaseStringTokenizer.getPhaseTokens("2AB+");
         assertTrue(tokens != null);
         assertTrue(tokens.size() == 1);
         assertTrue(tokens.get(0).numberOfTrails == 2);
@@ -39,7 +39,7 @@ public class PhaseStringTokenizerTests extends junit.framework.TestCase {
 
     @Test
     public void testParsePhaseDescription3() throws Exception {
-        ArrayList<PhaseStringTokenizer.TrailTypeTokens> tokens = PhaseStringTokenizer.GetPhaseTokens("AB-");
+        List<PhaseStringTokenizer.TrailTypeTokens> tokens = PhaseStringTokenizer.getPhaseTokens("AB-");
         assertTrue(tokens != null);
         assertTrue(tokens.size() == 1);
         assertTrue(tokens.get(0).numberOfTrails == 1);
@@ -51,7 +51,7 @@ public class PhaseStringTokenizerTests extends junit.framework.TestCase {
 
     @Test
     public void testParsePhaseDescription4() throws Exception {
-        ArrayList<PhaseStringTokenizer.TrailTypeTokens> tokens = PhaseStringTokenizer.GetPhaseTokens("2AB+/A-");
+        List<PhaseStringTokenizer.TrailTypeTokens> tokens = PhaseStringTokenizer.getPhaseTokens("2AB+/A-");
         assertTrue(tokens != null);
         assertTrue(tokens.size() == 2);
         assertTrue(tokens.get(0).numberOfTrails == 2);
@@ -68,7 +68,7 @@ public class PhaseStringTokenizerTests extends junit.framework.TestCase {
 
     @Test
     public void testParsePhaseDescription5() throws Exception {
-        ArrayList<PhaseStringTokenizer.TrailTypeTokens> tokens = PhaseStringTokenizer.GetPhaseTokens("60AX+/60AY-/69BX-/60BY+");
+        List<PhaseStringTokenizer.TrailTypeTokens> tokens = PhaseStringTokenizer.getPhaseTokens("60AX+/60AY-/69BX-/60BY+");
         assertTrue(tokens != null);
         assertTrue(tokens.size() == 4);
         assertTrue(tokens.get(0).numberOfTrails == 60);
@@ -99,7 +99,7 @@ public class PhaseStringTokenizerTests extends junit.framework.TestCase {
     @Test
     public void testParsePhaseDescription6() throws Exception {
         try {
-            PhaseStringTokenizer.GetPhaseTokens("2AB");
+            PhaseStringTokenizer.getPhaseTokens("2AB");
             fail("No exception was thrown");
         }catch (IllegalArgumentException ex) {}
     }
@@ -107,7 +107,7 @@ public class PhaseStringTokenizerTests extends junit.framework.TestCase {
     @Test
     public void testParsePhaseDescription7() throws Exception {
         try {
-            PhaseStringTokenizer.GetPhaseTokens("-2+");
+            PhaseStringTokenizer.getPhaseTokens("-2+");
             fail("No exception was thrown");
         }catch (IllegalArgumentException ex) {}
     }
@@ -115,7 +115,7 @@ public class PhaseStringTokenizerTests extends junit.framework.TestCase {
     @Test
     public void testParsePhaseDescription8() throws Exception {
         try {
-            PhaseStringTokenizer.GetPhaseTokens("A+2B+");
+            PhaseStringTokenizer.getPhaseTokens("A+2B+");
             fail("No exception was thrown");
         }catch (IllegalArgumentException ex) {}
     }

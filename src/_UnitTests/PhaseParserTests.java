@@ -26,8 +26,8 @@ public class PhaseParserTests extends junit.framework.TestCase {
         assertTrue(phase.trails.size() == 2);
         assertTrue(phase.trails.get(0).usPresent);
         assertTrue(phase.trails.get(1).usPresent);
-        assertTrue(phase.GetCues().size() == 1);
-        assertTrue(phase.GetCues().get(0).Name == 'A');
+        assertTrue(phase.getCues().size() == 1);
+        assertTrue(phase.getCues().get(0).Name == 'A');
     }
 
     @org.junit.Test
@@ -44,9 +44,9 @@ public class PhaseParserTests extends junit.framework.TestCase {
         assertTrue(phase.trails.size() == 2);
         assertTrue(phase.trails.get(0).usPresent);
         assertTrue(phase.trails.get(1).usPresent);
-        assertTrue(phase.GetCues().size() == 2);
-        assertTrue(phase.GetCues().get(0).Name == 'A');
-        assertTrue(phase.GetCues().get(1).Name == 'B');
+        assertTrue(phase.getCues().size() == 2);
+        assertTrue(phase.getCues().get(0).Name == 'A');
+        assertTrue(phase.getCues().get(1).Name == 'B');
     }
 
     @org.junit.Test
@@ -62,9 +62,9 @@ public class PhaseParserTests extends junit.framework.TestCase {
         assertTrue(phase != null);
         assertTrue(phase.trails.size() == 1);
         assertTrue(!phase.trails.get(0).usPresent);
-        assertTrue(phase.GetCues().size() == 2);
-        assertTrue(phase.GetCues().get(0).Name == 'A');
-        assertTrue(phase.GetCues().get(1).Name == 'B');
+        assertTrue(phase.getCues().size() == 2);
+        assertTrue(phase.getCues().get(0).Name == 'A');
+        assertTrue(phase.getCues().get(1).Name == 'B');
     }
 
     @org.junit.Test
@@ -93,8 +93,8 @@ public class PhaseParserTests extends junit.framework.TestCase {
         assertTrue(phase.trails.get(1).cuesPresent.size() == 2);
         assertTrue(!phase.trails.get(2).usPresent);
         assertTrue(phase.trails.get(2).cuesPresent.size() == 1);
-        assertTrue(phase.GetCues().size() == 2);
-        assertTrue(phase.GetCues().get(0).Name == 'A');
-        assertTrue(phase.GetCues().get(1).Name == 'B');
+        assertTrue(phase.getCues().size() == 2);
+        assertTrue(phase.getCues().get(0).Name == 'A');
+        assertTrue(phase.getCues().get(1).Name == 'B');
     }
 }

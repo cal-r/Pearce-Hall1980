@@ -1,6 +1,5 @@
 package Models;
 
-import Models.Parameters.CsParameter;
 import Models.Parameters.GammaParameter;
 import Models.Parameters.Parameter;
 
@@ -22,13 +21,31 @@ public class SimPhase {
         gamma = new GammaParameter();
     }
 
-    public List<ConditionalStimulus> GetCues() {
+    public void SimulateTrail(int trailNum){
+
+    }
+
+    public void addTrailType(List<SimTrail> trailsToAdd) { //all trails in the param are the same (e.g. 'AB+')
+        trails.addAll(trailsToAdd);
+        SimTrail firstOfTheType = trailsToAdd.get(0);
+        for(ConditionalStimulus cue : firstOfTheType.cuesPresent) {
+            addCue(cue);
+        }
+    }
+
+    private void addCue(ConditionalStimulus cue) {
+        if(!cues.containsKey(cue.Name)) {
+            cues.put(cue.Name, cue);
+        }
+    }
+
+    public List<ConditionalStimulus> getCues() {
         return new ArrayList<>(cues.values());
     }
 
     public List<Parameter> getAllCsParameters(){
         List<Parameter> parameters = new ArrayList<>();
-        for(ConditionalStimulus cs : GetCues()) {
+        for(ConditionalStimulus cs : getCues()) {
             parameters.addAll(cs.getAllParameters());
         }
         return parameters;
@@ -38,19 +55,5 @@ public class SimPhase {
         List<Parameter> parameters = new ArrayList<>();
         parameters.add(gamma);
         return parameters;
-    }
-
-    public void addTrailType(ArrayList<SimTrail> trailsToAdd) { //all trails in the param are the same (e.g. 'AB+')
-        trails.addAll(trailsToAdd);
-        SimTrail firstOfTheType = trailsToAdd.get(0);
-        for(ConditionalStimulus cue : firstOfTheType.cuesPresent) {
-            AddCue(cue);
-        }
-    }
-
-    private void AddCue(ConditionalStimulus cue) {
-        if(!cues.containsKey(cue.Name)) {
-            cues.put(cue.Name, cue);
-        }
     }
 }

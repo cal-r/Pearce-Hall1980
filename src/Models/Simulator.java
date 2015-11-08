@@ -27,7 +27,7 @@ public class Simulator {
 
     private SimPhase createPhaseFromDescription(String phaseDescription){
         return PhaseParser.ParsePhase(
-                PhaseStringTokenizer.GetPhaseTokens(phaseDescription));
+                PhaseStringTokenizer.getPhaseTokens(phaseDescription));
     }
 
 
