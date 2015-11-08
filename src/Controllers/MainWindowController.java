@@ -22,6 +22,7 @@ public class MainWindowController implements ActionListener {
     private JTable csParamsTable;
     private JTable trailTable;
     private JButton setParamsButton;
+    private JButton runSimButton;
 
     private Simulator simulator;
 
@@ -31,9 +32,19 @@ public class MainWindowController implements ActionListener {
 
     public void initSetParamsButton(JButton button) {
         setParamsButton = button;
-        setParamsButton.addActionListener(this);
-        setParamsButton.setText(GuiStringConstants.SET_PARAMETERS);
-        setParamsButton.setActionCommand(GuiStringConstants.SET_PARAMETERS);
+        innitButton(setParamsButton, GuiStringConstants.SET_PARAMETERS);
+    }
+
+    public void innitRunSimButton(JButton button){
+        runSimButton = button;
+        innitButton(runSimButton, GuiStringConstants.RUN_SIMULATION);
+        runSimButton.setEnabled(false);
+    }
+
+    private void innitButton(JButton button, String txt){
+        button.addActionListener(this);
+        button.setText(txt);
+        button.setActionCommand(txt);
     }
 
     public void initTrailTable(JTable table) {
@@ -51,7 +62,6 @@ public class MainWindowController implements ActionListener {
         globalParamsTable.setModel(new GlobalPramsTableModel());
     }
 
-
     private void onSetParams(){
         String phaseDescription = GuiHelper.GetPhaseDescription(trailTable);
         simulator.innitPhase(phaseDescription);
@@ -59,7 +69,7 @@ public class MainWindowController implements ActionListener {
         List<Parameter> globalParameters = simulator.getGlobalParameters();
         GuiHelper.SetUpParams(csParamsTable, csParameters);
         GuiHelper.SetUpParams(globalParamsTable, globalParameters);
-
+        runSimButton.setEnabled(true);
     }
 
     private void processEvent(String cmd){

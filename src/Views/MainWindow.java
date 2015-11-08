@@ -14,6 +14,8 @@ public class MainWindow extends JFrame{
     private JButton setParamsButton;
     private JTable csParamsTable;
     private JTable globalParamsTable;
+    private JButton runButton;
+    private JTextArea simOutput;
 
     private MainWindowController controller;
 
@@ -31,5 +33,6 @@ public class MainWindow extends JFrame{
         controller.initCsParamsTable(csParamsTable);
         controller.innitGlobalParamsTable(globalParamsTable);
         controller.initSetParamsButton(setParamsButton);
+        controller.innitRunSimButton(runButton);
     }   
 }

@@ -1,20 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="Views.MainWindow">
-  <grid id="27dc6" binding="rootPane" layout-manager="GridLayoutManager" row-count="4" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+  <grid id="27dc6" binding="rootPane" layout-manager="GridLayoutManager" row-count="6" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="15" left="15" bottom="15" right="15"/>
     <constraints>
-      <xy x="20" y="20" width="506" height="400"/>
+      <xy x="20" y="20" width="493" height="656"/>
     </constraints>
     <properties/>
     <border type="none"/>
     <children>
-      <vspacer id="460bc">
-        <constraints>
-          <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false">
-            <preferred-size width="11" height="88"/>
-          </grid>
-        </constraints>
-      </vspacer>
       <scrollpane id="da8a6">
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false">
@@ -42,7 +35,7 @@
       </component>
       <scrollpane id="72e02">
         <constraints>
-          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="4" anchor="0" fill="3" indent="0" use-parent-layout="false">
+          <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="7" hsize-policy="4" anchor="0" fill="3" indent="0" use-parent-layout="false">
             <minimum-size width="-1" height="150"/>
             <preferred-size width="-1" height="150"/>
             <maximum-size width="-1" height="150"/>
@@ -71,6 +64,32 @@
           <component id="fdd3a" class="javax.swing.JTable" binding="globalParamsTable">
             <constraints/>
             <properties/>
+          </component>
+        </children>
+      </scrollpane>
+      <component id="4ba3b" class="javax.swing.JButton" binding="runButton">
+        <constraints>
+          <grid row="4" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Button"/>
+        </properties>
+      </component>
+      <scrollpane id="f4c4c">
+        <constraints>
+          <grid row="5" column="0" row-span="1" col-span="2" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false">
+            <minimum-size width="-1" height="300"/>
+          </grid>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="d5561" class="javax.swing.JTextArea" binding="simOutput">
+            <constraints/>
+            <properties>
+              <editable value="false"/>
+              <enabled value="true"/>
+            </properties>
           </component>
         </children>
       </scrollpane>

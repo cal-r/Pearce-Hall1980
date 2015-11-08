@@ -24,6 +24,12 @@ public abstract class BaseParamsTableModel extends BaseTableModel {
     }
 
     @Override
+    public boolean isCellEditable(int rowIndex, int columnIndex) {
+
+        return columnIndex == 1;
+    }
+
+    @Override
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
         super.setValueAt(aValue, rowIndex, columnIndex);
         parameters.get(rowIndex).setValue((double) aValue);
