@@ -2,6 +2,7 @@ package Helpers;
 
 import Models.Parameters.CsParameter;
 import Models.Parameters.Parameter;
+import ViewModels.BaseParamsTableModel;
 import ViewModels.CSParamsTableModel;
 import ViewModels.TrailTableModel;
 
@@ -18,8 +19,8 @@ public class GuiHelper {
         return tableModel.GetPhaseDescription();
     }
 
-    public static void SetUpCsParams(JTable csParamsTable, List<Parameter> params){
-        CSParamsTableModel tableModel = (CSParamsTableModel) csParamsTable.getModel();
+    public static void SetUpParams(JTable csParamsTable, List<Parameter> params){
+        BaseParamsTableModel tableModel = (BaseParamsTableModel) csParamsTable.getModel();
         tableModel.setUpParameters(params);
     }
 

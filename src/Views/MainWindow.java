@@ -27,8 +27,9 @@ public class MainWindow extends JFrame{
 
     public void InnitSubElements() {
         controller = new MainWindowController();
-        controller.initCsParamsTable(csParamsTable);
         controller.initTrailTable(trailTable);
+        controller.initCsParamsTable(csParamsTable);
+        controller.innitGlobalParamsTable(globalParamsTable);
         controller.initSetParamsButton(setParamsButton);
-    }
+    }   
 }

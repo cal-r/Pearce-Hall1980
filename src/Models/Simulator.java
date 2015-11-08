@@ -13,9 +13,16 @@ public class Simulator {
 
     private SimPhase phase;
 
-    public List<Parameter> GetCsParameters(String phaseDescription){
+    public void innitPhase(String phaseDescription) {
         phase = createPhaseFromDescription(phaseDescription);
+    }
+
+    public List<Parameter> getCsParameters(){
         return phase.getAllCsParameters();
+    }
+
+    public List<Parameter> getGlobalParameters(){
+        return phase.getAllGlobalParameters();
     }
 
     private SimPhase createPhaseFromDescription(String phaseDescription){

@@ -20,10 +20,6 @@ public abstract class BaseParamsTableModel extends BaseTableModel {
     @Override
     protected List<List<Object>> getInitialData() {
         List<List<Object>> data = new ArrayList<>();
-        List<Object> firsRow = new ArrayList<>();
-        firsRow.add("");
-        firsRow.add("");
-        data.add(firsRow);
         return data;
     }
 
