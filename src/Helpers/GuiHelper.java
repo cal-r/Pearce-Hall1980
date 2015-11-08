@@ -1,6 +1,7 @@
 package Helpers;
 
 import Models.Parameters.CsParameter;
+import Models.Parameters.Parameter;
 import ViewModels.CSParamsTableModel;
 import ViewModels.TrailTableModel;
 
@@ -17,13 +18,9 @@ public class GuiHelper {
         return tableModel.GetPhaseDescription();
     }
 
-    public static void SetUpCsParams(JTable csParamsTable, List<CsParameter> params){
+    public static void SetUpCsParams(JTable csParamsTable, List<Parameter> params){
         CSParamsTableModel tableModel = (CSParamsTableModel) csParamsTable.getModel();
-
         tableModel.setUpParameters(params);
-        csParamsTable.repaint();
-        //csParamsTable.addRowSelectionInterval(0,2);
-        csParamsTable.requestFocus();
     }
 
 }

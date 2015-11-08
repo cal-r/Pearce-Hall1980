@@ -6,7 +6,8 @@ package Constants;
 public class TableStringConstants {
     public static final String GROUP_NAME = "Group Name";
     public static final String PHASE = "Phase";
-    public static final String PARAMETER = "Parameter";
+    public static final String CS_PARAMETER = "Cs Parameter";
+    public static final String GLOBAL_PARAMETER = "Global Parameter";
     public static final String VALUE = "Value";
 
     public static final String DEFAULT_PHASE = "2A+";

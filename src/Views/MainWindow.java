@@ -13,6 +13,7 @@ public class MainWindow extends JFrame{
     private JTable trailTable;
     private JButton setParamsButton;
     private JTable csParamsTable;
+    private JTable globalParamsTable;
 
     private MainWindowController controller;
 

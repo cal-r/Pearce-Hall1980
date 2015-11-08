@@ -4,6 +4,7 @@ import Helpers.GuiHelper;
 import Constants.GuiStringConstants;
 import Models.ConditionalStimulus;
 import Models.Parameters.CsParameter;
+import Models.Parameters.Parameter;
 import Models.Simulator;
 import ViewModels.CSParamsTableModel;
 import ViewModels.TrailTableModel;
@@ -44,10 +45,10 @@ public class MainWindowController implements ActionListener {
         trailTable = table;
         trailTable.setModel(new TrailTableModel());
     }
-
+    
     private void onSetParams(){
         String phaseDescription = GuiHelper.GetPhaseDescription(trailTable);
-        List<CsParameter> csParameters = simulator.GetCsParameters(phaseDescription);
+        List<Parameter> csParameters = simulator.GetCsParameters(phaseDescription);
         GuiHelper.SetUpCsParams(csParamsTable, csParameters);
     }
 

@@ -2,9 +2,8 @@ package Models;
 
 import Helpers.PhaseParser;
 import Helpers.PhaseStringTokenizer;
-import Models.Parameters.CsParameter;
+import Models.Parameters.Parameter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,9 +13,9 @@ public class Simulator {
 
     private SimPhase phase;
 
-    public List<CsParameter> GetCsParameters(String phaseDescription){
+    public List<Parameter> GetCsParameters(String phaseDescription){
         phase = createPhaseFromDescription(phaseDescription);
-        return phase.GetAllCsParameters();
+        return phase.getAllCsParameters();
     }
 
     private SimPhase createPhaseFromDescription(String phaseDescription){
