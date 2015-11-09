@@ -4,7 +4,6 @@ import Models.Parameters.CsParameter;
 import Models.Parameters.InitialAlphaParameter;
 import Models.Parameters.SalienceExcitatoryParameter;
 import Models.Parameters.SalienceInhibitoryParameter;
-import org.omg.Dynamic.Parameter;
 
 import java.util.ArrayList;
 
@@ -13,9 +12,9 @@ import java.util.ArrayList;
  */
 public class ConditionalStimulus {
 
-    public InitialAlphaParameter initialAlphaParameter;
-    public SalienceExcitatoryParameter salienceExcitatoryParameter;
-    public SalienceInhibitoryParameter salienceInhibitoryParameter;
+    public InitialAlphaParameter InitialAlphaParameter;
+    public SalienceExcitatoryParameter SalienceExcitatoryParameter;
+    public SalienceInhibitoryParameter SalienceInhibitoryParameter;
 
     public char Name;
 
@@ -30,9 +29,9 @@ public class ConditionalStimulus {
         AssociationInhibitory = 0;
         Name = name;
 
-        initialAlphaParameter = new InitialAlphaParameter(this);
-        salienceExcitatoryParameter = new SalienceExcitatoryParameter(this);
-        salienceInhibitoryParameter = new SalienceInhibitoryParameter(this);
+        InitialAlphaParameter = new InitialAlphaParameter(this);
+        SalienceExcitatoryParameter = new SalienceExcitatoryParameter(this);
+        SalienceInhibitoryParameter = new SalienceInhibitoryParameter(this);
 
         alphaSet = false;
     }
@@ -42,7 +41,7 @@ public class ConditionalStimulus {
     }
 
     public double getAlpha(){
-        return alphaSet ? alpha : initialAlphaParameter.getValue();
+        return alphaSet ? alpha : InitialAlphaParameter.getValue();
     }
 
     public void setAlpha(double value){
@@ -52,9 +51,9 @@ public class ConditionalStimulus {
 
     public ArrayList<CsParameter> getAllParameters(){
         ArrayList<CsParameter> params = new ArrayList<>();
-        params.add(initialAlphaParameter);
-        params.add(salienceExcitatoryParameter);
-        params.add(salienceInhibitoryParameter);
+        params.add(InitialAlphaParameter);
+        params.add(SalienceExcitatoryParameter);
+        params.add(SalienceInhibitoryParameter);
         return params;
     }
 }

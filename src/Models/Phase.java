@@ -10,24 +10,24 @@ import java.util.List;
 /**
  * Created by Rokas on 03/11/2015.
  */
-public class SimPhase {
+public class Phase {
     public GammaParameter gamma;
-    public ArrayList<SimTrail> trails;
+    public ArrayList<Trail> trails;
     private HashMap<Character, ConditionalStimulus> cues;
 
-    public SimPhase() {
+    public Phase() {
         trails = new ArrayList<>();
         cues = new HashMap<>();
         gamma = new GammaParameter();
     }
 
-    public void SimulateTrail(int trailNum){
-
+    public void simulateTrail(int trailNum){
+        trails.get(trailNum).simulate(calcVNet(), gamma.getValue());
     }
 
-    public void addTrailType(List<SimTrail> trailsToAdd) { //all trails in the param are the same (e.g. 'AB+')
+    public void addTrailType(List<Trail> trailsToAdd) { //all trails in the param are the same (e.g. 'AB+')
         trails.addAll(trailsToAdd);
-        SimTrail firstOfTheType = trailsToAdd.get(0);
+        Trail firstOfTheType = trailsToAdd.get(0);
         for(ConditionalStimulus cue : firstOfTheType.cuesPresent) {
             addCue(cue);
         }
@@ -55,5 +55,13 @@ public class SimPhase {
         List<Parameter> parameters = new ArrayList<>();
         parameters.add(gamma);
         return parameters;
+    }
+
+    private double calcVNet(){
+        double vNet = 0;
+        for(ConditionalStimulus cs : getCues()){
+            vNet += cs.getAssociationNet();
+        }
+        return vNet;
     }
 }

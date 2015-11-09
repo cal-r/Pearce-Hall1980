@@ -15,7 +15,7 @@ public class MainWindow extends JFrame{
     private JTable csParamsTable;
     private JTable globalParamsTable;
     private JButton runButton;
-    private JTextArea simOutput;
+    private JTextArea simOutputArea;
 
     private MainWindowController controller;
 
@@ -27,12 +27,13 @@ public class MainWindow extends JFrame{
         pack();
     }
 
-    public void InnitSubElements() {
+    public void initSubElements() {
         controller = new MainWindowController();
         controller.initTrailTable(trailTable);
         controller.initCsParamsTable(csParamsTable);
-        controller.innitGlobalParamsTable(globalParamsTable);
+        controller.initGlobalParamsTable(globalParamsTable);
         controller.initSetParamsButton(setParamsButton);
-        controller.innitRunSimButton(runButton);
+        controller.initRunSimButton(runButton);
+        controller.initOutputArea(simOutputArea);
     }   
 }

@@ -11,10 +11,13 @@ import java.util.List;
  */
 public class Simulator {
 
-    private SimPhase phase;
+    private Phase phase;
 
-    public void innitPhase(String phaseDescription) {
+    private int lastTrailIndex = 0;
+
+    public void initPhase(String phaseDescription) {
         phase = createPhaseFromDescription(phaseDescription);
+        lastTrailIndex = 0;
     }
 
     public List<Parameter> getCsParameters(){
@@ -25,7 +28,21 @@ public class Simulator {
         return phase.getAllGlobalParameters();
     }
 
-    private SimPhase createPhaseFromDescription(String phaseDescription){
+    public PhaseHistory simulatePhase(){
+        PhaseHistory history = new PhaseHistory(phase);
+        while (!simulationComplete()) {
+            phase.simulateTrail(lastTrailIndex);
+            history.recordState(lastTrailIndex);
+            lastTrailIndex++;
+        }
+        return history;
+    }
+
+    private boolean simulationComplete(){
+        return lastTrailIndex>=phase.trails.size();
+    }
+
+    private Phase createPhaseFromDescription(String phaseDescription){
         return PhaseParser.ParsePhase(
                 PhaseStringTokenizer.getPhaseTokens(phaseDescription));
     }

@@ -2,7 +2,7 @@ package _UnitTests;
 
 import Helpers.PhaseParser;
 import Helpers.PhaseStringTokenizer;
-import Models.SimPhase;
+import Models.Phase;
 
 import java.util.ArrayList;
 
@@ -20,7 +20,7 @@ public class PhaseParserTests extends junit.framework.TestCase {
         trailTypeTokens.reinforcer = '+';
         ArrayList<PhaseStringTokenizer.TrailTypeTokens> tokensArrayList = new ArrayList<>();
         tokensArrayList.add(trailTypeTokens);
-        SimPhase phase = PhaseParser.ParsePhase(tokensArrayList);
+        Phase phase = PhaseParser.ParsePhase(tokensArrayList);
 
         assertTrue(phase != null);
         assertTrue(phase.trails.size() == 2);
@@ -38,7 +38,7 @@ public class PhaseParserTests extends junit.framework.TestCase {
         trailTypeTokens.reinforcer = '+';
         ArrayList<PhaseStringTokenizer.TrailTypeTokens> tokensArrayList = new ArrayList<>();
         tokensArrayList.add(trailTypeTokens);
-        SimPhase phase = PhaseParser.ParsePhase(tokensArrayList);
+        Phase phase = PhaseParser.ParsePhase(tokensArrayList);
 
         assertTrue(phase != null);
         assertTrue(phase.trails.size() == 2);
@@ -57,7 +57,7 @@ public class PhaseParserTests extends junit.framework.TestCase {
         trailTypeTokens.reinforcer = '-';
         ArrayList<PhaseStringTokenizer.TrailTypeTokens> tokensArrayList = new ArrayList<>();
         tokensArrayList.add(trailTypeTokens);
-        SimPhase phase = PhaseParser.ParsePhase(tokensArrayList);
+        Phase phase = PhaseParser.ParsePhase(tokensArrayList);
 
         assertTrue(phase != null);
         assertTrue(phase.trails.size() == 1);
@@ -84,7 +84,7 @@ public class PhaseParserTests extends junit.framework.TestCase {
         tokensArrayList.add(trailTypeTokens);
         tokensArrayList.add(trailTypeTokens2);
 
-        SimPhase phase = PhaseParser.ParsePhase(tokensArrayList);
+        Phase phase = PhaseParser.ParsePhase(tokensArrayList);
         assertTrue(phase != null);
         assertTrue(phase.trails.size() == 3);
         assertTrue(phase.trails.get(0).usPresent);

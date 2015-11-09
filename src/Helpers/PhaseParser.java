@@ -1,10 +1,11 @@
 package Helpers;
 
 import Models.ConditionalStimulus;
-import Models.SimPhase;
-import Models.SimTrail;
+import Models.Phase;
+import Models.Trail;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -12,23 +13,25 @@ import java.util.List;
  */
 public class PhaseParser {
 
-    public static SimPhase ParsePhase(List<PhaseStringTokenizer.TrailTypeTokens> trailTypeTokensList) {
-        SimPhase phase = new SimPhase();
+    public static Phase ParsePhase(List<PhaseStringTokenizer.TrailTypeTokens> trailTypeTokensList) {
+        Phase phase = new Phase();
+
+        HashMap<Character, ConditionalStimulus> csMap = new HashMap<>();
 
         for(PhaseStringTokenizer.TrailTypeTokens trailType : trailTypeTokensList){
-            List<SimTrail> newTrails = getTrails(trailType);
+            List<Trail> newTrails = getTrails(trailType, csMap);
             phase.addTrailType(newTrails);
         }
 
         return phase;
     }
 
-    private static List<SimTrail> getTrails(PhaseStringTokenizer.TrailTypeTokens trailType) {
-        List<SimTrail> trails = new ArrayList<>();
+    private static List<Trail> getTrails(PhaseStringTokenizer.TrailTypeTokens trailType, HashMap<Character, ConditionalStimulus> csMap) {
+        List<Trail> trails = new ArrayList<>();
 
-        SimTrail trail = new SimTrail(
+        Trail trail = new Trail(
                 getUsPresent(trailType),
-                getCuesPresent(trailType));
+                getCuesPresent(trailType, csMap));
 
         for (int i = 0; i < trailType.numberOfTrails; i++){
             trails.add(trail);
@@ -44,11 +47,13 @@ public class PhaseParser {
         return false;
     }
 
-    private static List<ConditionalStimulus> getCuesPresent(PhaseStringTokenizer.TrailTypeTokens trailType) {
+    private static List<ConditionalStimulus> getCuesPresent(PhaseStringTokenizer.TrailTypeTokens trailType, HashMap<Character, ConditionalStimulus> csMap) {
         List<ConditionalStimulus> cuesPresent = new ArrayList<>();
         for(char cueName : trailType.cueNames){
-            ConditionalStimulus cue = new ConditionalStimulus(cueName);
-            cuesPresent.add(cue);
+            if(!csMap.containsKey(cueName)) {
+                csMap.put(cueName, new ConditionalStimulus(cueName));
+            }
+            cuesPresent.add(csMap.get(cueName));
         }
         return cuesPresent;
     }

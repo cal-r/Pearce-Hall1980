@@ -13,9 +13,10 @@ public class DefaultValuesHelper {
     private static final HashMap<String, Double> map;
     static {
         map = new HashMap<>();
-        map.put(ParameterNamingConstants.INITIAL_ALPHA, DefaultValuesConstants.INNITIAL_ALPHA);
+        map.put(ParameterNamingConstants.INITIAL_ALPHA, DefaultValuesConstants.INITIAL_ALPHA);
         map.put(ParameterNamingConstants.SALIENCE_INHIBATORY, DefaultValuesConstants.SALIENCE_INHIBATORY);
         map.put(ParameterNamingConstants.SALIENCE_EXCITATORY, DefaultValuesConstants.SALIENCE_EXCITATORY);
+        map.put(ParameterNamingConstants.GAMMA, DefaultValuesConstants.GAMMA);
     }
 
     public static double GetDefaultValue(String variableName){

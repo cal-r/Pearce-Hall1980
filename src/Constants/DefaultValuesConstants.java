@@ -5,6 +5,8 @@ package Constants;
  */
 public class DefaultValuesConstants {
     public static final double SALIENCE_INHIBATORY = 0.05;
-    public static final double INNITIAL_ALPHA = 0.5;
+    public static final double INITIAL_ALPHA = 0.5;
     public static final double SALIENCE_EXCITATORY = 0.05;
+    public static final double GAMMA = 0.01;
+    public static final double ROUNDING_PRECISION = 0.00000001;
 }

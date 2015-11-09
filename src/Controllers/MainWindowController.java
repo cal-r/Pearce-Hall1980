@@ -3,6 +3,7 @@ package Controllers;
 import Helpers.GuiHelper;
 import Constants.GuiStringConstants;
 import Models.Parameters.Parameter;
+import Models.PhaseHistory;
 import Models.Simulator;
 import ViewModels.CSParamsTableModel;
 import ViewModels.GlobalPramsTableModel;
@@ -23,6 +24,7 @@ public class MainWindowController implements ActionListener {
     private JTable trailTable;
     private JButton setParamsButton;
     private JButton runSimButton;
+    private JTextArea simOutputArea;
 
     private Simulator simulator;
 
@@ -32,16 +34,16 @@ public class MainWindowController implements ActionListener {
 
     public void initSetParamsButton(JButton button) {
         setParamsButton = button;
-        innitButton(setParamsButton, GuiStringConstants.SET_PARAMETERS);
+        initButton(setParamsButton, GuiStringConstants.SET_PARAMETERS);
     }
 
-    public void innitRunSimButton(JButton button){
+    public void initRunSimButton(JButton button){
         runSimButton = button;
-        innitButton(runSimButton, GuiStringConstants.RUN_SIMULATION);
+        initButton(runSimButton, GuiStringConstants.RUN_SIMULATION);
         runSimButton.setEnabled(false);
     }
 
-    private void innitButton(JButton button, String txt){
+    private void initButton(JButton button, String txt){
         button.addActionListener(this);
         button.setText(txt);
         button.setActionCommand(txt);
@@ -57,24 +59,35 @@ public class MainWindowController implements ActionListener {
         csParamsTable.setModel(new CSParamsTableModel());
     }
 
-    public void innitGlobalParamsTable(JTable table){
+    public void initGlobalParamsTable(JTable table){
         globalParamsTable = table;
         globalParamsTable.setModel(new GlobalPramsTableModel());
     }
 
+    public void initOutputArea(JTextArea simOutputArea){
+        this.simOutputArea = simOutputArea;
+    }
+
     private void onSetParams(){
-        String phaseDescription = GuiHelper.GetPhaseDescription(trailTable);
-        simulator.innitPhase(phaseDescription);
+        String phaseDescription = GuiHelper.getPhaseDescription(trailTable);
+        simulator.initPhase(phaseDescription);
         List<Parameter> csParameters = simulator.getCsParameters();
         List<Parameter> globalParameters = simulator.getGlobalParameters();
-        GuiHelper.SetUpParams(csParamsTable, csParameters);
-        GuiHelper.SetUpParams(globalParamsTable, globalParameters);
+        GuiHelper.setUpParams(csParamsTable, csParameters);
+        GuiHelper.setUpParams(globalParamsTable, globalParameters);
         runSimButton.setEnabled(true);
+    }
+
+    private void onRunSim(){
+        PhaseHistory history = simulator.simulatePhase();
+        GuiHelper.outputHistory(history, simOutputArea);
     }
 
     private void processEvent(String cmd){
         switch (cmd){
             case GuiStringConstants.SET_PARAMETERS: onSetParams();
+                break;
+            case GuiStringConstants.RUN_SIMULATION: onRunSim();
                 break;
         }
     }
