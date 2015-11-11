@@ -20,8 +20,8 @@ public class PhaseHistory {
     public void recordState(int trailIndex){
         for(ConditionalStimulus cs : phase.getCues()) {
             CsState csState = new CsState();
-            csState.Ve = cs.AssociationExcitatory;
-            csState.Vi = cs.AssociationInhibitory;
+            csState.Ve = cs.getAssociationExcitatory();
+            csState.Vi = cs.getAssociationInhibitory();
             csState.Vnet = cs.getAssociationNet();
             csState.TrailNumber = trailIndex+1;
             csHistoriesMap.get(cs).add(csState);

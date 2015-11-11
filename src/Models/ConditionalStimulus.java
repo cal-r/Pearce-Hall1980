@@ -18,15 +18,15 @@ public class ConditionalStimulus {
 
     public char Name;
 
-    public double AssociationExcitatory;
-    public double AssociationInhibitory;
+    private double associationInhibitory;
+    private double associationExcitatory;
 
     private boolean alphaSet;
     private double alpha;
 
     public ConditionalStimulus(char name){
-        AssociationExcitatory = 0;
-        AssociationInhibitory = 0;
+        associationExcitatory = 0;
+        associationInhibitory = 0;
         Name = name;
 
         InitialAlphaParameter = new InitialAlphaParameter(this);
@@ -37,7 +37,7 @@ public class ConditionalStimulus {
     }
 
     public double getAssociationNet() {
-        return AssociationExcitatory - AssociationInhibitory;
+        return Math.min(associationExcitatory - associationInhibitory, 1);
     }
 
     public double getAlpha(){
@@ -47,6 +47,22 @@ public class ConditionalStimulus {
     public void setAlpha(double value){
         alpha = value;
         alphaSet = true;
+    }
+
+    public double getAssociationExcitatory(){
+        return Math.min(associationExcitatory, 1);
+    }
+
+    public double getAssociationInhibitory(){
+        return Math.min(associationInhibitory, 1);
+    }
+
+    public void updateAssociationExcitatory(double change){
+        associationExcitatory+=change;
+    }
+
+    public void updateAssociationInhibitory(double change){
+        associationInhibitory+=change;
     }
 
     public ArrayList<CsParameter> getAllParameters(){

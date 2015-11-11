@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="PHSimulator:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/PHSimulator_jar</output-path>
+    <root id="archive" name="PHSimulator.jar">
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/out/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="module-output" name="PHSimulator" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/mockito-all-1.10.19.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$APPLICATION_HOME_DIR$/lib/junit-4.11.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$APPLICATION_HOME_DIR$/plugins/testng/lib/testng-plugin.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
