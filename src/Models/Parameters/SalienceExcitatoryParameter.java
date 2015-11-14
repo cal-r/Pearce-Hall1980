@@ -7,7 +7,7 @@ import Models.ConditionalStimulus;
  * Created by Rokas on 05/11/2015.
  */
 public class SalienceExcitatoryParameter extends CsParameter {
-    public SalienceExcitatoryParameter(ConditionalStimulus cue) {
+    public SalienceExcitatoryParameter(char cue) {
         super(cue, ParameterNamingConstants.SALIENCE_EXCITATORY);
     }
 }

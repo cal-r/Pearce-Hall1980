@@ -13,9 +13,7 @@ public abstract class BaseParamsTableModel extends BaseTableModel {
     private List<Parameter> parameters;
 
     @Override
-    protected String[] getColumnHeaders() {
-        return new String[0];
-    }
+    protected abstract List<String> getColumnHeaders();
 
     @Override
     protected List<List<Object>> getInitialData() {

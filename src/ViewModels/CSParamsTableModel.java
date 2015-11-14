@@ -13,8 +13,10 @@ import java.util.List;
 public class CSParamsTableModel extends BaseParamsTableModel {
 
     @Override
-    protected String[] getColumnHeaders() {
-        String[] columnHeaders = {TableStringConstants.CS_PARAMETER, TableStringConstants.VALUE};
+    protected List<String> getColumnHeaders() {
+        columnHeaders = new ArrayList<>();
+        columnHeaders.add(TableStringConstants.CS_PARAMETER);
+        columnHeaders.add(TableStringConstants.VALUE);
         return columnHeaders;
     }
 }

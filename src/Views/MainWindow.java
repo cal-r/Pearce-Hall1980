@@ -16,6 +16,8 @@ public class MainWindow extends JFrame{
     private JTable globalParamsTable;
     private JButton runButton;
     private JTextArea simOutputArea;
+    private JButton plusPhaseButton;
+    private JButton minusPhaseButton;
 
     private MainWindowController controller;
 
@@ -33,6 +35,8 @@ public class MainWindow extends JFrame{
         controller.initCsParamsTable(csParamsTable);
         controller.initGlobalParamsTable(globalParamsTable);
         controller.initSetParamsButton(setParamsButton);
+        controller.initPlusPhaseButton(plusPhaseButton);
+        controller.initMinusPhaseButton(minusPhaseButton);
         controller.initRunSimButton(runButton);
         controller.initOutputArea(simOutputArea);
     }   

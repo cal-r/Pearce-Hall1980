@@ -2,9 +2,13 @@ package _UnitTests;
 
 import Helpers.PhaseParser;
 import Helpers.PhaseStringTokenizer;
+import Models.ConditionalStimulus;
+import Models.Parameters.CsParameterPool;
 import Models.Phase;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Rokas on 04/11/2015.
@@ -20,14 +24,14 @@ public class PhaseParserTests extends junit.framework.TestCase {
         trailTypeTokens.reinforcer = '+';
         ArrayList<PhaseStringTokenizer.TrailTypeTokens> tokensArrayList = new ArrayList<>();
         tokensArrayList.add(trailTypeTokens);
-        Phase phase = PhaseParser.ParsePhase(tokensArrayList);
+        CsParameterPool cspPool = createCsParameterPool(trailTypeTokens.cueNames);
+        Map<Character, ConditionalStimulus> csMap = getCsMap(trailTypeTokens.cueNames, cspPool);
+        Phase phase = PhaseParser.ParsePhase(tokensArrayList, csMap);
 
         assertTrue(phase != null);
         assertTrue(phase.trails.size() == 2);
         assertTrue(phase.trails.get(0).usPresent);
         assertTrue(phase.trails.get(1).usPresent);
-        assertTrue(phase.getCues().size() == 1);
-        assertTrue(phase.getCues().get(0).Name == 'A');
     }
 
     @org.junit.Test
@@ -38,15 +42,15 @@ public class PhaseParserTests extends junit.framework.TestCase {
         trailTypeTokens.reinforcer = '+';
         ArrayList<PhaseStringTokenizer.TrailTypeTokens> tokensArrayList = new ArrayList<>();
         tokensArrayList.add(trailTypeTokens);
-        Phase phase = PhaseParser.ParsePhase(tokensArrayList);
+
+        CsParameterPool cspPool = createCsParameterPool(trailTypeTokens.cueNames);
+        Map<Character, ConditionalStimulus> csMap = getCsMap(trailTypeTokens.cueNames, cspPool);
+        Phase phase = PhaseParser.ParsePhase(tokensArrayList, csMap);
 
         assertTrue(phase != null);
         assertTrue(phase.trails.size() == 2);
         assertTrue(phase.trails.get(0).usPresent);
         assertTrue(phase.trails.get(1).usPresent);
-        assertTrue(phase.getCues().size() == 2);
-        assertTrue(phase.getCues().get(0).Name == 'A');
-        assertTrue(phase.getCues().get(1).Name == 'B');
     }
 
     @org.junit.Test
@@ -57,14 +61,14 @@ public class PhaseParserTests extends junit.framework.TestCase {
         trailTypeTokens.reinforcer = '-';
         ArrayList<PhaseStringTokenizer.TrailTypeTokens> tokensArrayList = new ArrayList<>();
         tokensArrayList.add(trailTypeTokens);
-        Phase phase = PhaseParser.ParsePhase(tokensArrayList);
+
+        CsParameterPool cspPool = createCsParameterPool(trailTypeTokens.cueNames);
+        Map<Character, ConditionalStimulus> csMap = getCsMap(trailTypeTokens.cueNames, cspPool);
+        Phase phase = PhaseParser.ParsePhase(tokensArrayList, csMap);
 
         assertTrue(phase != null);
         assertTrue(phase.trails.size() == 1);
         assertTrue(!phase.trails.get(0).usPresent);
-        assertTrue(phase.getCues().size() == 2);
-        assertTrue(phase.getCues().get(0).Name == 'A');
-        assertTrue(phase.getCues().get(1).Name == 'B');
     }
 
     @org.junit.Test
@@ -84,7 +88,10 @@ public class PhaseParserTests extends junit.framework.TestCase {
         tokensArrayList.add(trailTypeTokens);
         tokensArrayList.add(trailTypeTokens2);
 
-        Phase phase = PhaseParser.ParsePhase(tokensArrayList);
+        CsParameterPool cspPool = createCsParameterPool(trailTypeTokens.cueNames);
+        Map<Character, ConditionalStimulus> csMap = getCsMap(trailTypeTokens.cueNames, cspPool);
+        Phase phase = PhaseParser.ParsePhase(tokensArrayList, csMap);
+
         assertTrue(phase != null);
         assertTrue(phase.trails.size() == 3);
         assertTrue(phase.trails.get(0).usPresent);
@@ -93,8 +100,25 @@ public class PhaseParserTests extends junit.framework.TestCase {
         assertTrue(phase.trails.get(1).cuesPresent.size() == 2);
         assertTrue(!phase.trails.get(2).usPresent);
         assertTrue(phase.trails.get(2).cuesPresent.size() == 1);
-        assertTrue(phase.getCues().size() == 2);
-        assertTrue(phase.getCues().get(0).Name == 'A');
-        assertTrue(phase.getCues().get(1).Name == 'B');
+    }
+
+    private CsParameterPool createCsParameterPool(char[] cueNames){
+        CsParameterPool pool = new CsParameterPool();
+        for(char cueName : cueNames){
+            pool.createParameters(cueName);
+        }
+        return pool;
+    }
+
+    private Map<Character, ConditionalStimulus> getCsMap(char[] cueNames, CsParameterPool csParameterPool){
+        Map<Character, ConditionalStimulus> csMap = new HashMap<>();
+        for(char cueName : cueNames){
+            csMap.put(cueName, new ConditionalStimulus(
+                    cueName,
+                    csParameterPool.getInitialAlpha(cueName),
+                    csParameterPool.getSeParameter(cueName),
+                    csParameterPool.getSiParamter(cueName)));
+        }
+        return csMap;
     }
 }

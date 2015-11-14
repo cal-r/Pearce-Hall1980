@@ -11,8 +11,10 @@ import java.util.List;
  */
 public class GlobalPramsTableModel extends BaseParamsTableModel{
 
-    protected String[] getColumnHeaders() {
-        String[] columnHeaders = {TableStringConstants.GLOBAL_PARAMETER, TableStringConstants.VALUE};
+    protected List<String> getColumnHeaders() {
+        columnHeaders = new ArrayList<>();
+        columnHeaders.add(TableStringConstants.GLOBAL_PARAMETER);
+        columnHeaders.add(TableStringConstants.VALUE);
         return columnHeaders;
     }
 }

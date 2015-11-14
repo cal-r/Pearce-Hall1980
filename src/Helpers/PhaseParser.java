@@ -5,57 +5,63 @@ import Models.Phase;
 import Models.Trail;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Rokas on 04/11/2015.
  */
 public class PhaseParser {
 
-    public static Phase ParsePhase(List<PhaseStringTokenizer.TrailTypeTokens> trailTypeTokensList) {
+    public static Phase ParsePhase(List<PhaseStringTokenizer.TrailTypeTokens> trailTypeTokensList, Map<Character, ConditionalStimulus> csMap) {
+
+        TrailTypeParser trailTypeParser = new TrailTypeParser(csMap);
+
         Phase phase = new Phase();
 
-        HashMap<Character, ConditionalStimulus> csMap = new HashMap<>();
-
         for(PhaseStringTokenizer.TrailTypeTokens trailType : trailTypeTokensList){
-            List<Trail> newTrails = getTrails(trailType, csMap);
+            List<Trail> newTrails =trailTypeParser.getTrails(trailType);
             phase.addTrailType(newTrails);
         }
 
         return phase;
     }
 
-    private static List<Trail> getTrails(PhaseStringTokenizer.TrailTypeTokens trailType, HashMap<Character, ConditionalStimulus> csMap) {
-        List<Trail> trails = new ArrayList<>();
+    private static class TrailTypeParser {
 
-        Trail trail = new Trail(
-                getUsPresent(trailType),
-                getCuesPresent(trailType, csMap));
+        private Map<Character, ConditionalStimulus> csMap;
 
-        for (int i = 0; i < trailType.numberOfTrails; i++){
-            trails.add(trail);
+        private TrailTypeParser(Map < Character, ConditionalStimulus > csMap) {
+            this.csMap = csMap;
         }
 
-        return trails;
-    }
+        private List<Trail> getTrails (PhaseStringTokenizer.TrailTypeTokens trailType){
+            List<Trail> trails = new ArrayList<>();
 
-    private static boolean getUsPresent(PhaseStringTokenizer.TrailTypeTokens trailType) {
-        if(trailType.reinforcer == '+'){
-            return true;
-        }
-        return false;
-    }
+            Trail trail = new Trail(
+                    getUsPresent(trailType),
+                    getCuesPresent(trailType));
 
-    private static List<ConditionalStimulus> getCuesPresent(PhaseStringTokenizer.TrailTypeTokens trailType, HashMap<Character, ConditionalStimulus> csMap) {
-        List<ConditionalStimulus> cuesPresent = new ArrayList<>();
-        for(char cueName : trailType.cueNames){
-            if(!csMap.containsKey(cueName)) {
-                csMap.put(cueName, new ConditionalStimulus(cueName));
+            for (int i = 0; i < trailType.numberOfTrails; i++) {
+                trails.add(trail);
             }
-            cuesPresent.add(csMap.get(cueName));
-        }
-        return cuesPresent;
-    }
 
+            return trails;
+        }
+
+        private boolean getUsPresent(PhaseStringTokenizer.TrailTypeTokens trailType) {
+            if (trailType.reinforcer == '+') {
+                return true;
+            }
+            return false;
+        }
+
+        private List<ConditionalStimulus> getCuesPresent(PhaseStringTokenizer.TrailTypeTokens trailType) {
+            List<ConditionalStimulus> cuesPresent = new ArrayList<>();
+            for (char cueName : trailType.cueNames) {
+                cuesPresent.add(csMap.get(cueName));
+            }
+            return cuesPresent;
+        }
+    }
 }

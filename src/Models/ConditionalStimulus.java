@@ -1,5 +1,6 @@
 package Models;
 
+import Constants.DefaultValuesConstants;
 import Models.Parameters.CsParameter;
 import Models.Parameters.InitialAlphaParameter;
 import Models.Parameters.SalienceExcitatoryParameter;
@@ -24,20 +25,19 @@ public class ConditionalStimulus {
     private boolean alphaSet;
     private double alpha;
 
-    public ConditionalStimulus(char name){
+    public ConditionalStimulus(char name, InitialAlphaParameter initialAlphaParameter, SalienceExcitatoryParameter salienceExcitatoryParameter, SalienceInhibitoryParameter salienceInhibitoryParameter){
         associationExcitatory = 0;
         associationInhibitory = 0;
         Name = name;
 
-        InitialAlphaParameter = new InitialAlphaParameter(this);
-        SalienceExcitatoryParameter = new SalienceExcitatoryParameter(this);
-        SalienceInhibitoryParameter = new SalienceInhibitoryParameter(this);
-
+        InitialAlphaParameter = initialAlphaParameter;
+        SalienceExcitatoryParameter = salienceExcitatoryParameter;
+        SalienceInhibitoryParameter = salienceInhibitoryParameter;
         alphaSet = false;
     }
 
     public double getAssociationNet() {
-        return Math.min(associationExcitatory - associationInhibitory, 1);
+        return Math.min(associationExcitatory - associationInhibitory, DefaultValuesConstants.ASSOCIATION_ASYMPTOTE);
     }
 
     public double getAlpha(){
@@ -50,11 +50,11 @@ public class ConditionalStimulus {
     }
 
     public double getAssociationExcitatory(){
-        return Math.min(associationExcitatory, 1);
+        return Math.min(associationExcitatory, DefaultValuesConstants.ASSOCIATION_ASYMPTOTE);
     }
 
     public double getAssociationInhibitory(){
-        return Math.min(associationInhibitory, 1);
+        return Math.min(associationInhibitory, DefaultValuesConstants.ASSOCIATION_ASYMPTOTE);
     }
 
     public void updateAssociationExcitatory(double change){
@@ -63,13 +63,5 @@ public class ConditionalStimulus {
 
     public void updateAssociationInhibitory(double change){
         associationInhibitory+=change;
-    }
-
-    public ArrayList<CsParameter> getAllParameters(){
-        ArrayList<CsParameter> params = new ArrayList<>();
-        params.add(InitialAlphaParameter);
-        params.add(SalienceExcitatoryParameter);
-        params.add(SalienceInhibitoryParameter);
-        return params;
     }
 }

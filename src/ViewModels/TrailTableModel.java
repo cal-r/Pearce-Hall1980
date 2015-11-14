@@ -13,9 +13,21 @@ import java.util.List;
 public class TrailTableModel extends BaseTableModel {
 
     @Override
-    protected String[] getColumnHeaders() {
-        String[] columnHeaders = {TableStringConstants.GROUP_NAME, TableStringConstants.PHASE};
+    protected List<String> getColumnHeaders() {
+        int phaseCount = getPhaseCount();
+        columnHeaders = new ArrayList<>();
+        columnHeaders.add(TableStringConstants.GROUP_NAME);
+        for(int p=1;p<=phaseCount;p++) {
+            columnHeaders.add(TableStringConstants.GetPhaseTitle(phaseCount));
+        }
         return columnHeaders;
+    }
+
+    private int getPhaseCount(){
+        if(columnHeaders==null){
+            return 1;
+        }
+        return columnHeaders.size() - 1;
     }
 
     @Override
@@ -28,7 +40,28 @@ public class TrailTableModel extends BaseTableModel {
         return data;
     }
 
-    public String GetPhaseDescription() {
-        return (String) getValueAt(0,1);
+    public List<String> GetPhaseDescriptions(int groupNumber) {
+        List<String> descriptions = new ArrayList<>();
+        for(int p=0;p<getPhaseCount();p++){
+            descriptions.add((String) getValueAt(groupNumber-1, p));
+        }
+        return descriptions;
+    }
+
+    //move column adding/removing logic to the BaseTableModel
+    public void addPhase(){
+        for(List<Object> row : data){
+            row.add(TableStringConstants.DEFAULT_PHASE);
+        }
+        columnHeaders.add(TableStringConstants.GetPhaseTitle(1 + 1));
+        fireTableStructureChanged();
+    }
+
+    public void removePhase(){
+        for(List<Object> row : data) {
+            row.remove(row.size()-1);
+        }
+        columnHeaders.remove(columnHeaders.size()-1);
+        fireTableStructureChanged();
     }
 }

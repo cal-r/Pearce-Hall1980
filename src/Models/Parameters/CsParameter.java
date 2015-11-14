@@ -8,15 +8,15 @@ import Models.ConditionalStimulus;
  */
 public abstract class CsParameter extends Parameter {
 
-    public ConditionalStimulus cue;
+    public char CueName;
 
-    public CsParameter(ConditionalStimulus cue, String name) {
+    public CsParameter(char cueName, String name) {
         super(name);
-        this.cue = cue;
+        CueName = cueName;
     }
 
     @Override
     public String getDisplayName(){
-        return String.format("%s (%s)", name, cue.Name);
+        return String.format("%s (%s)", name, CueName);
     }
 }

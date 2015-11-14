@@ -2,6 +2,9 @@ package _UnitTests;
 
 import Constants.DefaultValuesConstants;
 import Models.ConditionalStimulus;
+import Models.Parameters.InitialAlphaParameter;
+import Models.Parameters.SalienceExcitatoryParameter;
+import Models.Parameters.SalienceInhibitoryParameter;
 import Models.Trail;
 import org.junit.Test;
 
@@ -91,9 +94,10 @@ public class TrailTests extends junit.framework.TestCase {
         assertEquals(0, allCues.get('B').getAssociationInhibitory(), DefaultValuesConstants.ROUNDING_PRECISION);
         assertEquals(0.54475, allCues.get('B').getAlpha(), DefaultValuesConstants.ROUNDING_PRECISION);
     }
-    
+
     @Test
     public void testSimulate200() throws Exception {
+        //Ve shouldn't go above 1
         double gamma = 0.1;
         HashMap<Character, ConditionalStimulus> allCues = createCsMap("A".toCharArray());
         Trail trail = createTrail(allCues, "A".toCharArray(), true);
@@ -116,7 +120,7 @@ public class TrailTests extends junit.framework.TestCase {
     private HashMap<Character, ConditionalStimulus> createCsMap(char[] chars){
         HashMap<Character, ConditionalStimulus> map = new HashMap<>();
         for(char c : chars){
-            map.put(c, new ConditionalStimulus(c));
+            map.put(c, new ConditionalStimulus(c, new InitialAlphaParameter(c), new SalienceExcitatoryParameter(c), new SalienceInhibitoryParameter(c)));
         }
         return map;
     }

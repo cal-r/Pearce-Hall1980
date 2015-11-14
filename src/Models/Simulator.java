@@ -1,9 +1,12 @@
 package Models;
 
-import Helpers.PhaseParser;
-import Helpers.PhaseStringTokenizer;
+import Models.Parameters.CsParameter;
+import Models.Parameters.GammaParameter;
 import Models.Parameters.Parameter;
+import Models.Parameters.CsParameterPool;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -11,41 +14,30 @@ import java.util.List;
  */
 public class Simulator {
 
-    private Phase phase;
+    private List<Group> groups;
+    private GammaParameter gamma;
+    private CsParameterPool csParameterPool;
 
-    private int lastTrailIndex = 0;
-
-    public void initPhase(String phaseDescription) {
-        phase = createPhaseFromDescription(phaseDescription);
-        lastTrailIndex = 0;
+    public Simulator(CsParameterPool csParameterPool, List<Group> groups){
+        this.csParameterPool = csParameterPool;
+        this.groups = groups;
+        gamma = new GammaParameter();
     }
 
-    public List<Parameter> getCsParameters(){
-        return phase.getAllCsParameters();
+    public List<CsParameter> getCsParameters(){
+        return csParameterPool.getAllParameters();
     }
 
     public List<Parameter> getGlobalParameters(){
-        return phase.getAllGlobalParameters();
+        List<Parameter> globals = new ArrayList<>();
+        globals.add(gamma);
+        return globals;
     }
 
-    public PhaseHistory simulatePhase(){
-        PhaseHistory history = new PhaseHistory(phase);
-        while (!simulationComplete()) {
-            phase.simulateTrail(lastTrailIndex);
-            history.recordState(lastTrailIndex);
-            lastTrailIndex++;
-        }
-        return history;
+    public List<PhaseHistory> runSimulation(){
+        List<PhaseHistory> histories = new ArrayList<>();
+
+
+        return histories;
     }
-
-    private boolean simulationComplete(){
-        return lastTrailIndex>=phase.trails.size();
-    }
-
-    private Phase createPhaseFromDescription(String phaseDescription){
-        return PhaseParser.ParsePhase(
-                PhaseStringTokenizer.getPhaseTokens(phaseDescription));
-    }
-
-
 }

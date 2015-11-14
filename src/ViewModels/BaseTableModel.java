@@ -1,5 +1,7 @@
 package ViewModels;
 
+import Constants.TableStringConstants;
+
 import javax.swing.*;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
@@ -15,7 +17,7 @@ public abstract class BaseTableModel extends AbstractTableModel {
 
     JTable table;
 
-    protected String[] columnHeaders;
+    protected List<String> columnHeaders;
     protected List<List<Object>> data;
 
     protected BaseTableModel(){
@@ -23,7 +25,7 @@ public abstract class BaseTableModel extends AbstractTableModel {
         data = getInitialData();
     }
 
-    protected abstract String[] getColumnHeaders();
+    protected abstract List<String> getColumnHeaders();
     protected abstract List<List<Object>> getInitialData();
 
     @Override
@@ -33,12 +35,12 @@ public abstract class BaseTableModel extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return columnHeaders.length;
+        return columnHeaders.size();
     }
 
     @Override
     public String getColumnName(int columnIndex) {
-        return columnHeaders[columnIndex];
+        return columnHeaders.get(columnIndex);
     }
 
     @Override
@@ -58,10 +60,14 @@ public abstract class BaseTableModel extends AbstractTableModel {
 
     @Override
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-        if(rowIndex==getRowCount()){
+        if (rowIndex == getRowCount()) {
             addRow();
         }
         data.get(rowIndex).set(columnIndex, aValue);
+    }
+
+    public List<String> getRow(int rowId){
+        return (List<String>)(List<?>) data.get(rowId);
     }
 
     private void addRow(){
