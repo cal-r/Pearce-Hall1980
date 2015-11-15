@@ -102,6 +102,52 @@ public class PhaseParserTests extends junit.framework.TestCase {
         assertTrue(phase.trails.get(2).cuesPresent.size() == 1);
     }
 
+    public void testParsePhase5() throws Exception {
+
+        PhaseStringTokenizer.TrailTypeTokens trailTypeTokens = new PhaseStringTokenizer.TrailTypeTokens();
+        trailTypeTokens.cueNames = "AAA".toCharArray();
+        trailTypeTokens.numberOfTrails = 2;
+        trailTypeTokens.reinforcer = '+';
+
+        ArrayList<PhaseStringTokenizer.TrailTypeTokens> tokensArrayList = new ArrayList<>();
+        tokensArrayList.add(trailTypeTokens);
+
+        CsParameterPool cspPool = createCsParameterPool(trailTypeTokens.cueNames);
+        Map<Character, ConditionalStimulus> csMap = getCsMap(trailTypeTokens.cueNames, cspPool);
+        Phase phase = PhaseParser.ParsePhase(tokensArrayList, csMap);
+
+        assertTrue(phase != null);
+        assertTrue(phase.trails.size() == 2);
+        assertTrue(phase.trails.get(0).usPresent);
+        assertTrue(phase.trails.get(0).cuesPresent.size() == 1);
+    }
+
+    @org.junit.Test
+    public void testParsePhase6() throws Exception {
+
+        PhaseStringTokenizer.TrailTypeTokens trailTypeTokens = new PhaseStringTokenizer.TrailTypeTokens();
+        trailTypeTokens.cueNames = "AB".toCharArray();
+        trailTypeTokens.numberOfTrails = 2;
+        trailTypeTokens.reinforcer = '+';
+
+        PhaseStringTokenizer.TrailTypeTokens trailTypeTokens2 = new PhaseStringTokenizer.TrailTypeTokens();
+        trailTypeTokens2.cueNames = "A".toCharArray();
+        trailTypeTokens2.numberOfTrails = 1;
+        trailTypeTokens2.reinforcer = '-';
+
+        ArrayList<PhaseStringTokenizer.TrailTypeTokens> tokensArrayList = new ArrayList<>();
+        tokensArrayList.add(trailTypeTokens);
+        tokensArrayList.add(trailTypeTokens2);
+
+        CsParameterPool cspPool = createCsParameterPool(trailTypeTokens.cueNames);
+        Map<Character, ConditionalStimulus> csMap = getCsMap(trailTypeTokens.cueNames, cspPool);
+        Phase phase = PhaseParser.ParsePhase(tokensArrayList, csMap);
+
+        ConditionalStimulus csA_T1 = phase.trails.get(0).cuesPresent.get(0);
+        ConditionalStimulus csA_T2 = phase.trails.get(1).cuesPresent.get(0);
+        assertEquals(csA_T1, csA_T2);
+    }
+
     private CsParameterPool createCsParameterPool(char[] cueNames){
         CsParameterPool pool = new CsParameterPool();
         for(char cueName : cueNames){

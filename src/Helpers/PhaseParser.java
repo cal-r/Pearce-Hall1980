@@ -5,6 +5,7 @@ import Models.Phase;
 import Models.Trail;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -58,8 +59,12 @@ public class PhaseParser {
 
         private List<ConditionalStimulus> getCuesPresent(PhaseStringTokenizer.TrailTypeTokens trailType) {
             List<ConditionalStimulus> cuesPresent = new ArrayList<>();
+            Map<Character, Boolean> added = new HashMap<>(); //to prevent same cs being added to trail twice, e.g. in case of AAB+
             for (char cueName : trailType.cueNames) {
-                cuesPresent.add(csMap.get(cueName));
+                if(!added.containsKey(cueName)) {
+                    cuesPresent.add(csMap.get(cueName));
+                    added.put(cueName, true);
+                }
             }
             return cuesPresent;
         }

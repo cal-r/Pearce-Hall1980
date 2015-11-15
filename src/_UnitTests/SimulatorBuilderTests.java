@@ -20,7 +20,7 @@ public class SimulatorBuilderTests extends junit.framework.TestCase {
         assertTrue(sim!=null);
         assertTrue(sim.getGroups().size() == 1);
         assertTrue(sim.getGroups().get(0).Name == "group name test");
-        assertTrue(sim.getCsParameters().size()==6);
+        assertTrue(sim.getCsParameters().size()==2*3);
         assertTrue(sim.getCsParameters().get(0).CueName == 'A');
         assertTrue(sim.getCsParameters().get(1).CueName == 'B');
         assertTrue(sim.getGroups().get(0).phases.size()==1);
@@ -38,19 +38,54 @@ public class SimulatorBuilderTests extends junit.framework.TestCase {
         assertTrue(sim!=null);
         assertTrue(sim.getGroups().size() == 1);
         assertTrue(sim.getGroups().get(0).Name == "group name test");
-        assertTrue(sim.getCsParameters().size()==6);
+        assertTrue(sim.getCsParameters().size()==2*3);
         assertTrue(sim.getCsParameters().get(0).CueName == 'A');
         assertTrue(sim.getCsParameters().get(1).CueName == 'B');
         assertTrue(sim.getGroups().get(0).phases.size() == 2);
         assertTrue(sim.getGroups().get(0).phases.get(0).trails.size() == 2);
         assertTrue(sim.getGroups().get(0).phases.get(1).trails.size() == 5);
         ConditionalStimulus csB_fromP1 = sim.getGroups().get(0).phases.get(0).trails.get(0).cuesPresent.get(1);
-        ConditionalStimulus csB_fromP2 = sim.getGroups().get(0).phases.get(0).trails.get(1).cuesPresent.get(0);
+        ConditionalStimulus csB_fromP2 = sim.getGroups().get(0).phases.get(1).trails.get(0).cuesPresent.get(0);
         assertTrue(csB_fromP1 == csB_fromP2); // has to be the same object!
     }
 
-//    @Test
-//    public void testSimBuilder3() throws Exception {
-//
-//    }
+    @Test
+    public void testSimBuilder3() throws Exception {
+        TrailTableModel tableModel = new TrailTableModel();
+        tableModel.addGroup();
+        tableModel.addPhase();
+        tableModel.setValueAt("group name test", 0, 0);
+        tableModel.setValueAt("group2 name test", 1, 0);
+        tableModel.setValueAt("2AAB+", 0, 1);
+        tableModel.setValueAt("5B-", 0, 2);
+        tableModel.setValueAt("ABC+", 1, 1);
+        tableModel.setValueAt("5B-", 1, 2);
+        Simulator sim = SimulatorBuilder.build(tableModel);
+
+        assertTrue(sim!=null);
+        assertTrue(sim.getGroups().size() == 2);
+        assertTrue(sim.getGroups().get(0).Name == "group name test");
+        assertTrue(sim.getGroups().get(1).Name == "group2 name test");
+        assertTrue(sim.getCsParameters().size()==3*3);
+        assertTrue(sim.getCsParameters().get(0).CueName == 'A');
+        assertTrue(sim.getCsParameters().get(1).CueName == 'B');
+        assertTrue(sim.getGroups().get(0).phases.size() == 2);
+        assertTrue(sim.getGroups().get(0).phases.get(0).trails.size() == 2);
+        assertTrue(sim.getGroups().get(0).phases.get(1).trails.size() == 5);
+        ConditionalStimulus csB_fromP1G1 = sim.getGroups().get(0).phases.get(0).trails.get(0).cuesPresent.get(1);
+        ConditionalStimulus csB_fromP2G1 = sim.getGroups().get(0).phases.get(1).trails.get(1).cuesPresent.get(0);
+        ConditionalStimulus csB_fromP1G2 = sim.getGroups().get(1).phases.get(0).trails.get(0).cuesPresent.get(1);
+        ConditionalStimulus csB_fromP2G2 = sim.getGroups().get(1).phases.get(1).trails.get(1).cuesPresent.get(0);
+
+        //cs is shared among phases but not among groups
+        //csparam is shared among groups
+        assertTrue(csB_fromP1G1 == csB_fromP2G1);
+        assertTrue(csB_fromP1G2 == csB_fromP2G2);
+
+        assertTrue(csB_fromP1G1 != csB_fromP1G2);
+        assertTrue(csB_fromP2G1 != csB_fromP2G2);
+        assertTrue(csB_fromP1G1.InitialAlphaParameter == csB_fromP1G1.InitialAlphaParameter);
+        assertTrue(csB_fromP1G1.SalienceExcitatoryParameter == csB_fromP1G1.SalienceExcitatoryParameter);
+        assertTrue(csB_fromP1G1.SalienceInhibitoryParameter == csB_fromP1G1.SalienceInhibitoryParameter);
+    }
 }
