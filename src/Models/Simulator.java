@@ -34,6 +34,10 @@ public class Simulator {
         return globals;
     }
 
+    public List<Group> getGroups(){
+        return groups;
+    }
+
     public List<PhaseHistory> runSimulation(){
         List<PhaseHistory> histories = new ArrayList<>();
 
