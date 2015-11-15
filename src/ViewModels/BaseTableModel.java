@@ -60,9 +60,6 @@ public abstract class BaseTableModel extends AbstractTableModel {
 
     @Override
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-        if (rowIndex == getRowCount()) {
-            addRow();
-        }
         data.get(rowIndex).set(columnIndex, aValue);
     }
 
@@ -70,7 +67,15 @@ public abstract class BaseTableModel extends AbstractTableModel {
         return (List<String>)(List<?>) data.get(rowId);
     }
 
-    private void addRow(){
+    protected void addColumn(String colName, String defaultValue){
+        for(List<Object> row : data){
+            row.add(defaultValue);
+        }
+        columnHeaders.add(colName);
+        fireTableStructureChanged();
+    }
+
+    protected void addRow(){
         List newRow = new ArrayList<>();
         for(int col=0;col<getColumnCount();col++){
             newRow.add(new Object());

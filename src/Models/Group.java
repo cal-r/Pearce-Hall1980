@@ -11,7 +11,7 @@ import java.util.Map;
  */
 public class Group {
     private Map<Character, ConditionalStimulus> csMap;
-    private List<Phase> phases;
+    public List<Phase> phases;
     public String Name;
 
     public Group(String name,

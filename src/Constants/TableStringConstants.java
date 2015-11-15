@@ -14,9 +14,8 @@ public class TableStringConstants {
 
     private static final String DEFAULT_GROUP_NAME = "Group";
     private static final String PHASE = "Phase";
-    private static int GroupCount = 1;
-    public static String GetPhaseTitle(int phaseNo){return PHASE + " " + phaseNo;}
-    public static String GetDefaultGroupName() {
-        return DEFAULT_GROUP_NAME + " " + GroupCount;
+    public static String getPhaseTitle(int phaseId){return PHASE + " " + (phaseId+1);}
+    public static String getDefaultGroupName(int groupNo) {
+        return DEFAULT_GROUP_NAME + " " + groupNo;
     }
 }
