@@ -1,12 +1,13 @@
 package Models;
 
+import Models.History.GroupHistory;
+import Models.History.PhaseHistory;
 import Models.Parameters.CsParameter;
 import Models.Parameters.GammaParameter;
 import Models.Parameters.Parameter;
 import Models.Parameters.CsParameterPool;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -38,10 +39,16 @@ public class Simulator {
         return groups;
     }
 
-    public List<PhaseHistory> runSimulation(){
-        List<PhaseHistory> histories = new ArrayList<>();
-
-
+    public List<GroupHistory> runSimulation(){
+        List<GroupHistory> histories = new ArrayList<>();
+        for(Group group : groups){
+            GroupHistory groupHistory = new GroupHistory(group);
+            for(Phase phase : group.phases) {
+                PhaseHistory phaseHistory = phase.simulateTrails(gamma);
+                groupHistory.phaseHistories.add(phaseHistory);
+            }
+            histories.add(groupHistory);
+        }
         return histories;
     }
 }

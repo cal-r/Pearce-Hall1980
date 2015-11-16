@@ -1,19 +1,24 @@
 package Models;
 
+import Constants.TableStringConstants;
+import Models.History.PhaseHistory;
 import Models.Parameters.GammaParameter;
-import Models.Parameters.Parameter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Rokas on 03/11/2015.
  */
 public class Phase {
     public ArrayList<Trail> trails;
+    private Map<Character, ConditionalStimulus> phaseCsMap;
+    private int phaseId;
 
-    public Phase() {
+    public Phase(int phaseId) {
+        this.phaseId = phaseId;
         trails = new ArrayList<>();
     }
 
@@ -22,7 +27,7 @@ public class Phase {
         PhaseHistory history = new PhaseHistory(this);
         for(Trail trail : trails) {
             trail.simulate(calcVNet(), gamma.getValue());
-            history.recordState();
+            history.recordState(trail);
         }
         return history;
     }
@@ -32,6 +37,32 @@ public class Phase {
     }
 
     private double calcVNet(){
-        return - 69;
+        double vNet = 0;
+        for(ConditionalStimulus cs : getPhaseCues()){
+            vNet += cs.getAssociationNet();
+        }
+        return vNet;
+    }
+
+    public List<ConditionalStimulus> getPhaseCues() {
+        if (phaseCsMap == null)
+            initCsMap();
+
+        return new ArrayList<>(phaseCsMap.values());
+    }
+
+    private void initCsMap(){
+        phaseCsMap = new HashMap<>();
+        for(Trail t : trails){
+            for(ConditionalStimulus cs : t.cuesPresent){
+                if(!phaseCsMap.containsKey(cs.Name)){
+                    phaseCsMap.put(cs.Name, cs);
+                }
+            }
+        }
+    }
+
+    public String toString(){
+        return TableStringConstants.getPhaseTitle(phaseId);
     }
 }

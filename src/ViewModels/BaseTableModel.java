@@ -3,6 +3,7 @@ package ViewModels;
 import Constants.TableStringConstants;
 
 import javax.swing.*;
+import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
@@ -61,6 +62,7 @@ public abstract class BaseTableModel extends AbstractTableModel {
     @Override
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
         data.get(rowIndex).set(columnIndex, aValue);
+        fireTableChanged(new TableModelEvent(this));
     }
 
     public List<String> getRow(int rowId){

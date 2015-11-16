@@ -47,7 +47,7 @@ public class SimulatorBuilder {
             for(int i=0;i<phaseDescriptions.size();i++){
                 List<PhaseStringTokenizer.TrailTypeTokens> phaseTokens = PhaseStringTokenizer.getPhaseTokens(phaseDescriptions.get(i));
                 updateCsMaps(phaseTokens);
-                phases.add(PhaseParser.ParsePhase(phaseTokens, csMap));
+                phases.add(PhaseParser.ParsePhase(phaseTokens, csMap, i));
             }
 
             return new Group(groupName, csMap, phases);

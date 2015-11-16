@@ -36,7 +36,9 @@ public abstract class BaseParamsTableModel extends BaseTableModel {
     public void setUpParameters(List<Parameter> parameters){
         this.parameters = parameters;
         for(int row = 0;row<parameters.size();row++){
-            addRow();
+            if(row == getRowCount()) {
+                addRow();
+            }
             Parameter rowParam = parameters.get(row);
             super.setValueAt(rowParam.getDisplayName(), row, 0);
             super.setValueAt(rowParam.getValue(), row, 1);

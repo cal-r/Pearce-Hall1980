@@ -12,11 +12,10 @@ public class TrailTableModel extends BaseTableModel {
 
     @Override
     protected List<String> getColumnHeaders() {
-        int phaseCount = getPhaseCount();
-        columnHeaders = new ArrayList<>();
-        columnHeaders.add(TableStringConstants.GROUP_NAME);
-        for(int p=1;p<=phaseCount;p++) {
-            columnHeaders.add(TableStringConstants.getPhaseTitle(phaseCount));
+        if(columnHeaders==null) {
+            columnHeaders = new ArrayList<>();
+            columnHeaders.add(TableStringConstants.GROUP_NAME);
+            columnHeaders.add(TableStringConstants.getPhaseTitle(0));
         }
         return columnHeaders;
     }

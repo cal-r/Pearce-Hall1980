@@ -9,4 +9,5 @@ public class GuiStringConstants {
     public static final String RUN_SIMULATION = "Run Simulation";
     public static final String ADD_PHASE = "+";
     public static final String REMOVE_PHASE = "-";
+    public static final String TRAIL_TABLE_CHANGED = "TTC";
 }

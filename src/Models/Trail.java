@@ -46,4 +46,12 @@ public class Trail {
         return gamma * Math.abs(lambda - vNet) + (1 - gamma) * oldAlpha;
     }
 
+    public String toString(){
+        String str = "";
+        for(ConditionalStimulus cs : cuesPresent){
+            str += cs.Name;
+        }
+        str+= usPresent ? "+" : "-";
+        return str;
+    }
 }

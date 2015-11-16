@@ -26,7 +26,7 @@ public class PhaseParserTests extends junit.framework.TestCase {
         tokensArrayList.add(trailTypeTokens);
         CsParameterPool cspPool = createCsParameterPool(trailTypeTokens.cueNames);
         Map<Character, ConditionalStimulus> csMap = getCsMap(trailTypeTokens.cueNames, cspPool);
-        Phase phase = PhaseParser.ParsePhase(tokensArrayList, csMap);
+        Phase phase = PhaseParser.ParsePhase(tokensArrayList, csMap, 0);
 
         assertTrue(phase != null);
         assertTrue(phase.trails.size() == 2);
@@ -45,7 +45,7 @@ public class PhaseParserTests extends junit.framework.TestCase {
 
         CsParameterPool cspPool = createCsParameterPool(trailTypeTokens.cueNames);
         Map<Character, ConditionalStimulus> csMap = getCsMap(trailTypeTokens.cueNames, cspPool);
-        Phase phase = PhaseParser.ParsePhase(tokensArrayList, csMap);
+        Phase phase = PhaseParser.ParsePhase(tokensArrayList, csMap, 0);
 
         assertTrue(phase != null);
         assertTrue(phase.trails.size() == 2);
@@ -64,7 +64,7 @@ public class PhaseParserTests extends junit.framework.TestCase {
 
         CsParameterPool cspPool = createCsParameterPool(trailTypeTokens.cueNames);
         Map<Character, ConditionalStimulus> csMap = getCsMap(trailTypeTokens.cueNames, cspPool);
-        Phase phase = PhaseParser.ParsePhase(tokensArrayList, csMap);
+        Phase phase = PhaseParser.ParsePhase(tokensArrayList, csMap, 0);
 
         assertTrue(phase != null);
         assertTrue(phase.trails.size() == 1);
@@ -90,7 +90,7 @@ public class PhaseParserTests extends junit.framework.TestCase {
 
         CsParameterPool cspPool = createCsParameterPool(trailTypeTokens.cueNames);
         Map<Character, ConditionalStimulus> csMap = getCsMap(trailTypeTokens.cueNames, cspPool);
-        Phase phase = PhaseParser.ParsePhase(tokensArrayList, csMap);
+        Phase phase = PhaseParser.ParsePhase(tokensArrayList, csMap, 0);
 
         assertTrue(phase != null);
         assertTrue(phase.trails.size() == 3);
@@ -114,7 +114,7 @@ public class PhaseParserTests extends junit.framework.TestCase {
 
         CsParameterPool cspPool = createCsParameterPool(trailTypeTokens.cueNames);
         Map<Character, ConditionalStimulus> csMap = getCsMap(trailTypeTokens.cueNames, cspPool);
-        Phase phase = PhaseParser.ParsePhase(tokensArrayList, csMap);
+        Phase phase = PhaseParser.ParsePhase(tokensArrayList, csMap, 0);
 
         assertTrue(phase != null);
         assertTrue(phase.trails.size() == 2);
@@ -141,7 +141,7 @@ public class PhaseParserTests extends junit.framework.TestCase {
 
         CsParameterPool cspPool = createCsParameterPool(trailTypeTokens.cueNames);
         Map<Character, ConditionalStimulus> csMap = getCsMap(trailTypeTokens.cueNames, cspPool);
-        Phase phase = PhaseParser.ParsePhase(tokensArrayList, csMap);
+        Phase phase = PhaseParser.ParsePhase(tokensArrayList, csMap, 0);
 
         ConditionalStimulus csA_T1 = phase.trails.get(0).cuesPresent.get(0);
         ConditionalStimulus csA_T2 = phase.trails.get(1).cuesPresent.get(0);

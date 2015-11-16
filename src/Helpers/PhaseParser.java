@@ -14,11 +14,11 @@ import java.util.Map;
  */
 public class PhaseParser {
 
-    public static Phase ParsePhase(List<PhaseStringTokenizer.TrailTypeTokens> trailTypeTokensList, Map<Character, ConditionalStimulus> csMap) {
+    public static Phase ParsePhase(List<PhaseStringTokenizer.TrailTypeTokens> trailTypeTokensList, Map<Character, ConditionalStimulus> csMap, int phaseId) {
 
         TrailTypeParser trailTypeParser = new TrailTypeParser(csMap);
 
-        Phase phase = new Phase();
+        Phase phase = new Phase(phaseId);
 
         for(PhaseStringTokenizer.TrailTypeTokens trailType : trailTypeTokensList){
             List<Trail> newTrails =trailTypeParser.getTrails(trailType);
