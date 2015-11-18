@@ -1,4 +1,4 @@
-package _UnitTests;
+package com;
 
 import Constants.DefaultValuesConstants;
 import Models.ConditionalStimulus;

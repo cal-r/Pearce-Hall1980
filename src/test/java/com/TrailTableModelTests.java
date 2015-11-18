@@ -1,13 +1,14 @@
-package _UnitTests;
+package com;
 
 import Constants.TableStringConstants;
 import ViewModels.TrailTableModel;
+import junit.framework.TestCase;
 import org.junit.Test;
 
 /**
  * Created by Rokas on 15/11/2015.
  */
-public class TrailTableModelTests  extends junit.framework.TestCase {
+public class TrailTableModelTests  extends TestCase {
 
     @Test
     public void testTrailTableModel() throws Exception{

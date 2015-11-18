@@ -1,4 +1,4 @@
-package _UnitTests;
+package com;
 
 import Models.Parameters.Parameter;
 import ViewModels.CSParamsTableModel;

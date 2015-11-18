@@ -10,12 +10,17 @@ import Models.Simulator;
 import ViewModels.CSParamsTableModel;
 import ViewModels.GlobalPramsTableModel;
 import ViewModels.TrailTableModel;
+import org.jxls.template.SimpleExporter;
 
 import javax.swing.*;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -68,6 +73,16 @@ public class MainWindowController implements ActionListener, TableModelListener 
         csParamsTableModel.setUpParameters((List<Parameter>)(List<?>)csParameters);
         globalParamsTableModel.setUpParameters(globalParameters);
         runSimButton.setEnabled(true);
+try {
+    try (OutputStream os1 = new FileOutputStream("target/simple_export_output1.xls")) {
+        List<String> employees = Arrays.asList("Name", "Birthday", "Payment");
+        List<String> headers = Arrays.asList("Name", "Birthday", "Payment");
+        SimpleExporter exporter = new SimpleExporter();
+        exporter.gridExport(headers, employees, "name, birthDate, payment", os1);
+    }
+}catch(Exception ex){
+
+}
     }
 
     private void onRunSim(){

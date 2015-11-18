@@ -1,4 +1,4 @@
-package _UnitTests;
+package com;
 
 import Helpers.SimulatorBuilder;
 import Models.ConditionalStimulus;
