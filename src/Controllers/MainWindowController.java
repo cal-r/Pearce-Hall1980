@@ -26,39 +26,19 @@ public class MainWindowController implements ActionListener, TableModelListener 
     private GlobalPramsTableModel globalParamsTableModel;
     private CSParamsTableModel csParamsTableModel;
     private TrailTableModel trailTableModel;
-    private JButton setParamsButton;
     private JButton runSimButton;
     private JTextArea simOutputArea;
-    private JButton plusPhaseButton;
-    private JButton minusPhaseButton;
 
     private Simulator simulator;
 
-    public void initSetParamsButton(JButton button) {
-        setParamsButton = button;
-        initButton(setParamsButton, GuiStringConstants.SET_PARAMETERS);
-    }
-
-    public void initRunSimButton(JButton button){
+    public void initRunSimButton(JButton button, String command){
         runSimButton = button;
-        initButton(runSimButton, GuiStringConstants.RUN_SIMULATION);
+        initButton(runSimButton, command);
         runSimButton.setEnabled(false);
     }
-
-    public void initPlusPhaseButton(JButton button){
-        plusPhaseButton = button;
-        initButton(plusPhaseButton, GuiStringConstants.ADD_PHASE);
-    }
-
-    public void initMinusPhaseButton(JButton button){
-        minusPhaseButton = button;
-        initButton(minusPhaseButton, GuiStringConstants.REMOVE_PHASE);
-    }
-
-    private void initButton(JButton button, String txt){
+    public void initButton(JButton button, String command){
         button.addActionListener(this);
-        button.setText(txt);
-        button.setActionCommand(txt);
+        button.setActionCommand(command);
     }
 
     public void initTrailTable(JTable table) {
@@ -103,6 +83,14 @@ public class MainWindowController implements ActionListener, TableModelListener 
         trailTableModel.removePhase();
     }
 
+    private void onGroupPlus(){
+        trailTableModel.addGroup();
+    }
+
+    private void onGroupMinus(){
+        trailTableModel.removeGroup();
+    }
+
     private void onTrailTableChanged(){
         runSimButton.setEnabled(false);
     }
@@ -118,6 +106,10 @@ public class MainWindowController implements ActionListener, TableModelListener 
             case GuiStringConstants.REMOVE_PHASE: onPhaseMinus();
                 break;
             case GuiStringConstants.TRAIL_TABLE_CHANGED: onTrailTableChanged();
+                break;
+            case GuiStringConstants.ADD_GROUP: onGroupPlus();
+                break;
+            case GuiStringConstants.REMOVE_GROUP: onGroupMinus();
         }
     }
 

@@ -50,6 +50,12 @@ public class TrailTableModel extends BaseTableModel {
         }
     }
 
+    public void removeGroup(){
+        if(getGroupCount()>1){
+            removeBottomRow();
+        }
+    }
+
     public String getGroupName(int groupId){
         return (String) getValueAt(groupId, 0);
     }
@@ -67,10 +73,12 @@ public class TrailTableModel extends BaseTableModel {
     }
 
     public void removePhase(){
-        for(List<Object> row : data) {
-            row.remove(row.size()-1);
+        if(getPhaseCount()>1) {
+            for (List<Object> row : data) {
+                row.remove(row.size() - 1);
+            }
+            columnHeaders.remove(getPhaseCount() - 1);
+            fireTableStructureChanged();
         }
-        columnHeaders.remove(getPhaseCount()-1);
-        fireTableStructureChanged();
     }
 }

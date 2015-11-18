@@ -84,4 +84,8 @@ public abstract class BaseTableModel extends AbstractTableModel {
         }
         data.add(newRow);
     }
+
+    protected void removeBottomRow(){
+        data.remove(data.size()-1);
+    }
 }
