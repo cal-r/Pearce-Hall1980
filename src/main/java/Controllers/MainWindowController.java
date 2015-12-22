@@ -1,6 +1,7 @@
 package Controllers;
 
 import Constants.GuiStringConstants;
+import Helpers.ExcelExportHelper;
 import Helpers.GuiHelper;
 import Helpers.SimulatorBuilder;
 import Models.History.GroupHistory;
@@ -9,18 +10,14 @@ import Models.Parameters.Parameter;
 import Models.Simulator;
 import ViewModels.CSParamsTableModel;
 import ViewModels.GlobalPramsTableModel;
+import ViewModels.ReportViewModel;
 import ViewModels.TrailTableModel;
-import org.jxls.template.SimpleExporter;
 
 import javax.swing.*;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -28,19 +25,26 @@ import java.util.List;
  */
 public class MainWindowController implements ActionListener, TableModelListener {
 
+    public JButton runSimButton;
+    public JButton xlsExportButton;
+
+    private FilePickerController filePickerController;
     private GlobalPramsTableModel globalParamsTableModel;
     private CSParamsTableModel csParamsTableModel;
     private TrailTableModel trailTableModel;
-    private JButton runSimButton;
     private JTextArea simOutputArea;
 
     private Simulator simulator;
 
-    public void initRunSimButton(JButton button, String command){
-        runSimButton = button;
-        initButton(runSimButton, command);
-        runSimButton.setEnabled(false);
+    public MainWindowController(JFrame mainFrame){
+        filePickerController = new FilePickerController(mainFrame);
     }
+
+    public void initDisabledButton(JButton button, String command){
+        initButton(button, command);
+        button.setEnabled(false);
+    }
+
     public void initButton(JButton button, String command){
         button.addActionListener(this);
         button.setActionCommand(command);
@@ -73,20 +77,15 @@ public class MainWindowController implements ActionListener, TableModelListener 
         csParamsTableModel.setUpParameters((List<Parameter>)(List<?>)csParameters);
         globalParamsTableModel.setUpParameters(globalParameters);
         runSimButton.setEnabled(true);
-try {
-    try (OutputStream os1 = new FileOutputStream("target/simple_export_output1.xls")) {
-        List<String> employees = Arrays.asList("Name", "Birthday", "Payment");
-        List<String> headers = Arrays.asList("Name", "Birthday", "Payment");
-        SimpleExporter exporter = new SimpleExporter();
-        exporter.gridExport(headers, employees, "name, birthDate, payment", os1);
+        xlsExportButton.setEnabled(true);
     }
-}catch(Exception ex){
 
-}
+    private void onExcelExport(){
+        ExcelExportHelper.exportSimulation(filePickerController, simulator.runSimulation());
     }
 
     private void onRunSim(){
-        List<GroupHistory> history = simulator.runSimulation();
+        ReportViewModel history = simulator.runSimulation();
         GuiHelper.outputHistory(history, simOutputArea);
     }
 
@@ -108,6 +107,7 @@ try {
 
     private void onTrailTableChanged(){
         runSimButton.setEnabled(false);
+        xlsExportButton.setEnabled(false);
     }
 
     private void processEvent(String cmd){
@@ -125,6 +125,8 @@ try {
             case GuiStringConstants.ADD_GROUP: onGroupPlus();
                 break;
             case GuiStringConstants.REMOVE_GROUP: onGroupMinus();
+                break;
+            case GuiStringConstants.XLS_EXPORT: onExcelExport();
         }
     }
 

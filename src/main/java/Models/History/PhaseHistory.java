@@ -13,8 +13,8 @@ import java.util.List;
  */
 public class PhaseHistory {
 
-    private HashMap<ConditionalStimulus, List<CsState>> csHistoriesMap;
-    private Phase phase;
+    public HashMap<ConditionalStimulus, List<CsState>> csHistoriesMap;
+    public Phase phase;
     private int trailNumber;
 
     public PhaseHistory(Phase phase){
@@ -34,24 +34,6 @@ public class PhaseHistory {
             csState.TrailDescription = trail.toString();
             csHistoriesMap.get(cs).add(csState);
         }
-    }
-
-    public String toString(){
-        StringBuilder builder = new StringBuilder();
-        builder.append(String.format("%s \n", phase.toString()));
-        for(ConditionalStimulus cs : csHistoriesMap.keySet()) {
-            builder.append(String.format("Cs: %s \n", cs.Name));
-            for (PhaseHistory.CsState state : csHistoriesMap.get(cs)) {
-                builder.append(String.format("#trial: %1$d \t", state.TrailNumber));
-                builder.append(String.format("%s \t", state.TrailDescription));
-                builder.append(String.format("Ve: %1$.5f \t", state.Ve));
-                builder.append(String.format("Vi: %1$.5f \t", state.Vi));
-                builder.append(String.format("Vnet: %1$.5f \t", state.Vnet));
-                builder.append("\n");
-            }
-            builder.append("\n");
-        }
-        return builder.toString();
     }
 
     private void initHistoriesMap(){

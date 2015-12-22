@@ -1,9 +1,7 @@
 package Helpers;
 
-import Models.ConditionalStimulus;
-import Models.Group;
 import Models.History.GroupHistory;
-import Models.History.PhaseHistory;
+import ViewModels.ReportViewModel;
 
 import javax.swing.*;
 import java.util.List;
@@ -13,10 +11,13 @@ import java.util.List;
  */
 public class GuiHelper {
 
-    public static void outputHistory(List<GroupHistory> history, JTextArea outputArea){
+    public static void outputHistory(ReportViewModel reportVM, JTextArea outputArea){
         outputArea.setText(null);
-        for(GroupHistory groupHistory : history){
-            outputArea.append(groupHistory.toString());
+        for(int row=0;row<reportVM.getNumberOfRows();row++){
+            for(int col=0;col<reportVM.getColumnCount();col++){
+                outputArea.append(reportVM.getCell(row, col));
+            }
+            outputArea.append("\n");
         }
     }
 }

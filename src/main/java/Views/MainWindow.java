@@ -21,6 +21,7 @@ public class MainWindow extends JFrame{
     private JButton minusPhaseButton;
     private JButton plusGroupButton;
     private JButton minusGroupButton;
+    private JButton xlsExportButton;
 
     private MainWindowController controller;
 
@@ -33,16 +34,23 @@ public class MainWindow extends JFrame{
     }
 
     public void initSubElements() {
-        controller = new MainWindowController();
+        controller = new MainWindowController(this);
+        //tables
         controller.initTrailTable(trailTable);
         controller.initCsParamsTable(csParamsTable);
         controller.initGlobalParamsTable(globalParamsTable);
+        //buttons
         controller.initButton(setParamsButton, GuiStringConstants.SET_PARAMETERS);
         controller.initButton(plusPhaseButton, GuiStringConstants.ADD_PHASE);
         controller.initButton(minusPhaseButton, GuiStringConstants.REMOVE_PHASE);
         controller.initButton(plusGroupButton, GuiStringConstants.ADD_GROUP);
         controller.initButton(minusGroupButton, GuiStringConstants.REMOVE_GROUP);
-        controller.initRunSimButton(runButton, GuiStringConstants.RUN_SIMULATION);
+        //initially disabled buttons
+        controller.initDisabledButton(runButton, GuiStringConstants.RUN_SIMULATION);
+        controller.initDisabledButton(xlsExportButton, GuiStringConstants.XLS_EXPORT);
+        controller.runSimButton = runButton;
+        controller.xlsExportButton = xlsExportButton;
+
         controller.initOutputArea(simOutputArea);
     }   
 }

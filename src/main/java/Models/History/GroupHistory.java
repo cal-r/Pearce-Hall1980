@@ -15,14 +15,4 @@ public class GroupHistory {
         this.group = group;
         phaseHistories = new ArrayList<>();
     }
-
-    public String toString(){
-        StringBuilder builder = new StringBuilder();
-        builder.append(String.format("%s \n", group.Name));
-        for(PhaseHistory phaseHistory : phaseHistories){
-            builder.append(phaseHistory.toString());
-            builder.append("\n");
-        }
-        return builder.toString();
-    }
 }

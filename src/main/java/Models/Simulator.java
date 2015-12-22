@@ -1,11 +1,13 @@
 package Models;
 
+import Helpers.ReportBuilder;
 import Models.History.GroupHistory;
 import Models.History.PhaseHistory;
 import Models.Parameters.CsParameter;
 import Models.Parameters.GammaParameter;
 import Models.Parameters.Parameter;
 import Models.Parameters.CsParameterPool;
+import ViewModels.ReportViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +41,7 @@ public class Simulator {
         return groups;
     }
 
-    public List<GroupHistory> runSimulation(){
+    public ReportViewModel runSimulation(){
         List<GroupHistory> histories = new ArrayList<>();
         for(Group group : groups){
             GroupHistory groupHistory = new GroupHistory(group);
@@ -49,6 +51,6 @@ public class Simulator {
             }
             histories.add(groupHistory);
         }
-        return histories;
+        return ReportBuilder.buildReport(histories);
     }
 }
