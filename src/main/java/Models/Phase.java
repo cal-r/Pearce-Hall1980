@@ -14,6 +14,8 @@ import java.util.Map;
  */
 public class Phase {
     public ArrayList<Trail> trails;
+
+    private boolean random;
     private Map<Character, ConditionalStimulus> phaseCsMap;
     private int phaseId;
 
@@ -24,8 +26,24 @@ public class Phase {
 
     public PhaseHistory simulateTrails(GammaParameter gamma)
     {
+        if(random){
+            return simulateTrailsRandomly(gamma);
+        }
+        return simulateTrailsSequentially(gamma);
+    }
+
+    private PhaseHistory simulateTrailsSequentially(GammaParameter gamma){
         PhaseHistory history = new PhaseHistory(this);
         for(Trail trail : trails) {
+            trail.simulate(calcVNet(), gamma.getValue());
+            history.recordState(trail);
+        }
+        return history;
+    }
+
+    private PhaseHistory simulateTrailsRandomly(GammaParameter gamma) {
+        PhaseHistory history = new PhaseHistory(this);
+        for (Trail trail : trails) {
             trail.simulate(calcVNet(), gamma.getValue());
             history.recordState(trail);
         }
@@ -60,6 +78,14 @@ public class Phase {
                 }
             }
         }
+    }
+
+    public boolean isRandom() {
+        return random;
+    }
+
+    public void setRandom(boolean isRandom) {
+        this.random = isRandom;
     }
 
     public String toString(){

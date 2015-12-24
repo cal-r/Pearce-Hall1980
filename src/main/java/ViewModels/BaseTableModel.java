@@ -69,7 +69,7 @@ public abstract class BaseTableModel extends AbstractTableModel {
         return (List<String>)(List<?>) data.get(rowId);
     }
 
-    protected void addColumn(String colName, String defaultValue){
+    protected void addColumn(String colName, Object defaultValue){
         for(List<Object> row : data){
             row.add(defaultValue);
         }
@@ -83,6 +83,16 @@ public abstract class BaseTableModel extends AbstractTableModel {
             newRow.add(new Object());
         }
         data.add(newRow);
+    }
+
+    //pop methods
+
+    protected void removeRighmostColumn(){
+        for (List<Object> row : data) {
+            row.remove(row.size() - 1);
+        }
+        columnHeaders.remove(getColumnCount() - 1);
+        fireTableStructureChanged();
     }
 
     protected void removeBottomRow(){

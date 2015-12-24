@@ -8,6 +8,7 @@ public class TableStringConstants {
     public static final String CS_PARAMETER = "Cs Parameter";
     public static final String GLOBAL_PARAMETER = "Global Parameter";
     public static final String VALUE = "Value";
+    public static final String RANDOM = "Random";
 
     public static final String DEFAULT_PHASE = "2A+";
 

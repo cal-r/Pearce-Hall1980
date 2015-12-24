@@ -23,7 +23,7 @@ public class SimulatorBuilder {
 
         List<Group> groups = new ArrayList<>();
         for(int gi=0;gi<tableModel.getGroupCount();gi++){
-            Group group = groupBuilder.buildGroup(tableModel.getGroupName(gi), tableModel.getPhaseDescriptions(gi));
+            Group group = groupBuilder.buildGroup(tableModel.getGroupName(gi), tableModel.getPhaseDescriptions(gi), tableModel.getRandomSelections(gi));
             groups.add(group);
         }
 
@@ -40,14 +40,16 @@ public class SimulatorBuilder {
             this.csParameterPool = csParameterPool;
         }
 
-        private Group buildGroup(String groupName, List<String> phaseDescriptions){
+        private Group buildGroup(String groupName, List<String> phaseDescriptions, List<Boolean> randomSelections){
             csMap = new HashMap<>();
             phases = new ArrayList<>();
 
             for(int i=0;i<phaseDescriptions.size();i++){
                 List<PhaseStringTokenizer.TrailTypeTokens> phaseTokens = PhaseStringTokenizer.getPhaseTokens(phaseDescriptions.get(i));
                 updateCsMaps(phaseTokens);
-                phases.add(PhaseParser.ParsePhase(phaseTokens, csMap, i));
+                Phase phase = PhaseParser.ParsePhase(phaseTokens, csMap, i);
+                phase.setRandom(randomSelections.get(i));
+                phases.add(phase);
             }
 
             return new Group(groupName, csMap, phases);
