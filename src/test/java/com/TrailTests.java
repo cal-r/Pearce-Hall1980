@@ -107,9 +107,10 @@ public class TrailTests extends junit.framework.TestCase {
 
         assertEquals(1, allCues.get('A').getAssociationExcitatory(), DefaultValuesConstants.ROUNDING_PRECISION);
         assertEquals(0, allCues.get('A').getAssociationInhibitory(), DefaultValuesConstants.ROUNDING_PRECISION);
+        assertEquals(1, allCues.get('A').getAssociationNet(), DefaultValuesConstants.ROUNDING_PRECISION);
     }
 
-    private Trail createTrail(HashMap<Character, ConditionalStimulus> allCues, char[] presentCss, boolean usPresent){
+    public static Trail createTrail(HashMap<Character, ConditionalStimulus> allCues, char[] presentCss, boolean usPresent){
         List<ConditionalStimulus> presentCues = new ArrayList<>();
         for(char c : presentCss) {
             presentCues.add(allCues.get(c));
@@ -117,7 +118,7 @@ public class TrailTests extends junit.framework.TestCase {
         return new Trail(usPresent, presentCues);
     }
 
-    private HashMap<Character, ConditionalStimulus> createCsMap(char[] chars){
+    public static HashMap<Character, ConditionalStimulus> createCsMap(char[] chars){
         HashMap<Character, ConditionalStimulus> map = new HashMap<>();
         for(char c : chars){
             map.put(c, new ConditionalStimulus(c, new InitialAlphaParameter(c), new SalienceExcitatoryParameter(c), new SalienceInhibitoryParameter(c)));

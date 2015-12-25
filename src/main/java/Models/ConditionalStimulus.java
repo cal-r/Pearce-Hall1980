@@ -26,14 +26,33 @@ public class ConditionalStimulus {
     private double alpha;
 
     public ConditionalStimulus(char name, InitialAlphaParameter initialAlphaParameter, SalienceExcitatoryParameter salienceExcitatoryParameter, SalienceInhibitoryParameter salienceInhibitoryParameter){
+        Name = name;
+
         associationExcitatory = 0;
         associationInhibitory = 0;
-        Name = name;
+        alphaSet = false;
 
         InitialAlphaParameter = initialAlphaParameter;
         SalienceExcitatoryParameter = salienceExcitatoryParameter;
         SalienceInhibitoryParameter = salienceInhibitoryParameter;
-        alphaSet = false;
+    }
+
+    public ConditionalStimulus(char name, InitialAlphaParameter initialAlphaParameter,
+                               SalienceExcitatoryParameter salienceExcitatoryParameter,
+                               SalienceInhibitoryParameter salienceInhibitoryParameter,
+                               double associationExcitatory,
+                               double associationInhibitory,
+                               double alpha) {
+        this(name, initialAlphaParameter, salienceExcitatoryParameter, salienceInhibitoryParameter);
+        this.associationExcitatory = associationExcitatory;
+        this.associationInhibitory = associationInhibitory;
+        setAlpha(alpha);
+    }
+
+    public void reset(ConditionalStimulus cs){
+        associationExcitatory = cs.getAssociationExcitatory();
+        associationInhibitory = cs.getAssociationInhibitory();
+        setAlpha(cs.getAlpha());
     }
 
     public double getAssociationNet() {
@@ -63,5 +82,17 @@ public class ConditionalStimulus {
 
     public void updateAssociationInhibitory(double change){
         associationInhibitory+=change;
+    }
+
+    public void setAssociationExcitatory(double newVal){
+        associationExcitatory=newVal;
+    }
+
+    public void setAssociationInhibitory(double newVal){
+        associationInhibitory=newVal;
+    }
+
+    public ConditionalStimulus getCopy(){
+        return new ConditionalStimulus(Name, InitialAlphaParameter, SalienceExcitatoryParameter, SalienceInhibitoryParameter, associationExcitatory, associationInhibitory, getAlpha());
     }
 }

@@ -20,10 +20,10 @@ public class ReportBuilder {
             for(PhaseHistory phaseHistory : groupHistory.phaseHistories) {
                 report.setCell(rowId, 0, phaseHistory.phase.toString());
                 rowId++;
-                for(ConditionalStimulus cs : phaseHistory.csHistoriesMap.keySet()) {
-                    report.setCell(rowId, 0, String.format("Cs: %s", cs.Name));
+                for(char csname : phaseHistory.csHistoriesMap.keySet()) {
+                    report.setCell(rowId, 0, String.format("Cs: %s", csname));
                     rowId++;
-                    for (PhaseHistory.CsState state : phaseHistory.csHistoriesMap.get(cs)) {
+                    for (PhaseHistory.CsState state : phaseHistory.csHistoriesMap.get(csname)) {
                         int colId = 0;
                         report.setCell(rowId, colId++, String.format("#trial: %1$d", state.TrailNumber));
                         report.setCell(rowId, colId++, "\t");

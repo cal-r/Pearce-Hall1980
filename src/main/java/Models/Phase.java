@@ -1,6 +1,8 @@
 package Models;
 
+import Constants.DefaultValuesConstants;
 import Constants.TableStringConstants;
+import Helpers.RandomArrayGenerator;
 import Models.History.PhaseHistory;
 import Models.Parameters.GammaParameter;
 
@@ -42,16 +44,49 @@ public class Phase {
     }
 
     private PhaseHistory simulateTrailsRandomly(GammaParameter gamma) {
-        PhaseHistory history = new PhaseHistory(this);
-        for (Trail trail : trails) {
-            trail.simulate(calcVNet(), gamma.getValue());
-            history.recordState(trail);
+        List<ConditionalStimulus> csCopies = getCsCopies(); //preserve initial state of CSs
+        List<PhaseHistory> tempHistories = new ArrayList<>(); //stores every simulation
+        //sim phase 1000 times
+        for(int simNum = 0;simNum< DefaultValuesConstants.NUMBER_OF_RANDOM_COMBINATIONS; simNum++) {
+            resetCues(csCopies);
+            PhaseHistory history = new PhaseHistory(this);
+            int[] randomArray = RandomArrayGenerator.createRandomDistinctArray(trails.size());
+            for (int trailNo = 0; trailNo < trails.size(); trailNo++) {
+                Trail trail = trails.get(randomArray[trailNo]);
+                trail.simulate(calcVNet(), gamma.getValue());
+                history.recordState(trail);
+            }
+            tempHistories.add(history);
         }
-        return history;
+        //get avg history
+        PhaseHistory averageHistory = PhaseHistory.getAverageHistory(tempHistories);
+
+        //set cs properties to average values
+        for(ConditionalStimulus cs : getPhaseCues()) {
+            PhaseHistory.CsState csState = averageHistory.csHistoriesMap.get(cs.Name).get(trails.size() - 1); //get the state of cs after the last trail
+            cs.setAlpha(csState.Alpha);
+            cs.setAssociationExcitatory(csState.Ve);
+            cs.setAssociationInhibitory(csState.Vi);
+        }
+        return averageHistory;
     }
 
     public void addTrailType(List<Trail> trailsToAdd) { //all trails in the param are the same (e.g. 'AB+')
         trails.addAll(trailsToAdd);
+    }
+
+    private void resetCues(List<ConditionalStimulus> copies){
+        for(ConditionalStimulus copy : copies){
+            phaseCsMap.get(copy.Name).reset(copy);
+        }
+    }
+
+    private List<ConditionalStimulus> getCsCopies(){
+        List<ConditionalStimulus> copies = new ArrayList<>();
+        for(ConditionalStimulus cs : getPhaseCues()){
+            copies.add(cs.getCopy());
+        }
+        return copies;
     }
 
     private double calcVNet(){

@@ -1,5 +1,6 @@
 package Models.History;
 
+import Constants.DefaultValuesConstants;
 import Models.ConditionalStimulus;
 import Models.Phase;
 import Models.Trail;
@@ -13,7 +14,7 @@ import java.util.List;
  */
 public class PhaseHistory {
 
-    public HashMap<ConditionalStimulus, List<CsState>> csHistoriesMap;
+    public HashMap<Character, List<CsState>> csHistoriesMap;
     public Phase phase;
     private int trailNumber;
 
@@ -30,16 +31,17 @@ public class PhaseHistory {
             csState.Ve = cs.getAssociationExcitatory();
             csState.Vi = cs.getAssociationInhibitory();
             csState.Vnet = cs.getAssociationNet();
+            csState.Alpha = cs.getAlpha();
             csState.TrailNumber = trailNumber;
             csState.TrailDescription = trail.toString();
-            csHistoriesMap.get(cs).add(csState);
+            csHistoriesMap.get(cs.Name).add(csState);
         }
     }
 
     private void initHistoriesMap(){
         csHistoriesMap = new HashMap<>();
         for(ConditionalStimulus cs : phase.getPhaseCues()){
-            csHistoriesMap.put(cs, new ArrayList<CsState>());
+            csHistoriesMap.put(cs.Name, new ArrayList<CsState>());
         }
     }
 
@@ -47,7 +49,38 @@ public class PhaseHistory {
         public double Ve;
         public double Vi;
         public double Vnet;
+        public double Alpha;
         public int TrailNumber;
         public String TrailDescription;
+    }
+
+    public static PhaseHistory getAverageHistory(List<PhaseHistory> list){
+        //sum up
+        PhaseHistory avgHist = list.get(0);
+        for(int i=1;i<list.size();i++){
+            for(char csName : avgHist.csHistoriesMap.keySet()){
+                List<CsState> statesToAdd = list.get(i).csHistoriesMap.get(csName);
+                List<CsState> avgStates = avgHist.csHistoriesMap.get(csName);
+                for(int stateId=0;stateId<avgStates.size();stateId++){
+                    avgStates.get(stateId).Ve += statesToAdd.get(stateId).Ve;
+                    avgStates.get(stateId).Vi += statesToAdd.get(stateId).Vi;
+                    avgStates.get(stateId).Vnet += statesToAdd.get(stateId).Vnet;
+                    avgStates.get(stateId).Alpha += statesToAdd.get(stateId).Alpha;
+                    avgStates.get(stateId).TrailDescription += statesToAdd.get(stateId).TrailDescription;
+                }
+            }
+        }
+        //divide by 1000
+        for(char csName : avgHist.csHistoriesMap.keySet()){
+            List<CsState> avgStates = avgHist.csHistoriesMap.get(csName);
+            for(int stateId=0;stateId<avgStates.size();stateId++){
+                avgStates.get(stateId).Ve /= DefaultValuesConstants.NUMBER_OF_RANDOM_COMBINATIONS;
+                avgStates.get(stateId).Vi /= DefaultValuesConstants.NUMBER_OF_RANDOM_COMBINATIONS;
+                avgStates.get(stateId).Vnet /= DefaultValuesConstants.NUMBER_OF_RANDOM_COMBINATIONS;
+                avgStates.get(stateId).Alpha /= DefaultValuesConstants.NUMBER_OF_RANDOM_COMBINATIONS;
+            }
+        }
+
+        return avgHist;
     }
 }
