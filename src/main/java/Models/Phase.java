@@ -75,6 +75,12 @@ public class Phase {
         trails.addAll(trailsToAdd);
     }
 
+    public void reset(){
+        for(ConditionalStimulus cs : getPhaseCues()){
+            cs.reset();
+        }
+    }
+
     private void resetCues(List<ConditionalStimulus> copies){
         for(ConditionalStimulus copy : copies){
             phaseCsMap.get(copy.Name).reset(copy);

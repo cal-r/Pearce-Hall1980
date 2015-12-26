@@ -43,6 +43,7 @@ public class Simulator {
     }
 
     public void runSimulation(){
+        resetPhases();
         List<GroupHistory> histories = new ArrayList<>();
         for(Group group : groups){
             GroupHistory groupHistory = new GroupHistory(group);
@@ -54,6 +55,14 @@ public class Simulator {
         }
 
         report = ReportBuilder.buildReport(histories);
+    }
+
+    private void resetPhases(){
+        for(Group group : groups) {
+            for(Phase phase : group.phases) {
+                phase.reset();
+            }
+        }
     }
 
     public ReportViewModel getLatestReport(){

@@ -27,11 +27,7 @@ public class ConditionalStimulus {
 
     public ConditionalStimulus(char name, InitialAlphaParameter initialAlphaParameter, SalienceExcitatoryParameter salienceExcitatoryParameter, SalienceInhibitoryParameter salienceInhibitoryParameter){
         Name = name;
-
-        associationExcitatory = 0;
-        associationInhibitory = 0;
-        alphaSet = false;
-
+        setInitialValues();
         InitialAlphaParameter = initialAlphaParameter;
         SalienceExcitatoryParameter = salienceExcitatoryParameter;
         SalienceInhibitoryParameter = salienceInhibitoryParameter;
@@ -47,12 +43,6 @@ public class ConditionalStimulus {
         this.associationExcitatory = associationExcitatory;
         this.associationInhibitory = associationInhibitory;
         setAlpha(alpha);
-    }
-
-    public void reset(ConditionalStimulus cs){
-        associationExcitatory = cs.getAssociationExcitatory();
-        associationInhibitory = cs.getAssociationInhibitory();
-        setAlpha(cs.getAlpha());
     }
 
     public double getAssociationNet() {
@@ -94,5 +84,21 @@ public class ConditionalStimulus {
 
     public ConditionalStimulus getCopy(){
         return new ConditionalStimulus(Name, InitialAlphaParameter, SalienceExcitatoryParameter, SalienceInhibitoryParameter, associationExcitatory, associationInhibitory, getAlpha());
+    }
+
+    public void reset(ConditionalStimulus cs){
+        associationExcitatory = cs.getAssociationExcitatory();
+        associationInhibitory = cs.getAssociationInhibitory();
+        setAlpha(cs.getAlpha());
+    }
+
+    public void reset(){
+        setInitialValues();
+    }
+
+    private void setInitialValues(){
+        associationExcitatory = 0;
+        associationInhibitory = 0;
+        alphaSet = false;
     }
 }
