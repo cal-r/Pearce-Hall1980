@@ -46,11 +46,12 @@ public class Simulator {
         for(Group group : groups){
             GroupHistory groupHistory = new GroupHistory(group);
             for(Phase phase : group.phases) {
-                PhaseHistory phaseHistory = phase.simulateTrails(gamma);
-                groupHistory.phaseHistories.add(phaseHistory);
+                groupHistory.phaseHistories.add(
+                        phase.simulateTrails(gamma));
             }
             histories.add(groupHistory);
         }
+
         return ReportBuilder.buildReport(histories);
     }
 }

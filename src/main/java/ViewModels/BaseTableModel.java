@@ -96,6 +96,12 @@ public abstract class BaseTableModel extends AbstractTableModel {
     }
 
     protected void removeBottomRow(){
-        data.remove(data.size()-1);
+        data.remove(data.size() - 1);
+    }
+
+    protected void clearTable(){
+        while(getRowCount()>0){
+            removeBottomRow();
+        }
     }
 }

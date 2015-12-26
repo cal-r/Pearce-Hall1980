@@ -34,7 +34,8 @@ public abstract class BaseParamsTableModel extends BaseTableModel {
     }
 
     public void setUpParameters(List<Parameter> parameters){
-        this.parameters = parameters;
+        clearTable();
+        setParameters(parameters);
         for(int row = 0;row<parameters.size();row++){
             if(row == getRowCount()) {
                 addRow();
@@ -44,5 +45,22 @@ public abstract class BaseParamsTableModel extends BaseTableModel {
             super.setValueAt(rowParam.getValue(), row, 1);
         }
         fireTableDataChanged();
+    }
+
+    private void setParameters(List<Parameter> newParameters){
+        if(parameters != null) {
+            preserveExistingValues(parameters, newParameters);
+        }
+        this.parameters = newParameters;
+    }
+
+    private static void preserveExistingValues(List<Parameter> oldParameters, List<Parameter> newParameters) {
+        for (Parameter oldParam : oldParameters) {
+            for (Parameter newParam : newParameters) {
+                if (oldParam.getDisplayName().equals(newParam.getDisplayName())) {
+                    newParam.setValue(oldParam.getValue());
+                }
+            }
+        }
     }
 }
