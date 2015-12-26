@@ -20,6 +20,7 @@ public class Simulator {
     private List<Group> groups;
     private GammaParameter gamma;
     private CsParameterPool csParameterPool;
+    private ReportViewModel report;
 
     public Simulator(CsParameterPool csParameterPool, List<Group> groups){
         this.csParameterPool = csParameterPool;
@@ -41,7 +42,7 @@ public class Simulator {
         return groups;
     }
 
-    public ReportViewModel runSimulation(){
+    public void runSimulation(){
         List<GroupHistory> histories = new ArrayList<>();
         for(Group group : groups){
             GroupHistory groupHistory = new GroupHistory(group);
@@ -52,6 +53,10 @@ public class Simulator {
             histories.add(groupHistory);
         }
 
-        return ReportBuilder.buildReport(histories);
+        report = ReportBuilder.buildReport(histories);
+    }
+
+    public ReportViewModel getLatestReport(){
+        return report;
     }
 }

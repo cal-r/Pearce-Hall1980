@@ -4,14 +4,10 @@ import Constants.GuiStringConstants;
 import Helpers.ExcelExportHelper;
 import Helpers.GuiHelper;
 import Helpers.SimulatorBuilder;
-import Models.History.GroupHistory;
 import Models.Parameters.CsParameter;
 import Models.Parameters.Parameter;
 import Models.Simulator;
-import ViewModels.CSParamsTableModel;
-import ViewModels.GlobalPramsTableModel;
-import ViewModels.ReportViewModel;
-import ViewModels.TrailTableModel;
+import ViewModels.*;
 
 import javax.swing.*;
 import javax.swing.event.TableModelEvent;
@@ -52,18 +48,22 @@ public class MainWindowController implements ActionListener, TableModelListener 
 
     public void initTrailTable(JTable table) {
         trailTableModel = new TrailTableModel();
-        trailTableModel.addTableModelListener(this);
-        table.setModel(trailTableModel);
+        initTableModel(table, trailTableModel);
     }
 
     public void initCsParamsTable(JTable table) {
         csParamsTableModel = new CSParamsTableModel();
-        table.setModel(csParamsTableModel);
+        initTableModel(table, csParamsTableModel);
     }
 
     public void initGlobalParamsTable(JTable table){
         globalParamsTableModel = new GlobalPramsTableModel();
-        table.setModel(globalParamsTableModel);
+        initTableModel(table, globalParamsTableModel);
+    }
+
+    private void initTableModel(JTable table, BaseTableModel tableModel){
+        tableModel.addTableModelListener(this);
+        table.setModel(tableModel);
     }
 
     public void initOutputArea(JTextArea simOutputArea){
@@ -77,16 +77,17 @@ public class MainWindowController implements ActionListener, TableModelListener 
         csParamsTableModel.setUpParameters((List<Parameter>)(List<?>)csParameters);
         globalParamsTableModel.setUpParameters(globalParameters);
         runSimButton.setEnabled(true);
-        xlsExportButton.setEnabled(true);
     }
 
     private void onExcelExport(){
-        ExcelExportHelper.exportSimulation(filePickerController, simulator.runSimulation());
+        ExcelExportHelper.exportSimulation(filePickerController, simulator.getLatestReport());
     }
 
     private void onRunSim(){
-        ReportViewModel history = simulator.runSimulation();
+        simulator.runSimulation();
+        ReportViewModel history = simulator.getLatestReport();
         GuiHelper.outputHistory(history, simOutputArea);
+        xlsExportButton.setEnabled(true);
     }
 
     private void onPhasePlus(){
@@ -107,7 +108,16 @@ public class MainWindowController implements ActionListener, TableModelListener 
 
     private void onTrailTableChanged(){
         runSimButton.setEnabled(false);
-        xlsExportButton.setEnabled(false);
+        onSelectionChanged();
+    }
+
+    private void onParamsTableChanged(){
+        onSelectionChanged();
+    }
+
+    private void onSelectionChanged(){
+        GuiHelper.clearOuputArea(simOutputArea);
+        xlsExportButton.setEnabled(false);        
     }
 
     private void processEvent(String cmd){
@@ -121,6 +131,10 @@ public class MainWindowController implements ActionListener, TableModelListener 
             case GuiStringConstants.REMOVE_PHASE: onPhaseMinus();
                 break;
             case GuiStringConstants.TRAIL_TABLE_CHANGED: onTrailTableChanged();
+                break;
+            case GuiStringConstants.CS_PARAMS_TABLE_CHANGED: onParamsTableChanged();
+                break;
+            case GuiStringConstants.GLOBAL_PARAMS_TABLE_CHANGED: onParamsTableChanged();
                 break;
             case GuiStringConstants.ADD_GROUP: onGroupPlus();
                 break;
@@ -136,5 +150,16 @@ public class MainWindowController implements ActionListener, TableModelListener 
     }
 
     @Override
-    public void tableChanged(TableModelEvent e) {processEvent(GuiStringConstants.TRAIL_TABLE_CHANGED); }
+    public void tableChanged(TableModelEvent e) {
+        Class tableClass = e.getSource().getClass();
+        if(tableClass == TrailTableModel.class) {
+            processEvent(GuiStringConstants.TRAIL_TABLE_CHANGED);
+        }
+        if(tableClass == CSParamsTableModel.class) {
+            processEvent(GuiStringConstants.CS_PARAMS_TABLE_CHANGED);
+        }
+        if(tableClass == GlobalPramsTableModel.class){
+            processEvent(GuiStringConstants.GLOBAL_PARAMS_TABLE_CHANGED);
+        }
+    }
 }

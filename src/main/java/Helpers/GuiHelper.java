@@ -12,12 +12,16 @@ import java.util.List;
 public class GuiHelper {
 
     public static void outputHistory(ReportViewModel reportVM, JTextArea outputArea){
-        outputArea.setText(null);
+        clearOuputArea(outputArea);
         for(int row=0;row<reportVM.getNumberOfRows();row++){
             for(int col=0;col<reportVM.getColumnCount();col++){
                 outputArea.append(reportVM.getCell(row, col));
             }
             outputArea.append("\n");
         }
+    }
+
+    public static void clearOuputArea(JTextArea outputArea){
+        outputArea.setText(null);
     }
 }
