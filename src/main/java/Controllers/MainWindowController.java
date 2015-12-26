@@ -3,6 +3,7 @@ package Controllers;
 import Constants.GuiStringConstants;
 import Helpers.ExcelExportHelper;
 import Helpers.GuiHelper;
+import Helpers.ListCaster;
 import Helpers.SimulatorBuilder;
 import Models.Parameters.CsParameter;
 import Models.Parameters.Parameter;
@@ -72,9 +73,9 @@ public class MainWindowController implements ActionListener, TableModelListener 
 
     private void onSetParams(){
         simulator = SimulatorBuilder.build(trailTableModel);
-        List<CsParameter> csParameters = simulator.getCsParameters();
+        List<Parameter> csParameters = ListCaster.cast(simulator.getCsParameters());
         List<Parameter> globalParameters = simulator.getGlobalParameters();
-        csParamsTableModel.setUpParameters((List<Parameter>)(List<?>)csParameters);
+        csParamsTableModel.setUpParameters(csParameters);
         globalParamsTableModel.setUpParameters(globalParameters);
         runSimButton.setEnabled(true);
     }
@@ -117,7 +118,7 @@ public class MainWindowController implements ActionListener, TableModelListener 
 
     private void onSelectionChanged(){
         GuiHelper.clearOuputArea(simOutputArea);
-        xlsExportButton.setEnabled(false);        
+        xlsExportButton.setEnabled(false);
     }
 
     private void processEvent(String cmd){
