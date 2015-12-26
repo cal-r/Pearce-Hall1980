@@ -11,12 +11,12 @@ public class TableStringConstants {
     public static final String RANDOM = "Random";
 
     public static final String DEFAULT_PHASE = "2A+";
-
+    public static final String TRAIL_TYPE_SEPARATOR = "/";
 
     private static final String DEFAULT_GROUP_NAME = "Group";
     private static final String PHASE = "Phase";
     public static String getPhaseTitle(int phaseId){return PHASE + " " + (phaseId+1);}
     public static String getDefaultGroupName(int groupNo) {
-        return DEFAULT_GROUP_NAME + " " + groupNo;
+        return DEFAULT_GROUP_NAME + " " + (groupNo+1);
     }
 }

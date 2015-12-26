@@ -1,6 +1,8 @@
 package Models.History;
 
 import Constants.DefaultValuesConstants;
+import Constants.GuiStringConstants;
+import Constants.TableStringConstants;
 import Models.ConditionalStimulus;
 import Models.Phase;
 import Models.Trail;
@@ -66,7 +68,7 @@ public class PhaseHistory {
                     avgStates.get(stateId).Vi += statesToAdd.get(stateId).Vi;
                     avgStates.get(stateId).Vnet += statesToAdd.get(stateId).Vnet;
                     avgStates.get(stateId).Alpha += statesToAdd.get(stateId).Alpha;
-                    avgStates.get(stateId).TrailDescription += statesToAdd.get(stateId).TrailDescription;
+                    avgStates.get(stateId).TrailDescription = TableStringConstants.RANDOM;
                 }
             }
         }

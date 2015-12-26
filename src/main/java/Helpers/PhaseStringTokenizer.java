@@ -1,5 +1,7 @@
 package Helpers;
 
+import Constants.TableStringConstants;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -23,7 +25,6 @@ import java.util.regex.Pattern;
 public class PhaseStringTokenizer {
 
     private static final String TRAIL_TYPE_REGEX = "(\\d*)([a-zA-Z]+)([\\+\\-])";
-    private static final String TRAIL_TYPE_SEPARATOR = "/";
 
     public static List<TrailTypeTokens> getPhaseTokens(String phaseDescription) throws IllegalArgumentException {
 
@@ -62,7 +63,7 @@ public class PhaseStringTokenizer {
     }
 
     private static String[] getTrailTypes(String phaseDescription) {
-        return phaseDescription.split(TRAIL_TYPE_SEPARATOR);
+        return phaseDescription.split(TableStringConstants.TRAIL_TYPE_SEPARATOR);
     }
 
     private static Matcher matchTrailType(String trailTypeDescription) throws IllegalArgumentException {
