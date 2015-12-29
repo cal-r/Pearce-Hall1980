@@ -5,7 +5,6 @@ import Helpers.ExcelExportHelper;
 import Helpers.GuiHelper;
 import Helpers.ListCaster;
 import Helpers.SimulatorBuilder;
-import Models.Parameters.CsParameter;
 import Models.Parameters.Parameter;
 import Models.Simulator;
 import ViewModels.*;
