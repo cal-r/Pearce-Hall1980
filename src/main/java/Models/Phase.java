@@ -63,7 +63,7 @@ public class Phase {
 
         //set cs properties to average values
         for(ConditionalStimulus cs : getPhaseCues()) {
-            PhaseHistory.CsState csState = averageHistory.csHistoriesMap.get(cs.Name).get(trails.size() - 1); //get the state of cs after the last trail
+            PhaseHistory.CsState csState = averageHistory.getState(cs.Name, trails.size()); //get the state of cs after the last trail
             cs.setAlpha(csState.Alpha);
             cs.setAssociationExcitatory(csState.Ve);
             cs.setAssociationInhibitory(csState.Vi);
@@ -128,6 +128,8 @@ public class Phase {
     public void setRandom(boolean isRandom) {
         this.random = isRandom;
     }
+
+    public int getNumberOfTrails(){ return trails.size(); }
 
     public String toString(){
         return TableStringConstants.getPhaseTitle(phaseId);

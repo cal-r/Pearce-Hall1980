@@ -17,45 +17,50 @@ public class ReportBuilder {
     public static ReportViewModel buildReport(List<GroupHistory> history){
         ReportViewModel report = new ReportViewModel();
         int rowId = 0;
+
         for(GroupHistory groupHistory : history){
             report.setCell(rowId, 0, groupHistory.group.Name);
             rowId++;
             for(PhaseHistory phaseHistory : groupHistory.phaseHistories) {
-                insertPhaseDescription(report, rowId, phaseHistory.phase);
-                rowId++;
-                for(char csname : phaseHistory.csHistoriesMap.keySet()) {
-                    report.setCell(rowId, 0, String.format("Cs: %s", csname));
-                    rowId++;
-                    for (PhaseHistory.CsState state : phaseHistory.csHistoriesMap.get(csname)) {
-                        int colId = 0;
-                        report.setCell(rowId, colId++, String.format("#trial: %1$d", state.TrailNumber));
-                        report.setCell(rowId, colId++, "\t");
-                        report.setCell(rowId, colId++, state.TrailDescription);
-                        report.setCell(rowId, colId++, "\t");
-                        report.setCell(rowId, colId++, "Ve: ");
-                        report.setCell(rowId, colId++, String.format("%1$.5f", state.Ve));
-                        report.setCell(rowId, colId++, "\t");
-                        report.setCell(rowId, colId++, "Vi: ");
-                        report.setCell(rowId, colId++, String.format("%1$.5f", state.Vi));
-                        report.setCell(rowId, colId++, "\t");
-                        report.setCell(rowId, colId++, "Vnet: ");
-                        report.setCell(rowId, colId++, String.format("%1$.5f", state.Vnet));
-                        report.setCell(rowId, colId++, "\t");
-                        rowId++;
-                    }
-                    rowId++;
+                insertPhaseDescription(report, rowId++, phaseHistory.phase);
+                for(Variable variable : Variable.values())
+                {
+                    report.setCell(rowId++, 0, variable.toString());
+                    createVariableTable(report, rowId, phaseHistory, variable);
+                    rowId+=phaseHistory.getCues().size()+2;
                 }
             }
         }
         return report;
     }
 
+    private static void createVariableTable(ReportViewModel report, int rowId, PhaseHistory phaseHistory, Variable variable){
+        int currRowId = rowId;
+
+        currRowId++;
+        for(char csname : phaseHistory.getCues()) {
+            report.setCell(currRowId++, 0, csname);
+        }
+        currRowId = rowId;
+        int colId = 1;
+
+        for(int trailNo=1;trailNo<=phaseHistory.phase.getNumberOfTrails();trailNo++) {
+            report.setCell(currRowId++, colId, String.format("trial %1$d", trailNo));
+            for(char csname : phaseHistory.getCues()) {
+                PhaseHistory.CsState state = phaseHistory.getState(csname, trailNo);
+                if(csname == (Character)report.getCell(currRowId, 0) && trailNo == state.TrailNumber) { //sanity check
+                    report.setCell(currRowId++, colId, getValue(state, variable));
+                }
+            }
+            currRowId = rowId;
+            colId++;
+        }
+    }
+
     private static void insertPhaseDescription(ReportViewModel report, int rowId, Phase phase){
         int colId = 0;
         report.setCell(rowId, colId++, phase.toString()); //append name ("Phase 69")
-        report.setCell(rowId, colId++, "\t");
         report.setCell(rowId, colId++, constructTrailsString(phase.trails));
-        report.setCell(rowId, colId++, "\t");
         if(phase.isRandom()){
             report.setCell(rowId, colId++, TableStringConstants.RANDOM);
         }
@@ -83,5 +88,15 @@ public class ReportBuilder {
             slashNeeded = true;
         }
         return str;
+    }
+
+    private enum Variable { ALPHA, VE, VI, VNET };
+    private static double getValue(PhaseHistory.CsState state, Variable variable){
+        switch (variable){
+            case ALPHA: return state.Alpha;
+            case VE: return state.Ve;
+            case VI: return state.Vi;
+            default: return state.Vnet;
+        }
     }
 }

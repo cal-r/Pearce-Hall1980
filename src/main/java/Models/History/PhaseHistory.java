@@ -16,7 +16,7 @@ import java.util.List;
  */
 public class PhaseHistory {
 
-    public HashMap<Character, List<CsState>> csHistoriesMap;
+    private HashMap<Character, List<CsState>> csHistoriesMap;
     public Phase phase;
     private int trailNumber;
 
@@ -24,6 +24,15 @@ public class PhaseHistory {
         this.phase = phase;
         initHistoriesMap();
         trailNumber =0;
+    }
+
+    public List<Character> getCues(){
+        return new ArrayList<>(csHistoriesMap.keySet());
+    }
+
+    public CsState getState(Character cue, int trailNumber)
+    {
+        return csHistoriesMap.get(cue).get(trailNumber-1);
     }
 
     public void recordState(Trail trail){
@@ -60,7 +69,7 @@ public class PhaseHistory {
         //sum up
         PhaseHistory avgHist = list.get(0);
         for(int i=1;i<list.size();i++){
-            for(char csName : avgHist.csHistoriesMap.keySet()){
+            for(char csName : avgHist.getCues()){
                 List<CsState> statesToAdd = list.get(i).csHistoriesMap.get(csName);
                 List<CsState> avgStates = avgHist.csHistoriesMap.get(csName);
                 for(int stateId=0;stateId<avgStates.size();stateId++){
@@ -73,7 +82,7 @@ public class PhaseHistory {
             }
         }
         //divide by 1000
-        for(char csName : avgHist.csHistoriesMap.keySet()){
+        for(char csName : avgHist.getCues()){
             List<CsState> avgStates = avgHist.csHistoriesMap.get(csName);
             for(int stateId=0;stateId<avgStates.size();stateId++){
                 avgStates.get(stateId).Ve /= DefaultValuesConstants.NUMBER_OF_RANDOM_COMBINATIONS;

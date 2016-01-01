@@ -2,6 +2,7 @@ package Helpers;
 
 import Controllers.FilePickerController;
 import ViewModels.ReportViewModel;
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 
@@ -36,7 +37,13 @@ public class ExcelExportHelper {
         for(int rowId=0;rowId<reportVM.getNumberOfRows();rowId++) {
             Row excelRow = sheet.createRow(rowId);
             for (int colId = 0; colId < reportVM.getColumnCount(); colId++) {
-                excelRow.createCell(colId).setCellValue(reportVM.getCell(rowId, colId));
+                Cell cell = excelRow.createCell(colId);
+                Object content = reportVM.getCell(rowId, colId);
+                if(content instanceof Double) {
+                    cell.setCellValue((Double) content);
+                }else {
+                    cell.setCellValue(content.toString());
+                }
             }
         }
         workbook.write(outputStream);

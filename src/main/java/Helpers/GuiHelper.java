@@ -15,7 +15,8 @@ public class GuiHelper {
         clearOuputArea(outputArea);
         for(int row=0;row<reportVM.getNumberOfRows();row++){
             for(int col=0;col<reportVM.getColumnCount();col++){
-                outputArea.append(reportVM.getCell(row, col));
+                outputArea.append(reportVM.getCell(row, col).toString());
+                outputArea.append("\t");
             }
             outputArea.append("\n");
         }

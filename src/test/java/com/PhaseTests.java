@@ -35,8 +35,8 @@ public class PhaseTests extends junit.framework.TestCase {
         }
 
         //test return value
-        for(Character csname : hist.csHistoriesMap.keySet()) {
-            assertEquals(expectedVnet, hist.csHistoriesMap.get(csname).get(79).Vnet, DefaultValuesConstants.ROUNDING_PRECISION);
+        for(Character csname : hist.getCues()) {
+            assertEquals(expectedVnet, hist.getState(csname, 80).Vnet, DefaultValuesConstants.ROUNDING_PRECISION);
         }
 
     }
@@ -59,8 +59,8 @@ public class PhaseTests extends junit.framework.TestCase {
         }
 
         //test return value
-        for(Character csname : hist.csHistoriesMap.keySet()) {
-            assertEquals(expectedVnet, hist.csHistoriesMap.get(csname).get(79).Vnet, DefaultValuesConstants.ROUNDING_PRECISION);
+        for(Character csname : hist.getCues()) {
+            assertEquals(expectedVnet, hist.getState(csname, 79).Vnet, DefaultValuesConstants.ROUNDING_PRECISION);
         }
     }
 
@@ -81,11 +81,11 @@ public class PhaseTests extends junit.framework.TestCase {
 
 
         //test return value
-        for(Character csname : hist.csHistoriesMap.keySet()) {
-            assertTrue(hist.csHistoriesMap.get(csname).get(79).Vnet > 0.2);
-            assertTrue(hist.csHistoriesMap.get(csname).get(79).Vnet < 0.5);
-            assertTrue(hist.csHistoriesMap.get(csname).get(20).Ve < 0.33);
-            assertTrue(hist.csHistoriesMap.get(csname).get(20).Vi < 0.1);
+        for(Character csname : hist.getCues()) {
+            assertTrue(hist.getState(csname, 80).Vnet > 0.2);
+            assertTrue(hist.getState(csname, 80).Vnet < 0.5);
+            assertTrue(hist.getState(csname, 20).Ve < 0.33);
+            assertTrue(hist.getState(csname, 20).Vi < 0.1);
         }
     }
 
@@ -106,11 +106,11 @@ public class PhaseTests extends junit.framework.TestCase {
         assertEquals(csSeq.getAssociationNet(), csRand.getAssociationNet(), DefaultValuesConstants.ROUNDING_PRECISION);
 
         //test return value
-        for(Character csname : histRand.csHistoriesMap.keySet()) {
-            for(int tNum = 0;tNum<phaseRand.trails.size();tNum++){
-                assertEquals(histSeq.csHistoriesMap.get(csname).get(tNum).Vnet, histRand.csHistoriesMap.get(csname).get(tNum).Vnet, DefaultValuesConstants.ROUNDING_PRECISION);
-                assertEquals(histSeq.csHistoriesMap.get(csname).get(tNum).Ve, histRand.csHistoriesMap.get(csname).get(tNum).Ve, DefaultValuesConstants.ROUNDING_PRECISION);
-                assertEquals(histSeq.csHistoriesMap.get(csname).get(tNum).Vi, histRand.csHistoriesMap.get(csname).get(tNum).Vi, DefaultValuesConstants.ROUNDING_PRECISION);
+        for(Character csname : histRand.getCues()) {
+            for(int tNum = 1;tNum<=phaseRand.trails.size();tNum++){
+                assertEquals(histSeq.getState(csname, tNum).Vnet, histRand.getState(csname, tNum).Vnet, DefaultValuesConstants.ROUNDING_PRECISION);
+                assertEquals(histSeq.getState(csname, tNum).Ve, histRand.getState(csname, tNum).Ve, DefaultValuesConstants.ROUNDING_PRECISION);
+                assertEquals(histSeq.getState(csname, tNum).Vi, histRand.getState(csname, tNum).Vi, DefaultValuesConstants.ROUNDING_PRECISION);
             }
         }
     }

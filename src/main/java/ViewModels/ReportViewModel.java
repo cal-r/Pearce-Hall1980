@@ -7,7 +7,7 @@ import java.util.List;
  * Created by Rokas on 22/12/2015.
  */
 public class ReportViewModel {
-    private List<List<String>> rows;
+    private List<List<Object>> rows;
     private int numberOfColumns;
     public ReportViewModel(){
         rows = new ArrayList();
@@ -22,14 +22,14 @@ public class ReportViewModel {
         return numberOfColumns;
     }
 
-    public String getCell(int row, int col){
+    public Object getCell(int row, int col){
         if(row< getNumberOfRows() && col<rows.get(row).size()) {
             return rows.get(row).get(col);
         }
         return "";
     }
 
-    public void setCell(int row, int col, String content){
+    public void setCell(int row, int col, Object content){
         //add blank(s)
         while (row>=rows.size()){
             AddBlankRow();
@@ -39,9 +39,13 @@ public class ReportViewModel {
         }
         //set cell
         rows.get(row).set(col, content);
+
+        //set cell type
+
+
         //update col count
-        if(col>numberOfColumns){
-            numberOfColumns = col;
+        if(col>=numberOfColumns){
+            numberOfColumns = col+1;
         }
     }
 
@@ -50,6 +54,7 @@ public class ReportViewModel {
     }
 
     private void AddBlankRow(){
-        rows.add(new ArrayList<String>());
+        rows.add(new ArrayList<>());
     }
+
 }
