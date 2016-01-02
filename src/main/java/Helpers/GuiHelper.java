@@ -1,7 +1,6 @@
 package Helpers;
 
-import Models.History.GroupHistory;
-import ViewModels.ReportViewModel;
+import ViewModels.GroupReportViewModel;
 
 import javax.swing.*;
 import java.util.List;
@@ -11,12 +10,15 @@ import java.util.List;
  */
 public class GuiHelper {
 
-    public static void outputHistory(ReportViewModel reportVM, JTextArea outputArea){
+    public static void outputHistory(List<GroupReportViewModel> groupReports, JTextArea outputArea){
         clearOuputArea(outputArea);
-        for(int row=0;row<reportVM.getNumberOfRows();row++){
-            for(int col=0;col<reportVM.getColumnCount();col++){
-                outputArea.append(reportVM.getCell(row, col).toString());
-                outputArea.append("\t");
+        for(GroupReportViewModel reportVM : groupReports) {
+            for (int row = 0; row < reportVM.getNumberOfRows(); row++) {
+                for (int col = 0; col < reportVM.getColumnCount(); col++) {
+                    outputArea.append(reportVM.getCell(row, col).toString());
+                    outputArea.append("\t");
+                }
+                outputArea.append("\n");
             }
             outputArea.append("\n");
         }

@@ -3,10 +3,14 @@ package Helpers;
 import Constants.TableStringConstants;
 import Models.History.GroupHistory;
 import Models.History.PhaseHistory;
+import Models.Parameters.CsParameter;
+import Models.Parameters.CsParameterPool;
+import Models.Parameters.Parameter;
 import Models.Phase;
 import Models.Trail;
-import ViewModels.ReportViewModel;
+import ViewModels.GroupReportViewModel;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -14,27 +18,61 @@ import java.util.List;
  * Created by Rokas on 22/12/2015.
  */
 public class ReportBuilder {
-    public static ReportViewModel buildReport(List<GroupHistory> history){
-        ReportViewModel report = new ReportViewModel();
-        int rowId = 0;
 
+    public static List<GroupReportViewModel> buildReport(List<GroupHistory> history){
+        List<GroupReportViewModel> groupReports = new ArrayList<>();
         for(GroupHistory groupHistory : history){
-            report.setCell(rowId, 0, groupHistory.group.Name);
+            groupReports.add(buildGroupReport(groupHistory));
+        }
+        return groupReports;
+    }
+
+    private static GroupReportViewModel buildGroupReport(GroupHistory groupHistory){
+        GroupReportViewModel report = new GroupReportViewModel(groupHistory.group.Name);
+        int rowId = 0;
+        report.setCell(rowId++, 0, "P&H parameters:");
+        rowId = insertCsParameterTable(report, rowId, groupHistory.csParameterPool) +1;
+        rowId = insertGlobalParameterTable(report, rowId, groupHistory.globalParameters) + 2;
+
+        report.setCell(rowId++, 0, groupHistory.group.Name);
+        for(PhaseHistory phaseHistory : groupHistory.phaseHistories) {
+            insertPhaseDescription(report, rowId++, phaseHistory.phase);
             rowId++;
-            for(PhaseHistory phaseHistory : groupHistory.phaseHistories) {
-                insertPhaseDescription(report, rowId++, phaseHistory.phase);
-                for(Variable variable : Variable.values())
-                {
-                    report.setCell(rowId++, 0, variable.toString());
-                    createVariableTable(report, rowId, phaseHistory, variable);
-                    rowId+=phaseHistory.getCues().size()+2;
-                }
+            for(Variable variable : Variable.values())
+            {
+                report.setCell(rowId++, 0, variable.toString());
+                int lastRowId = insertVariableTable(report, rowId, phaseHistory, variable);
+                rowId = lastRowId+1;
             }
         }
         return report;
     }
 
-    private static void createVariableTable(ReportViewModel report, int rowId, PhaseHistory phaseHistory, Variable variable){
+    private static int insertCsParameterTable(GroupReportViewModel report, int rowId, CsParameterPool pool){
+        report.setCell(rowId, 0, TableStringConstants.CS_PARAMETER);
+        report.setCell(rowId, 1, TableStringConstants.VALUE);
+        rowId++;
+        for(CsParameter csParameter : pool.getAllParameters()){
+            report.setCell(rowId, 0, csParameter.getDisplayName());
+            report.setCell(rowId, 1, csParameter.getValue());
+            rowId++;
+        }
+        return rowId;
+    }
+
+    private static int insertGlobalParameterTable(GroupReportViewModel report, int rowId, List<Parameter> params){
+        report.setCell(rowId, 0, TableStringConstants.GLOBAL_PARAMETER);
+        report.setCell(rowId, 1, TableStringConstants.VALUE);
+        rowId++;
+        for(Parameter parameter : params){
+            report.setCell(rowId, 0, parameter.getDisplayName());
+            report.setCell(rowId, 1, parameter.getValue());
+            rowId++;
+        }
+        return rowId;
+    }
+
+    private static int insertVariableTable(GroupReportViewModel report, int rowId, PhaseHistory phaseHistory, Variable variable){
         int currRowId = rowId;
 
         currRowId++;
@@ -55,15 +93,15 @@ public class ReportBuilder {
             currRowId = rowId;
             colId++;
         }
+        return rowId + phaseHistory.getCues().size()+1;
     }
 
-    private static void insertPhaseDescription(ReportViewModel report, int rowId, Phase phase){
+    private static void insertPhaseDescription(GroupReportViewModel report, int rowId, Phase phase){
         int colId = 0;
         report.setCell(rowId, colId++, phase.toString()); //append name ("Phase 69")
         report.setCell(rowId, colId++, constructTrailsString(phase.trails));
-        if(phase.isRandom()){
-            report.setCell(rowId, colId++, TableStringConstants.RANDOM);
-        }
+        colId++;
+        report.setCell(rowId, colId++, TableStringConstants.RANDOM + ": "+ phase.isRandom());
     }
 
     private static String constructTrailsString(List<Trail> trails){

@@ -1,6 +1,8 @@
 package Models.History;
 
 import Models.Group;
+import Models.Parameters.CsParameterPool;
+import Models.Parameters.Parameter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,8 +13,12 @@ import java.util.List;
 public class GroupHistory {
     public Group group;
     public List<PhaseHistory> phaseHistories;
-    public GroupHistory(Group group){
+    public CsParameterPool csParameterPool;
+    public List<Parameter> globalParameters;
+    public GroupHistory(Group group, CsParameterPool csParameterPool, List<Parameter> globalParameters){
         this.group = group;
+        this.csParameterPool = csParameterPool;
+        this.globalParameters = globalParameters;
         phaseHistories = new ArrayList<>();
     }
 }

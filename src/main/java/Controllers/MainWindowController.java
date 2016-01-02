@@ -85,8 +85,7 @@ public class MainWindowController implements ActionListener, TableModelListener 
 
     private void onRunSim(){
         simulator.runSimulation();
-        ReportViewModel history = simulator.getLatestReport();
-        GuiHelper.outputHistory(history, simOutputArea);
+        GuiHelper.outputHistory(simulator.getLatestReport(), simOutputArea);
         xlsExportButton.setEnabled(true);
     }
 
