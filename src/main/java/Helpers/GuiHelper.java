@@ -24,6 +24,11 @@ public class GuiHelper {
         }
     }
 
+    public static void outputErrorMessage(String error, JTextArea outputArea){
+        clearOuputArea(outputArea);
+        outputArea.append(error);
+    }
+
     public static void clearOuputArea(JTextArea outputArea){
         outputArea.setText(null);
     }

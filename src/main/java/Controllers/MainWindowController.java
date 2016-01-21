@@ -1,5 +1,6 @@
 package Controllers;
 
+import Constants.ActionCommands;
 import Constants.GuiStringConstants;
 import Helpers.ExcelExportHelper;
 import Helpers.GuiHelper;
@@ -8,7 +9,6 @@ import Helpers.SimulatorBuilder;
 import Models.Parameters.Parameter;
 import Models.Simulator;
 import ViewModels.*;
-import Views.GraphPanel;
 import Views.GraphWindow;
 
 import javax.swing.*;
@@ -80,12 +80,16 @@ public class MainWindowController implements ActionListener, TableModelListener 
     }
 
     private void onSetParams(){
-        simulator = SimulatorBuilder.build(trailTableModel);
-        List<Parameter> csParameters = ListCaster.cast(simulator.getCsParameters());
-        List<Parameter> globalParameters = simulator.getGlobalParameters();
-        csParamsTableModel.setUpParameters(csParameters);
-        globalParamsTableModel.setUpParameters(globalParameters);
-        runSimButton.setEnabled(true);
+        try {
+            simulator = SimulatorBuilder.build(trailTableModel);
+            List<Parameter> csParameters = ListCaster.cast(simulator.getCsParameters());
+            List<Parameter> globalParameters = simulator.getGlobalParameters();
+            csParamsTableModel.setUpParameters(csParameters);
+            globalParamsTableModel.setUpParameters(globalParameters);
+            runSimButton.setEnabled(true);
+        }catch (IllegalArgumentException ex){
+            GuiHelper.outputErrorMessage(GuiStringConstants.TRAIL_TABLE_ERROR, simOutputArea);
+        }
     }
 
     private void onExcelExport(){
@@ -140,27 +144,27 @@ public class MainWindowController implements ActionListener, TableModelListener 
 
     private void processEvent(String cmd){
         switch (cmd){
-            case GuiStringConstants.SET_PARAMETERS: onSetParams();
+            case ActionCommands.SET_PARAMETERS: onSetParams();
                 break;
-            case GuiStringConstants.RUN_SIMULATION: onRunSim();
+            case ActionCommands.RUN_SIMULATION: onRunSim();
                 break;
-            case GuiStringConstants.ADD_PHASE: onPhasePlus();
+            case ActionCommands.ADD_PHASE: onPhasePlus();
                 break;
-            case GuiStringConstants.REMOVE_PHASE: onPhaseMinus();
+            case ActionCommands.REMOVE_PHASE: onPhaseMinus();
                 break;
-            case GuiStringConstants.TRAIL_TABLE_CHANGED: onTrailTableChanged();
+            case ActionCommands.TRAIL_TABLE_CHANGED: onTrailTableChanged();
                 break;
-            case GuiStringConstants.CS_PARAMS_TABLE_CHANGED: onParamsTableChanged();
+            case ActionCommands.CS_PARAMS_TABLE_CHANGED: onParamsTableChanged();
                 break;
-            case GuiStringConstants.GLOBAL_PARAMS_TABLE_CHANGED: onParamsTableChanged();
+            case ActionCommands.GLOBAL_PARAMS_TABLE_CHANGED: onParamsTableChanged();
                 break;
-            case GuiStringConstants.ADD_GROUP: onGroupPlus();
+            case ActionCommands.ADD_GROUP: onGroupPlus();
                 break;
-            case GuiStringConstants.REMOVE_GROUP: onGroupMinus();
+            case ActionCommands.REMOVE_GROUP: onGroupMinus();
                 break;
-            case GuiStringConstants.XLS_EXPORT: onExcelExport();
+            case ActionCommands.XLS_EXPORT: onExcelExport();
                 break;
-            case GuiStringConstants.GRAPHS_DISPLAY : onShowGraphs();
+            case ActionCommands.GRAPHS_DISPLAY : onShowGraphs();
         }
     }
 
@@ -173,13 +177,13 @@ public class MainWindowController implements ActionListener, TableModelListener 
     public void tableChanged(TableModelEvent e) {
         Class tableClass = e.getSource().getClass();
         if(tableClass == TrailTableModel.class) {
-            processEvent(GuiStringConstants.TRAIL_TABLE_CHANGED);
+            processEvent(ActionCommands.TRAIL_TABLE_CHANGED);
         }
         if(tableClass == CSParamsTableModel.class) {
-            processEvent(GuiStringConstants.CS_PARAMS_TABLE_CHANGED);
+            processEvent(ActionCommands.CS_PARAMS_TABLE_CHANGED);
         }
         if(tableClass == GlobalPramsTableModel.class){
-            processEvent(GuiStringConstants.GLOBAL_PARAMS_TABLE_CHANGED);
+            processEvent(ActionCommands.GLOBAL_PARAMS_TABLE_CHANGED);
         }
     }
 }
