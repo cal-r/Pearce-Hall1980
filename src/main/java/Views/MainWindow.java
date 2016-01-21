@@ -1,6 +1,6 @@
 package Views;
 
-import Constants.GuiStringConstants;
+import Constants.ActionCommands;
 import Controllers.MainWindowController;
 
 import javax.swing.*;
@@ -41,18 +41,18 @@ public class MainWindow extends JFrame{
         controller.initCsParamsTable(csParamsTable);
         controller.initGlobalParamsTable(globalParamsTable);
         //buttons
-        controller.initButton(setParamsButton, GuiStringConstants.SET_PARAMETERS);
-        controller.initButton(plusPhaseButton, GuiStringConstants.ADD_PHASE);
-        controller.initButton(minusPhaseButton, GuiStringConstants.REMOVE_PHASE);
-        controller.initButton(plusGroupButton, GuiStringConstants.ADD_GROUP);
-        controller.initButton(minusGroupButton, GuiStringConstants.REMOVE_GROUP);
+        controller.initButton(setParamsButton, ActionCommands.SET_PARAMETERS);
+        controller.initButton(plusPhaseButton, ActionCommands.ADD_PHASE);
+        controller.initButton(minusPhaseButton, ActionCommands.REMOVE_PHASE);
+        controller.initButton(plusGroupButton, ActionCommands.ADD_GROUP);
+        controller.initButton(minusGroupButton, ActionCommands.REMOVE_GROUP);
         //simulation button
-        controller.initDisabledButton(runButton, GuiStringConstants.RUN_SIMULATION);
+        controller.initDisabledButton(runButton, ActionCommands.RUN_SIMULATION);
         controller.runSimButton = runButton;
 
         //export buttons
-        controller.initExportButton(xlsExportButton, GuiStringConstants.XLS_EXPORT);
-        controller.initExportButton(graphsButton, GuiStringConstants.GRAPHS_DISPLAY);
+        controller.initExportButton(xlsExportButton, ActionCommands.XLS_EXPORT);
+        controller.initExportButton(graphsButton, ActionCommands.GRAPHS_DISPLAY);
 
         controller.initOutputArea(simOutputArea);
     }   

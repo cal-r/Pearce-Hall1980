@@ -3,7 +3,8 @@ package Models;
 import Constants.DefaultValuesConstants;
 import Constants.TableStringConstants;
 import Helpers.RandomArrayGenerator;
-import Models.History.PhaseHistory;
+import Helpers.RandomSimulationHelper;
+import Models.History.GroupPhaseHistory;
 import Models.Parameters.GammaParameter;
 
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ public class Phase {
         trails = new ArrayList<>();
     }
 
-    public PhaseHistory simulateTrails(GammaParameter gamma)
+    public GroupPhaseHistory simulateTrails(GammaParameter gamma)
     {
         if(random){
             return simulateTrailsRandomly(gamma);
@@ -34,8 +35,8 @@ public class Phase {
         return simulateTrailsSequentially(gamma);
     }
 
-    private PhaseHistory simulateTrailsSequentially(GammaParameter gamma){
-        PhaseHistory history = new PhaseHistory(this);
+    private GroupPhaseHistory simulateTrailsSequentially(GammaParameter gamma){
+        GroupPhaseHistory history = new GroupPhaseHistory(this);
         for(Trail trail : trails) {
             trail.simulate(calcVNet(), gamma.getValue());
             history.recordState(trail);
@@ -43,13 +44,13 @@ public class Phase {
         return history;
     }
 
-    private PhaseHistory simulateTrailsRandomly(GammaParameter gamma) {
+    private GroupPhaseHistory simulateTrailsRandomly(GammaParameter gamma) {
         List<ConditionalStimulus> csCopies = getCsCopies(); //preserve initial state of CSs
-        List<PhaseHistory> tempHistories = new ArrayList<>(); //stores every simulation
+        List<GroupPhaseHistory> tempHistories = new ArrayList<>(); //stores every simulation
         //sim phase 1000 times
         for(int simNum = 0;simNum< DefaultValuesConstants.NUMBER_OF_RANDOM_COMBINATIONS; simNum++) {
             resetCues(csCopies);
-            PhaseHistory history = new PhaseHistory(this);
+            GroupPhaseHistory history = new GroupPhaseHistory(this);
             int[] randomArray = RandomArrayGenerator.createRandomDistinctArray(trails.size());
             for (int trailNo = 0; trailNo < trails.size(); trailNo++) {
                 Trail trail = trails.get(randomArray[trailNo]);
@@ -59,11 +60,11 @@ public class Phase {
             tempHistories.add(history);
         }
         //get avg history
-        PhaseHistory averageHistory = PhaseHistory.getAverageHistory(tempHistories);
+        GroupPhaseHistory averageHistory = RandomSimulationHelper.getAverageHistory(tempHistories);
 
         //set cs properties to average values
         for(ConditionalStimulus cs : getPhaseCues()) {
-            PhaseHistory.CsState csState = averageHistory.getState(cs.Name, trails.size()); //get the state of cs after the last trail
+            GroupPhaseHistory.CsState csState = averageHistory.getState(cs.Name, trails.size()); //get the state of cs after the last trail
             cs.setAlpha(csState.Alpha);
             cs.setAssociationExcitatory(csState.Ve);
             cs.setAssociationInhibitory(csState.Vi);

@@ -2,7 +2,8 @@ package Helpers;
 
 import Constants.TableStringConstants;
 import Models.History.GroupHistory;
-import Models.History.PhaseHistory;
+import Models.History.GroupPhaseHistory;
+import Models.History.SimulationHistory;
 import Models.Parameters.CsParameter;
 import Models.Parameters.CsParameterPool;
 import Models.Parameters.Parameter;
@@ -19,7 +20,7 @@ import java.util.List;
  */
 public class ReportBuilder {
 
-    public static List<GroupReportViewModel> buildReport(List<GroupHistory> history){
+    public static List<GroupReportViewModel> buildReport(SimulationHistory history){
         List<GroupReportViewModel> groupReports = new ArrayList<>();
         for(GroupHistory groupHistory : history){
             groupReports.add(buildGroupReport(groupHistory));
@@ -35,13 +36,13 @@ public class ReportBuilder {
         rowId = insertGlobalParameterTable(report, rowId, groupHistory.globalParameters) + 2;
 
         report.setCell(rowId++, 0, groupHistory.group.Name);
-        for(PhaseHistory phaseHistory : groupHistory.phaseHistories) {
-            insertPhaseDescription(report, rowId++, phaseHistory.phase);
+        for(GroupPhaseHistory groupPhaseHistory : groupHistory.phaseHistories) {
+            insertPhaseDescription(report, rowId++, groupPhaseHistory.getPhase());
             rowId++;
             for(Variable variable : Variable.values())
             {
                 report.setCell(rowId++, 0, variable.toString());
-                int lastRowId = insertVariableTable(report, rowId, phaseHistory, variable);
+                int lastRowId = insertVariableTable(report, rowId, groupPhaseHistory, variable);
                 rowId = lastRowId+1;
             }
         }
@@ -72,20 +73,20 @@ public class ReportBuilder {
         return rowId;
     }
 
-    private static int insertVariableTable(GroupReportViewModel report, int rowId, PhaseHistory phaseHistory, Variable variable){
+    private static int insertVariableTable(GroupReportViewModel report, int rowId, GroupPhaseHistory groupPhaseHistory, Variable variable){
         int currRowId = rowId;
 
         currRowId++;
-        for(char csname : phaseHistory.getCues()) {
+        for(char csname : groupPhaseHistory.getCues()) {
             report.setCell(currRowId++, 0, csname);
         }
         currRowId = rowId;
         int colId = 1;
 
-        for(int trailNo=1;trailNo<=phaseHistory.phase.getNumberOfTrails();trailNo++) {
+        for(int trailNo=1;trailNo<= groupPhaseHistory.getNumberOfTrails();trailNo++) {
             report.setCell(currRowId++, colId, String.format("trial %1$d", trailNo));
-            for(char csname : phaseHistory.getCues()) {
-                PhaseHistory.CsState state = phaseHistory.getState(csname, trailNo);
+            for(char csname : groupPhaseHistory.getCues()) {
+                GroupPhaseHistory.CsState state = groupPhaseHistory.getState(csname, trailNo);
                 if(csname == (Character)report.getCell(currRowId, 0) && trailNo == state.TrailNumber) { //sanity check
                     report.setCell(currRowId++, colId, getValue(state, variable));
                 }
@@ -93,7 +94,7 @@ public class ReportBuilder {
             currRowId = rowId;
             colId++;
         }
-        return rowId + phaseHistory.getCues().size()+1;
+        return rowId + groupPhaseHistory.getCues().size()+1;
     }
 
     private static void insertPhaseDescription(GroupReportViewModel report, int rowId, Phase phase){
@@ -129,7 +130,7 @@ public class ReportBuilder {
     }
 
     private enum Variable { ALPHA, VE, VI, VNET };
-    private static double getValue(PhaseHistory.CsState state, Variable variable){
+    private static double getValue(GroupPhaseHistory.CsState state, Variable variable){
         switch (variable){
             case ALPHA: return state.Alpha;
             case VE: return state.Ve;

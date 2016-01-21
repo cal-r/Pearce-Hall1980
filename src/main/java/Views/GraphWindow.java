@@ -10,7 +10,7 @@ import java.util.Random;
  */
 public class GraphWindow extends JFrame{
     private JPanel rootPane;
-    private JPanel lenedPanel;
+    private JPanel legendPanel;
     private JPanel checkboxesPanel;
     private GraphPanel graphPanel;
 

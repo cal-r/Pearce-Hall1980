@@ -2,14 +2,13 @@ package com;
 
 import Constants.DefaultValuesConstants;
 import Models.ConditionalStimulus;
-import Models.History.PhaseHistory;
+import Models.History.GroupPhaseHistory;
 import Models.Parameters.GammaParameter;
 import Models.Phase;
 import Models.Trail;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -24,7 +23,7 @@ public class PhaseTests extends junit.framework.TestCase {
 
         //40AB+/40AB-
         Phase phase = CreatePhase40(true, false, false);
-        PhaseHistory hist = phase.simulateTrails(gamma);
+        GroupPhaseHistory hist = phase.simulateTrails(gamma);
 
         double expectedVnet = 0.08489972;
         //        excel gives 0.08747151
@@ -48,7 +47,7 @@ public class PhaseTests extends junit.framework.TestCase {
 
         //40AB+/40AB-
         Phase phase = CreatePhase40(false, true, false);
-        PhaseHistory hist = phase.simulateTrails(gamma);
+        GroupPhaseHistory hist = phase.simulateTrails(gamma);
 
         double expectedVnet = 0.500572221;
         //        excel gives 0.500433494
@@ -71,7 +70,7 @@ public class PhaseTests extends junit.framework.TestCase {
 
         //random test
         Phase phase = CreatePhase40(false, true, true);
-        PhaseHistory hist = phase.simulateTrails(gamma);
+        GroupPhaseHistory hist = phase.simulateTrails(gamma);
 
         //test state of cues after simulation
         for(ConditionalStimulus cs : phase.getPhaseCues()) {
@@ -97,8 +96,8 @@ public class PhaseTests extends junit.framework.TestCase {
         //should be the same
         Phase phaseRand = CreatePhase40(true, true, true);
             Phase phaseSeq = CreatePhase40(true, true, false);
-        PhaseHistory histRand = phaseRand.simulateTrails(gamma);
-        PhaseHistory histSeq = phaseSeq.simulateTrails(gamma);
+        GroupPhaseHistory histRand = phaseRand.simulateTrails(gamma);
+        GroupPhaseHistory histSeq = phaseSeq.simulateTrails(gamma);
 
         //test state of cues after simulation
         ConditionalStimulus csRand = phaseRand.getPhaseCues().get(0);

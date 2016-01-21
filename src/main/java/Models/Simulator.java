@@ -2,6 +2,7 @@ package Models;
 
 import Helpers.ReportBuilder;
 import Models.History.GroupHistory;
+import Models.History.SimulationHistory;
 import Models.Parameters.CsParameter;
 import Models.Parameters.GammaParameter;
 import Models.Parameters.Parameter;
@@ -43,17 +44,17 @@ public class Simulator {
 
     public void runSimulation(){
         resetPhases();
-        List<GroupHistory> histories = new ArrayList<>();
+        SimulationHistory simHistory = new SimulationHistory();
         for(Group group : groups){
             GroupHistory groupHistory = createGroupHistory(group);
             for(Phase phase : group.phases) {
                 groupHistory.phaseHistories.add(
                         phase.simulateTrails(gamma));
             }
-            histories.add(groupHistory);
+            simHistory.add(groupHistory);
         }
 
-        report = ReportBuilder.buildReport(histories);
+        report = ReportBuilder.buildReport(simHistory);
     }
 
     private GroupHistory createGroupHistory(Group group){
