@@ -22,6 +22,7 @@ public class MainWindow extends JFrame{
     private JButton plusGroupButton;
     private JButton minusGroupButton;
     private JButton xlsExportButton;
+    private JButton graphsButton;
 
     private MainWindowController controller;
 
@@ -45,11 +46,13 @@ public class MainWindow extends JFrame{
         controller.initButton(minusPhaseButton, GuiStringConstants.REMOVE_PHASE);
         controller.initButton(plusGroupButton, GuiStringConstants.ADD_GROUP);
         controller.initButton(minusGroupButton, GuiStringConstants.REMOVE_GROUP);
-        //initially disabled buttons
+        //simulation button
         controller.initDisabledButton(runButton, GuiStringConstants.RUN_SIMULATION);
-        controller.initDisabledButton(xlsExportButton, GuiStringConstants.XLS_EXPORT);
         controller.runSimButton = runButton;
-        controller.xlsExportButton = xlsExportButton;
+
+        //export buttons
+        controller.initExportButton(xlsExportButton, GuiStringConstants.XLS_EXPORT);
+        controller.initExportButton(graphsButton, GuiStringConstants.GRAPHS_DISPLAY);
 
         controller.initOutputArea(simOutputArea);
     }   

@@ -8,12 +8,15 @@ import Helpers.SimulatorBuilder;
 import Models.Parameters.Parameter;
 import Models.Simulator;
 import ViewModels.*;
+import Views.GraphPanel;
+import Views.GraphWindow;
 
 import javax.swing.*;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,7 +25,7 @@ import java.util.List;
 public class MainWindowController implements ActionListener, TableModelListener {
 
     public JButton runSimButton;
-    public JButton xlsExportButton;
+    private List<JButton> exportButtons;
 
     private FilePickerController filePickerController;
     private GlobalPramsTableModel globalParamsTableModel;
@@ -34,6 +37,12 @@ public class MainWindowController implements ActionListener, TableModelListener 
 
     public MainWindowController(JFrame mainFrame){
         filePickerController = new FilePickerController(mainFrame);
+        exportButtons = new ArrayList<>();
+    }
+
+    public void initExportButton(JButton button, String command){
+        exportButtons.add(button);
+        initDisabledButton(button, command);
     }
 
     public void initDisabledButton(JButton button, String command){
@@ -86,7 +95,13 @@ public class MainWindowController implements ActionListener, TableModelListener 
     private void onRunSim(){
         simulator.runSimulation();
         GuiHelper.outputHistory(simulator.getLatestReport(), simOutputArea);
-        xlsExportButton.setEnabled(true);
+        enableExportButtons(true);
+    }
+
+    private void enableExportButtons(boolean enable){
+        for(JButton btn : exportButtons){
+            btn.setEnabled(enable);
+        }
     }
 
     private void onPhasePlus(){
@@ -116,7 +131,11 @@ public class MainWindowController implements ActionListener, TableModelListener 
 
     private void onSelectionChanged(){
         GuiHelper.clearOuputArea(simOutputArea);
-        xlsExportButton.setEnabled(false);
+        enableExportButtons(false);
+    }
+
+    private void onShowGraphs(){
+        new GraphWindow();
     }
 
     private void processEvent(String cmd){
@@ -140,6 +159,8 @@ public class MainWindowController implements ActionListener, TableModelListener 
             case GuiStringConstants.REMOVE_GROUP: onGroupMinus();
                 break;
             case GuiStringConstants.XLS_EXPORT: onExcelExport();
+                break;
+            case GuiStringConstants.GRAPHS_DISPLAY : onShowGraphs();
         }
     }
 
