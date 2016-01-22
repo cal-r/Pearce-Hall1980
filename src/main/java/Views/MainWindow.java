@@ -35,7 +35,7 @@ public class MainWindow extends JFrame{
     }
 
     public void initSubElements() {
-        controller = new MainWindowController(this);
+        controller = new MainWindowController();
         //tables
         controller.initTrailTable(trailTable);
         controller.initCsParamsTable(csParamsTable);

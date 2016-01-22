@@ -9,12 +9,10 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 public class FilePickerController {
     private JFileChooser picker;
-    private JFrame frame;
 
     private static final String excelExtension = "xlsx";
 
-    public FilePickerController(JFrame frame){
-        this.frame = frame;
+    public FilePickerController(){
         picker = new JFileChooser();
     }
 
@@ -30,7 +28,7 @@ public class FilePickerController {
     }
 
     private String pickPath(){
-        if(picker.showOpenDialog(frame) == JFileChooser.APPROVE_OPTION){
+        if(picker.showOpenDialog(new JFrame()) == JFileChooser.APPROVE_OPTION){
             return picker.getSelectedFile().getPath();
         }
         //cancelled

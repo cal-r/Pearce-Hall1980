@@ -27,7 +27,6 @@ public class MainWindowController implements ActionListener, TableModelListener 
     public JButton runSimButton;
     private List<JButton> exportButtons;
 
-    private FilePickerController filePickerController;
     private GlobalPramsTableModel globalParamsTableModel;
     private CSParamsTableModel csParamsTableModel;
     private TrailTableModel trailTableModel;
@@ -35,8 +34,7 @@ public class MainWindowController implements ActionListener, TableModelListener 
 
     private Simulator simulator;
 
-    public MainWindowController(JFrame mainFrame){
-        filePickerController = new FilePickerController(mainFrame);
+    public MainWindowController(){
         exportButtons = new ArrayList<>();
     }
 
@@ -93,7 +91,7 @@ public class MainWindowController implements ActionListener, TableModelListener 
     }
 
     private void onExcelExport(){
-        ExcelExportHelper.exportSimulation(filePickerController, simulator.getLatestReport());
+        ExcelExportHelper.exportSimulation(new FilePickerController(), simulator.getLatestReport());
     }
 
     private void onRunSim(){
