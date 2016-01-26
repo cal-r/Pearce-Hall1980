@@ -1,7 +1,6 @@
 package ViewModels;
 
-import Constants.TableStringConstants;
-import Models.Parameters.GammaParameter;
+import Constants.GuiStringConstants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,8 +12,8 @@ public class GlobalPramsTableModel extends BaseParamsTableModel{
 
     protected List<String> getColumnHeaders() {
         columnHeaders = new ArrayList<>();
-        columnHeaders.add(TableStringConstants.GLOBAL_PARAMETER);
-        columnHeaders.add(TableStringConstants.VALUE);
+        columnHeaders.add(GuiStringConstants.GLOBAL_PARAMETER);
+        columnHeaders.add(GuiStringConstants.VALUE);
         return columnHeaders;
     }
 }

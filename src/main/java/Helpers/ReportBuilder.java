@@ -1,6 +1,6 @@
 package Helpers;
 
-import Constants.TableStringConstants;
+import Constants.GuiStringConstants;
 import Models.History.GroupHistory;
 import Models.History.GroupPhaseHistory;
 import Models.History.SimulationHistory;
@@ -36,7 +36,8 @@ public class ReportBuilder {
         rowId = insertGlobalParameterTable(report, rowId, groupHistory.globalParameters) + 2;
 
         report.setCell(rowId++, 0, groupHistory.group.Name);
-        for(GroupPhaseHistory groupPhaseHistory : groupHistory.phaseHistories) {
+        for(int gpId = 0; gpId < groupHistory.getNumberOfPhases(); gpId++) {
+            GroupPhaseHistory groupPhaseHistory = groupHistory.getGroupPhaseHistory(gpId);
             insertPhaseDescription(report, rowId++, groupPhaseHistory.getPhase());
             rowId++;
             for(Variable variable : Variable.values())
@@ -50,8 +51,8 @@ public class ReportBuilder {
     }
 
     private static int insertCsParameterTable(GroupReportViewModel report, int rowId, CsParameterPool pool){
-        report.setCell(rowId, 0, TableStringConstants.CS_PARAMETER);
-        report.setCell(rowId, 1, TableStringConstants.VALUE);
+        report.setCell(rowId, 0, GuiStringConstants.CS_PARAMETER);
+        report.setCell(rowId, 1, GuiStringConstants.VALUE);
         rowId++;
         for(CsParameter csParameter : pool.getAllParameters()){
             report.setCell(rowId, 0, csParameter.getDisplayName());
@@ -62,8 +63,8 @@ public class ReportBuilder {
     }
 
     private static int insertGlobalParameterTable(GroupReportViewModel report, int rowId, List<Parameter> params){
-        report.setCell(rowId, 0, TableStringConstants.GLOBAL_PARAMETER);
-        report.setCell(rowId, 1, TableStringConstants.VALUE);
+        report.setCell(rowId, 0, GuiStringConstants.GLOBAL_PARAMETER);
+        report.setCell(rowId, 1, GuiStringConstants.VALUE);
         rowId++;
         for(Parameter parameter : params){
             report.setCell(rowId, 0, parameter.getDisplayName());
@@ -102,7 +103,7 @@ public class ReportBuilder {
         report.setCell(rowId, colId++, phase.toString()); //append name ("Phase 69")
         report.setCell(rowId, colId++, constructTrailsString(phase.trails));
         colId++;
-        report.setCell(rowId, colId++, TableStringConstants.RANDOM + ": "+ phase.isRandom());
+        report.setCell(rowId, colId++, GuiStringConstants.RANDOM + ": "+ phase.isRandom());
     }
 
     private static String constructTrailsString(List<Trail> trails){
@@ -120,7 +121,7 @@ public class ReportBuilder {
         boolean slashNeeded = false;
         for(String trailDesc : counts.keySet()){
             if(slashNeeded){
-                str+= TableStringConstants.TRAIL_TYPE_SEPARATOR;
+                str+= GuiStringConstants.TRAIL_TYPE_SEPARATOR;
             }
             str+=counts.get(trailDesc);
             str+=trailDesc;

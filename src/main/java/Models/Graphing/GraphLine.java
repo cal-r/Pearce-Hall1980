@@ -28,6 +28,10 @@ public class GraphLine {
         updateMax(x, y);
     }
 
+    public java.util.List<Point2D.Double> getDataPoints(){
+        return dataPoints;
+    }
+
     public double getMaxX(){
         return maxX;
     }

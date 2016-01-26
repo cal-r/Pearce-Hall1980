@@ -1,7 +1,7 @@
 package Models;
 
 import Constants.DefaultValuesConstants;
-import Constants.TableStringConstants;
+import Constants.GuiStringConstants;
 import Helpers.RandomArrayGenerator;
 import Helpers.RandomSimulationHelper;
 import Models.History.GroupPhaseHistory;
@@ -133,6 +133,6 @@ public class Phase {
     public int getNumberOfTrails(){ return trails.size(); }
 
     public String toString(){
-        return TableStringConstants.getPhaseTitle(phaseId);
+        return GuiStringConstants.getPhaseTitle(phaseId);
     }
 }

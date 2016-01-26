@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class GroupHistory {
     public Group group;
-    public List<GroupPhaseHistory> phaseHistories;
+    private List<GroupPhaseHistory> phaseHistories;
     public CsParameterPool csParameterPool;
     public List<Parameter> globalParameters;
     public GroupHistory(Group group, CsParameterPool csParameterPool, List<Parameter> globalParameters){
@@ -20,5 +20,18 @@ public class GroupHistory {
         this.csParameterPool = csParameterPool;
         this.globalParameters = globalParameters;
         phaseHistories = new ArrayList<>();
+    }
+
+    public void add(GroupPhaseHistory gpHist){
+        gpHist.setGroupName(group.Name);
+        phaseHistories.add(gpHist);
+    }
+
+    public GroupPhaseHistory getGroupPhaseHistory(int phaseId){
+        return phaseHistories.get(phaseId);
+    }
+
+    public int getNumberOfPhases(){
+        return phaseHistories.size();
     }
 }

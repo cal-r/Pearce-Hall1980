@@ -1,7 +1,7 @@
 package ViewModels;
 
 import Constants.DefaultValuesConstants;
-import Constants.TableStringConstants;
+import Constants.GuiStringConstants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +19,7 @@ public class TrailTableModel extends BaseTableModel {
     protected List<String> getColumnHeaders() {
         if(columnHeaders==null) {
             columnHeaders = new ArrayList<>();
-            columnHeaders.add(TableStringConstants.GROUP_NAME);
+            columnHeaders.add(GuiStringConstants.GROUP_NAME);
         }
         return columnHeaders;
     }
@@ -39,7 +39,7 @@ public class TrailTableModel extends BaseTableModel {
     protected List<List<Object>> getInitialData() {
         List<List<Object>> data = new ArrayList<>();
         List<Object> firsRow = new ArrayList<>();
-        firsRow.add(TableStringConstants.getDefaultGroupName(0));
+        firsRow.add(GuiStringConstants.getDefaultGroupName(0));
         data.add(firsRow);
         return data;
     }
@@ -47,9 +47,9 @@ public class TrailTableModel extends BaseTableModel {
     public void addGroup(){
         addRow();
         int groupId = getGroupCount()-1;
-        setValueAt(TableStringConstants.getDefaultGroupName(groupId), groupId, 0);
+        setValueAt(GuiStringConstants.getDefaultGroupName(groupId), groupId, 0);
         for(int phaseId = 1;phaseId <= getPhaseCount();phaseId++){
-            setValueAt(TableStringConstants.DEFAULT_PHASE, groupId, phaseId*2 - 1);
+            setValueAt(GuiStringConstants.DEFAULT_PHASE, groupId, phaseId*2 - 1);
             setValueAt(DefaultValuesConstants.RANDOM_SELECTION, groupId, phaseId*2);
         }
     }
@@ -82,8 +82,8 @@ public class TrailTableModel extends BaseTableModel {
     }
 
     public void addPhase(){
-        addColumn(TableStringConstants.getPhaseTitle(getPhaseCount()), TableStringConstants.DEFAULT_PHASE);
-        addColumn(TableStringConstants.RANDOM, DefaultValuesConstants.RANDOM_SELECTION);
+        addColumn(GuiStringConstants.getPhaseTitle(getPhaseCount()), GuiStringConstants.DEFAULT_PHASE);
+        addColumn(GuiStringConstants.RANDOM, DefaultValuesConstants.RANDOM_SELECTION);
     }
 
     public void removePhase(){

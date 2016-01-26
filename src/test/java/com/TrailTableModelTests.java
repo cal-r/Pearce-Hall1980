@@ -1,6 +1,6 @@
 package com;
 
-import Constants.TableStringConstants;
+import Constants.GuiStringConstants;
 import ViewModels.TrailTableModel;
 import junit.framework.TestCase;
 import org.junit.Test;
@@ -15,9 +15,9 @@ public class TrailTableModelTests  extends TestCase {
         TrailTableModel tableModel = new TrailTableModel();
         assertEquals(tableModel.getPhaseCount(), 1);
         assertEquals(tableModel.getGroupCount(), 1);
-        assertEquals(tableModel.getGroupName(0), TableStringConstants.getDefaultGroupName(0));
+        assertEquals(tableModel.getGroupName(0), GuiStringConstants.getDefaultGroupName(0));
         assertEquals(tableModel.getPhaseDescriptions(0).size(), 1);
-        assertEquals(tableModel.getPhaseDescriptions(0).get(0), TableStringConstants.DEFAULT_PHASE);
+        assertEquals(tableModel.getPhaseDescriptions(0).get(0), GuiStringConstants.DEFAULT_PHASE);
     }
 
     @Test
@@ -26,10 +26,10 @@ public class TrailTableModelTests  extends TestCase {
         tableModel.addPhase();
         assertEquals(tableModel.getPhaseCount(), 2);
         assertEquals(tableModel.getGroupCount(), 1);
-        assertEquals(tableModel.getGroupName(0), TableStringConstants.getDefaultGroupName(0));
+        assertEquals(tableModel.getGroupName(0), GuiStringConstants.getDefaultGroupName(0));
         assertEquals(tableModel.getPhaseDescriptions(0).size(), 2);
-        assertEquals(tableModel.getPhaseDescriptions(0).get(0), TableStringConstants.DEFAULT_PHASE);
-        assertEquals(tableModel.getPhaseDescriptions(0).get(1), TableStringConstants.DEFAULT_PHASE);
+        assertEquals(tableModel.getPhaseDescriptions(0).get(0), GuiStringConstants.DEFAULT_PHASE);
+        assertEquals(tableModel.getPhaseDescriptions(0).get(1), GuiStringConstants.DEFAULT_PHASE);
     }
 
     @Test
@@ -46,8 +46,8 @@ public class TrailTableModelTests  extends TestCase {
         assertEquals(tableModel.getGroupName(0), group1Name);
         assertEquals(tableModel.getGroupName(1), group2Name);
         assertEquals(tableModel.getPhaseDescriptions(0).size(), 2);
-        assertEquals(tableModel.getPhaseDescriptions(0).get(0), TableStringConstants.DEFAULT_PHASE);
-        assertEquals(tableModel.getPhaseDescriptions(0).get(1), TableStringConstants.DEFAULT_PHASE);
+        assertEquals(tableModel.getPhaseDescriptions(0).get(0), GuiStringConstants.DEFAULT_PHASE);
+        assertEquals(tableModel.getPhaseDescriptions(0).get(1), GuiStringConstants.DEFAULT_PHASE);
     }
 }
 

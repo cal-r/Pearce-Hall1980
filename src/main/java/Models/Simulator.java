@@ -21,6 +21,7 @@ public class Simulator {
     private GammaParameter gamma;
     private CsParameterPool csParameterPool;
     private List<GroupReportViewModel> report;
+    private SimulationHistory simulationHistory;
 
     public Simulator(CsParameterPool csParameterPool, List<Group> groups){
         this.csParameterPool = csParameterPool;
@@ -48,12 +49,13 @@ public class Simulator {
         for(Group group : groups){
             GroupHistory groupHistory = createGroupHistory(group);
             for(Phase phase : group.phases) {
-                groupHistory.phaseHistories.add(
+                groupHistory.add(
                         phase.simulateTrails(gamma));
             }
             simHistory.add(groupHistory);
         }
 
+        simulationHistory = simHistory;
         report = ReportBuilder.buildReport(simHistory);
     }
 
@@ -71,5 +73,9 @@ public class Simulator {
 
     public List<GroupReportViewModel> getLatestReport(){
         return report;
+    }
+
+    public SimulationHistory getLatestSimHistory(){
+        return simulationHistory;
     }
 }

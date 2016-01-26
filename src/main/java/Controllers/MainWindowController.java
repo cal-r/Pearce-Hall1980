@@ -2,14 +2,11 @@ package Controllers;
 
 import Constants.ActionCommands;
 import Constants.GuiStringConstants;
-import Helpers.ExcelExportHelper;
-import Helpers.GuiHelper;
-import Helpers.ListCaster;
-import Helpers.SimulatorBuilder;
+import Helpers.*;
+import Models.Graphing.Graph;
 import Models.Parameters.Parameter;
 import Models.Simulator;
 import ViewModels.*;
-import Views.GraphWindow;
 
 import javax.swing.*;
 import javax.swing.event.TableModelEvent;
@@ -137,7 +134,9 @@ public class MainWindowController implements ActionListener, TableModelListener 
     }
 
     private void onShowGraphs(){
-        new GraphWindow();
+        for(Graph graph : GraphBuilder.BuildGraphs(simulator.getLatestSimHistory())){
+            new GraphWindowController(graph);
+        }
     }
 
     private void processEvent(String cmd){

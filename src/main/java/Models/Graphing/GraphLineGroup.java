@@ -9,7 +9,7 @@ import java.util.Map;
  * Created by Rokas on 21/01/2016.
  */
 public class GraphLineGroup {
-    public String name;
+    private String name;
     private boolean visible;
     private Map<String, GraphLine> linesMap;
 
@@ -23,7 +23,7 @@ public class GraphLineGroup {
         linesMap.put(line.getName(), line);
     }
 
-    public List<GraphLine> getLine(){
+    public List<GraphLine> getLines(){
         return  new ArrayList<>(linesMap.values());
     }
 
@@ -56,5 +56,13 @@ public class GraphLineGroup {
             max = Math.max(line.getMaxY(), max);
         }
         return max;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getLineInGroupName(GraphLine line){
+        return String.format("%s - %s", name, line.getName());
     }
 }

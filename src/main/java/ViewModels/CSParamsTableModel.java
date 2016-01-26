@@ -1,8 +1,6 @@
 package ViewModels;
 
-import Constants.TableStringConstants;
-import Models.Parameters.CsParameter;
-import Models.Parameters.Parameter;
+import Constants.GuiStringConstants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,8 +13,8 @@ public class CSParamsTableModel extends BaseParamsTableModel {
     @Override
     protected List<String> getColumnHeaders() {
         columnHeaders = new ArrayList<>();
-        columnHeaders.add(TableStringConstants.CS_PARAMETER);
-        columnHeaders.add(TableStringConstants.VALUE);
+        columnHeaders.add(GuiStringConstants.CS_PARAMETER);
+        columnHeaders.add(GuiStringConstants.VALUE);
         return columnHeaders;
     }
 }

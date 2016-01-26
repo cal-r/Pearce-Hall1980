@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class GraphBuilder {
 
-    public static List<Graph> BuildGraph(SimulationHistory history){
+    public static List<Graph> BuildGraphs(SimulationHistory history){
         List<Graph> phaseGraphs = new ArrayList<>();
         for(PhaseHistory phaseHistory : history.getPhases()){
             Graph graph = new Graph(phaseHistory.getPhaseName());
@@ -25,6 +25,7 @@ public class GraphBuilder {
                     graph.addLine(gpHist.getGroupName(), line);
                 }
             }
+            phaseGraphs.add(graph);
         }
         return phaseGraphs;
     }

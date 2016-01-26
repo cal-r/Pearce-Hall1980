@@ -1,6 +1,8 @@
 package Models.Graphing;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -21,6 +23,10 @@ public class Graph {
             linesGroupsMap.put(groupName, new GraphLineGroup(groupName));
         }
         linesGroupsMap.get(groupName).addLine(line);
+    }
+
+    public List<GraphLineGroup> getGroups(){
+        return new ArrayList<>(linesGroupsMap.values());
     }
 
     public double getMaxX(){

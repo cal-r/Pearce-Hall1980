@@ -1,7 +1,7 @@
 package Helpers;
 
 import Constants.DefaultValuesConstants;
-import Constants.TableStringConstants;
+import Constants.GuiStringConstants;
 import Models.History.GroupPhaseHistory;
 
 import java.util.List;
@@ -22,7 +22,7 @@ public class RandomSimulationHelper {
                     avgStates.get(stateId).Vi += statesToAdd.get(stateId).Vi;
                     avgStates.get(stateId).Vnet += statesToAdd.get(stateId).Vnet;
                     avgStates.get(stateId).Alpha += statesToAdd.get(stateId).Alpha;
-                    avgStates.get(stateId).TrailDescription = TableStringConstants.RANDOM;
+                    avgStates.get(stateId).TrailDescription = GuiStringConstants.RANDOM;
                 }
             }
         }

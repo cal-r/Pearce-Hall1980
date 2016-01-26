@@ -1,36 +1,47 @@
 package Views;
 
 import javax.swing.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+
+//demo
+import javax.swing.JPanel;
+
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+
+import java.awt.*;
 
 /**
  * Created by Rokas on 21/01/2016.
  */
 public class GraphWindow extends JFrame{
     private JPanel rootPane;
-    private JPanel legendPanel;
     private JPanel checkboxesPanel;
-    private GraphPanel graphPanel;
+    private ChartPanel chartPanel;
 
-    public GraphWindow(){
+    private JFreeChart chart;
+
+    public GraphWindow(JFreeChart chart){
         super();
+        this.chart = chart;
         setVisible(true);
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setContentPane(rootPane);
         pack();
     }
 
     private void createUIComponents() {
         // TODO: place custom component creation code here
-        List<Integer> scores = new ArrayList<Integer>();
-        Random random = new Random();
-        int maxDataPoints = 16;
-        int maxScore = 20;
-        for (int i = 0; i < maxDataPoints ; i++) {
-            scores.add(random.nextInt(maxScore));
-        }
-        graphPanel = new GraphPanel(scores);
+        chartPanel = createChartPanel();
+    }
+
+    public JFreeChart getChart() {
+        return chart;
+    }
+
+    private ChartPanel createChartPanel(){
+        return new ChartPanel( chart );
+    }
+
+    public JPanel getCheckboxesPanel() {
+        return checkboxesPanel;
     }
 }

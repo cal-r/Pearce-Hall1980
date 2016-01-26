@@ -11,8 +11,9 @@ public class SimulationHistory extends ArrayList<GroupHistory> {
         List<PhaseHistory> phases = new ArrayList<>();
         for(int i=0;i<numberOfPhases();i++){
             PhaseHistory phaseHist = new PhaseHistory(getPhaseName(i));
-            GroupHistory groupHistory = this.get(i);
-            for (GroupPhaseHistory gpHist : groupHistory.phaseHistories){
+            for(GroupHistory groupHistory : this)
+            {
+                GroupPhaseHistory gpHist = groupHistory.getGroupPhaseHistory(i);
                 gpHist.setGroupName(groupHistory.group.Name);
                 phaseHist.add(gpHist);
             }
@@ -22,11 +23,11 @@ public class SimulationHistory extends ArrayList<GroupHistory> {
     }
 
     private int numberOfPhases(){
-        return this.get(0).phaseHistories.size();
+        return this.get(0).getNumberOfPhases();
     }
 
     //param index zero based
     private String getPhaseName(int index){
-        return this.get(0).phaseHistories.get(index).getPhaseName();
+        return this.get(0).getGroupPhaseHistory(index).getPhaseName();
     }
 }

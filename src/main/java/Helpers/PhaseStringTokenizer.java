@@ -1,6 +1,6 @@
 package Helpers;
 
-import Constants.TableStringConstants;
+import Constants.GuiStringConstants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,11 +34,14 @@ public class PhaseStringTokenizer {
 
             TrailTypeTokens trailTokens = new TrailTypeTokens();
 
-            Matcher matcher = matchTrailType(trailTypeDescription);
+            if(!isEmpty(trailTypeDescription)) {
 
-            trailTokens.numberOfTrails = getNumberOfTrails(matcher);
-            trailTokens.cueNames = getCueNames(matcher);
-            trailTokens.reinforcer = getReinforcer(matcher);
+                Matcher matcher = matchTrailType(trailTypeDescription);
+
+                trailTokens.numberOfTrails = getNumberOfTrails(matcher);
+                trailTokens.cueNames = getCueNames(matcher);
+                trailTokens.reinforcer = getReinforcer(matcher);
+            }
 
             tokensList.add(trailTokens);
         }
@@ -63,7 +66,7 @@ public class PhaseStringTokenizer {
     }
 
     private static String[] getTrailTypes(String phaseDescription) {
-        return phaseDescription.split(TableStringConstants.TRAIL_TYPE_SEPARATOR);
+        return phaseDescription.split(GuiStringConstants.TRAIL_TYPE_SEPARATOR);
     }
 
     private static Matcher matchTrailType(String trailTypeDescription) throws IllegalArgumentException {
@@ -77,9 +80,17 @@ public class PhaseStringTokenizer {
         return matcher;
     }
 
+    private static boolean isEmpty(String trailTypeDescription){
+        return trailTypeDescription.isEmpty() || trailTypeDescription.equals("0");
+    }
+
     public static class TrailTypeTokens {
         public int numberOfTrails;
         public char[] cueNames;
         public char reinforcer;
+        public TrailTypeTokens(){
+            numberOfTrails = 0;
+            cueNames = new char[0];
+        }
     }
 }
