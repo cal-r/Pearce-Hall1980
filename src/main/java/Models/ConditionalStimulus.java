@@ -46,7 +46,7 @@ public class ConditionalStimulus {
     }
 
     public double getAssociationNet() {
-        return Math.min(associationExcitatory - associationInhibitory, DefaultValuesConstants.ASSOCIATION_ASYMPTOTE);
+        return associationExcitatory - associationInhibitory;
     }
 
     public double getAlpha(){
@@ -59,11 +59,11 @@ public class ConditionalStimulus {
     }
 
     public double getAssociationExcitatory(){
-        return Math.min(associationExcitatory, DefaultValuesConstants.ASSOCIATION_ASYMPTOTE);
+        return associationExcitatory;
     }
 
     public double getAssociationInhibitory(){
-        return Math.min(associationInhibitory, DefaultValuesConstants.ASSOCIATION_ASYMPTOTE);
+        return associationInhibitory;
     }
 
     public void updateAssociationExcitatory(double change){

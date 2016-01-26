@@ -101,13 +101,13 @@ public class TrailTests extends junit.framework.TestCase {
         double gamma = 0.1;
         HashMap<Character, ConditionalStimulus> allCues = createCsMap("A".toCharArray());
         Trail trail = createTrail(allCues, "A".toCharArray(), true);
-        for(int i=0;i<200;i++) {
+        for(int i=0;i<2000;i++) {
             trail.simulate(allCues.get('A').getAssociationNet(), gamma);
         }
 
-        assertEquals(1, allCues.get('A').getAssociationExcitatory(), DefaultValuesConstants.ROUNDING_PRECISION);
+        assertEquals(1, allCues.get('A').getAssociationExcitatory(), DefaultValuesConstants.ASYMPTOTE_EXCEED_ALLOWANCE);
         assertEquals(0, allCues.get('A').getAssociationInhibitory(), DefaultValuesConstants.ROUNDING_PRECISION);
-        assertEquals(1, allCues.get('A').getAssociationNet(), DefaultValuesConstants.ROUNDING_PRECISION);
+        assertEquals(1, allCues.get('A').getAssociationNet(), DefaultValuesConstants.ASYMPTOTE_EXCEED_ALLOWANCE);
     }
 
     public static Trail createTrail(HashMap<Character, ConditionalStimulus> allCues, char[] presentCss, boolean usPresent){
