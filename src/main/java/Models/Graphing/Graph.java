@@ -29,22 +29,6 @@ public class Graph {
         return new ArrayList<>(linesGroupsMap.values());
     }
 
-    public double getMaxX(){
-        double max = Double.MIN_VALUE;
-        for(GraphLineGroup lineGroup : linesGroupsMap.values()){
-            max = Math.max(lineGroup.getMaxX(), max);
-        }
-        return max;
-    }
-
-    public double getMaxY(){
-        double max = Double.MIN_VALUE;
-        for(GraphLineGroup line : linesGroupsMap.values()){
-            max = Math.max(line.getMaxY(), max);
-        }
-        return max;
-    }
-
     public String getName() {
         return name;
     }

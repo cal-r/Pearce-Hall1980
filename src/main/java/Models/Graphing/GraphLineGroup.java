@@ -41,23 +41,7 @@ public class GraphLineGroup {
     public void setLineVisible(String name, boolean visible){
         linesMap.get(name).visible = visible;
     }
-
-    public double getMaxX(){
-        double max = Double.MIN_VALUE;
-        for(GraphLine line : linesMap.values()){
-            max = Math.max(line.getMaxX(), max);
-        }
-        return max;
-    }
-
-    public double getMaxY(){
-        double max = Double.MIN_VALUE;
-        for(GraphLine line : linesMap.values()){
-            max = Math.max(line.getMaxY(), max);
-        }
-        return max;
-    }
-
+    
     public String getName() {
         return name;
     }
