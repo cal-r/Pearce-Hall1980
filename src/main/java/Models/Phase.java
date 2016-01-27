@@ -37,9 +37,11 @@ public class Phase {
 
     private GroupPhaseHistory simulateTrailsSequentially(GammaParameter gamma){
         GroupPhaseHistory history = new GroupPhaseHistory(this);
-        for(Trail trail : trails) {
-            trail.simulate(calcVNet(), gamma.getValue());
+        for(int i=0;i<trails.size();i++){
+            Trail trail = trails.get(i);
+            //The algorithm runs AFTER the first trial finishes and gives the first predictive value for the following trial.
             history.recordState(trail);
+            trail.simulate(calcVNet(), gamma.getValue());
         }
         return history;
     }
