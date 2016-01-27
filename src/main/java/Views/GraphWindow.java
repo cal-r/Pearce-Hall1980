@@ -8,8 +8,6 @@ import javax.swing.JPanel;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 
-import java.awt.*;
-
 /**
  * Created by Rokas on 21/01/2016.
  */

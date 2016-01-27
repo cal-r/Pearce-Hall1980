@@ -1,5 +1,7 @@
 package Models.Graphing;
 
+import Helpers.GraphStringsHelper;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,6 +25,11 @@ public class Graph {
             linesGroupsMap.put(groupName, new GraphLineGroup(groupName));
         }
         linesGroupsMap.get(groupName).addLine(line);
+    }
+
+    public void setVisibility(String command, boolean visible){
+        String groupName = GraphStringsHelper.getGroupNameFromCommand(command);
+        linesGroupsMap.get(groupName).setVisible(command, visible);
     }
 
     public List<GraphLineGroup> getGroups(){

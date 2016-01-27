@@ -16,4 +16,5 @@ public class ActionCommands {
     public static final String TRAIL_TABLE_CHANGED = "TTC";
     public static final String CS_PARAMS_TABLE_CHANGED = "CPTC";
     public static final String GLOBAL_PARAMS_TABLE_CHANGED = "GPTC";
+    public static final String GROUP_LINE_SEPARATOR = "@@GLS@@";
 }

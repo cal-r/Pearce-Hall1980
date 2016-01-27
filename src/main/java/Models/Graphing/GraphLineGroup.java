@@ -1,5 +1,7 @@
 package Models.Graphing;
 
+import Helpers.GraphStringsHelper;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,12 +12,10 @@ import java.util.Map;
  */
 public class GraphLineGroup {
     private String name;
-    private boolean visible;
     private Map<String, GraphLine> linesMap;
 
     public GraphLineGroup(String name){
         this.name = name;
-        visible = true;
         linesMap = new HashMap<>();
     }
 
@@ -23,30 +23,25 @@ public class GraphLineGroup {
         linesMap.put(line.getName(), line);
     }
 
+    public GraphLine getLine(String name){
+        return linesMap.get(name);
+    }
+
     public List<GraphLine> getLines(){
         return  new ArrayList<>(linesMap.values());
     }
 
-    public void setLineGroupVisible(boolean visible){
-        this.visible = visible;
-        for(GraphLine line : linesMap.values()) {
-            line.visible = false;
+    public void setVisible(String command, boolean visible){
+        if(GraphStringsHelper.isGroupCommand(command)){
+            for(GraphLine line : linesMap.values()) {
+                line.setVisible(visible);
+            }
+        }else {
+            linesMap.get(GraphStringsHelper.getLineNameFromCommand(command)).setVisible(visible);
         }
     }
 
-    public boolean getVisible(){
-        return visible;
-    }
-
-    public void setLineVisible(String name, boolean visible){
-        linesMap.get(name).visible = visible;
-    }
-    
     public String getName() {
         return name;
-    }
-
-    public String getLineInGroupName(GraphLine line){
-        return String.format("%s - %s", name, line.getName());
     }
 }
