@@ -28,7 +28,7 @@ public class FilePickerController {
     }
 
     private String pickPath(){
-        if(picker.showOpenDialog(new JFrame()) == JFileChooser.APPROVE_OPTION){
+        if(picker.showSaveDialog(new JFrame()) == JFileChooser.APPROVE_OPTION){
             return picker.getSelectedFile().getPath();
         }
         //cancelled
