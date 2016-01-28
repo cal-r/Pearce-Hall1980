@@ -26,7 +26,7 @@ public class MainWindowController implements ActionListener, TableModelListener 
 
     private GlobalPramsTableModel globalParamsTableModel;
     private CSParamsTableModel csParamsTableModel;
-    private TrailTableModel trailTableModel;
+    private TrialTableModel trialTableModel;
     private JTextArea simOutputArea;
 
     private Simulator simulator;
@@ -50,9 +50,9 @@ public class MainWindowController implements ActionListener, TableModelListener 
         button.setActionCommand(command);
     }
 
-    public void initTrailTable(JTable table) {
-        trailTableModel = new TrailTableModel();
-        initTableModel(table, trailTableModel);
+    public void initTrialTable(JTable table) {
+        trialTableModel = new TrialTableModel();
+        initTableModel(table, trialTableModel);
     }
 
     public void initCsParamsTable(JTable table) {
@@ -76,7 +76,7 @@ public class MainWindowController implements ActionListener, TableModelListener 
 
     private void onSetParams(){
         try {
-            simulator = SimulatorBuilder.build(trailTableModel);
+            simulator = SimulatorBuilder.build(trialTableModel);
             List<Parameter> csParameters = ListCaster.cast(simulator.getCsParameters());
             List<Parameter> globalParameters = simulator.getGlobalParameters();
             csParamsTableModel.setUpParameters(csParameters);
@@ -104,22 +104,22 @@ public class MainWindowController implements ActionListener, TableModelListener 
     }
 
     private void onPhasePlus(){
-        trailTableModel.addPhase();
+        trialTableModel.addPhase();
     }
 
     private void onPhaseMinus() {
-        trailTableModel.removePhase();
+        trialTableModel.removePhase();
     }
 
     private void onGroupPlus(){
-        trailTableModel.addGroup();
+        trialTableModel.addGroup();
     }
 
     private void onGroupMinus(){
-        trailTableModel.removeGroup();
+        trialTableModel.removeGroup();
     }
 
-    private void onTrailTableChanged(){
+    private void onTrialTableChanged(){
         runSimButton.setEnabled(false);
         onSelectionChanged();
     }
@@ -149,7 +149,7 @@ public class MainWindowController implements ActionListener, TableModelListener 
                 break;
             case ActionCommands.REMOVE_PHASE: onPhaseMinus();
                 break;
-            case ActionCommands.TRAIL_TABLE_CHANGED: onTrailTableChanged();
+            case ActionCommands.TRAIL_TABLE_CHANGED: onTrialTableChanged();
                 break;
             case ActionCommands.CS_PARAMS_TABLE_CHANGED: onParamsTableChanged();
                 break;
@@ -173,7 +173,7 @@ public class MainWindowController implements ActionListener, TableModelListener 
     @Override
     public void tableChanged(TableModelEvent e) {
         Class tableClass = e.getSource().getClass();
-        if(tableClass == TrailTableModel.class) {
+        if(tableClass == TrialTableModel.class) {
             processEvent(ActionCommands.TRAIL_TABLE_CHANGED);
         }
         if(tableClass == CSParamsTableModel.class) {

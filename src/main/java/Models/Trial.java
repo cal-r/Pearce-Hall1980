@@ -5,11 +5,11 @@ import java.util.List;
 /**
  * Created by Rokas on 03/11/2015.
  */
-public class Trail {
+public class Trial {
     public boolean usPresent;
     public List<ConditionalStimulus> cuesPresent;
 
-    public Trail(boolean usPresent, List<ConditionalStimulus> cuesPresent){
+    public Trial(boolean usPresent, List<ConditionalStimulus> cuesPresent){
         this.usPresent = usPresent;
         this.cuesPresent = cuesPresent;
     }

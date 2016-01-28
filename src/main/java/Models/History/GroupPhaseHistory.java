@@ -3,7 +3,7 @@ package Models.History;
 
 import Models.ConditionalStimulus;
 import Models.Phase;
-import Models.Trail;
+import Models.Trial;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,36 +16,36 @@ public class GroupPhaseHistory {
     private Phase phase;
     private HashMap<Character, List<CsState>> csHistoriesMap;
     private String groupName;
-    private int trailCounrer;
+    private int trialCounrer;
 
     public GroupPhaseHistory(Phase phase){
         this.phase = phase;
         initHistoriesMap();
-        trailCounrer =0;
+        trialCounrer =0;
     }
 
     public List<Character> getCues(){
         return new ArrayList<>(csHistoriesMap.keySet());
     }
 
-    public CsState getState(Character cue, int trailNumber) {
-        return csHistoriesMap.get(cue).get(trailNumber-1);
+    public CsState getState(Character cue, int trialNumber) {
+        return csHistoriesMap.get(cue).get(trialNumber-1);
     }
 
     public List<CsState> getCsHistory(Character cue){
         return csHistoriesMap.get(cue);
     }
 
-    public void recordState(Trail trail){
-        trailCounrer++;
+    public void recordState(Trial trial){
+        trialCounrer++;
         for(ConditionalStimulus cs : phase.getPhaseCues()) {
             CsState csState = new CsState();
             csState.Ve = cs.getAssociationExcitatory();
             csState.Vi = cs.getAssociationInhibitory();
             csState.Vnet = cs.getAssociationNet();
             csState.Alpha = cs.getAlpha();
-            csState.TrailNumber = trailCounrer;
-            csState.TrailDescription = trail.toString();
+            csState.TrialNumber = trialCounrer;
+            csState.TrialDescription = trial.toString();
             csHistoriesMap.get(cs.Name).add(csState);
         }
     }
@@ -62,8 +62,8 @@ public class GroupPhaseHistory {
         public double Vi;
         public double Vnet;
         public double Alpha;
-        public int TrailNumber;
-        public String TrailDescription;
+        public int TrialNumber;
+        public String TrialDescription;
     }
 
     public Phase getPhase(){
@@ -74,8 +74,8 @@ public class GroupPhaseHistory {
         return phase.toString();
     }
 
-    public int getNumberOfTrails(){
-        return phase.getNumberOfTrails();
+    public int getNumberOfTrials(){
+        return phase.getNumberOfTrials();
     }
 
     public String getGroupName() {

@@ -17,7 +17,7 @@
         <properties/>
         <border type="none"/>
         <children>
-          <component id="52432" class="javax.swing.JTable" binding="trailTable">
+          <component id="52432" class="javax.swing.JTable" binding="trialTable">
             <constraints/>
             <properties/>
           </component>

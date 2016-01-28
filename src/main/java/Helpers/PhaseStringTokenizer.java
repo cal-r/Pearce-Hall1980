@@ -26,30 +26,30 @@ public class PhaseStringTokenizer {
 
     private static final String TRAIL_TYPE_REGEX = "(\\d*)([a-zA-Z]+)([\\+\\-])";
 
-    public static List<TrailTypeTokens> getPhaseTokens(String phaseDescription) throws IllegalArgumentException {
+    public static List<TrialTypeTokens> getPhaseTokens(String phaseDescription) throws IllegalArgumentException {
 
-        List<TrailTypeTokens> tokensList = new ArrayList<>();
+        List<TrialTypeTokens> tokensList = new ArrayList<>();
 
-        for(String trailTypeDescription : getTrailTypes(phaseDescription)) {
+        for(String trialTypeDescription : getTrialTypes(phaseDescription)) {
 
-            TrailTypeTokens trailTokens = new TrailTypeTokens();
+            TrialTypeTokens trialTokens = new TrialTypeTokens();
 
-            if(!isEmpty(trailTypeDescription)) {
+            if(!isEmpty(trialTypeDescription)) {
 
-                Matcher matcher = matchTrailType(trailTypeDescription);
+                Matcher matcher = matchTrialType(trialTypeDescription);
 
-                trailTokens.numberOfTrails = getNumberOfTrails(matcher);
-                trailTokens.cueNames = getCueNames(matcher);
-                trailTokens.reinforcer = getReinforcer(matcher);
+                trialTokens.numberOfTrials = getNumberOfTrials(matcher);
+                trialTokens.cueNames = getCueNames(matcher);
+                trialTokens.reinforcer = getReinforcer(matcher);
             }
 
-            tokensList.add(trailTokens);
+            tokensList.add(trialTokens);
         }
 
         return tokensList;
     }
 
-    private static int getNumberOfTrails(Matcher matcher) {
+    private static int getNumberOfTrials(Matcher matcher) {
         String str = matcher.group(1);
         if(str.isEmpty()){
             return 1;
@@ -65,13 +65,13 @@ public class PhaseStringTokenizer {
         return matcher.group(3).charAt(0);
     }
 
-    private static String[] getTrailTypes(String phaseDescription) {
+    private static String[] getTrialTypes(String phaseDescription) {
         return phaseDescription.split(GuiStringConstants.TRAIL_TYPE_SEPARATOR);
     }
 
-    private static Matcher matchTrailType(String trailTypeDescription) throws IllegalArgumentException {
+    private static Matcher matchTrialType(String trialTypeDescription) throws IllegalArgumentException {
         Pattern pattern = Pattern.compile(TRAIL_TYPE_REGEX);
-        Matcher matcher = pattern.matcher(trailTypeDescription);
+        Matcher matcher = pattern.matcher(trialTypeDescription);
 
         if (!matcher.matches()) {
             throw new IllegalArgumentException();
@@ -80,16 +80,16 @@ public class PhaseStringTokenizer {
         return matcher;
     }
 
-    private static boolean isEmpty(String trailTypeDescription){
-        return trailTypeDescription.isEmpty() || trailTypeDescription.equals("0");
+    private static boolean isEmpty(String trialTypeDescription){
+        return trialTypeDescription.isEmpty() || trialTypeDescription.equals("0");
     }
 
-    public static class TrailTypeTokens {
-        public int numberOfTrails;
+    public static class TrialTypeTokens {
+        public int numberOfTrials;
         public char[] cueNames;
         public char reinforcer;
-        public TrailTypeTokens(){
-            numberOfTrails = 0;
+        public TrialTypeTokens(){
+            numberOfTrials = 0;
             cueNames = new char[0];
         }
     }

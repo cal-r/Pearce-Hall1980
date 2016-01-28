@@ -31,8 +31,8 @@ public class GraphBuilder {
     }
 
     private static void addLinePoints(GraphLine line, Character cue, GroupPhaseHistory gpHist){
-        for(int trailNo = 1; trailNo<=gpHist.getNumberOfTrails(); trailNo++){
-            line.addPoint(trailNo, gpHist.getState(cue, trailNo).Vnet);
+        for(int trialNo = 1; trialNo<=gpHist.getNumberOfTrials(); trialNo++){
+            line.addPoint(trialNo, gpHist.getState(cue, trialNo).Vnet);
         }
     }
 }

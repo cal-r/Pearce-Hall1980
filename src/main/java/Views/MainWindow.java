@@ -11,7 +11,7 @@ import javax.swing.*;
 public class MainWindow extends JFrame{
 
     private JPanel rootPane;
-    private JTable trailTable;
+    private JTable trialTable;
     private JButton setParamsButton;
     private JTable csParamsTable;
     private JTable globalParamsTable;
@@ -37,7 +37,7 @@ public class MainWindow extends JFrame{
     public void initSubElements() {
         controller = new MainWindowController();
         //tables
-        controller.initTrailTable(trailTable);
+        controller.initTrialTable(trialTable);
         controller.initCsParamsTable(csParamsTable);
         controller.initGlobalParamsTable(globalParamsTable);
         //buttons

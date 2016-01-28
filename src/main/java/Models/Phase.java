@@ -16,7 +16,7 @@ import java.util.Map;
  * Created by Rokas on 03/11/2015.
  */
 public class Phase {
-    public ArrayList<Trail> trails;
+    public ArrayList<Trial> trials;
 
     private boolean random;
     private Map<Character, ConditionalStimulus> phaseCsMap;
@@ -24,40 +24,40 @@ public class Phase {
 
     public Phase(int phaseId) {
         this.phaseId = phaseId;
-        trails = new ArrayList<>();
+        trials = new ArrayList<>();
     }
 
-    public GroupPhaseHistory simulateTrails(GammaParameter gamma)
+    public GroupPhaseHistory simulateTrials(GammaParameter gamma)
     {
         if(random){
-            return simulateTrailsRandomly(gamma);
+            return simulateTrialsRandomly(gamma);
         }
-        return simulateTrailsSequentially(gamma);
+        return simulateTrialsSequentially(gamma);
     }
 
-    private GroupPhaseHistory simulateTrailsSequentially(GammaParameter gamma){
+    private GroupPhaseHistory simulateTrialsSequentially(GammaParameter gamma){
         GroupPhaseHistory history = new GroupPhaseHistory(this);
-        for(int i=0;i<trails.size();i++){
-            Trail trail = trails.get(i);
+        for(int i=0;i<trials.size();i++){
+            Trial trial = trials.get(i);
             //The algorithm runs AFTER the first trial finishes and gives the first predictive value for the following trial.
-            history.recordState(trail);
-            trail.simulate(calcVNet(), gamma.getValue());
+            history.recordState(trial);
+            trial.simulate(calcVNet(), gamma.getValue());
         }
         return history;
     }
 
-    private GroupPhaseHistory simulateTrailsRandomly(GammaParameter gamma) {
+    private GroupPhaseHistory simulateTrialsRandomly(GammaParameter gamma) {
         List<ConditionalStimulus> csCopies = getCsCopies(); //preserve initial state of CSs
         List<GroupPhaseHistory> tempHistories = new ArrayList<>(); //stores every simulation
         //sim phase 1000 times
         for(int simNum = 0;simNum< DefaultValuesConstants.NUMBER_OF_RANDOM_COMBINATIONS; simNum++) {
             resetCues(csCopies);
             GroupPhaseHistory history = new GroupPhaseHistory(this);
-            int[] randomArray = RandomArrayGenerator.createRandomDistinctArray(trails.size());
-            for (int trailNo = 0; trailNo < trails.size(); trailNo++) {
-                Trail trail = trails.get(randomArray[trailNo]);
-                trail.simulate(calcVNet(), gamma.getValue());
-                history.recordState(trail);
+            int[] randomArray = RandomArrayGenerator.createRandomDistinctArray(trials.size());
+            for (int trialNo = 0; trialNo < trials.size(); trialNo++) {
+                Trial trial = trials.get(randomArray[trialNo]);
+                trial.simulate(calcVNet(), gamma.getValue());
+                history.recordState(trial);
             }
             tempHistories.add(history);
         }
@@ -66,7 +66,7 @@ public class Phase {
 
         //set cs properties to average values
         for(ConditionalStimulus cs : getPhaseCues()) {
-            GroupPhaseHistory.CsState csState = averageHistory.getState(cs.Name, trails.size()); //get the state of cs after the last trail
+            GroupPhaseHistory.CsState csState = averageHistory.getState(cs.Name, trials.size()); //get the state of cs after the last trial
             cs.setAlpha(csState.Alpha);
             cs.setAssociationExcitatory(csState.Ve);
             cs.setAssociationInhibitory(csState.Vi);
@@ -74,8 +74,8 @@ public class Phase {
         return averageHistory;
     }
 
-    public void addTrailType(List<Trail> trailsToAdd) { //all trails in the param are the same (e.g. 'AB+')
-        trails.addAll(trailsToAdd);
+    public void addTrialType(List<Trial> trialsToAdd) { //all trials in the param are the same (e.g. 'AB+')
+        trials.addAll(trialsToAdd);
     }
 
     public void reset(){
@@ -115,7 +115,7 @@ public class Phase {
 
     private void initCsMap(){
         phaseCsMap = new HashMap<>();
-        for(Trail t : trails){
+        for(Trial t : trials){
             for(ConditionalStimulus cs : t.cuesPresent){
                 if(!phaseCsMap.containsKey(cs.Name)){
                     phaseCsMap.put(cs.Name, cs);
@@ -132,7 +132,7 @@ public class Phase {
         this.random = isRandom;
     }
 
-    public int getNumberOfTrails(){ return trails.size(); }
+    public int getNumberOfTrials(){ return trials.size(); }
 
     public String toString(){
         return GuiStringConstants.getPhaseTitle(phaseId);

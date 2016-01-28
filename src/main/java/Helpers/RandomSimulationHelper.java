@@ -22,7 +22,7 @@ public class RandomSimulationHelper {
                     avgStates.get(stateId).Vi += statesToAdd.get(stateId).Vi;
                     avgStates.get(stateId).Vnet += statesToAdd.get(stateId).Vnet;
                     avgStates.get(stateId).Alpha += statesToAdd.get(stateId).Alpha;
-                    avgStates.get(stateId).TrailDescription = GuiStringConstants.RANDOM;
+                    avgStates.get(stateId).TrialDescription = GuiStringConstants.RANDOM;
                 }
             }
         }

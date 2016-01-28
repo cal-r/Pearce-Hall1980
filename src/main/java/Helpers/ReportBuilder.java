@@ -8,7 +8,7 @@ import Models.Parameters.CsParameter;
 import Models.Parameters.CsParameterPool;
 import Models.Parameters.Parameter;
 import Models.Phase;
-import Models.Trail;
+import Models.Trial;
 import ViewModels.GroupReportViewModel;
 
 import java.util.ArrayList;
@@ -84,11 +84,11 @@ public class ReportBuilder {
         currRowId = rowId;
         int colId = 1;
 
-        for(int trailNo=1;trailNo<= groupPhaseHistory.getNumberOfTrails();trailNo++) {
-            report.setCell(currRowId++, colId, String.format("trial %1$d", trailNo));
+        for(int trialNo=1;trialNo<= groupPhaseHistory.getNumberOfTrials();trialNo++) {
+            report.setCell(currRowId++, colId, String.format("trial %1$d", trialNo));
             for(char csname : groupPhaseHistory.getCues()) {
-                GroupPhaseHistory.CsState state = groupPhaseHistory.getState(csname, trailNo);
-                if(csname == (Character)report.getCell(currRowId, 0) && trailNo == state.TrailNumber) { //sanity check
+                GroupPhaseHistory.CsState state = groupPhaseHistory.getState(csname, trialNo);
+                if(csname == (Character)report.getCell(currRowId, 0) && trialNo == state.TrialNumber) { //sanity check
                     report.setCell(currRowId++, colId, getValue(state, variable));
                 }
             }
@@ -101,30 +101,30 @@ public class ReportBuilder {
     private static void insertPhaseDescription(GroupReportViewModel report, int rowId, Phase phase){
         int colId = 0;
         report.setCell(rowId, colId++, phase.toString()); //append name ("Phase 69")
-        report.setCell(rowId, colId++, constructTrailsString(phase.trails));
+        report.setCell(rowId, colId++, constructTrialsString(phase.trials));
         colId++;
         report.setCell(rowId, colId++, GuiStringConstants.RANDOM + ": "+ phase.isRandom());
     }
 
-    private static String constructTrailsString(List<Trail> trails){
+    private static String constructTrialsString(List<Trial> trials){
         HashMap<String, Integer> counts = new HashMap<>();
-        for(int tid = 0; tid<trails.size(); tid++){
-            String trailDesc = trails.get(tid).toString();
-            if(!counts.containsKey(trailDesc)){
-                counts.put(trailDesc, 0);
+        for(int tid = 0; tid<trials.size(); tid++){
+            String trialDesc = trials.get(tid).toString();
+            if(!counts.containsKey(trialDesc)){
+                counts.put(trialDesc, 0);
             }
-            //increment trail type count
-            counts.put(trailDesc, counts.get(trailDesc)+1); // in C#: counts[trailDesc]++, stupid java..
+            //increment trial type count
+            counts.put(trialDesc, counts.get(trialDesc)+1); // in C#: counts[trialDesc]++, stupid java..
         }
         //form 40AB+/30AB-
         String str = "";
         boolean slashNeeded = false;
-        for(String trailDesc : counts.keySet()){
+        for(String trialDesc : counts.keySet()){
             if(slashNeeded){
                 str+= GuiStringConstants.TRAIL_TYPE_SEPARATOR;
             }
-            str+=counts.get(trailDesc);
-            str+=trailDesc;
+            str+=counts.get(trialDesc);
+            str+=trialDesc;
             slashNeeded = true;
         }
         return str;

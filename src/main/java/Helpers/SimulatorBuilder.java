@@ -5,7 +5,7 @@ import Models.Group;
 import Models.Parameters.CsParameterPool;
 import Models.Phase;
 import Models.Simulator;
-import ViewModels.TrailTableModel;
+import ViewModels.TrialTableModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,7 +17,7 @@ import java.util.Map;
  */
 public class SimulatorBuilder {
 
-    public static Simulator build(TrailTableModel tableModel){
+    public static Simulator build(TrialTableModel tableModel){
         CsParameterPool csParameterPool = new CsParameterPool();
         GroupBuilder groupBuilder = new GroupBuilder(csParameterPool);
 
@@ -45,7 +45,7 @@ public class SimulatorBuilder {
             phases = new ArrayList<>();
 
             for(int i=0;i<phaseDescriptions.size();i++){
-                List<PhaseStringTokenizer.TrailTypeTokens> phaseTokens = PhaseStringTokenizer.getPhaseTokens(phaseDescriptions.get(i));
+                List<PhaseStringTokenizer.TrialTypeTokens> phaseTokens = PhaseStringTokenizer.getPhaseTokens(phaseDescriptions.get(i));
                 updateCsMaps(phaseTokens);
                 Phase phase = PhaseParser.ParsePhase(phaseTokens, csMap, i);
                 phase.setRandom(randomSelections.get(i));
@@ -55,9 +55,9 @@ public class SimulatorBuilder {
             return new Group(groupName, csMap, phases);
         }
 
-        private void updateCsMaps(List<PhaseStringTokenizer.TrailTypeTokens> phaseTokens){
-            for(PhaseStringTokenizer.TrailTypeTokens trailTypeTokens : phaseTokens){
-                for(char cueName : trailTypeTokens.cueNames){
+        private void updateCsMaps(List<PhaseStringTokenizer.TrialTypeTokens> phaseTokens){
+            for(PhaseStringTokenizer.TrialTypeTokens trialTypeTokens : phaseTokens){
+                for(char cueName : trialTypeTokens.cueNames){
                     if(!csParameterPool.contains(cueName)){
                         csParameterPool.createParameters(cueName);
                     }

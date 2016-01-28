@@ -5,7 +5,7 @@ import Models.ConditionalStimulus;
 import Models.History.GroupPhaseHistory;
 import Models.Parameters.GammaParameter;
 import Models.Phase;
-import Models.Trail;
+import Models.Trial;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,7 +23,7 @@ public class PhaseTests extends junit.framework.TestCase {
 
         //40AB+/40AB-
         Phase phase = CreatePhase40(true, false, false);
-        GroupPhaseHistory hist = phase.simulateTrails(gamma);
+        GroupPhaseHistory hist = phase.simulateTrials(gamma);
 
         double expectedVnet = 0.08489972;
         //        excel gives 0.08747151
@@ -47,7 +47,7 @@ public class PhaseTests extends junit.framework.TestCase {
 
         //40AB+/40AB-
         Phase phase = CreatePhase40(false, true, false);
-        GroupPhaseHistory hist = phase.simulateTrails(gamma);
+        GroupPhaseHistory hist = phase.simulateTrials(gamma);
 
         double expectedVnet = 0.500572221;
         //        excel gives 0.500433494
@@ -70,7 +70,7 @@ public class PhaseTests extends junit.framework.TestCase {
 
         //random test
         Phase phase = CreatePhase40(false, true, true);
-        GroupPhaseHistory hist = phase.simulateTrails(gamma);
+        GroupPhaseHistory hist = phase.simulateTrials(gamma);
 
         //test state of cues after simulation
         for(ConditionalStimulus cs : phase.getPhaseCues()) {
@@ -96,8 +96,8 @@ public class PhaseTests extends junit.framework.TestCase {
         //should be the same
         Phase phaseRand = CreatePhase40(true, true, true);
             Phase phaseSeq = CreatePhase40(true, true, false);
-        GroupPhaseHistory histRand = phaseRand.simulateTrails(gamma);
-        GroupPhaseHistory histSeq = phaseSeq.simulateTrails(gamma);
+        GroupPhaseHistory histRand = phaseRand.simulateTrials(gamma);
+        GroupPhaseHistory histSeq = phaseSeq.simulateTrials(gamma);
 
         //test state of cues after simulation
         ConditionalStimulus csRand = phaseRand.getPhaseCues().get(0);
@@ -106,7 +106,7 @@ public class PhaseTests extends junit.framework.TestCase {
 
         //test return value
         for(Character csname : histRand.getCues()) {
-            for(int tNum = 1;tNum<=phaseRand.trails.size();tNum++){
+            for(int tNum = 1;tNum<=phaseRand.trials.size();tNum++){
                 assertEquals(histSeq.getState(csname, tNum).Vnet, histRand.getState(csname, tNum).Vnet, DefaultValuesConstants.ROUNDING_PRECISION);
                 assertEquals(histSeq.getState(csname, tNum).Ve, histRand.getState(csname, tNum).Ve, DefaultValuesConstants.ROUNDING_PRECISION);
                 assertEquals(histSeq.getState(csname, tNum).Vi, histRand.getState(csname, tNum).Vi, DefaultValuesConstants.ROUNDING_PRECISION);
@@ -117,18 +117,18 @@ public class PhaseTests extends junit.framework.TestCase {
     //40AB+/40AB-
     private static Phase CreatePhase40(boolean usPresent1, boolean usPresent2, boolean isRandom){
         Phase phase = new Phase(1);
-        HashMap<Character, ConditionalStimulus> phaseCues = TrailTests.createCsMap("AB".toCharArray());
-        phase.addTrailType(createTrailType(phaseCues, "AB", 40, usPresent1));
-        phase.addTrailType(createTrailType(phaseCues, "AB", 40, usPresent2));
+        HashMap<Character, ConditionalStimulus> phaseCues = TrialTests.createCsMap("AB".toCharArray());
+        phase.addTrialType(createTrialType(phaseCues, "AB", 40, usPresent1));
+        phase.addTrialType(createTrialType(phaseCues, "AB", 40, usPresent2));
         phase.setRandom(isRandom);
         return phase;
     }
 
-    private static List<Trail> createTrailType(HashMap<Character, ConditionalStimulus> phaseCues, String presentCSs, int count, boolean usPresent){
-        List<Trail> trailType = new ArrayList<>();
+    private static List<Trial> createTrialType(HashMap<Character, ConditionalStimulus> phaseCues, String presentCSs, int count, boolean usPresent){
+        List<Trial> trialType = new ArrayList<>();
         for(int i=0;i<count;i++){
-            trailType.add(TrailTests.createTrail(phaseCues, presentCSs.toCharArray(), usPresent));
+            trialType.add(TrialTests.createTrial(phaseCues, presentCSs.toCharArray(), usPresent));
         }
-        return trailType;
+        return trialType;
     }
 }

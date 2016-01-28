@@ -4,7 +4,7 @@ package Constants;
  * Created by Rokas on 03/11/2015.
  */
 public class GuiStringConstants {
-    public static final String TRAIL_TABLE_ERROR = "ERROR: invalid input in trail table";
+    public static final String TRAIL_TABLE_ERROR = "ERROR: invalid input in trial table";
 
     public static final String GROUP_NAME = "Group Name";
     public static final String CS_PARAMETER = "Cs Parameter";
@@ -23,5 +23,5 @@ public class GuiStringConstants {
     }
 
     public static final String CHART_Y_AXIS_LABEL = "Vnet";
-    public static final String CHART_X_AXIS_LABEL = "Trails";
+    public static final String CHART_X_AXIS_LABEL = "Trials";
 }

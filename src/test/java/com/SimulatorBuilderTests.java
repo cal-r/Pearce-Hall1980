@@ -3,7 +3,7 @@ package com;
 import Helpers.SimulatorBuilder;
 import Models.ConditionalStimulus;
 import Models.Simulator;
-import ViewModels.TrailTableModel;
+import ViewModels.TrialTableModel;
 import org.junit.Test;
 
 /**
@@ -13,7 +13,7 @@ public class SimulatorBuilderTests extends junit.framework.TestCase {
 
     @Test
     public void testSimBuilder1() throws Exception{
-        TrailTableModel tableModel = new TrailTableModel();
+        TrialTableModel tableModel = new TrialTableModel();
         tableModel.setValueAt("group name test", 0, 0);
         tableModel.setValueAt("2AB+", 0, 1);
         Simulator sim = SimulatorBuilder.build(tableModel);
@@ -24,13 +24,13 @@ public class SimulatorBuilderTests extends junit.framework.TestCase {
         assertTrue(sim.getCsParameters().get(0).CueName == 'A');
         assertTrue(sim.getCsParameters().get(1).CueName == 'B');
         assertTrue(sim.getGroups().get(0).phases.size()==1);
-        assertTrue(sim.getGroups().get(0).phases.get(0).trails.size()==2);
+        assertTrue(sim.getGroups().get(0).phases.get(0).trials.size()==2);
         assertFalse(sim.getGroups().get(0).phases.get(0).isRandom());
     }
 
     @Test
     public void testSimBuilder2() throws Exception{
-        TrailTableModel tableModel = new TrailTableModel();
+        TrialTableModel tableModel = new TrialTableModel();
         tableModel.setValueAt("group name test", 0, 0);
         tableModel.setValueAt("2AAB+", 0, 1);
         tableModel.addPhase();
@@ -44,18 +44,18 @@ public class SimulatorBuilderTests extends junit.framework.TestCase {
         assertTrue(sim.getCsParameters().get(0).CueName == 'A');
         assertTrue(sim.getCsParameters().get(1).CueName == 'B');
         assertTrue(sim.getGroups().get(0).phases.size() == 2);
-        assertTrue(sim.getGroups().get(0).phases.get(0).trails.size() == 2);
+        assertTrue(sim.getGroups().get(0).phases.get(0).trials.size() == 2);
         assertFalse(sim.getGroups().get(0).phases.get(0).isRandom());
-        assertTrue(sim.getGroups().get(0).phases.get(1).trails.size() == 5);
+        assertTrue(sim.getGroups().get(0).phases.get(1).trials.size() == 5);
         assertTrue(sim.getGroups().get(0).phases.get(1).isRandom());
-        ConditionalStimulus csB_fromP1 = sim.getGroups().get(0).phases.get(0).trails.get(0).cuesPresent.get(1);
-        ConditionalStimulus csB_fromP2 = sim.getGroups().get(0).phases.get(1).trails.get(0).cuesPresent.get(0);
+        ConditionalStimulus csB_fromP1 = sim.getGroups().get(0).phases.get(0).trials.get(0).cuesPresent.get(1);
+        ConditionalStimulus csB_fromP2 = sim.getGroups().get(0).phases.get(1).trials.get(0).cuesPresent.get(0);
         assertTrue(csB_fromP1 == csB_fromP2); // has to be the same object!
     }
 
     @Test
     public void testSimBuilder3() throws Exception {
-        TrailTableModel tableModel = new TrailTableModel();
+        TrialTableModel tableModel = new TrialTableModel();
         tableModel.addGroup();
         tableModel.addPhase();
         //group 1
@@ -78,20 +78,20 @@ public class SimulatorBuilderTests extends junit.framework.TestCase {
         assertTrue(sim.getCsParameters().get(1).CueName == 'B');
         //group 1
         assertTrue(sim.getGroups().get(0).phases.size() == 2);
-        assertTrue(sim.getGroups().get(0).phases.get(0).trails.size() == 2);
+        assertTrue(sim.getGroups().get(0).phases.get(0).trials.size() == 2);
         assertFalse(sim.getGroups().get(0).phases.get(0).isRandom());
-        assertTrue(sim.getGroups().get(0).phases.get(1).trails.size() == 5);
+        assertTrue(sim.getGroups().get(0).phases.get(1).trials.size() == 5);
         assertFalse(sim.getGroups().get(0).phases.get(1).isRandom());
         //group 2
-        assertTrue(sim.getGroups().get(1).phases.get(0).trails.size() == 1);
+        assertTrue(sim.getGroups().get(1).phases.get(0).trials.size() == 1);
         assertTrue(sim.getGroups().get(1).phases.get(0).isRandom());
-        assertTrue(sim.getGroups().get(1).phases.get(1).trails.size() == 5);
+        assertTrue(sim.getGroups().get(1).phases.get(1).trials.size() == 5);
         assertFalse(sim.getGroups().get(1).phases.get(1).isRandom());
 
-        ConditionalStimulus csB_fromP1G1 = sim.getGroups().get(0).phases.get(0).trails.get(0).cuesPresent.get(1);
-        ConditionalStimulus csB_fromP2G1 = sim.getGroups().get(0).phases.get(1).trails.get(1).cuesPresent.get(0);
-        ConditionalStimulus csB_fromP1G2 = sim.getGroups().get(1).phases.get(0).trails.get(0).cuesPresent.get(1);
-        ConditionalStimulus csB_fromP2G2 = sim.getGroups().get(1).phases.get(1).trails.get(1).cuesPresent.get(0);
+        ConditionalStimulus csB_fromP1G1 = sim.getGroups().get(0).phases.get(0).trials.get(0).cuesPresent.get(1);
+        ConditionalStimulus csB_fromP2G1 = sim.getGroups().get(0).phases.get(1).trials.get(1).cuesPresent.get(0);
+        ConditionalStimulus csB_fromP1G2 = sim.getGroups().get(1).phases.get(0).trials.get(0).cuesPresent.get(1);
+        ConditionalStimulus csB_fromP2G2 = sim.getGroups().get(1).phases.get(1).trials.get(1).cuesPresent.get(0);
 
         //cs is shared among phases but not among groups
         //csparam is shared among groups

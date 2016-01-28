@@ -50,7 +50,7 @@ public class Simulator {
             GroupHistory groupHistory = createGroupHistory(group);
             for(Phase phase : group.phases) {
                 groupHistory.add(
-                        phase.simulateTrails(gamma));
+                        phase.simulateTrials(gamma));
             }
             simHistory.add(groupHistory);
         }
