@@ -3,7 +3,7 @@ package Controllers;
 import Constants.GuiStringConstants;
 import Helpers.GraphDatasetHelper;
 import Helpers.GraphStringsHelper;
-import Helpers.GuiHelper;
+import Helpers.ChartPainer;
 import Models.Graphing.Graph;
 import Models.Graphing.GraphLine;
 import Models.Graphing.GraphLineGroup;
@@ -23,7 +23,7 @@ import java.util.*;
 /**
  * Created by Rokas on 22/01/2016.
  */
-public class GraphWindowController implements ActionListener{
+public class GraphWindowController implements ActionListener {
     private Graph graphData;
     private GraphWindow window;
     private JFreeChart chart;
@@ -37,16 +37,6 @@ public class GraphWindowController implements ActionListener{
         this.chart = createChart();
         window = new GraphWindow(chart);
         addCheckboxes();
-    }
-
-    private void addCheckboxes(){
-        GridBagConstraints constraints = createGridBagConstraints();
-        for(GraphLineGroup lineGroup : graphData.getGroups()){
-            addCheckBox(constraints, true, lineGroup);
-            for (GraphLine line : lineGroup.getLines()){
-               addCheckBox(constraints, false, lineGroup, line);
-            }
-        }
     }
 
     @Override
@@ -93,7 +83,19 @@ public class GraphWindowController implements ActionListener{
         domainAxis.setAutoRange(true);
         domainAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
 
+        new ChartPainer(chart, renderer, graphData);
+
         return chart;
+    }
+
+    private void addCheckboxes(){
+        GridBagConstraints constraints = createGridBagConstraints();
+        for(GraphLineGroup lineGroup : graphData.getGroups()){
+            addCheckBox(constraints, true, lineGroup);
+            for (GraphLine line : lineGroup.getLines()){
+                addCheckBox(constraints, false, lineGroup, line);
+            }
+        }
     }
 
     private GridBagConstraints createGridBagConstraints(){

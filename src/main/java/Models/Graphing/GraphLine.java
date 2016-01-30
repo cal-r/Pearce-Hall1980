@@ -1,7 +1,6 @@
 package Models.Graphing;
 
 
-import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
@@ -11,8 +10,11 @@ import java.util.ArrayList;
 public class GraphLine {
     private boolean visible;
     private int displayId;
+    private Marker marker;
+
     private String name;
     private java.util.List<Point2D.Double> dataPoints;
+    private java.util.List<GraphLine> linkedLines;
 
     public GraphLine(String name){
         this.name = name;
@@ -38,6 +40,27 @@ public class GraphLine {
 
     public void addPoint(double x, double y){
         dataPoints.add(new Point2D.Double(x, y));
+    }
+
+    public void setLinkedLines(java.util.List<GraphLine> linkedLines){
+        this.linkedLines = linkedLines;
+    }
+
+    public boolean isMarkerSet(){
+        return marker != null;
+    }
+
+    public Marker getMarker() {
+        return marker;
+    }
+
+    public void setMarker(Marker marker) {
+        if(!isMarkerSet()) {
+            this.marker = marker;
+            for(GraphLine linkedLine : linkedLines){
+                linkedLine.marker = marker;
+            }
+        }
     }
 
     public java.util.List<Point2D.Double> getDataPoints(){

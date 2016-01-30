@@ -31,10 +31,6 @@ public class GraphWindow extends JFrame{
         chartPanel = createChartPanel();
     }
 
-    public JFreeChart getChart() {
-        return chart;
-    }
-
     private ChartPanel createChartPanel(){
         return new ChartPanel( chart );
     }

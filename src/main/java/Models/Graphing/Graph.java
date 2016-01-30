@@ -32,6 +32,10 @@ public class Graph {
         linesGroupsMap.get(groupName).setVisible(command, visible);
     }
 
+    public GraphLineGroup getGroup(String groupName){
+        return linesGroupsMap.get(groupName);
+    }
+
     public List<GraphLineGroup> getGroups(){
         return new ArrayList<>(linesGroupsMap.values());
     }
