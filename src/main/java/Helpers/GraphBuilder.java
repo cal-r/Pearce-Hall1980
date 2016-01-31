@@ -1,5 +1,6 @@
 package Helpers;
 
+import Models.ConditionalStimulus;
 import Models.Graphing.Graph;
 import Models.Graphing.GraphLine;
 import Models.Graphing.GraphLineGroup;
@@ -25,8 +26,8 @@ public class GraphBuilder {
         for(PhaseHistory phaseHistory : history.getPhases()){
             Graph graph = new Graph(phaseHistory.getPhaseName());
             for(GroupPhaseHistory gpHist : phaseHistory){
-                for(Character cue : gpHist.getCues()){
-                    GraphLine line = new GraphLine(cue.toString());
+                for(ConditionalStimulus cue : gpHist.getCues()){
+                    GraphLine line = new GraphLine(String.valueOf(cue.Name));
                     addLinePoints(line, cue, gpHist);
                     graph.addLine(gpHist.getGroupName(), line);
                     setLink(linkedLinesMap, line);
@@ -37,7 +38,7 @@ public class GraphBuilder {
         return graphs;
     }
 
-    private static void addLinePoints(GraphLine line, Character cue, GroupPhaseHistory gpHist){
+    private static void addLinePoints(GraphLine line, ConditionalStimulus cue, GroupPhaseHistory gpHist){
         for(int trialNo = 1; trialNo<=gpHist.getNumberOfTrials(); trialNo++){
             line.addPoint(trialNo, gpHist.getState(cue, trialNo).Vnet);
         }

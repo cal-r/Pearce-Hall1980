@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class GroupPhaseHistory {
     private GroupPhase groupPhase;
-    private HashMap<Character, List<CsState>> csHistoriesMap;
+    private HashMap<ConditionalStimulus, List<CsState>> csHistoriesMap;
     private String groupName;
     private int trialCounrer;
 
@@ -24,15 +24,15 @@ public class GroupPhaseHistory {
         trialCounrer = 0;
     }
 
-    public List<Character> getCues(){
+    public List<ConditionalStimulus> getCues(){
         return new ArrayList<>(csHistoriesMap.keySet());
     }
 
-    public CsState getState(Character cue, int trialNumber) {
+    public CsState getState(ConditionalStimulus cue, int trialNumber) {
         return csHistoriesMap.get(cue).get(trialNumber-1);
     }
 
-    public List<CsState> getCsHistory(Character cue){
+    public List<CsState> getCsHistory(ConditionalStimulus cue){
         return csHistoriesMap.get(cue);
     }
 
@@ -46,14 +46,14 @@ public class GroupPhaseHistory {
             csState.Alpha = cs.getAlpha();
             csState.TrialNumber = trialCounrer;
             csState.TrialDescription = trial.toString();
-            csHistoriesMap.get(cs.Name).add(csState);
+            csHistoriesMap.get(cs).add(csState);
         }
     }
 
     private void initHistoriesMap(){
         csHistoriesMap = new HashMap<>();
         for(ConditionalStimulus cs : groupPhase.getPhaseCues()){
-            csHistoriesMap.put(cs.Name, new ArrayList<CsState>());
+            csHistoriesMap.put(cs, new ArrayList<CsState>());
         }
     }
 

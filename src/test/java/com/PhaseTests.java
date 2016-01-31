@@ -34,8 +34,8 @@ public class PhaseTests extends junit.framework.TestCase {
         }
 
         //test return value
-        for(Character csname : hist.getCues()) {
-            assertEquals(expectedVnet, hist.getState(csname, 80).Vnet, DefaultValuesConstants.ROUNDING_PRECISION);
+        for(ConditionalStimulus cs : hist.getCues()) {
+            assertEquals(expectedVnet, hist.getState(cs, 80).Vnet, DefaultValuesConstants.ROUNDING_PRECISION);
         }
 
     }
@@ -58,8 +58,8 @@ public class PhaseTests extends junit.framework.TestCase {
         }
 
         //test return value
-        for(Character csname : hist.getCues()) {
-            assertEquals(expectedVnet, hist.getState(csname, 79).Vnet, DefaultValuesConstants.ROUNDING_PRECISION);
+        for(ConditionalStimulus cs : hist.getCues()) {
+            assertEquals(expectedVnet, hist.getState(cs, 79).Vnet, DefaultValuesConstants.ROUNDING_PRECISION);
         }
     }
 
@@ -80,11 +80,11 @@ public class PhaseTests extends junit.framework.TestCase {
 
 
         //test return value
-        for(Character csname : hist.getCues()) {
-            assertTrue(hist.getState(csname, 80).Vnet > 0.2);
-            assertTrue(hist.getState(csname, 80).Vnet < 0.5);
-            assertTrue(hist.getState(csname, 20).Ve < 0.33);
-            assertTrue(hist.getState(csname, 20).Vi < 0.1);
+        for(ConditionalStimulus cs : hist.getCues()) {
+            assertTrue(hist.getState(cs, 80).Vnet > 0.2);
+            assertTrue(hist.getState(cs, 80).Vnet < 0.5);
+            assertTrue(hist.getState(cs, 20).Ve < 0.33);
+            assertTrue(hist.getState(cs, 20).Vi < 0.1);
         }
     }
 
@@ -105,11 +105,11 @@ public class PhaseTests extends junit.framework.TestCase {
         assertEquals(csSeq.getAssociationNet(), csRand.getAssociationNet(), DefaultValuesConstants.ROUNDING_PRECISION);
 
         //test return value
-        for(Character csname : histRand.getCues()) {
+        for(ConditionalStimulus cs : histRand.getCues()) {
             for(int tNum = 1;tNum<= groupPhaseRand.trials.size();tNum++){
-                assertEquals(histSeq.getState(csname, tNum).Vnet, histRand.getState(csname, tNum).Vnet, DefaultValuesConstants.ROUNDING_PRECISION);
-                assertEquals(histSeq.getState(csname, tNum).Ve, histRand.getState(csname, tNum).Ve, DefaultValuesConstants.ROUNDING_PRECISION);
-                assertEquals(histSeq.getState(csname, tNum).Vi, histRand.getState(csname, tNum).Vi, DefaultValuesConstants.ROUNDING_PRECISION);
+                assertEquals(histSeq.getState(cs, tNum).Vnet, histRand.getState(cs, tNum).Vnet, DefaultValuesConstants.ROUNDING_PRECISION);
+                assertEquals(histSeq.getState(cs, tNum).Ve, histRand.getState(cs, tNum).Ve, DefaultValuesConstants.ROUNDING_PRECISION);
+                assertEquals(histSeq.getState(cs, tNum).Vi, histRand.getState(cs, tNum).Vi, DefaultValuesConstants.ROUNDING_PRECISION);
             }
         }
     }
