@@ -21,7 +21,7 @@ public class GroupPhaseHistory {
     public GroupPhaseHistory(GroupPhase groupPhase){
         this.groupPhase = groupPhase;
         initHistoriesMap();
-        trialCounrer =0;
+        trialCounrer = 0;
     }
 
     public List<Character> getCues(){
@@ -55,15 +55,6 @@ public class GroupPhaseHistory {
         for(ConditionalStimulus cs : groupPhase.getPhaseCues()){
             csHistoriesMap.put(cs.Name, new ArrayList<CsState>());
         }
-    }
-
-    public class CsState{
-        public double Ve;
-        public double Vi;
-        public double Vnet;
-        public double Alpha;
-        public int TrialNumber;
-        public String TrialDescription;
     }
 
     public GroupPhase getGroupPhase(){
