@@ -2,6 +2,7 @@ package Helpers;
 
 import Constants.GuiStringConstants;
 import Models.GroupPhase;
+import Models.History.CsState;
 import Models.History.GroupHistory;
 import Models.History.GroupPhaseHistory;
 import Models.History.SimulationHistory;
@@ -87,7 +88,7 @@ public class ReportBuilder {
         for(int trialNo=1;trialNo<= groupPhaseHistory.getNumberOfTrials();trialNo++) {
             report.setCell(currRowId++, colId, String.format("trial %1$d", trialNo));
             for(char csname : groupPhaseHistory.getCues()) {
-                GroupPhaseHistory.CsState state = groupPhaseHistory.getState(csname, trialNo);
+                CsState state = groupPhaseHistory.getState(csname, trialNo);
                 if(csname == (Character)report.getCell(currRowId, 0) && trialNo == state.TrialNumber) { //sanity check
                     report.setCell(currRowId++, colId, getValue(state, variable));
                 }
@@ -131,7 +132,7 @@ public class ReportBuilder {
     }
 
     private enum Variable { ALPHA, VE, VI, VNET };
-    private static double getValue(GroupPhaseHistory.CsState state, Variable variable){
+    private static double getValue(CsState state, Variable variable){
         switch (variable){
             case ALPHA: return state.Alpha;
             case VE: return state.Ve;

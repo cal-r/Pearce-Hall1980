@@ -4,6 +4,7 @@ import Constants.DefaultValuesConstants;
 import Constants.GuiStringConstants;
 import Helpers.RandomArrayGenerator;
 import Helpers.RandomSimulationHelper;
+import Models.History.CsState;
 import Models.History.GroupPhaseHistory;
 import Models.Parameters.GammaParameter;
 
@@ -66,7 +67,7 @@ public class GroupPhase {
 
         //set cs properties to average values
         for(ConditionalStimulus cs : getPhaseCues()) {
-            GroupPhaseHistory.CsState csState = averageHistory.getState(cs.Name, trials.size()); //get the state of cs after the last trial
+            CsState csState = averageHistory.getState(cs.Name, trials.size()); //get the state of cs after the last trial
             cs.setAlpha(csState.Alpha);
             cs.setAssociationExcitatory(csState.Ve);
             cs.setAssociationInhibitory(csState.Vi);

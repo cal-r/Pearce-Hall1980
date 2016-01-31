@@ -2,6 +2,7 @@ package Helpers;
 
 import Constants.DefaultValuesConstants;
 import Constants.GuiStringConstants;
+import Models.History.CsState;
 import Models.History.GroupPhaseHistory;
 
 import java.util.List;
@@ -15,8 +16,8 @@ public class RandomSimulationHelper {
         GroupPhaseHistory avgHist = list.get(0);
         for(int i=1;i<list.size();i++){
             for(char csName : avgHist.getCues()){
-                List<GroupPhaseHistory.CsState> statesToAdd = list.get(i).getCsHistory(csName);
-                List<GroupPhaseHistory.CsState> avgStates = avgHist.getCsHistory(csName);
+                List<CsState> statesToAdd = list.get(i).getCsHistory(csName);
+                List<CsState> avgStates = avgHist.getCsHistory(csName);
                 for(int stateId=0;stateId<avgStates.size();stateId++){
                     avgStates.get(stateId).Ve += statesToAdd.get(stateId).Ve;
                     avgStates.get(stateId).Vi += statesToAdd.get(stateId).Vi;
@@ -28,7 +29,7 @@ public class RandomSimulationHelper {
         }
         //divide by 1000
         for(char csName : avgHist.getCues()){
-            List<GroupPhaseHistory.CsState> avgStates = avgHist.getCsHistory(csName);
+            List<CsState> avgStates = avgHist.getCsHistory(csName);
             for(int stateId=0;stateId<avgStates.size();stateId++){
                 avgStates.get(stateId).Ve /= DefaultValuesConstants.NUMBER_OF_RANDOM_COMBINATIONS;
                 avgStates.get(stateId).Vi /= DefaultValuesConstants.NUMBER_OF_RANDOM_COMBINATIONS;
