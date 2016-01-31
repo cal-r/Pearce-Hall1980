@@ -2,9 +2,9 @@ package com;
 
 import Constants.DefaultValuesConstants;
 import Models.ConditionalStimulus;
+import Models.GroupPhase;
 import Models.History.GroupPhaseHistory;
 import Models.Parameters.GammaParameter;
-import Models.Phase;
 import Models.Trial;
 
 import java.util.ArrayList;
@@ -22,14 +22,14 @@ public class PhaseTests extends junit.framework.TestCase {
         gamma.setValue(0.1);
 
         //40AB+/40AB-
-        Phase phase = CreatePhase40(true, false, false);
-        GroupPhaseHistory hist = phase.simulateTrials(gamma);
+        GroupPhase groupPhase = CreatePhase40(true, false, false);
+        GroupPhaseHistory hist = groupPhase.simulateTrials(gamma);
 
         double expectedVnet = 0.08489972;
         //        excel gives 0.08747151
 
         //test state of cues after simulation
-        for(ConditionalStimulus cs : phase.getPhaseCues()) {
+        for(ConditionalStimulus cs : groupPhase.getPhaseCues()) {
             assertEquals(expectedVnet, cs.getAssociationNet(), DefaultValuesConstants.ROUNDING_PRECISION);
         }
 
@@ -46,14 +46,14 @@ public class PhaseTests extends junit.framework.TestCase {
         gamma.setValue(0.1);
 
         //40AB+/40AB-
-        Phase phase = CreatePhase40(false, true, false);
-        GroupPhaseHistory hist = phase.simulateTrials(gamma);
+        GroupPhase groupPhase = CreatePhase40(false, true, false);
+        GroupPhaseHistory hist = groupPhase.simulateTrials(gamma);
 
         double expectedVnet = 0.500572221;
         //        excel gives 0.500433494
 
         //test state of cues after simulation
-        for(ConditionalStimulus cs : phase.getPhaseCues()) {
+        for(ConditionalStimulus cs : groupPhase.getPhaseCues()) {
             assertEquals(expectedVnet, cs.getAssociationNet(), DefaultValuesConstants.ROUNDING_PRECISION);
         }
 
@@ -69,11 +69,11 @@ public class PhaseTests extends junit.framework.TestCase {
         gamma.setValue(0.1);
 
         //random test
-        Phase phase = CreatePhase40(false, true, true);
-        GroupPhaseHistory hist = phase.simulateTrials(gamma);
+        GroupPhase groupPhase = CreatePhase40(false, true, true);
+        GroupPhaseHistory hist = groupPhase.simulateTrials(gamma);
 
         //test state of cues after simulation
-        for(ConditionalStimulus cs : phase.getPhaseCues()) {
+        for(ConditionalStimulus cs : groupPhase.getPhaseCues()) {
             assertTrue(cs.getAssociationNet() > 0.2);
             assertTrue(cs.getAssociationNet() < 0.5);
         }
@@ -94,19 +94,19 @@ public class PhaseTests extends junit.framework.TestCase {
         gamma.setValue(0.1);
 
         //should be the same
-        Phase phaseRand = CreatePhase40(true, true, true);
-            Phase phaseSeq = CreatePhase40(true, true, false);
-        GroupPhaseHistory histRand = phaseRand.simulateTrials(gamma);
-        GroupPhaseHistory histSeq = phaseSeq.simulateTrials(gamma);
+        GroupPhase groupPhaseRand = CreatePhase40(true, true, true);
+            GroupPhase groupPhaseSeq = CreatePhase40(true, true, false);
+        GroupPhaseHistory histRand = groupPhaseRand.simulateTrials(gamma);
+        GroupPhaseHistory histSeq = groupPhaseSeq.simulateTrials(gamma);
 
         //test state of cues after simulation
-        ConditionalStimulus csRand = phaseRand.getPhaseCues().get(0);
-        ConditionalStimulus csSeq = phaseSeq.getPhaseCues().get(0);
+        ConditionalStimulus csRand = groupPhaseRand.getPhaseCues().get(0);
+        ConditionalStimulus csSeq = groupPhaseSeq.getPhaseCues().get(0);
         assertEquals(csSeq.getAssociationNet(), csRand.getAssociationNet(), DefaultValuesConstants.ROUNDING_PRECISION);
 
         //test return value
         for(Character csname : histRand.getCues()) {
-            for(int tNum = 1;tNum<=phaseRand.trials.size();tNum++){
+            for(int tNum = 1;tNum<= groupPhaseRand.trials.size();tNum++){
                 assertEquals(histSeq.getState(csname, tNum).Vnet, histRand.getState(csname, tNum).Vnet, DefaultValuesConstants.ROUNDING_PRECISION);
                 assertEquals(histSeq.getState(csname, tNum).Ve, histRand.getState(csname, tNum).Ve, DefaultValuesConstants.ROUNDING_PRECISION);
                 assertEquals(histSeq.getState(csname, tNum).Vi, histRand.getState(csname, tNum).Vi, DefaultValuesConstants.ROUNDING_PRECISION);
@@ -115,13 +115,13 @@ public class PhaseTests extends junit.framework.TestCase {
     }
 
     //40AB+/40AB-
-    private static Phase CreatePhase40(boolean usPresent1, boolean usPresent2, boolean isRandom){
-        Phase phase = new Phase(1);
+    private static GroupPhase CreatePhase40(boolean usPresent1, boolean usPresent2, boolean isRandom){
+        GroupPhase groupPhase = new GroupPhase(1);
         HashMap<Character, ConditionalStimulus> phaseCues = TrialTests.createCsMap("AB".toCharArray());
-        phase.addTrialType(createTrialType(phaseCues, "AB", 40, usPresent1));
-        phase.addTrialType(createTrialType(phaseCues, "AB", 40, usPresent2));
-        phase.setRandom(isRandom);
-        return phase;
+        groupPhase.addTrialType(createTrialType(phaseCues, "AB", 40, usPresent1));
+        groupPhase.addTrialType(createTrialType(phaseCues, "AB", 40, usPresent2));
+        groupPhase.setRandom(isRandom);
+        return groupPhase;
     }
 
     private static List<Trial> createTrialType(HashMap<Character, ConditionalStimulus> phaseCues, String presentCSs, int count, boolean usPresent){

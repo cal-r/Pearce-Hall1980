@@ -15,14 +15,14 @@ import java.util.Map;
 /**
  * Created by Rokas on 03/11/2015.
  */
-public class Phase {
+public class GroupPhase {
     public ArrayList<Trial> trials;
 
     private boolean random;
     private Map<Character, ConditionalStimulus> phaseCsMap;
     private int phaseId;
 
-    public Phase(int phaseId) {
+    public GroupPhase(int phaseId) {
         this.phaseId = phaseId;
         trials = new ArrayList<>();
     }

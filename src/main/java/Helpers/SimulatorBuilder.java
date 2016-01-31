@@ -2,8 +2,8 @@ package Helpers;
 
 import Models.ConditionalStimulus;
 import Models.Group;
+import Models.GroupPhase;
 import Models.Parameters.CsParameterPool;
-import Models.Phase;
 import Models.Simulator;
 import ViewModels.TrialTableModel;
 
@@ -34,7 +34,7 @@ public class SimulatorBuilder {
         private CsParameterPool csParameterPool;
 
         private Map<Character, ConditionalStimulus> csMap;
-        private List<Phase> phases;
+        private List<GroupPhase> groupPhases;
 
         private GroupBuilder(CsParameterPool csParameterPool){
             this.csParameterPool = csParameterPool;
@@ -42,17 +42,17 @@ public class SimulatorBuilder {
 
         private Group buildGroup(String groupName, List<String> phaseDescriptions, List<Boolean> randomSelections){
             csMap = new HashMap<>();
-            phases = new ArrayList<>();
+            groupPhases = new ArrayList<>();
 
             for(int i=0;i<phaseDescriptions.size();i++){
                 List<PhaseStringTokenizer.TrialTypeTokens> phaseTokens = PhaseStringTokenizer.getPhaseTokens(phaseDescriptions.get(i));
                 updateCsMaps(phaseTokens);
-                Phase phase = PhaseParser.ParsePhase(phaseTokens, csMap, i);
-                phase.setRandom(randomSelections.get(i));
-                phases.add(phase);
+                GroupPhase groupPhase = PhaseParser.ParsePhase(phaseTokens, csMap, i);
+                groupPhase.setRandom(randomSelections.get(i));
+                groupPhases.add(groupPhase);
             }
 
-            return new Group(groupName, csMap, phases);
+            return new Group(groupName, csMap, groupPhases);
         }
 
         private void updateCsMaps(List<PhaseStringTokenizer.TrialTypeTokens> phaseTokens){

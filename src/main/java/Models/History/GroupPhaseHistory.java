@@ -2,7 +2,7 @@ package Models.History;
 
 
 import Models.ConditionalStimulus;
-import Models.Phase;
+import Models.GroupPhase;
 import Models.Trial;
 
 import java.util.ArrayList;
@@ -13,13 +13,13 @@ import java.util.List;
  * Created by Rokas on 09/11/2015.
  */
 public class GroupPhaseHistory {
-    private Phase phase;
+    private GroupPhase groupPhase;
     private HashMap<Character, List<CsState>> csHistoriesMap;
     private String groupName;
     private int trialCounrer;
 
-    public GroupPhaseHistory(Phase phase){
-        this.phase = phase;
+    public GroupPhaseHistory(GroupPhase groupPhase){
+        this.groupPhase = groupPhase;
         initHistoriesMap();
         trialCounrer =0;
     }
@@ -38,7 +38,7 @@ public class GroupPhaseHistory {
 
     public void recordState(Trial trial){
         trialCounrer++;
-        for(ConditionalStimulus cs : phase.getPhaseCues()) {
+        for(ConditionalStimulus cs : groupPhase.getPhaseCues()) {
             CsState csState = new CsState();
             csState.Ve = cs.getAssociationExcitatory();
             csState.Vi = cs.getAssociationInhibitory();
@@ -52,7 +52,7 @@ public class GroupPhaseHistory {
 
     private void initHistoriesMap(){
         csHistoriesMap = new HashMap<>();
-        for(ConditionalStimulus cs : phase.getPhaseCues()){
+        for(ConditionalStimulus cs : groupPhase.getPhaseCues()){
             csHistoriesMap.put(cs.Name, new ArrayList<CsState>());
         }
     }
@@ -66,16 +66,16 @@ public class GroupPhaseHistory {
         public String TrialDescription;
     }
 
-    public Phase getPhase(){
-        return phase;
+    public GroupPhase getGroupPhase(){
+        return groupPhase;
     }
 
     public String getPhaseName(){
-        return phase.toString();
+        return groupPhase.toString();
     }
 
     public int getNumberOfTrials(){
-        return phase.getNumberOfTrials();
+        return groupPhase.getNumberOfTrials();
     }
 
     public String getGroupName() {

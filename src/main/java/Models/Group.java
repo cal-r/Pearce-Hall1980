@@ -1,8 +1,5 @@
 package Models;
 
-import Models.ConditionalStimulus;
-import Models.Phase;
-
 import java.util.List;
 import java.util.Map;
 
@@ -11,14 +8,14 @@ import java.util.Map;
  */
 public class Group {
     private Map<Character, ConditionalStimulus> csMap;
-    public List<Phase> phases;
+    public List<GroupPhase> groupPhases;
     public String Name;
 
     public Group(String name,
                  Map<Character, ConditionalStimulus> csMap,
-                 List<Phase> phases){
+                 List<GroupPhase> groupPhases){
         Name = name;
         this.csMap = csMap;
-        this.phases =phases;
+        this.groupPhases = groupPhases;
     }
 }

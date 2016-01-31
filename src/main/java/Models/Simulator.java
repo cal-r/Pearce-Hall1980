@@ -48,9 +48,9 @@ public class Simulator {
         SimulationHistory simHistory = new SimulationHistory();
         for(Group group : groups){
             GroupHistory groupHistory = createGroupHistory(group);
-            for(Phase phase : group.phases) {
+            for(GroupPhase groupPhase : group.groupPhases) {
                 groupHistory.add(
-                        phase.simulateTrials(gamma));
+                        groupPhase.simulateTrials(gamma));
             }
             simHistory.add(groupHistory);
         }
@@ -65,8 +65,8 @@ public class Simulator {
 
     private void resetPhases(){
         for(Group group : groups) {
-            for(Phase phase : group.phases) {
-                phase.reset();
+            for(GroupPhase groupPhase : group.groupPhases) {
+                groupPhase.reset();
             }
         }
     }

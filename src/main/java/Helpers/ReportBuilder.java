@@ -1,13 +1,13 @@
 package Helpers;
 
 import Constants.GuiStringConstants;
+import Models.GroupPhase;
 import Models.History.GroupHistory;
 import Models.History.GroupPhaseHistory;
 import Models.History.SimulationHistory;
 import Models.Parameters.CsParameter;
 import Models.Parameters.CsParameterPool;
 import Models.Parameters.Parameter;
-import Models.Phase;
 import Models.Trial;
 import ViewModels.GroupReportViewModel;
 
@@ -38,7 +38,7 @@ public class ReportBuilder {
         report.setCell(rowId++, 0, groupHistory.group.Name);
         for(int gpId = 0; gpId < groupHistory.getNumberOfPhases(); gpId++) {
             GroupPhaseHistory groupPhaseHistory = groupHistory.getGroupPhaseHistory(gpId);
-            insertPhaseDescription(report, rowId++, groupPhaseHistory.getPhase());
+            insertPhaseDescription(report, rowId++, groupPhaseHistory.getGroupPhase());
             rowId++;
             for(Variable variable : Variable.values())
             {
@@ -98,12 +98,12 @@ public class ReportBuilder {
         return rowId + groupPhaseHistory.getCues().size()+1;
     }
 
-    private static void insertPhaseDescription(GroupReportViewModel report, int rowId, Phase phase){
+    private static void insertPhaseDescription(GroupReportViewModel report, int rowId, GroupPhase groupPhase){
         int colId = 0;
-        report.setCell(rowId, colId++, phase.toString()); //append name ("Phase 69")
-        report.setCell(rowId, colId++, constructTrialsString(phase.trials));
+        report.setCell(rowId, colId++, groupPhase.toString()); //append name ("Phase 69")
+        report.setCell(rowId, colId++, constructTrialsString(groupPhase.trials));
         colId++;
-        report.setCell(rowId, colId++, GuiStringConstants.RANDOM + ": "+ phase.isRandom());
+        report.setCell(rowId, colId++, GuiStringConstants.RANDOM + ": "+ groupPhase.isRandom());
     }
 
     private static String constructTrialsString(List<Trial> trials){

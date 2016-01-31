@@ -3,8 +3,8 @@ package com;
 import Helpers.PhaseParser;
 import Helpers.PhaseStringTokenizer;
 import Models.ConditionalStimulus;
+import Models.GroupPhase;
 import Models.Parameters.CsParameterPool;
-import Models.Phase;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,12 +26,12 @@ public class PhaseParserTests extends junit.framework.TestCase {
         tokensArrayList.add(trialTypeTokens);
         CsParameterPool cspPool = createCsParameterPool(trialTypeTokens.cueNames);
         Map<Character, ConditionalStimulus> csMap = getCsMap(trialTypeTokens.cueNames, cspPool);
-        Phase phase = PhaseParser.ParsePhase(tokensArrayList, csMap, 0);
+        GroupPhase groupPhase = PhaseParser.ParsePhase(tokensArrayList, csMap, 0);
 
-        assertTrue(phase != null);
-        assertTrue(phase.trials.size() == 2);
-        assertTrue(phase.trials.get(0).usPresent);
-        assertTrue(phase.trials.get(1).usPresent);
+        assertTrue(groupPhase != null);
+        assertTrue(groupPhase.trials.size() == 2);
+        assertTrue(groupPhase.trials.get(0).usPresent);
+        assertTrue(groupPhase.trials.get(1).usPresent);
     }
 
     @org.junit.Test
@@ -45,12 +45,12 @@ public class PhaseParserTests extends junit.framework.TestCase {
 
         CsParameterPool cspPool = createCsParameterPool(trialTypeTokens.cueNames);
         Map<Character, ConditionalStimulus> csMap = getCsMap(trialTypeTokens.cueNames, cspPool);
-        Phase phase = PhaseParser.ParsePhase(tokensArrayList, csMap, 0);
+        GroupPhase groupPhase = PhaseParser.ParsePhase(tokensArrayList, csMap, 0);
 
-        assertTrue(phase != null);
-        assertTrue(phase.trials.size() == 2);
-        assertTrue(phase.trials.get(0).usPresent);
-        assertTrue(phase.trials.get(1).usPresent);
+        assertTrue(groupPhase != null);
+        assertTrue(groupPhase.trials.size() == 2);
+        assertTrue(groupPhase.trials.get(0).usPresent);
+        assertTrue(groupPhase.trials.get(1).usPresent);
     }
 
     @org.junit.Test
@@ -64,11 +64,11 @@ public class PhaseParserTests extends junit.framework.TestCase {
 
         CsParameterPool cspPool = createCsParameterPool(trialTypeTokens.cueNames);
         Map<Character, ConditionalStimulus> csMap = getCsMap(trialTypeTokens.cueNames, cspPool);
-        Phase phase = PhaseParser.ParsePhase(tokensArrayList, csMap, 0);
+        GroupPhase groupPhase = PhaseParser.ParsePhase(tokensArrayList, csMap, 0);
 
-        assertTrue(phase != null);
-        assertTrue(phase.trials.size() == 1);
-        assertTrue(!phase.trials.get(0).usPresent);
+        assertTrue(groupPhase != null);
+        assertTrue(groupPhase.trials.size() == 1);
+        assertTrue(!groupPhase.trials.get(0).usPresent);
     }
 
     @org.junit.Test
@@ -90,16 +90,16 @@ public class PhaseParserTests extends junit.framework.TestCase {
 
         CsParameterPool cspPool = createCsParameterPool(trialTypeTokens.cueNames);
         Map<Character, ConditionalStimulus> csMap = getCsMap(trialTypeTokens.cueNames, cspPool);
-        Phase phase = PhaseParser.ParsePhase(tokensArrayList, csMap, 0);
+        GroupPhase groupPhase = PhaseParser.ParsePhase(tokensArrayList, csMap, 0);
 
-        assertTrue(phase != null);
-        assertTrue(phase.trials.size() == 3);
-        assertTrue(phase.trials.get(0).usPresent);
-        assertTrue(phase.trials.get(0).cuesPresent.size() == 2);
-        assertTrue(phase.trials.get(1).usPresent);
-        assertTrue(phase.trials.get(1).cuesPresent.size() == 2);
-        assertTrue(!phase.trials.get(2).usPresent);
-        assertTrue(phase.trials.get(2).cuesPresent.size() == 1);
+        assertTrue(groupPhase != null);
+        assertTrue(groupPhase.trials.size() == 3);
+        assertTrue(groupPhase.trials.get(0).usPresent);
+        assertTrue(groupPhase.trials.get(0).cuesPresent.size() == 2);
+        assertTrue(groupPhase.trials.get(1).usPresent);
+        assertTrue(groupPhase.trials.get(1).cuesPresent.size() == 2);
+        assertTrue(!groupPhase.trials.get(2).usPresent);
+        assertTrue(groupPhase.trials.get(2).cuesPresent.size() == 1);
     }
 
     public void testParsePhase5() throws Exception {
@@ -114,12 +114,12 @@ public class PhaseParserTests extends junit.framework.TestCase {
 
         CsParameterPool cspPool = createCsParameterPool(trialTypeTokens.cueNames);
         Map<Character, ConditionalStimulus> csMap = getCsMap(trialTypeTokens.cueNames, cspPool);
-        Phase phase = PhaseParser.ParsePhase(tokensArrayList, csMap, 0);
+        GroupPhase groupPhase = PhaseParser.ParsePhase(tokensArrayList, csMap, 0);
 
-        assertTrue(phase != null);
-        assertTrue(phase.trials.size() == 2);
-        assertTrue(phase.trials.get(0).usPresent);
-        assertTrue(phase.trials.get(0).cuesPresent.size() == 1);
+        assertTrue(groupPhase != null);
+        assertTrue(groupPhase.trials.size() == 2);
+        assertTrue(groupPhase.trials.get(0).usPresent);
+        assertTrue(groupPhase.trials.get(0).cuesPresent.size() == 1);
     }
 
     @org.junit.Test
@@ -141,10 +141,10 @@ public class PhaseParserTests extends junit.framework.TestCase {
 
         CsParameterPool cspPool = createCsParameterPool(trialTypeTokens.cueNames);
         Map<Character, ConditionalStimulus> csMap = getCsMap(trialTypeTokens.cueNames, cspPool);
-        Phase phase = PhaseParser.ParsePhase(tokensArrayList, csMap, 0);
+        GroupPhase groupPhase = PhaseParser.ParsePhase(tokensArrayList, csMap, 0);
 
-        ConditionalStimulus csA_T1 = phase.trials.get(0).cuesPresent.get(0);
-        ConditionalStimulus csA_T2 = phase.trials.get(1).cuesPresent.get(0);
+        ConditionalStimulus csA_T1 = groupPhase.trials.get(0).cuesPresent.get(0);
+        ConditionalStimulus csA_T2 = groupPhase.trials.get(1).cuesPresent.get(0);
         assertEquals(csA_T1, csA_T2);
     }
 

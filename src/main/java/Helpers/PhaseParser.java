@@ -1,7 +1,7 @@
 package Helpers;
 
 import Models.ConditionalStimulus;
-import Models.Phase;
+import Models.GroupPhase;
 import Models.Trial;
 
 import java.util.ArrayList;
@@ -14,18 +14,18 @@ import java.util.Map;
  */
 public class PhaseParser {
 
-    public static Phase ParsePhase(List<PhaseStringTokenizer.TrialTypeTokens> trialTypeTokensList, Map<Character, ConditionalStimulus> csMap, int phaseId) {
+    public static GroupPhase ParsePhase(List<PhaseStringTokenizer.TrialTypeTokens> trialTypeTokensList, Map<Character, ConditionalStimulus> csMap, int phaseId) {
 
         TrialTypeParser trialTypeParser = new TrialTypeParser(csMap);
 
-        Phase phase = new Phase(phaseId);
+        GroupPhase groupPhase = new GroupPhase(phaseId);
 
         for(PhaseStringTokenizer.TrialTypeTokens trialType : trialTypeTokensList){
             List<Trial> newTrials =trialTypeParser.getTrials(trialType);
-            phase.addTrialType(newTrials);
+            groupPhase.addTrialType(newTrials);
         }
 
-        return phase;
+        return groupPhase;
     }
 
     private static class TrialTypeParser {
