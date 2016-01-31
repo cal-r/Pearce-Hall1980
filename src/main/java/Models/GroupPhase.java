@@ -28,8 +28,7 @@ public class GroupPhase {
         trials = new ArrayList<>();
     }
 
-    public GroupPhaseHistory simulateTrials(GammaParameter gamma)
-    {
+    public GroupPhaseHistory simulateTrials(GammaParameter gamma) {
         if(random){
             return simulateTrialsRandomly(gamma);
         }
@@ -67,7 +66,7 @@ public class GroupPhase {
 
         //set cs properties to average values
         for(ConditionalStimulus cs : getPhaseCues()) {
-            CsState csState = averageHistory.getState(cs.Name, trials.size()); //get the state of cs after the last trial
+            CsState csState = averageHistory.getState(cs, trials.size()); //get the state of cs after the last trial
             cs.setAlpha(csState.Alpha);
             cs.setAssociationExcitatory(csState.Ve);
             cs.setAssociationInhibitory(csState.Vi);

@@ -81,7 +81,7 @@ public class ReportBuilder {
 
         currRowId++;
         for(ConditionalStimulus cs : groupPhaseHistory.getCues()) {
-            report.setCell(currRowId++, 0, cs);
+            report.setCell(currRowId++, 0, cs.Name);
         }
         currRowId = rowId;
         int colId = 1;
