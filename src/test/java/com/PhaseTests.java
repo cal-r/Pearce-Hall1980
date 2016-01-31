@@ -95,7 +95,7 @@ public class PhaseTests extends junit.framework.TestCase {
 
         //should be the same
         GroupPhase groupPhaseRand = CreatePhase40(true, true, true);
-            GroupPhase groupPhaseSeq = CreatePhase40(true, true, false);
+        GroupPhase groupPhaseSeq = CreatePhase40(true, true, false);
         GroupPhaseHistory histRand = groupPhaseRand.simulateTrials(gamma);
         GroupPhaseHistory histSeq = groupPhaseSeq.simulateTrials(gamma);
 
@@ -107,11 +107,20 @@ public class PhaseTests extends junit.framework.TestCase {
         //test return value
         for(ConditionalStimulus cs : histRand.getCues()) {
             for(int tNum = 1;tNum<= groupPhaseRand.trials.size();tNum++){
-                assertEquals(histSeq.getState(cs, tNum).Vnet, histRand.getState(cs, tNum).Vnet, DefaultValuesConstants.ROUNDING_PRECISION);
-                assertEquals(histSeq.getState(cs, tNum).Ve, histRand.getState(cs, tNum).Ve, DefaultValuesConstants.ROUNDING_PRECISION);
-                assertEquals(histSeq.getState(cs, tNum).Vi, histRand.getState(cs, tNum).Vi, DefaultValuesConstants.ROUNDING_PRECISION);
+                assertEquals(getMatchingState(histSeq, cs, tNum).Vnet, histRand.getState(cs, tNum).Vnet, DefaultValuesConstants.ROUNDING_PRECISION);
+                assertEquals(getMatchingState(histSeq, cs, tNum).Vi, histRand.getState(cs, tNum).Vi, DefaultValuesConstants.ROUNDING_PRECISION);
+                assertEquals(getMatchingState(histSeq, cs, tNum).Ve, histRand.getState(cs, tNum).Ve, DefaultValuesConstants.ROUNDING_PRECISION);
             }
         }
+    }
+
+    private static CsState getMatchingState(GroupPhaseHistory hist, ConditionalStimulus cs, int trailNumber){
+        for(ConditionalStimulus histCs : hist.getCues()){
+            if(histCs.Name == cs.Name){
+                return hist.getState(histCs, trailNumber);
+            }
+        }
+        return null;
     }
 
     //40AB+/40AB-
