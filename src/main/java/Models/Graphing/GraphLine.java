@@ -7,7 +7,7 @@ import java.util.ArrayList;
 /**
  * Created by Rokas on 21/01/2016.
  */
-public class GraphLine {
+public class GraphLine implements Comparable<GraphLine> {
     private boolean visible;
     private int displayId;
     private Marker marker;
@@ -79,5 +79,16 @@ public class GraphLine {
 
     public String getName(){
         return name;
+    }
+
+    @Override
+    public int compareTo(GraphLine other) {
+        if(other.displayId > displayId){
+            return -1;
+        }
+        if(other.displayId < displayId){
+            return 1;
+        }
+        return 0;
     }
 }

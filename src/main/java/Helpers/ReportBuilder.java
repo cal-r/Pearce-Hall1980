@@ -80,7 +80,7 @@ public class ReportBuilder {
         int currRowId = rowId;
 
         currRowId++;
-        for(ConditionalStimulus cs : groupPhaseHistory.getCues()) {
+        for(ConditionalStimulus cs : groupPhaseHistory.getOrderedCues()) {
             report.setCell(currRowId++, 0, cs.Name);
         }
         currRowId = rowId;
@@ -88,14 +88,14 @@ public class ReportBuilder {
 
         for(int trialNo=1;trialNo<= groupPhaseHistory.getNumberOfTrials();trialNo++) {
             report.setCell(currRowId++, colId, String.format("trial %1$d", trialNo));
-            for(ConditionalStimulus cs : groupPhaseHistory.getCues()) {
+            for(ConditionalStimulus cs : groupPhaseHistory.getOrderedCues()) {
                 CsState state = groupPhaseHistory.getState(cs, trialNo);
                 report.setCell(currRowId++, colId, getValue(state, variable));
             }
             currRowId = rowId;
             colId++;
         }
-        return rowId + groupPhaseHistory.getCues().size()+1;
+        return rowId + groupPhaseHistory.getOrderedCues().size()+1;
     }
 
     private static void insertPhaseDescription(GroupReportViewModel report, int rowId, GroupPhase groupPhase){

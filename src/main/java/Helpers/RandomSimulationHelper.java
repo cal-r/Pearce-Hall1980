@@ -16,7 +16,7 @@ public class RandomSimulationHelper {
         //sum up
         GroupPhaseHistory avgHist = list.get(0);
         for(int i=1;i<list.size();i++){
-            for(ConditionalStimulus cs : avgHist.getCues()){
+            for(ConditionalStimulus cs : avgHist.getOrderedCues()){
                 List<CsState> statesToAdd = list.get(i).getCsHistory(cs);
                 List<CsState> avgStates = avgHist.getCsHistory(cs);
                 for(int stateId=0;stateId<avgStates.size();stateId++){
@@ -29,7 +29,7 @@ public class RandomSimulationHelper {
             }
         }
         //divide by 1000
-        for(ConditionalStimulus cs : avgHist.getCues()){
+        for(ConditionalStimulus cs : avgHist.getOrderedCues()){
             List<CsState> avgStates = avgHist.getCsHistory(cs);
             for(int stateId=0;stateId<avgStates.size();stateId++){
                 avgStates.get(stateId).Ve /= DefaultValuesConstants.NUMBER_OF_RANDOM_COMBINATIONS;

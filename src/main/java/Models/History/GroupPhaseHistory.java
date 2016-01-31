@@ -24,12 +24,20 @@ public class GroupPhaseHistory {
         trialCounrer = 0;
     }
 
-    public List<ConditionalStimulus> getCues(){
-        return new ArrayList<>(csHistoriesMap.keySet());
+    public List<ConditionalStimulus> getOrderedCues(){
+        List<ConditionalStimulus> orderedCues = new ArrayList<>();
+        for(int i=0;i<csHistoriesMap.size();i++){
+            for(ConditionalStimulus cs : csHistoriesMap.keySet()){
+                if(groupPhase.getCsOrder(cs) == i){
+                    orderedCues.add(cs);
+                }
+            }
+        }
+        return orderedCues;
     }
 
     public CsState getState(ConditionalStimulus cue, int trialNumber) {
-        return csHistoriesMap.get(cue).get(trialNumber-1);
+        return csHistoriesMap.get(cue).get(trialNumber - 1);
     }
 
     public List<CsState> getCsHistory(ConditionalStimulus cue){

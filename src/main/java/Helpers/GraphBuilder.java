@@ -3,13 +3,10 @@ package Helpers;
 import Models.ConditionalStimulus;
 import Models.Graphing.Graph;
 import Models.Graphing.GraphLine;
-import Models.Graphing.GraphLineGroup;
 import Models.History.GroupPhaseHistory;
 import Models.History.PhaseHistory;
 import Models.History.SimulationHistory;
-import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,13 +21,15 @@ public class GraphBuilder {
         Map<String, List<GraphLine>> linkedLinesMap = new HashMap<>();
         List<Graph> graphs = new ArrayList<>();
         for(PhaseHistory phaseHistory : history.getPhases()){
+            int lineDisplayId = 0;
             Graph graph = new Graph(phaseHistory.getPhaseName());
             for(GroupPhaseHistory gpHist : phaseHistory){
-                for(ConditionalStimulus cue : gpHist.getCues()){
+                for(ConditionalStimulus cue : gpHist.getOrderedCues()){
                     GraphLine line = new GraphLine(String.valueOf(cue.Name));
                     addLinePoints(line, cue, gpHist);
                     graph.addLine(gpHist.getGroupName(), line);
                     setLink(linkedLinesMap, line);
+                    line.setDisplayId(lineDisplayId++);
                 }
             }
             graphs.add(graph);

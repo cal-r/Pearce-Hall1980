@@ -18,14 +18,18 @@ import java.util.Map;
  */
 public class GroupPhase {
     public ArrayList<Trial> trials;
-
     private boolean random;
-    private Map<Character, ConditionalStimulus> phaseCsMap;
+    private Map<Character, ConditionalStimulus> csMap;
+    private Map<ConditionalStimulus, Integer> csOrderingMap;
     private int phaseId;
+    private int orderCounter;
 
     public GroupPhase(int phaseId) {
         this.phaseId = phaseId;
         trials = new ArrayList<>();
+        csMap = new HashMap<>();
+        csOrderingMap = new HashMap<>();
+        orderCounter = 0;
     }
 
     public GroupPhaseHistory simulateTrials(GammaParameter gamma) {
@@ -74,8 +78,12 @@ public class GroupPhase {
         return averageHistory;
     }
 
-    public void addTrialType(List<Trial> trialsToAdd) { //all trials in the param are the same (e.g. 'AB+')
-        trials.addAll(trialsToAdd);
+    public void addTrialType(List<Trial> trailType) { //all trials in the param are the same (e.g. 'AB+')
+        trials.addAll(trailType);
+        Trial firstOfTheType = trailType.get(0);
+        updateCsMap(firstOfTheType);
+        updateOrderingMap(firstOfTheType);
+
     }
 
     public void reset(){
@@ -86,7 +94,7 @@ public class GroupPhase {
 
     private void resetCues(List<ConditionalStimulus> copies){
         for(ConditionalStimulus copy : copies){
-            phaseCsMap.get(copy.Name).reset(copy);
+            csMap.get(copy.Name).reset(copy);
         }
     }
 
@@ -107,19 +115,21 @@ public class GroupPhase {
     }
 
     public List<ConditionalStimulus> getPhaseCues() {
-        if (phaseCsMap == null)
-            initCsMap();
-
-        return new ArrayList<>(phaseCsMap.values());
+        return new ArrayList<>(csMap.values());
     }
 
-    private void initCsMap(){
-        phaseCsMap = new HashMap<>();
-        for(Trial t : trials){
-            for(ConditionalStimulus cs : t.cuesPresent){
-                if(!phaseCsMap.containsKey(cs.Name)){
-                    phaseCsMap.put(cs.Name, cs);
-                }
+    private void updateCsMap(Trial trial){
+        for(ConditionalStimulus cs : trial.cuesPresent){
+            if(!csMap.containsKey(cs.Name)){
+                csMap.put(cs.Name, cs);
+            }
+        }
+    }
+
+    private void updateOrderingMap(Trial trial){
+        for (ConditionalStimulus cs : trial.cuesPresent) {
+            if(!csOrderingMap.containsKey(cs)) {
+                csOrderingMap.put(cs, orderCounter++);
             }
         }
     }
@@ -136,5 +146,9 @@ public class GroupPhase {
 
     public String toString(){
         return GuiStringConstants.getPhaseTitle(phaseId);
+    }
+
+    public int getCsOrder(ConditionalStimulus cs){
+        return csOrderingMap.get(cs);
     }
 }

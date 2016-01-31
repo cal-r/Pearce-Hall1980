@@ -1,11 +1,9 @@
 package Models.Graphing;
 
 import Helpers.GraphStringsHelper;
+import com.sun.javafx.collections.transformation.SortedList;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Rokas on 21/01/2016.
@@ -47,6 +45,7 @@ public class Graph {
                 lines.add(line);
             }
         }
+        Collections.sort(lines);
         return lines;
     }
 

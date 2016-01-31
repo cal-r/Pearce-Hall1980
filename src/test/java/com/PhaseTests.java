@@ -30,7 +30,7 @@ public class PhaseTests extends junit.framework.TestCase {
         //        excel gives 0.08747151
 
         //test return value
-        for(ConditionalStimulus cs : hist.getCues()) {
+        for(ConditionalStimulus cs : hist.getOrderedCues()) {
             assertEquals(expectedVnet, hist.getState(cs, 80).Vnet, DefaultValuesConstants.ROUNDING_PRECISION);
         }
     }
@@ -53,7 +53,7 @@ public class PhaseTests extends junit.framework.TestCase {
         }
 
         //test return value
-        for(ConditionalStimulus cs : hist.getCues()) {
+        for(ConditionalStimulus cs : hist.getOrderedCues()) {
             assertEquals(expectedVnet, hist.getState(cs, 79).Vnet, DefaultValuesConstants.ROUNDING_PRECISION);
         }
     }
@@ -75,7 +75,7 @@ public class PhaseTests extends junit.framework.TestCase {
 
 
         //test return value
-        for(ConditionalStimulus cs : hist.getCues()) {
+        for(ConditionalStimulus cs : hist.getOrderedCues()) {
             assertTrue(hist.getState(cs, 80).Vnet > 0.2);
             assertTrue(hist.getState(cs, 80).Vnet < 0.5);
             assertTrue(hist.getState(cs, 20).Ve < 0.33);
@@ -100,7 +100,7 @@ public class PhaseTests extends junit.framework.TestCase {
         assertEquals(csSeq.getAssociationNet(), csRand.getAssociationNet(), DefaultValuesConstants.ROUNDING_PRECISION);
 
         //test return value
-        for(ConditionalStimulus cs : histRand.getCues()) {
+        for(ConditionalStimulus cs : histRand.getOrderedCues()) {
             for(int tNum = 1;tNum<= groupPhaseRand.trials.size();tNum++){
                 assertEquals(getMatchingState(histSeq, cs, tNum).Vnet, histRand.getState(cs, tNum).Vnet, DefaultValuesConstants.ROUNDING_PRECISION);
                 assertEquals(getMatchingState(histSeq, cs, tNum).Vi, histRand.getState(cs, tNum).Vi, DefaultValuesConstants.ROUNDING_PRECISION);
@@ -110,7 +110,7 @@ public class PhaseTests extends junit.framework.TestCase {
     }
 
     private static CsState getMatchingState(GroupPhaseHistory hist, ConditionalStimulus cs, int trailNumber){
-        for(ConditionalStimulus histCs : hist.getCues()){
+        for(ConditionalStimulus histCs : hist.getOrderedCues()){
             if(histCs.Name == cs.Name){
                 return hist.getState(histCs, trailNumber);
             }
