@@ -40,7 +40,7 @@ public class GroupPhase {
         GroupPhaseHistory history = new GroupPhaseHistory(this);
         for(int i=0;i<trials.size();i++){
             Trial trial = trials.get(i);
-            //The algorithm runs AFTER the first trial finishes and gives the first predictive value for the following trial.
+            //The algorithm runs AFTER the trial finishes and gives the predictive value for the following trial.
             history.recordState(trial);
             trial.simulate(calcVNet(), gamma.getValue());
         }
@@ -57,8 +57,8 @@ public class GroupPhase {
             int[] randomArray = RandomArrayGenerator.createRandomDistinctArray(trials.size());
             for (int trialNo = 0; trialNo < trials.size(); trialNo++) {
                 Trial trial = trials.get(randomArray[trialNo]);
-                trial.simulate(calcVNet(), gamma.getValue());
                 history.recordState(trial);
+                trial.simulate(calcVNet(), gamma.getValue());
             }
             tempHistories.add(history);
         }

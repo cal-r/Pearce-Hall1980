@@ -3,6 +3,7 @@ package com;
 import Constants.DefaultValuesConstants;
 import Models.ConditionalStimulus;
 import Models.GroupPhase;
+import Models.History.CsState;
 import Models.History.GroupPhaseHistory;
 import Models.Parameters.GammaParameter;
 import Models.Trial;
@@ -25,19 +26,13 @@ public class PhaseTests extends junit.framework.TestCase {
         GroupPhase groupPhase = CreatePhase40(true, false, false);
         GroupPhaseHistory hist = groupPhase.simulateTrials(gamma);
 
-        double expectedVnet = 0.08489972;
+        double expectedVnet = 0.08724879;
         //        excel gives 0.08747151
-
-        //test state of cues after simulation
-        for(ConditionalStimulus cs : groupPhase.getPhaseCues()) {
-            assertEquals(expectedVnet, cs.getAssociationNet(), DefaultValuesConstants.ROUNDING_PRECISION);
-        }
 
         //test return value
         for(ConditionalStimulus cs : hist.getCues()) {
             assertEquals(expectedVnet, hist.getState(cs, 80).Vnet, DefaultValuesConstants.ROUNDING_PRECISION);
         }
-
     }
 
     @org.junit.Test
