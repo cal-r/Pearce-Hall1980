@@ -12,8 +12,8 @@ public class GraphStringsHelper {
         return String.format("%s - %s", group.getName(), line.getName());
     }
 
-    public static String getLineCommand(GraphLineGroup group, GraphLine line){
-        return String.format("%s%s%s", group.getName(), ActionCommands.GROUP_LINE_SEPARATOR, line.getName());
+    public static String getLineCommand(GraphLine line){
+        return String.format("%s%s%s", line.getGroup().getName(), ActionCommands.GROUP_LINE_SEPARATOR, line.getName());
     }
 
     public static String getGroupCommand(GraphLineGroup group){

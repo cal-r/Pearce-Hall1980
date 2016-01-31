@@ -10,6 +10,8 @@ import Models.Graphing.GraphLineGroup;
 import Views.GraphWindow;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.LegendItem;
+import org.jfree.chart.LegendItemCollection;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
@@ -58,11 +60,9 @@ public class GraphWindowController implements ActionListener {
     }
 
     private void refreshView(){
-        for(GraphLineGroup lineGroup : graphData.getGroups()){
-            for (GraphLine line : lineGroup.getLines()) {
-                renderer.setSeriesLinesVisible(line.getDisplayId(), line.isVisible());
-                renderer.setSeriesShapesVisible(line.getDisplayId(), line.isVisible());
-            }
+        for (GraphLine line : graphData.getAllLines()) {
+            renderer.setSeriesLinesVisible(line.getDisplayId(), line.isVisible());
+            renderer.setSeriesShapesVisible(line.getDisplayId(), line.isVisible());
         }
     }
 
@@ -87,6 +87,14 @@ public class GraphWindowController implements ActionListener {
 
         return chart;
     }
+
+//    private void createFixedLegendItemCollection(){
+//        LegendItemCollection legend = new LegendItemCollection();
+//        for(GraphLine line : graphData.getAllLines()){
+//
+//        }
+//        chart.getXYPlot().setFixedLegendItems()
+//    }
 
     private void addCheckboxes(){
         GridBagConstraints constraints = createGridBagConstraints();
@@ -124,7 +132,7 @@ public class GraphWindowController implements ActionListener {
     }
 
     private void addCheckBox(GridBagConstraints constraints, boolean startNewLine, GraphLineGroup lineGroup, GraphLine line){
-        JCheckBox checkBox = createCheckBox(line.getName(), GraphStringsHelper.getLineCommand(lineGroup, line));
+        JCheckBox checkBox = createCheckBox(line.getName(), GraphStringsHelper.getLineCommand(line));
         addCheckBoxToPanel(constraints, startNewLine, checkBox);
         groupedCheckboxesMap.get(GraphStringsHelper.getGroupCommand(lineGroup)).add(checkBox);
     }

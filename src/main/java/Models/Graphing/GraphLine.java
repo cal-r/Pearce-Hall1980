@@ -13,6 +13,8 @@ public class GraphLine {
     private Marker marker;
 
     private String name;
+
+    private GraphLineGroup group;
     private java.util.List<Point2D.Double> dataPoints;
     private java.util.List<GraphLine> linkedLines;
 
@@ -28,6 +30,14 @@ public class GraphLine {
 
     public void setDisplayId(int displayId) {
         this.displayId = displayId;
+    }
+
+    public void setGroup(GraphLineGroup group) {
+        this.group = group;
+    }
+
+    public GraphLineGroup getGroup() {
+        return group;
     }
 
     public boolean isVisible() {

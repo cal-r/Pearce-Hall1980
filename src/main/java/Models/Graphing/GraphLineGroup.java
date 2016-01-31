@@ -21,6 +21,7 @@ public class GraphLineGroup {
 
     public void addLine(GraphLine line){
         linesMap.put(line.getName(), line);
+        line.setGroup(this);
     }
 
     public GraphLine getLine(String name){

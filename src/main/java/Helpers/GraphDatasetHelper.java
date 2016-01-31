@@ -16,15 +16,13 @@ public class GraphDatasetHelper {
     public static XYDataset createDataset(Graph graph){
         XYSeriesCollection dataset = new XYSeriesCollection();
         int displayId = 0;
-        for(GraphLineGroup lineGroup : graph.getGroups()){
-            for (GraphLine line : lineGroup.getLines()){
-                XYSeries series = new XYSeries(GraphStringsHelper.getLineInGroupName(lineGroup, line));
-                for(Point2D.Double point : line.getDataPoints()){
-                    series.add(point.x, point.y);
-                }
-                dataset.addSeries(series);
-                line.setDisplayId(displayId++);
+        for (GraphLine line : graph.getAllLines()){
+            XYSeries series = new XYSeries(GraphStringsHelper.getLineInGroupName(line.getGroup(), line));
+            for(Point2D.Double point : line.getDataPoints()){
+                series.add(point.x, point.y);
             }
+            dataset.addSeries(series);
+            line.setDisplayId(displayId++);
         }
         return dataset;
     }

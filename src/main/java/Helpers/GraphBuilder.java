@@ -29,7 +29,7 @@ public class GraphBuilder {
                     GraphLine line = new GraphLine(cue.toString());
                     addLinePoints(line, cue, gpHist);
                     graph.addLine(gpHist.getGroupName(), line);
-                    setLink(linkedLinesMap, line, graph.getGroup(gpHist.getGroupName()));
+                    setLink(linkedLinesMap, line);
                 }
             }
             graphs.add(graph);
@@ -44,8 +44,8 @@ public class GraphBuilder {
     }
 
     //used for colour consistency among graphs
-    private static void setLink(Map<String, List<GraphLine>> linkedLinesMap, GraphLine line, GraphLineGroup group){
-        String lineCommand = GraphStringsHelper.getLineCommand(group, line);
+    private static void setLink(Map<String, List<GraphLine>> linkedLinesMap, GraphLine line){
+        String lineCommand = GraphStringsHelper.getLineCommand(line);
         if(!linkedLinesMap.containsKey(lineCommand)) {
             linkedLinesMap.put(lineCommand, new ArrayList<GraphLine>());
         }

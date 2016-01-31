@@ -40,6 +40,16 @@ public class Graph {
         return new ArrayList<>(linesGroupsMap.values());
     }
 
+    public List<GraphLine> getAllLines(){
+        List<GraphLine> lines = new ArrayList<>();
+        for(GraphLineGroup group : getGroups()){
+            for (GraphLine line : group.getLines()){
+                lines.add(line);
+            }
+        }
+        return lines;
+    }
+
     public String getName() {
         return name;
     }

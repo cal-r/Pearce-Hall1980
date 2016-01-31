@@ -27,22 +27,20 @@ public class ChartPainer{
     }
 
     private void setUpMarkers(){
-        for(GraphLineGroup lineGroup : graphData.getGroups()) {
-            for (GraphLine line : lineGroup.getLines()) {
-                if(line.isMarkerSet()){
-                    setMarkerOnRenderer(line);
+        for (GraphLine line : graphData.getAllLines()){
+            if(line.isMarkerSet()){
+                setMarkerOnRenderer(line);
+            }else{
+                Marker newMarker = createMarkerFromRenderer(line);
+                if(isMarkerUnique(newMarker)) {
+                    line.setMarker(newMarker);
                 }else{
-                    Marker newMarker = createMarkerFromRenderer(line);
-                    if(isMarkerUnique(newMarker)) {
-                        line.setMarker(newMarker);
-                    }else{
+                    newMarker = createRandomMarker();
+                    while (!isMarkerUnique(newMarker)){
                         newMarker = createRandomMarker();
-                        while (!isMarkerUnique(newMarker)){
-                            newMarker = createRandomMarker();
-                        }
-                        line.setMarker(newMarker);
-                        setMarkerOnRenderer(line);
                     }
+                    line.setMarker(newMarker);
+                    setMarkerOnRenderer(line);
                 }
             }
         }
@@ -70,11 +68,9 @@ public class ChartPainer{
     }
 
     private boolean isMarkerUnique(Marker newMarker) {
-        for(GraphLineGroup lineGroup : graphData.getGroups()) {
-            for (GraphLine line : lineGroup.getLines()) {
-                if(line.isMarkerSet() && line.getMarker().isSimilar(newMarker)){
-                    return false;
-                }
+        for (GraphLine line : graphData.getAllLines()){
+            if(line.isMarkerSet() && line.getMarker().isSimilar(newMarker)){
+                return false;
             }
         }
         return true;
