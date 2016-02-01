@@ -26,10 +26,6 @@ public class GraphLineGroup implements Comparable<GraphLineGroup> {
         line.setGroup(this);
     }
 
-    public GraphLine getLine(String name){
-        return linesMap.get(name);
-    }
-
     public List<GraphLine> getLines(){
         return  new ArrayList<>(linesMap.values());
     }
