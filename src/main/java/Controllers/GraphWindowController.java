@@ -1,12 +1,14 @@
 package Controllers;
 
 import Constants.GuiStringConstants;
+import Helpers.Graphing.GraphBuilder;
 import Helpers.Graphing.GraphDatasetHelper;
 import Helpers.Graphing.GraphStringsHelper;
 import Helpers.Graphing.ChartPainer;
 import Models.Graphing.Graph;
 import Models.Graphing.GraphLine;
 import Models.Graphing.GraphLineGroup;
+import Models.History.SimulationHistory;
 import Views.GraphWindow;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
@@ -30,11 +32,11 @@ public class GraphWindowController implements ActionListener {
     private XYLineAndShapeRenderer renderer;
     private Map<String, java.util.List<JCheckBox>> groupedCheckboxesMap;
 
-    public GraphWindowController(Graph graphData){
+    public GraphWindowController(Graph graphData, Map<Paint, Boolean> interGraphColorMap){
         groupedCheckboxesMap = new HashMap<>();
         this.graphData = graphData;
         this.renderer = new XYLineAndShapeRenderer();
-        this.chart = createChart();
+        this.chart = createChart(interGraphColorMap);
         window = new GraphWindow(chart);
         addCheckboxes();
     }
@@ -64,7 +66,7 @@ public class GraphWindowController implements ActionListener {
         }
     }
 
-    private JFreeChart createChart() {
+    private JFreeChart createChart(Map<Paint, Boolean> interGraphColorMap) {
         JFreeChart chart = ChartFactory.createXYLineChart(
                 graphData.getName(),
                 GuiStringConstants.CHART_X_AXIS_LABEL,
@@ -81,7 +83,7 @@ public class GraphWindowController implements ActionListener {
         domainAxis.setAutoRange(true);
         domainAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
 
-        new ChartPainer(chart, renderer, graphData);
+        new ChartPainer(chart, renderer, graphData, interGraphColorMap);
 
         return chart;
     }
@@ -132,5 +134,12 @@ public class GraphWindowController implements ActionListener {
         checkBox.addActionListener(this);
         checkBox.setActionCommand(command);
         return checkBox;
+    }
+
+    static void showGraphs(SimulationHistory history){
+        Map<Paint, Boolean> interGraphColorMap = new HashMap<>();
+        for(Graph graph : GraphBuilder.BuildGraphs(history)){
+            new GraphWindowController(graph, interGraphColorMap);
+        }
     }
 }

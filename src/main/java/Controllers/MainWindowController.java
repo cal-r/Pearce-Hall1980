@@ -136,9 +136,7 @@ public class MainWindowController implements ActionListener, TableModelListener 
     }
 
     private void onShowGraphs(){
-        for(Graph graph : GraphBuilder.BuildGraphs(simulator.getLatestSimHistory())){
-            new GraphWindowController(graph);
-        }
+        GraphWindowController.showGraphs(simulator.getLatestSimHistory());
     }
 
     private void processEvent(String cmd){

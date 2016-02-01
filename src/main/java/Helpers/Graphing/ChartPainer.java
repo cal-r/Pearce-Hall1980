@@ -10,6 +10,7 @@ import org.jfree.chart.event.ChartProgressListener;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 
 import java.awt.*;
+import java.util.Map;
 import java.util.Random;
 
 /**
@@ -19,10 +20,12 @@ public class ChartPainer{
 
     private Graph graphData;
     private XYLineAndShapeRenderer renderer;
+    private Map<Paint, Boolean> interGraphColorMap;
 
-    public ChartPainer(JFreeChart chart, XYLineAndShapeRenderer renderer, Graph graphData) {
+    public ChartPainer(JFreeChart chart, XYLineAndShapeRenderer renderer, Graph graphData, Map<Paint, Boolean> interGraphColorMap) {
         this.renderer = renderer;
         this.graphData = graphData;
+        this.interGraphColorMap = interGraphColorMap;
         new Caller(chart);
     }
 
@@ -32,18 +35,23 @@ public class ChartPainer{
                 setMarkerOnRenderer(line);
             }else{
                 Marker newMarker = createMarkerFromRenderer(line);
-                if(isMarkerUnique(newMarker)) {
-                    line.setMarker(newMarker);
+                if(!interGraphColorMap.containsKey(newMarker.getColor())) {
+                    setNewMarker(newMarker, line);
                 }else{
                     newMarker = createRandomMarker();
-                    while (!isMarkerUnique(newMarker)){
+                    while (interGraphColorMap.containsKey(newMarker.getColor())){
                         newMarker = createRandomMarker();
                     }
-                    line.setMarker(newMarker);
+                    setNewMarker(newMarker, line);
                     setMarkerOnRenderer(line);
                 }
             }
         }
+    }
+
+    private void setNewMarker(Marker newMarker, GraphLine line){
+        line.setMarker(newMarker);
+        interGraphColorMap.put(newMarker.getColor(), true);
     }
 
     private Marker createMarkerFromRenderer(GraphLine line){
@@ -57,23 +65,14 @@ public class ChartPainer{
         renderer.setSeriesShape(line.getDisplayId(), line.getMarker().getShape());
     }
 
-    private Marker createRandomMarker(){
+    private Marker createRandomMarker() {
         Random random = new Random(System.nanoTime());
         return new Marker(
                 new Color(
-                    random.nextInt(256),
-                    random.nextInt(256),
-                    random.nextInt(256)),
+                        random.nextInt(256),
+                        random.nextInt(256),
+                        random.nextInt(256)),
                 renderer.getBaseShape());
-    }
-
-    private boolean isMarkerUnique(Marker newMarker) {
-        for (GraphLine line : graphData.getAllLines()){
-            if(line.isMarkerSet() && line.getMarker().isSimilar(newMarker)){
-                return false;
-            }
-        }
-        return true;
     }
 
     private boolean isChartRendered(){

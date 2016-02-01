@@ -21,8 +21,4 @@ public class Marker {
     public Paint getColor() {
         return color;
     }
-
-    public boolean isSimilar(Marker other){
-        return color == other.color;
-    }
 }
