@@ -9,7 +9,6 @@ import java.util.*;
  */
 public class Graph {
     private Map<String, GraphLineGroup> linesGroupsMap;
-
     private String name;
 
     public Graph(String name){
@@ -19,7 +18,8 @@ public class Graph {
 
     public void addLine(String groupName, GraphLine line){
         if(!linesGroupsMap.containsKey(groupName)){
-            linesGroupsMap.put(groupName, new GraphLineGroup(groupName));
+            GraphLineGroup newGroup = new GraphLineGroup(groupName, linesGroupsMap.size());
+            linesGroupsMap.put(groupName, newGroup);
         }
         linesGroupsMap.get(groupName).addLine(line);
     }
@@ -29,17 +29,15 @@ public class Graph {
         linesGroupsMap.get(groupName).setVisible(command, visible);
     }
 
-    public GraphLineGroup getGroup(String groupName){
-        return linesGroupsMap.get(groupName);
-    }
-
-    public List<GraphLineGroup> getGroups(){
-        return new ArrayList<>(linesGroupsMap.values());
+    public List<GraphLineGroup> getAllGroups(){
+        List<GraphLineGroup> groups = new ArrayList<>(linesGroupsMap.values());
+        Collections.sort(groups);
+        return groups;
     }
 
     public List<GraphLine> getAllLines(){
         List<GraphLine> lines = new ArrayList<>();
-        for(GraphLineGroup group : getGroups()){
+        for(GraphLineGroup group : getAllGroups()){
             for (GraphLine line : group.getLines()){
                 lines.add(line);
             }

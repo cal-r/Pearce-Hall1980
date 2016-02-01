@@ -10,12 +10,14 @@ import java.util.Map;
 /**
  * Created by Rokas on 21/01/2016.
  */
-public class GraphLineGroup {
+public class GraphLineGroup implements Comparable<GraphLineGroup> {
+    private Integer groupId;
     private String name;
     private Map<String, GraphLine> linesMap;
 
-    public GraphLineGroup(String name){
+    public GraphLineGroup(String name, int groupId){
         this.name = name;
+        this.groupId = groupId;
         linesMap = new HashMap<>();
     }
 
@@ -44,5 +46,10 @@ public class GraphLineGroup {
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public int compareTo(GraphLineGroup other) {
+        return groupId.compareTo(other.groupId);
     }
 }

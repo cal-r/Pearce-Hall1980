@@ -9,7 +9,7 @@ import java.util.ArrayList;
  */
 public class GraphLine implements Comparable<GraphLine> {
     private boolean visible;
-    private int displayId;
+    private Integer displayId;
     private Marker marker;
 
     private String name;
@@ -83,12 +83,6 @@ public class GraphLine implements Comparable<GraphLine> {
 
     @Override
     public int compareTo(GraphLine other) {
-        if(other.displayId > displayId){
-            return -1;
-        }
-        if(other.displayId < displayId){
-            return 1;
-        }
-        return 0;
+        return displayId.compareTo(other.displayId);
     }
 }

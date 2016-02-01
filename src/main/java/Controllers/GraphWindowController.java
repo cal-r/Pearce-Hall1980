@@ -90,7 +90,7 @@ public class GraphWindowController implements ActionListener {
 
     private void addCheckboxes(){
         GridBagConstraints constraints = createGridBagConstraints();
-        for(GraphLineGroup lineGroup : graphData.getGroups()){
+        for(GraphLineGroup lineGroup : graphData.getAllGroups()){
             addCheckBox(constraints, true, lineGroup);
             for (GraphLine line : lineGroup.getLines()){
                 addCheckBox(constraints, false, lineGroup, line);
