@@ -1,17 +1,15 @@
 package Controllers;
 
 import Constants.GuiStringConstants;
-import Helpers.GraphDatasetHelper;
-import Helpers.GraphStringsHelper;
-import Helpers.ChartPainer;
+import Helpers.Graphing.GraphDatasetHelper;
+import Helpers.Graphing.GraphStringsHelper;
+import Helpers.Graphing.ChartPainer;
 import Models.Graphing.Graph;
 import Models.Graphing.GraphLine;
 import Models.Graphing.GraphLineGroup;
 import Views.GraphWindow;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.LegendItem;
-import org.jfree.chart.LegendItemCollection;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
@@ -87,14 +85,6 @@ public class GraphWindowController implements ActionListener {
 
         return chart;
     }
-
-//    private void createFixedLegendItemCollection(){
-//        LegendItemCollection legend = new LegendItemCollection();
-//        for(GraphLine line : graphData.getAllLines()){
-//
-//        }
-//        chart.getXYPlot().setFixedLegendItems()
-//    }
 
     private void addCheckboxes(){
         GridBagConstraints constraints = createGridBagConstraints();

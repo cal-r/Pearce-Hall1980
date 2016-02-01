@@ -1,4 +1,4 @@
-package Helpers;
+package Helpers.ModelBuilding;
 
 import Models.ConditionalStimulus;
 import Models.GroupPhase;

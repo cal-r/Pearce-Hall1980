@@ -1,8 +1,7 @@
-package Helpers;
+package Helpers.Graphing;
 
 import Models.Graphing.Graph;
 import Models.Graphing.GraphLine;
-import Models.Graphing.GraphLineGroup;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;

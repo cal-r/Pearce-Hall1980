@@ -1,4 +1,4 @@
-package Helpers;
+package Helpers.Graphing;
 
 import Models.ConditionalStimulus;
 import Models.Graphing.Graph;

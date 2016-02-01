@@ -1,4 +1,4 @@
-package Helpers;
+package Helpers.Random;
 
 import java.util.HashMap;
 import java.util.List;

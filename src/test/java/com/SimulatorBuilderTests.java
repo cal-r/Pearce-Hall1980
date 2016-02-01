@@ -1,6 +1,6 @@
 package com;
 
-import Helpers.SimulatorBuilder;
+import Helpers.ModelBuilding.SimulatorBuilder;
 import Models.ConditionalStimulus;
 import Models.Simulator;
 import ViewModels.TrialTableModel;

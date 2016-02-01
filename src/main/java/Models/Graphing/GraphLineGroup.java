@@ -1,6 +1,6 @@
 package Models.Graphing;
 
-import Helpers.GraphStringsHelper;
+import Helpers.Graphing.GraphStringsHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;

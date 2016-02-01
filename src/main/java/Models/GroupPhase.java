@@ -2,8 +2,8 @@ package Models;
 
 import Constants.DefaultValuesConstants;
 import Constants.GuiStringConstants;
-import Helpers.RandomArrayGenerator;
-import Helpers.RandomSimulationHelper;
+import Helpers.Random.RandomArrayGenerator;
+import Helpers.Random.RandomSimulationHelper;
 import Models.History.CsState;
 import Models.History.GroupPhaseHistory;
 import Models.Parameters.GammaParameter;

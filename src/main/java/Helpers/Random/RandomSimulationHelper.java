@@ -1,4 +1,4 @@
-package Helpers;
+package Helpers.Random;
 
 import Constants.DefaultValuesConstants;
 import Constants.GuiStringConstants;

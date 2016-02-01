@@ -1,10 +1,7 @@
 package com;
 
-import Helpers.PhaseStringTokenizer;
-import Helpers.RandomArrayGenerator;
+import Helpers.Random.RandomArrayGenerator;
 import org.junit.Test;
-
-import java.util.List;
 
 /**
  * Created by Rokas on 24/12/2015.

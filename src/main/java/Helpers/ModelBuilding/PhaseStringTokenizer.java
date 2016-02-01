@@ -1,4 +1,4 @@
-package Helpers;
+package Helpers.ModelBuilding;
 
 import Constants.GuiStringConstants;
 

@@ -1,5 +1,7 @@
-package Helpers;
+package Helpers.ModelBuilding;
 
+import Helpers.ModelBuilding.PhaseParser;
+import Helpers.ModelBuilding.PhaseStringTokenizer;
 import Models.ConditionalStimulus;
 import Models.Group;
 import Models.GroupPhase;

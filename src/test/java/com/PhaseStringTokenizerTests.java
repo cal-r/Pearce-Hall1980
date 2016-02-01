@@ -1,9 +1,8 @@
 package com;
 
-import Helpers.PhaseStringTokenizer;
+import Helpers.ModelBuilding.PhaseStringTokenizer;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertTrue;

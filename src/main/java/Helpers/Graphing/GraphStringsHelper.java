@@ -1,4 +1,4 @@
-package Helpers;
+package Helpers.Graphing;
 
 import Constants.ActionCommands;
 import Models.Graphing.GraphLine;

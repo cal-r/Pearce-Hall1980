@@ -3,6 +3,8 @@ package Controllers;
 import Constants.ActionCommands;
 import Constants.GuiStringConstants;
 import Helpers.*;
+import Helpers.Graphing.GraphBuilder;
+import Helpers.ModelBuilding.SimulatorBuilder;
 import Models.Graphing.Graph;
 import Models.Parameters.Parameter;
 import Models.Simulator;

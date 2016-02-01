@@ -1,7 +1,7 @@
 package com;
 
-import Helpers.PhaseParser;
-import Helpers.PhaseStringTokenizer;
+import Helpers.ModelBuilding.PhaseParser;
+import Helpers.ModelBuilding.PhaseStringTokenizer;
 import Models.ConditionalStimulus;
 import Models.GroupPhase;
 import Models.Parameters.CsParameterPool;

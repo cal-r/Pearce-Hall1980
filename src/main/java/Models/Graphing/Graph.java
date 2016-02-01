@@ -1,7 +1,6 @@
 package Models.Graphing;
 
-import Helpers.GraphStringsHelper;
-import com.sun.javafx.collections.transformation.SortedList;
+import Helpers.Graphing.GraphStringsHelper;
 
 import java.util.*;
 
