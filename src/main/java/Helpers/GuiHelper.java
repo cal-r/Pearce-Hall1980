@@ -4,6 +4,7 @@ import Constants.GuiStringConstants;
 import ViewModels.GroupReportViewModel;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
 import java.util.List;
 
 /**
@@ -31,6 +32,14 @@ public class GuiHelper {
                 error,
                 GuiStringConstants.ERROR,
                 JOptionPane.ERROR_MESSAGE);
+    }
+
+    public static boolean isCheckBoxSelected(ActionEvent e){
+        return ((JCheckBox)e.getSource()).isSelected();
+    }
+
+    public static boolean isMenuItemSelected(ActionEvent e){
+        return ((JCheckBoxMenuItem)e.getSource()).isSelected();
     }
 
     public static void clearOuputArea(JTextArea outputArea){

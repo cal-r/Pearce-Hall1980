@@ -5,6 +5,7 @@ import Helpers.Graphing.GraphBuilder;
 import Helpers.Graphing.GraphDatasetHelper;
 import Helpers.Graphing.GraphStringsHelper;
 import Helpers.Graphing.ChartPainer;
+import Helpers.GuiHelper;
 import Models.Graphing.Graph;
 import Models.Graphing.GraphLine;
 import Models.Graphing.GraphLineGroup;
@@ -44,16 +45,15 @@ public class GraphWindowController implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() instanceof JCheckBox){
-            onCheckBoxClick((JCheckBox)e.getSource(), e.getActionCommand());
+            onCheckBoxClick(GuiHelper.isCheckBoxSelected(e), e.getActionCommand());
         }
     }
 
-    private void onCheckBoxClick(JCheckBox box, String command){
-        boolean isCheckboxTicked = box.isSelected();
+    private void onCheckBoxClick(boolean isCheckboxTicked, String command){
         graphData.setVisibility(command, isCheckboxTicked);
         if(groupedCheckboxesMap.containsKey(command)){
             for(JCheckBox childBox : groupedCheckboxesMap.get(command)){
-                childBox.setSelected(box.isSelected());
+                childBox.setSelected(isCheckboxTicked);
             }
         }
         refreshView();

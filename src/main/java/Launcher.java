@@ -11,9 +11,8 @@ import javax.swing.*;
 public class Launcher {
     public static void main(String[] args) {
         Simulator simulator = new Simulator();
-
         MainWindowController mainWindowController = new MainWindowController(simulator);
-        MenuController menuController = new MenuController(simulator);
+        MenuController menuController = new MenuController(mainWindowController);
 
         MainWindow mainWindow = new MainWindow(mainWindowController, menuController);
         mainWindow.setVisible(true);

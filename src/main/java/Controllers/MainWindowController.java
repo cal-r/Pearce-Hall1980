@@ -182,4 +182,8 @@ public class MainWindowController implements ActionListener, TableModelListener 
             processEvent(ActionCommands.GLOBAL_PARAMS_TABLE_CHANGED);
         }
     }
+
+    public Simulator getSimulator(){
+        return simulator;
+    }
 }

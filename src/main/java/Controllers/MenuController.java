@@ -3,22 +3,24 @@ package Controllers;
 import Constants.GuiStringConstants;
 import Helpers.GuiHelper;
 import Models.Simulator;
+import Models.SimulatorSettings;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 
 /**
  * Created by Rokas on 01/02/2016.
  */
 public class MenuController implements ActionListener {
 
-    private Simulator simulator;
+    private SimulatorSettings settings;
+    private MainWindowController mainWindowController;
     private JMenuBar menuBar;
 
-    public MenuController(Simulator simulator) {
-        this.simulator = simulator;
+    public MenuController(MainWindowController mainWindowController) {
+        this.mainWindowController = mainWindowController;
+        settings = mainWindowController.getSimulator().getSimulatorSettings();
         initMenuBar();
     }
 
@@ -39,7 +41,21 @@ public class MenuController implements ActionListener {
         createMenuItem(settingsMenu, GuiStringConstants.COMPOUND_RESULTS_SETTING, MenuItemType.CHECKBOX);
         createMenuItem(settingsMenu, GuiStringConstants.CONIFGURAL_CUES_SETTING, MenuItemType.CHECKBOX);
         menuBar.add(settingsMenu);
+    }
 
+    private void onCompoundResultsSettingTicked(boolean isSelected){
+        settings.CompoundResults = isSelected;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        switch (e.getActionCommand()){
+            case GuiStringConstants.COMPOUND_RESULTS_SETTING:
+                onCompoundResultsSettingTicked(GuiHelper.isMenuItemSelected(e));
+                break;
+            default:
+                GuiHelper.displayErrorMessage("Nicht implementiert!");
+        }
     }
 
     private enum MenuItemType { BASIC, CHECKBOX }
@@ -49,10 +65,5 @@ public class MenuController implements ActionListener {
         menuItem.setActionCommand(nameAndCommand);
         menuItem.addActionListener(this);
         menu.add(menuItem);
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        GuiHelper.displayErrorMessage(e.getActionCommand());
     }
 }

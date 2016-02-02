@@ -16,6 +16,7 @@ import java.util.List;
  * Created by Rokas on 06/11/2015.
  */
 public class Simulator {
+    private SimulatorSettings settings;
 
     private List<Group> groups;
     private GammaParameter gamma;
@@ -24,6 +25,7 @@ public class Simulator {
     private SimulationHistory simulationHistory;
 
     public Simulator(){
+        settings = new SimulatorSettings();
         gamma = new GammaParameter();
     }
 
@@ -83,5 +85,9 @@ public class Simulator {
 
     public SimulationHistory getLatestSimHistory(){
         return simulationHistory;
+    }
+
+    public SimulatorSettings getSimulatorSettings(){
+        return settings;
     }
 }
