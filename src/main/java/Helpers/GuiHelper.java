@@ -1,5 +1,6 @@
 package Helpers;
 
+import Constants.GuiStringConstants;
 import ViewModels.GroupReportViewModel;
 
 import javax.swing.*;
@@ -24,9 +25,12 @@ public class GuiHelper {
         }
     }
 
-    public static void outputErrorMessage(String error, JTextArea outputArea){
-        clearOuputArea(outputArea);
-        outputArea.append(error);
+    public static void displayErrorMessage(String error){
+        JOptionPane.showMessageDialog(
+                new JFrame(),
+                GuiStringConstants.TRAIL_TABLE_ERROR,
+                GuiStringConstants.ERROR,
+                JOptionPane.ERROR_MESSAGE);
     }
 
     public static void clearOuputArea(JTextArea outputArea){

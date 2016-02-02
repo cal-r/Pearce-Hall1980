@@ -84,7 +84,7 @@ public class MainWindowController implements ActionListener, TableModelListener 
             globalParamsTableModel.setUpParameters(globalParameters);
             runSimButton.setEnabled(true);
         }catch (IllegalArgumentException ex){
-            GuiHelper.outputErrorMessage(GuiStringConstants.TRAIL_TABLE_ERROR, simOutputArea);
+            GuiHelper.displayErrorMessage(GuiStringConstants.TRAIL_TABLE_ERROR);
         }
     }
 
