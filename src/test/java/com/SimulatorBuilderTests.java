@@ -16,7 +16,8 @@ public class SimulatorBuilderTests extends junit.framework.TestCase {
         TrialTableModel tableModel = new TrialTableModel();
         tableModel.setValueAt("group name test", 0, 0);
         tableModel.setValueAt("2AB+", 0, 1);
-        Simulator sim = SimulatorBuilder.build(tableModel);
+        Simulator sim = new Simulator();
+        SimulatorBuilder.initSimulator(tableModel, sim);
         assertTrue(sim!=null);
         assertTrue(sim.getGroups().size() == 1);
         assertTrue(sim.getGroups().get(0).Name == "group name test");
@@ -36,7 +37,8 @@ public class SimulatorBuilderTests extends junit.framework.TestCase {
         tableModel.addPhase();
         tableModel.setValueAt("5B-", 0, 3);
         tableModel.setValueAt(true, 0, 4);
-        Simulator sim = SimulatorBuilder.build(tableModel);
+        Simulator sim = new Simulator();
+        SimulatorBuilder.initSimulator(tableModel, sim);
         assertTrue(sim!=null);
         assertTrue(sim.getGroups().size() == 1);
         assertTrue(sim.getGroups().get(0).Name == "group name test");
@@ -67,7 +69,8 @@ public class SimulatorBuilderTests extends junit.framework.TestCase {
         tableModel.setValueAt("ABC+", 1, 1);
         tableModel.setValueAt(true, 1, 2);
         tableModel.setValueAt("5B-", 1, 3);
-        Simulator sim = SimulatorBuilder.build(tableModel);
+        Simulator sim = new Simulator();
+        SimulatorBuilder.initSimulator(tableModel, sim);
 
         assertTrue(sim != null);
         assertTrue(sim.getGroups().size() == 2);

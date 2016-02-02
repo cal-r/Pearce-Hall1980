@@ -23,10 +23,16 @@ public class Simulator {
     private List<GroupReportViewModel> report;
     private SimulationHistory simulationHistory;
 
-    public Simulator(CsParameterPool csParameterPool, List<Group> groups){
-        this.csParameterPool = csParameterPool;
-        this.groups = groups;
+    public Simulator(){
         gamma = new GammaParameter();
+    }
+
+    public void setCsParameterPool(CsParameterPool csParameterPool){
+        this.csParameterPool = csParameterPool;
+    }
+
+    public void setGroups(List<Group> groups){
+        this.groups = groups;
     }
 
     public List<CsParameter> getCsParameters(){

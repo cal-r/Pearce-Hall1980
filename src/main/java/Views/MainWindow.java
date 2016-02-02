@@ -2,6 +2,7 @@ package Views;
 
 import Constants.ActionCommands;
 import Controllers.MainWindowController;
+import Controllers.MenuController;
 
 import javax.swing.*;
 
@@ -25,17 +26,19 @@ public class MainWindow extends JFrame{
     private JButton graphsButton;
 
     private MainWindowController controller;
+    private MenuController menuController;
 
-    public MainWindow() {
+    public MainWindow(MainWindowController controller, MenuController menuController) {
         super();
-        setVisible(true);
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        this.controller = controller;
+        this.menuController = menuController;
         setContentPane(rootPane);
+        setJMenuBar(menuController.getBar());
         pack();
+        initSubElements();
     }
 
-    public void initSubElements() {
-        controller = new MainWindowController();
+    private void initSubElements() {
         //tables
         controller.initTrialTable(trialTable);
         controller.initCsParamsTable(csParamsTable);
@@ -55,5 +58,5 @@ public class MainWindow extends JFrame{
         controller.initExportButton(graphsButton, ActionCommands.GRAPHS_DISPLAY);
 
         controller.initOutputArea(simOutputArea);
-    }   
+    }
 }

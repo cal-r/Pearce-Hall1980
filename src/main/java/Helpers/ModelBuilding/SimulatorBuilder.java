@@ -19,7 +19,7 @@ import java.util.Map;
  */
 public class SimulatorBuilder {
 
-    public static Simulator build(TrialTableModel tableModel){
+    public static void initSimulator(TrialTableModel tableModel, Simulator simulator){
         CsParameterPool csParameterPool = new CsParameterPool();
         GroupBuilder groupBuilder = new GroupBuilder(csParameterPool);
 
@@ -29,7 +29,8 @@ public class SimulatorBuilder {
             groups.add(group);
         }
 
-        return new Simulator(csParameterPool, groups);
+        simulator.setCsParameterPool(csParameterPool);
+        simulator.setGroups(groups);
     }
 
     private static class GroupBuilder{

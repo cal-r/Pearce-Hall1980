@@ -12,8 +12,6 @@ import java.util.List;
 
 public abstract class BaseTableModel extends AbstractTableModel {
 
-    JTable table;
-
     protected List<String> columnHeaders;
     protected List<List<Object>> data;
 

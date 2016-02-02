@@ -3,9 +3,7 @@ package Controllers;
 import Constants.ActionCommands;
 import Constants.GuiStringConstants;
 import Helpers.*;
-import Helpers.Graphing.GraphBuilder;
 import Helpers.ModelBuilding.SimulatorBuilder;
-import Models.Graphing.Graph;
 import Models.Parameters.Parameter;
 import Models.Simulator;
 import ViewModels.*;
@@ -33,7 +31,8 @@ public class MainWindowController implements ActionListener, TableModelListener 
 
     private Simulator simulator;
 
-    public MainWindowController(){
+    public MainWindowController(Simulator simulator){
+        this.simulator = simulator;
         exportButtons = new ArrayList<>();
     }
 
@@ -78,7 +77,7 @@ public class MainWindowController implements ActionListener, TableModelListener 
 
     private void onSetParams(){
         try {
-            simulator = SimulatorBuilder.build(trialTableModel);
+            SimulatorBuilder.initSimulator(trialTableModel, simulator);
             List<Parameter> csParameters = ListCaster.cast(simulator.getCsParameters());
             List<Parameter> globalParameters = simulator.getGlobalParameters();
             csParamsTableModel.setUpParameters(csParameters);
