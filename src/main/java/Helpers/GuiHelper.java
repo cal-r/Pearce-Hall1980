@@ -28,7 +28,7 @@ public class GuiHelper {
     public static void displayErrorMessage(String error){
         JOptionPane.showMessageDialog(
                 new JFrame(),
-                GuiStringConstants.TRAIL_TABLE_ERROR,
+                error,
                 GuiStringConstants.ERROR,
                 JOptionPane.ERROR_MESSAGE);
     }

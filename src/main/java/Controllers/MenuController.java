@@ -1,15 +1,18 @@
 package Controllers;
 
+import Constants.GuiStringConstants;
+import Helpers.GuiHelper;
 import Models.Simulator;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
 /**
  * Created by Rokas on 01/02/2016.
  */
-public class MenuController {
+public class MenuController implements ActionListener {
 
     private Simulator simulator;
     private JMenuBar menuBar;
@@ -24,79 +27,32 @@ public class MenuController {
     }
 
     private void initMenuBar(){
-        JMenu menu, submenu;
-        JMenuItem menuItem;
-        JRadioButtonMenuItem rbMenuItem;
-        JCheckBoxMenuItem cbMenuItem;
-
-//Create the menu bar.
         menuBar = new JMenuBar();
+        //file menu
+        JMenu fileMenu = new JMenu(GuiStringConstants.FILE);
+        createMenuItem(fileMenu, GuiStringConstants.SAVE, MenuItemType.BASIC);
+        createMenuItem(fileMenu, GuiStringConstants.OPEN, MenuItemType.BASIC);
+        menuBar.add(fileMenu);
+        //settings menu
+        JMenu settingsMenu = new JMenu(GuiStringConstants.SETTINGS);
+        createMenuItem(settingsMenu, GuiStringConstants.RANDOM_TRAILS_SETTING, MenuItemType.BASIC);
+        createMenuItem(settingsMenu, GuiStringConstants.COMPOUND_RESULTS_SETTING, MenuItemType.CHECKBOX);
+        createMenuItem(settingsMenu, GuiStringConstants.CONIFGURAL_CUES_SETTING, MenuItemType.CHECKBOX);
+        menuBar.add(settingsMenu);
 
-//Build the first menu.
-        menu = new JMenu("A Menu");
-        menu.setMnemonic(KeyEvent.VK_A);
-        menu.getAccessibleContext().setAccessibleDescription(
-                "The only menu in this program that has menu items");
-        menuBar.add(menu);
+    }
 
-//a group of JMenuItems
-        menuItem = new JMenuItem("A text-only menu item",
-                KeyEvent.VK_T);
-        menuItem.setAccelerator(KeyStroke.getKeyStroke(
-                KeyEvent.VK_1, ActionEvent.ALT_MASK));
-        menuItem.getAccessibleContext().setAccessibleDescription(
-                "This doesn't really do anything");
+    private enum MenuItemType { BASIC, CHECKBOX }
+
+    private void createMenuItem(JMenu menu, String nameAndCommand, MenuItemType type){
+        JMenuItem menuItem = type == MenuItemType.CHECKBOX ? new JCheckBoxMenuItem(nameAndCommand) : new JMenuItem(nameAndCommand);
+        menuItem.setActionCommand(nameAndCommand);
+        menuItem.addActionListener(this);
         menu.add(menuItem);
+    }
 
-        menuItem = new JMenuItem(new ImageIcon("images/middle.gif"));
-        menuItem.setMnemonic(KeyEvent.VK_D);
-        menu.add(menuItem);
-
-//a group of radio button menu items
-        menu.addSeparator();
-        ButtonGroup group = new ButtonGroup();
-        rbMenuItem = new JRadioButtonMenuItem("A radio button menu item");
-        rbMenuItem.setSelected(true);
-        rbMenuItem.setMnemonic(KeyEvent.VK_R);
-        group.add(rbMenuItem);
-        menu.add(rbMenuItem);
-
-        rbMenuItem = new JRadioButtonMenuItem("Another one");
-        rbMenuItem.setMnemonic(KeyEvent.VK_O);
-        group.add(rbMenuItem);
-        menu.add(rbMenuItem);
-
-//a group of check box menu items
-        menu.addSeparator();
-        cbMenuItem = new JCheckBoxMenuItem("A check box menu item");
-        cbMenuItem.setMnemonic(KeyEvent.VK_C);
-        menu.add(cbMenuItem);
-
-        cbMenuItem = new JCheckBoxMenuItem("Another one");
-        cbMenuItem.setMnemonic(KeyEvent.VK_H);
-        menu.add(cbMenuItem);
-
-//a submenu
-        menu.addSeparator();
-        submenu = new JMenu("A submenu");
-        submenu.setMnemonic(KeyEvent.VK_S);
-
-        menuItem = new JMenuItem("An item in the submenu");
-        menuItem.setAccelerator(KeyStroke.getKeyStroke(
-                KeyEvent.VK_2, ActionEvent.ALT_MASK));
-        submenu.add(menuItem);
-
-        menuItem = new JMenuItem("Another item");
-        submenu.add(menuItem);
-        menu.add(submenu);
-
-//Build second menu in the menu bar.
-        menu = new JMenu("Another Menu");
-        menu.setMnemonic(KeyEvent.VK_N);
-        menu.getAccessibleContext().setAccessibleDescription(
-                "This menu does nothing");
-        menuBar.add(menu);
-
-        //setJMenuBar(menuBar);
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        GuiHelper.displayErrorMessage(e.getActionCommand());
     }
 }
