@@ -3,6 +3,7 @@ package Controllers;
 import Constants.ActionCommands;
 import Constants.GuiStringConstants;
 import Helpers.*;
+import Helpers.Export.ExcelExportHelper;
 import Helpers.ModelBuilding.SimulatorBuilder;
 import Models.Parameters.Parameter;
 import Models.Simulator;
@@ -89,7 +90,7 @@ public class MainWindowController implements ActionListener, TableModelListener 
     }
 
     private void onExcelExport(){
-        ExcelExportHelper.exportSimulation(new FilePickerController(), simulator.getLatestReport());
+        ExcelExportHelper.exportSimulation(simulator.getLatestReport());
     }
 
     private void onRunSim(){

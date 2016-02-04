@@ -1,4 +1,4 @@
-package Helpers;
+package Helpers.Export;
 
 import Controllers.FilePickerController;
 import ViewModels.GroupReportViewModel;
@@ -18,14 +18,9 @@ import java.util.List;
  * Created by Rokas on 22/12/2015.
  */
 public class ExcelExportHelper {
-    public static void exportSimulation(FilePickerController filePickerController, List<GroupReportViewModel> groupReports){
-        String path = filePickerController.pickExcelExportPath();
-        if(path == null)
-            return;
-
-        try {
-            File file = new File(path);
-            FileOutputStream stream = new FileOutputStream(file);
+    public static void exportSimulation(List<GroupReportViewModel> groupReports){
+        try{
+            OutputStream stream = ExportHelper.getOutputStream(FilePickerController.FileMode.ExcelExport);
             ExportToStream(groupReports, stream);
         }catch (Exception ex){
 
