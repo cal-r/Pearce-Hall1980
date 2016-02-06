@@ -7,7 +7,10 @@ import Helpers.Export.ExcelExportHelper;
 import Helpers.ModelBuilding.SimulatorBuilder;
 import Models.Parameters.Parameter;
 import Models.Simulator;
-import ViewModels.*;
+import ViewModels.TableModels.BaseTableModel;
+import ViewModels.TableModels.CSParamsTableModel;
+import ViewModels.TableModels.GlobalPramsTableModel;
+import ViewModels.TableModels.TrialTableModel;
 
 import javax.swing.*;
 import javax.swing.event.TableModelEvent;

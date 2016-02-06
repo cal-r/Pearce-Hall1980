@@ -1,4 +1,4 @@
-package ViewModels;
+package ViewModels.TableModels;
 
 import javax.swing.*;
 import javax.swing.event.TableModelEvent;

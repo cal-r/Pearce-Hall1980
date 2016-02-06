@@ -1,6 +1,7 @@
-package ViewModels;
+package ViewModels.TableModels;
 
 import Constants.GuiStringConstants;
+import ViewModels.TableModels.BaseParamsTableModel;
 
 import java.util.ArrayList;
 import java.util.List;

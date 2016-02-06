@@ -1,4 +1,4 @@
-package ViewModels;
+package ViewModels.TableModels;
 
 import Models.Parameters.Parameter;
 

@@ -1,7 +1,7 @@
 package com;
 
 import Constants.GuiStringConstants;
-import ViewModels.TrialTableModel;
+import ViewModels.TableModels.TrialTableModel;
 import junit.framework.TestCase;
 import org.junit.Test;
 

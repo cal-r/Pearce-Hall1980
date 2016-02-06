@@ -1,5 +1,6 @@
 package Helpers.Export;
 
+
 import Controllers.FilePickerController;
 import ViewModels.GroupReportViewModel;
 import org.apache.poi.ss.usermodel.Cell;
@@ -8,8 +9,6 @@ import org.apache.poi.ss.usermodel.Sheet;
 
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
@@ -21,13 +20,17 @@ public class ExcelExportHelper {
     public static void exportSimulation(List<GroupReportViewModel> groupReports){
         try{
             OutputStream stream = ExportHelper.getOutputStream(FilePickerController.FileMode.ExcelExport);
-            ExportToStream(groupReports, stream);
+            exportToStream(createWorkbook(groupReports), stream);
         }catch (Exception ex){
 
         }
     }
 
-    private static void ExportToStream(List<GroupReportViewModel> groupReports, OutputStream outputStream) throws IOException {
+    private static void exportToStream(XSSFWorkbook workbook, OutputStream outputStream) throws IOException {
+        workbook.write(outputStream);
+    }
+
+    private static XSSFWorkbook createWorkbook(List<GroupReportViewModel> groupReports){
         XSSFWorkbook workbook = new XSSFWorkbook();
         for(GroupReportViewModel reportVM : groupReports) {
             Sheet sheet = workbook.createSheet(reportVM.title);
@@ -45,6 +48,6 @@ public class ExcelExportHelper {
                 }
             }
         }
-        workbook.write(outputStream);
+        return workbook;
     }
 }

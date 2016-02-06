@@ -1,13 +1,11 @@
 package Helpers.ModelBuilding;
 
-import Helpers.ModelBuilding.PhaseParser;
-import Helpers.ModelBuilding.PhaseStringTokenizer;
 import Models.ConditionalStimulus;
 import Models.Group;
 import Models.GroupPhase;
 import Models.Parameters.CsParameterPool;
 import Models.Simulator;
-import ViewModels.TrialTableModel;
+import ViewModels.TableModels.TrialTableModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;

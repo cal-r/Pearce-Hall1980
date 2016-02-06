@@ -1,8 +1,7 @@
 package com;
 
 import Models.Parameters.Parameter;
-import ViewModels.CSParamsTableModel;
-import org.mockito.stubbing.Answer;
+import ViewModels.TableModels.CSParamsTableModel;
 
 import static org.mockito.Mockito.*;
 

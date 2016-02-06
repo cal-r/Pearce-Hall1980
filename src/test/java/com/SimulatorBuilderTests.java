@@ -3,7 +3,7 @@ package com;
 import Helpers.ModelBuilding.SimulatorBuilder;
 import Models.ConditionalStimulus;
 import Models.Simulator;
-import ViewModels.TrialTableModel;
+import ViewModels.TableModels.TrialTableModel;
 import org.junit.Test;
 
 /**
