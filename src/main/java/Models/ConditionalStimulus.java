@@ -6,12 +6,13 @@ import Models.Parameters.InitialAlphaParameter;
 import Models.Parameters.SalienceExcitatoryParameter;
 import Models.Parameters.SalienceInhibitoryParameter;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by Rokas on 03/11/2015.
  */
-public class ConditionalStimulus {
+public class ConditionalStimulus implements Serializable {
 
     public InitialAlphaParameter InitialAlphaParameter;
     public SalienceExcitatoryParameter SalienceExcitatoryParameter;

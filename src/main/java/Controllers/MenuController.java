@@ -3,8 +3,8 @@ package Controllers;
 import Constants.GuiStringConstants;
 import Helpers.Export.ModelExportHelper;
 import Helpers.GuiHelper;
-import Helpers.ModelBuilding.ModelDtoBuilder;
-import Models.Simulator;
+import Helpers.ModelBuilding.ModelDtoHelper;
+import Models.DTOs.ModelDto;
 import Models.SimulatorSettings;
 
 import javax.swing.*;
@@ -57,9 +57,15 @@ public class MenuController implements ActionListener {
     }
 
     private void onSaveModel(){
-        ModelExportHelper.ExportModel(ModelDtoBuilder.buildModelDto(mainWindowController));
+        ModelExportHelper.exportModel(ModelDtoHelper.buildModelDto(mainWindowController));
     }
 
+    private void onLoadModel() {
+        try {
+            ModelDto modelDto = ModelExportHelper.readModel();
+            ModelDtoHelper.loadModelDto(modelDto, mainWindowController);
+        }catch(Exception ex){}
+    }
 
     @Override
     public void actionPerformed(ActionEvent e){
@@ -69,6 +75,9 @@ public class MenuController implements ActionListener {
                 break;
             case GuiStringConstants.SAVE:
                 onSaveModel();
+                break;
+            case GuiStringConstants.OPEN:
+                onLoadModel();
                 break;
             default:
                 GuiHelper.displayErrorMessage("Nicht implementiert!");

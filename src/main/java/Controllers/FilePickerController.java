@@ -22,7 +22,7 @@ public class FilePickerController {
         picker = new JFileChooser();
     }
 
-    public String pickExcelExportPath(){
+    public String pickPath(){
         FileFilter filter = new FileNameExtensionFilter(fileType.getFilter(), fileType.getExtension());
         picker.setFileFilter(filter);
 

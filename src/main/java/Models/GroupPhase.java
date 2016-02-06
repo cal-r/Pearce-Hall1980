@@ -8,6 +8,7 @@ import Models.History.CsState;
 import Models.History.GroupPhaseHistory;
 import Models.Parameters.GammaParameter;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,7 +17,7 @@ import java.util.Map;
 /**
  * Created by Rokas on 03/11/2015.
  */
-public class GroupPhase {
+public class GroupPhase implements Serializable {
     public ArrayList<Trial> trials;
     private boolean random;
     private Map<Character, ConditionalStimulus> csMap;

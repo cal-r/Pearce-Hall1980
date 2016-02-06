@@ -1,12 +1,13 @@
 package Models;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
 /**
  * Created by Rokas on 13/11/2015.
  */
-public class Group {
+public class Group implements Serializable {
     private Map<Character, ConditionalStimulus> csMap;
     public List<GroupPhase> groupPhases;
     public String Name;

@@ -205,4 +205,20 @@ public class MainWindowController implements ActionListener, TableModelListener 
     public GlobalPramsTableModel getGlobalParamsTableModel() {
         return globalParamsTableModel;
     }
+
+    public void setSimulator(Simulator simulator) {
+        this.simulator = simulator;
+    }
+
+    public void setTrialTableModel(TrialTableModel trialTableModel) {
+        this.trialTableModel.copyData(trialTableModel);
+    }
+
+    public void setCsParamsTableModel(CSParamsTableModel csParamsTableModel) {
+        this.csParamsTableModel.copyData(csParamsTableModel);
+    }
+
+    public void setGlobalParamsTableModel(GlobalPramsTableModel globalParamsTableModel) {
+        this.globalParamsTableModel.copyData(globalParamsTableModel);
+    }
 }

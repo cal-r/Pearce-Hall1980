@@ -3,6 +3,7 @@ package ViewModels.TableModels;
 import javax.swing.*;
 import javax.swing.event.TableModelEvent;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableModel;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +11,7 @@ import java.util.List;
  * Created by Rokas on 03/11/2015.
  */
 
-public abstract class BaseTableModel extends AbstractTableModel {
+public abstract class BaseTableModel extends AbstractTableModel  {
 
     protected List<String> columnHeaders;
     protected List<List<Object>> data;
@@ -51,6 +52,12 @@ public abstract class BaseTableModel extends AbstractTableModel {
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         return data.get(rowIndex).get(columnIndex);
+    }
+
+    public void copyData(BaseTableModel tableModel){
+        data = tableModel.data;
+        columnHeaders = tableModel.columnHeaders;
+        fireTableStructureChanged();
     }
 
     @Override

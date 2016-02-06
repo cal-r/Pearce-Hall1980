@@ -4,13 +4,14 @@ import Models.Group;
 import Models.Parameters.CsParameterPool;
 import Models.Parameters.Parameter;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Rokas on 16/11/2015.
  */
-public class GroupHistory {
+public class GroupHistory implements Serializable {
     public Group group;
     private List<GroupPhaseHistory> phaseHistories;
     public CsParameterPool csParameterPool;

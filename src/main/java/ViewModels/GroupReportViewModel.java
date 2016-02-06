@@ -1,12 +1,13 @@
 package ViewModels;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Rokas on 22/12/2015.
  */
-public class GroupReportViewModel {
+public class GroupReportViewModel implements Serializable {
     private List<List<Object>> rows;
     private int numberOfColumns;
     public String title;

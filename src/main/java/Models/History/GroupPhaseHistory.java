@@ -5,6 +5,7 @@ import Models.ConditionalStimulus;
 import Models.GroupPhase;
 import Models.Trial;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.List;
 /**
  * Created by Rokas on 09/11/2015.
  */
-public class GroupPhaseHistory {
+public class GroupPhaseHistory implements Serializable {
     private GroupPhase groupPhase;
     private HashMap<ConditionalStimulus, List<CsState>> csHistoriesMap;
     private String groupName;

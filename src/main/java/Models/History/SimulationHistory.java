@@ -1,12 +1,13 @@
 package Models.History;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Rokas on 21/01/2016.
  */
-public class SimulationHistory extends ArrayList<GroupHistory> {
+public class SimulationHistory extends ArrayList<GroupHistory> implements Serializable {
     public List<PhaseHistory> getPhases(){
         List<PhaseHistory> phases = new ArrayList<>();
         for(int i=0;i<numberOfPhases();i++){

@@ -4,13 +4,14 @@ import Constants.DefaultValuesConstants;
 import Constants.GuiStringConstants;
 import ViewModels.TableModels.BaseTableModel;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Rokas on 03/11/2015.
  */
-public class TrialTableModel extends BaseTableModel {
+public class TrialTableModel extends BaseTableModel implements Serializable {
 
     public TrialTableModel(){
         addPhase();

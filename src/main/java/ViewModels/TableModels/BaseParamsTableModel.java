@@ -2,13 +2,14 @@ package ViewModels.TableModels;
 
 import Models.Parameters.Parameter;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Rokas on 08/11/2015.
  */
-public abstract class BaseParamsTableModel extends BaseTableModel {
+public abstract class BaseParamsTableModel extends BaseTableModel implements Serializable {
 
     private List<Parameter> parameters;
 
@@ -31,6 +32,11 @@ public abstract class BaseParamsTableModel extends BaseTableModel {
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
         super.setValueAt(aValue, rowIndex, columnIndex);
         parameters.get(rowIndex).setValue((double) aValue);
+    }
+
+    public void copyData(BaseParamsTableModel tableModel){
+        super.copyData(tableModel);
+        parameters = tableModel.parameters;
     }
 
     public void setUpParameters(List<Parameter> parameters){

@@ -2,10 +2,12 @@ package Models;
 
 import Constants.DefaultValuesConstants;
 
+import java.io.Serializable;
+
 /**
  * Created by Rokas on 02/02/2016.
  */
-public class SimulatorSettings {
+public class SimulatorSettings implements Serializable {
     public boolean CompoundResults;
     public boolean ConfiguralCues;
     public int NumberOfRandomCombination;

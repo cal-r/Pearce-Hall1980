@@ -1,5 +1,6 @@
 package Models.Parameters;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,7 +9,7 @@ import java.util.Map;
 /**
  * Created by Rokas on 13/11/2015.
  */
-public class CsParameterPool {
+public class CsParameterPool implements Serializable {
     Map<Character, InitialAlphaParameter> initialAlphaParameterMap;
     Map<Character, SalienceExcitatoryParameter> salienceExcitatoryParameterMap;
     Map<Character, SalienceInhibitoryParameter> salienceInhibitoryParameterMap;

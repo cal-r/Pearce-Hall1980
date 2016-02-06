@@ -9,13 +9,14 @@ import Models.Parameters.Parameter;
 import Models.Parameters.CsParameterPool;
 import ViewModels.GroupReportViewModel;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Rokas on 06/11/2015.
  */
-public class Simulator {
+public class Simulator implements Serializable{
     private SimulatorSettings settings;
 
     private List<Group> groups;

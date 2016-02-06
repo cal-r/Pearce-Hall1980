@@ -3,13 +3,14 @@ package ViewModels.TableModels;
 import Constants.GuiStringConstants;
 import ViewModels.TableModels.BaseParamsTableModel;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Rokas on 07/11/2015.
  */
-public class GlobalPramsTableModel extends BaseParamsTableModel {
+public class GlobalPramsTableModel extends BaseParamsTableModel implements Serializable {
 
     protected List<String> getColumnHeaders() {
         columnHeaders = new ArrayList<>();

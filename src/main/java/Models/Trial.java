@@ -1,11 +1,12 @@
 package Models;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Rokas on 03/11/2015.
  */
-public class Trial {
+public class Trial implements Serializable {
     public boolean usPresent;
     public List<ConditionalStimulus> cuesPresent;
 

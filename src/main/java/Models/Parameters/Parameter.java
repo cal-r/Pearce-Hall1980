@@ -2,10 +2,12 @@ package Models.Parameters;
 
 import Helpers.DefaultValuesHelper;
 
+import java.io.Serializable;
+
 /**
  * Created by Rokas on 07/11/2015.
  */
-public abstract class Parameter {
+public abstract class Parameter implements Serializable {
     protected double value;
     protected boolean isSet;
     protected String name;
