@@ -40,6 +40,7 @@ public class MainWindowController implements ActionListener, TableModelListener 
         exportButtons = new ArrayList<>();
     }
 
+    //init stuff
     public void initExportButton(JButton button, String command){
         exportButtons.add(button);
         initDisabledButton(button, command);
@@ -79,6 +80,7 @@ public class MainWindowController implements ActionListener, TableModelListener 
         this.simOutputArea = simOutputArea;
     }
 
+    //action events
     private void onSetParams(){
         try {
             SimulatorBuilder.initSimulator(trialTableModel, simulator);
@@ -187,7 +189,20 @@ public class MainWindowController implements ActionListener, TableModelListener 
         }
     }
 
+    //getters
     public Simulator getSimulator(){
         return simulator;
+    }
+
+    public TrialTableModel getTrialTableModel() {
+        return trialTableModel;
+    }
+
+    public CSParamsTableModel getCsParamsTableModel() {
+        return csParamsTableModel;
+    }
+
+    public GlobalPramsTableModel getGlobalParamsTableModel() {
+        return globalParamsTableModel;
     }
 }

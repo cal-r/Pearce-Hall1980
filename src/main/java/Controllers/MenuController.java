@@ -1,7 +1,9 @@
 package Controllers;
 
 import Constants.GuiStringConstants;
+import Helpers.Export.ModelExportHelper;
 import Helpers.GuiHelper;
+import Helpers.ModelBuilding.ModelDtoBuilder;
 import Models.Simulator;
 import Models.SimulatorSettings;
 
@@ -24,10 +26,7 @@ public class MenuController implements ActionListener {
         initMenuBar();
     }
 
-    public JMenuBar getBar(){
-        return menuBar;
-    }
-
+    //init stuff
     private void initMenuBar(){
         menuBar = new JMenuBar();
         //file menu
@@ -43,21 +42,6 @@ public class MenuController implements ActionListener {
         menuBar.add(settingsMenu);
     }
 
-    private void onCompoundResultsSettingTicked(boolean isSelected){
-        settings.CompoundResults = isSelected;
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        switch (e.getActionCommand()){
-            case GuiStringConstants.COMPOUND_RESULTS_SETTING:
-                onCompoundResultsSettingTicked(GuiHelper.isMenuItemSelected(e));
-                break;
-            default:
-                GuiHelper.displayErrorMessage("Nicht implementiert!");
-        }
-    }
-
     private enum MenuItemType { BASIC, CHECKBOX }
 
     private void createMenuItem(JMenu menu, String nameAndCommand, MenuItemType type){
@@ -65,5 +49,34 @@ public class MenuController implements ActionListener {
         menuItem.setActionCommand(nameAndCommand);
         menuItem.addActionListener(this);
         menu.add(menuItem);
+    }
+
+    //action events
+    private void onCompoundResultsSettingTicked(boolean isSelected){
+        settings.CompoundResults = isSelected;
+    }
+
+    private void onSaveModel(){
+        ModelExportHelper.ExportModel(ModelDtoBuilder.buildModelDto(mainWindowController));
+    }
+
+
+    @Override
+    public void actionPerformed(ActionEvent e){
+        switch (e.getActionCommand()){
+            case GuiStringConstants.COMPOUND_RESULTS_SETTING:
+                onCompoundResultsSettingTicked(GuiHelper.isMenuItemSelected(e));
+                break;
+            case GuiStringConstants.SAVE:
+                onSaveModel();
+                break;
+            default:
+                GuiHelper.displayErrorMessage("Nicht implementiert!");
+        }
+    }
+
+    //getters
+    public JMenuBar getBar(){
+        return menuBar;
     }
 }

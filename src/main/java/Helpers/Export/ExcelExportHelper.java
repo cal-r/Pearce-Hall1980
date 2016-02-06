@@ -19,8 +19,8 @@ import java.util.List;
 public class ExcelExportHelper {
     public static void exportSimulation(List<GroupReportViewModel> groupReports){
         try{
-            OutputStream stream = ExportHelper.getOutputStream(FilePickerController.FileMode.ExcelExport);
-            exportToStream(createWorkbook(groupReports), stream);
+            OutputStream outputStream = ExportHelper.getOutputStream(FilePickerController.FileMode.ExcelExport);
+            exportToStream(createWorkbook(groupReports), outputStream);
         }catch (Exception ex){
 
         }
