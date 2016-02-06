@@ -17,7 +17,7 @@ public class GuiStringConstants {
     public static final String SAVE = "Save";
     public static final String OPEN = "Open";
     public static final String SETTINGS = "Settings";
-    public static final String RANDOM_TRAILS_SETTING = "Number of Random Trails Combinations";
+    public static final String RANDOM_TRIALS_SETTING = "Number of Random Trials Combinations";
     public static final String COMPOUND_RESULTS_SETTING = "Show Compound Results";
     public static final String CONIFGURAL_CUES_SETTING = "Use Configural Cues";
 

@@ -33,14 +33,14 @@ public class GroupPhase implements Serializable {
         orderCounter = 0;
     }
 
-    public GroupPhaseHistory simulateTrials(GammaParameter gamma) {
+    public GroupPhaseHistory simulateTrials(GammaParameter gamma, SimulatorSettings simulatorSettings) {
         if(random){
-            return simulateTrialsRandomly(gamma);
+            return simulateTrialsRandomly(gamma, simulatorSettings);
         }
-        return simulateTrialsSequentially(gamma);
+        return simulateTrialsSequentially(gamma, simulatorSettings);
     }
 
-    private GroupPhaseHistory simulateTrialsSequentially(GammaParameter gamma){
+    private GroupPhaseHistory simulateTrialsSequentially(GammaParameter gamma, SimulatorSettings simulatorSettings){
         GroupPhaseHistory history = new GroupPhaseHistory(this);
         for(int i=0;i<trials.size();i++){
             Trial trial = trials.get(i);
@@ -51,11 +51,11 @@ public class GroupPhase implements Serializable {
         return history;
     }
 
-    private GroupPhaseHistory simulateTrialsRandomly(GammaParameter gamma) {
+    private GroupPhaseHistory simulateTrialsRandomly(GammaParameter gamma, SimulatorSettings simulatorSettings) {
         List<ConditionalStimulus> csCopies = getCsCopies(); //preserve initial state of CSs
         List<GroupPhaseHistory> tempHistories = new ArrayList<>(); //stores every simulation
         //sim phase 1000 times
-        for(int simNum = 0;simNum< DefaultValuesConstants.NUMBER_OF_RANDOM_COMBINATIONS; simNum++) {
+        for(int simNum = 0;simNum< simulatorSettings.NumberOfRandomCombination; simNum++) {
             resetCues(csCopies);
             GroupPhaseHistory history = new GroupPhaseHistory(this);
             int[] randomArray = RandomArrayGenerator.createRandomDistinctArray(trials.size());

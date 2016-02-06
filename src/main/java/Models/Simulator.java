@@ -59,7 +59,7 @@ public class Simulator implements Serializable{
             GroupHistory groupHistory = createGroupHistory(group);
             for(GroupPhase groupPhase : group.groupPhases) {
                 groupHistory.add(
-                        groupPhase.simulateTrials(gamma));
+                        groupPhase.simulateTrials(gamma, settings));
             }
             simHistory.add(groupHistory);
         }

@@ -34,6 +34,14 @@ public class GuiHelper {
                 JOptionPane.ERROR_MESSAGE);
     }
 
+    public static int getIntFromUser(String message, int defaultValue){
+        try {
+            return Integer.parseInt(JOptionPane.showInputDialog(message, defaultValue));
+        }catch (Exception ex){
+            return 0;
+        }
+    }
+
     public static boolean isCheckBoxSelected(ActionEvent e){
         return ((JCheckBox)e.getSource()).isSelected();
     }

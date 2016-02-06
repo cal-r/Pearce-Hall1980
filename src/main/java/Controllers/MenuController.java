@@ -36,7 +36,7 @@ public class MenuController implements ActionListener {
         menuBar.add(fileMenu);
         //settings menu
         JMenu settingsMenu = new JMenu(GuiStringConstants.SETTINGS);
-        createMenuItem(settingsMenu, GuiStringConstants.RANDOM_TRAILS_SETTING, MenuItemType.BASIC);
+        createMenuItem(settingsMenu, GuiStringConstants.RANDOM_TRIALS_SETTING, MenuItemType.BASIC);
         createMenuItem(settingsMenu, GuiStringConstants.COMPOUND_RESULTS_SETTING, MenuItemType.CHECKBOX);
         createMenuItem(settingsMenu, GuiStringConstants.CONIFGURAL_CUES_SETTING, MenuItemType.CHECKBOX);
         menuBar.add(settingsMenu);
@@ -67,6 +67,10 @@ public class MenuController implements ActionListener {
         }catch(Exception ex){}
     }
 
+    private void onRandomTrialsSetting(){
+        settings.NumberOfRandomCombination = GuiHelper.getIntFromUser(GuiStringConstants.RANDOM_TRIALS_SETTING, settings.NumberOfRandomCombination);
+    }
+
     @Override
     public void actionPerformed(ActionEvent e){
         switch (e.getActionCommand()){
@@ -75,9 +79,12 @@ public class MenuController implements ActionListener {
                 break;
             case GuiStringConstants.SAVE:
                 onSaveModel();
-                break;
+            break;
             case GuiStringConstants.OPEN:
                 onLoadModel();
+                break;
+            case GuiStringConstants.RANDOM_TRIALS_SETTING:
+                onRandomTrialsSetting();
                 break;
             default:
                 GuiHelper.displayErrorMessage("Nicht implementiert!");

@@ -6,6 +6,7 @@ import Models.GroupPhase;
 import Models.History.CsState;
 import Models.History.GroupPhaseHistory;
 import Models.Parameters.GammaParameter;
+import Models.SimulatorSettings;
 import Models.Trial;
 
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ public class PhaseTests extends junit.framework.TestCase {
 
         //40AB+/40AB-
         GroupPhase groupPhase = CreatePhase40(true, false, false);
-        GroupPhaseHistory hist = groupPhase.simulateTrials(gamma);
+        GroupPhaseHistory hist = groupPhase.simulateTrials(gamma, new SimulatorSettings());
 
         double expectedVnet = 0.08724879;
         //        excel gives 0.08747151
@@ -42,7 +43,7 @@ public class PhaseTests extends junit.framework.TestCase {
 
         //40AB+/40AB-
         GroupPhase groupPhase = CreatePhase40(false, true, false);
-        GroupPhaseHistory hist = groupPhase.simulateTrials(gamma);
+        GroupPhaseHistory hist = groupPhase.simulateTrials(gamma, new SimulatorSettings());
 
         double expectedVnet = 0.500572221;
         //        excel gives 0.500433494
@@ -65,7 +66,7 @@ public class PhaseTests extends junit.framework.TestCase {
 
         //random test
         GroupPhase groupPhase = CreatePhase40(false, true, true);
-        GroupPhaseHistory hist = groupPhase.simulateTrials(gamma);
+        GroupPhaseHistory hist = groupPhase.simulateTrials(gamma, new SimulatorSettings());
 
         //test state of cues after simulation
         for(ConditionalStimulus cs : groupPhase.getPhaseCues()) {
@@ -91,8 +92,8 @@ public class PhaseTests extends junit.framework.TestCase {
         //should be the same
         GroupPhase groupPhaseRand = CreatePhase40(true, true, true);
         GroupPhase groupPhaseSeq = CreatePhase40(true, true, false);
-        GroupPhaseHistory histRand = groupPhaseRand.simulateTrials(gamma);
-        GroupPhaseHistory histSeq = groupPhaseSeq.simulateTrials(gamma);
+        GroupPhaseHistory histRand = groupPhaseRand.simulateTrials(gamma, new SimulatorSettings());
+        GroupPhaseHistory histSeq = groupPhaseSeq.simulateTrials(gamma, new SimulatorSettings());
 
         //test state of cues after simulation
         ConditionalStimulus csRand = groupPhaseRand.getPhaseCues().get(0);
