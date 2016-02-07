@@ -3,11 +3,9 @@ package Views;
 import Constants.ActionCommands;
 import Controllers.MainWindowController;
 import Controllers.MenuController;
-import sun.misc.Launcher;
+import Helpers.ResourceHelper;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.io.IOException;
 
 /**
  * Created by Rokas on 03/11/2015.
@@ -37,9 +35,8 @@ public class MainWindow extends JFrame{
         this.controller = controller;
         this.menuController = menuController;
         setContentPane(rootPane);
-        setJMenuBar(menuController.getBar());
-        footerPanel.add(new JLabel(new ImageIcon(Launcher.class.getResource("/images/Foot.png"))));
-
+        initMenuBar();
+        initFooter();
         pack();
         initSubElements();
     }
@@ -64,5 +61,13 @@ public class MainWindow extends JFrame{
         controller.initExportButton(graphsButton, ActionCommands.GRAPHS_DISPLAY);
 
         controller.initOutputArea(simOutputArea);
+    }
+
+    private void initMenuBar(){
+        setJMenuBar(menuController.getBar());
+    }
+
+    private void initFooter(){
+        footerPanel.add(new JLabel(ResourceHelper.getFooterImage()));
     }
 }

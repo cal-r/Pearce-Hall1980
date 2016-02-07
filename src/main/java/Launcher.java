@@ -4,6 +4,8 @@ import Models.Simulator;
 import Views.MainWindow;
 
 import javax.swing.*;
+import java.awt.*;
+import java.io.IOException;
 
 /**
  * Created by Rokas on 03/11/2015.
