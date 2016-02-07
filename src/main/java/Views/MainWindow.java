@@ -3,8 +3,11 @@ package Views;
 import Constants.ActionCommands;
 import Controllers.MainWindowController;
 import Controllers.MenuController;
+import sun.misc.Launcher;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.io.IOException;
 
 /**
  * Created by Rokas on 03/11/2015.
@@ -24,6 +27,7 @@ public class MainWindow extends JFrame{
     private JButton minusGroupButton;
     private JButton xlsExportButton;
     private JButton graphsButton;
+    private JPanel footerPanel;
 
     private MainWindowController controller;
     private MenuController menuController;
@@ -34,6 +38,8 @@ public class MainWindow extends JFrame{
         this.menuController = menuController;
         setContentPane(rootPane);
         setJMenuBar(menuController.getBar());
+        footerPanel.add(new JLabel(new ImageIcon(Launcher.class.getResource("/images/Foot.png"))));
+
         pack();
         initSubElements();
     }
