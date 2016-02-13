@@ -24,7 +24,6 @@ public class GroupHistory implements Serializable {
     }
 
     public void add(GroupPhaseHistory gpHist){
-        gpHist.setGroupName(group.Name);
         phaseHistories.add(gpHist);
     }
 

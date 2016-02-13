@@ -2,11 +2,7 @@ package Helpers;
 
 import Constants.GuiStringConstants;
 import Models.ConditionalStimulus;
-import Models.GroupPhase;
-import Models.History.CsState;
-import Models.History.GroupHistory;
-import Models.History.GroupPhaseHistory;
-import Models.History.SimulationHistory;
+import Models.History.*;
 import Models.Parameters.CsParameter;
 import Models.Parameters.CsParameterPool;
 import Models.Parameters.Parameter;
@@ -40,7 +36,7 @@ public class ReportBuilder {
         report.setCell(rowId++, 0, groupHistory.group.Name);
         for(int gpId = 0; gpId < groupHistory.getNumberOfPhases(); gpId++) {
             GroupPhaseHistory groupPhaseHistory = groupHistory.getGroupPhaseHistory(gpId);
-            insertPhaseDescription(report, rowId++, groupPhaseHistory.getGroupPhase());
+            insertPhaseDescription(report, rowId++, groupPhaseHistory);
             rowId++;
             for(Variable variable : Variable.values())
             {
@@ -80,63 +76,48 @@ public class ReportBuilder {
         int currRowId = rowId;
 
         currRowId++;
-        for(ConditionalStimulus cs : groupPhaseHistory.getOrderedCues()) {
-            report.setCell(currRowId++, 0, cs.Name);
+        for(String stimName : groupPhaseHistory.getStimsNames()) {
+            report.setCell(currRowId++, 0, stimName);
         }
         currRowId = rowId;
         int colId = 1;
+        int maxRow = currRowId;
 
         for(int trialNo=1;trialNo<= groupPhaseHistory.getNumberOfTrials();trialNo++) {
             report.setCell(currRowId++, colId, String.format("trial %1$d", trialNo));
-            for(ConditionalStimulus cs : groupPhaseHistory.getOrderedCues()) {
-                CsState state = groupPhaseHistory.getState(cs, trialNo);
-                report.setCell(currRowId++, colId, getValue(state, variable));
+            for(String stimName : groupPhaseHistory.getStimsNames()) {
+                StimulusState stimState = groupPhaseHistory.getState(stimName, trialNo);
+                if(hasValue(stimState, variable)){
+                    report.setCell(currRowId++, colId, getValue(stimState, variable));
+                    maxRow = Math.max(maxRow, currRowId);
+                }
             }
             currRowId = rowId;
             colId++;
         }
-        return rowId + groupPhaseHistory.getOrderedCues().size()+1;
+
+        return maxRow + 1;
     }
 
-    private static void insertPhaseDescription(GroupReportViewModel report, int rowId, GroupPhase groupPhase){
+    private static void insertPhaseDescription(GroupReportViewModel report, int rowId, GroupPhaseHistory groupPhaseHistory){
         int colId = 0;
-        report.setCell(rowId, colId++, groupPhase.toString()); //append name ("Phase 69")
-        report.setCell(rowId, colId++, constructTrialsString(groupPhase.trials));
+        report.setCell(rowId, colId++, groupPhaseHistory.getPhaseName()); //append name ("Phase 69")
+        report.setCell(rowId, colId++, groupPhaseHistory.getDescription());
         colId++;
-        report.setCell(rowId, colId++, GuiStringConstants.RANDOM + ": "+ groupPhase.isRandom());
-    }
-
-    private static String constructTrialsString(List<Trial> trials){
-        HashMap<String, Integer> counts = new HashMap<>();
-        for(int tid = 0; tid<trials.size(); tid++){
-            String trialDesc = trials.get(tid).toString();
-            if(!counts.containsKey(trialDesc)){
-                counts.put(trialDesc, 0);
-            }
-            //increment trial type count
-            counts.put(trialDesc, counts.get(trialDesc)+1); // in C#: counts[trialDesc]++, stupid java..
-        }
-        //form 40AB+/30AB-
-        String str = "";
-        boolean slashNeeded = false;
-        for(String trialDesc : counts.keySet()){
-            if(slashNeeded){
-                str+= GuiStringConstants.TRAIL_TYPE_SEPARATOR;
-            }
-            str+=counts.get(trialDesc);
-            str+=trialDesc;
-            slashNeeded = true;
-        }
-        return str;
+        report.setCell(rowId, colId++, GuiStringConstants.RANDOM + ": " + groupPhaseHistory.isRandom());
     }
 
     private enum Variable { ALPHA, VE, VI, VNET };
-    private static double getValue(CsState state, Variable variable){
+    private static double getValue(StimulusState state, Variable variable){
         switch (variable){
-            case ALPHA: return state.Alpha;
-            case VE: return state.Ve;
-            case VI: return state.Vi;
-            default: return state.Vnet;
+            case ALPHA: return ((ConditionalStimulusState)state).Alpha;
+            case VE: return ((ConditionalStimulusState)state).Ve;
+            case VI: return ((ConditionalStimulusState)state).Vi;
+            default: return ((ConditionalStimulusState)state).Vnet;
         }
+    }
+
+    private static boolean hasValue(StimulusState state, Variable variable){
+        return variable == Variable.VNET || state instanceof ConditionalStimulusState;
     }
 }

@@ -1,12 +1,12 @@
 package Models;
 
-import Constants.DefaultValuesConstants;
 import Constants.GuiStringConstants;
 import Helpers.Random.RandomArrayGenerator;
 import Helpers.Random.RandomSimulationHelper;
-import Models.History.CsState;
+import Models.History.ConditionalStimulusState;
 import Models.History.GroupPhaseHistory;
 import Models.Parameters.GammaParameter;
+import Models.Stimulus.Stimulus;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -20,32 +20,33 @@ import java.util.Map;
 public class GroupPhase implements Serializable {
     public ArrayList<Trial> trials;
     private boolean random;
-    private Map<Character, ConditionalStimulus> csMap;
-    private Map<ConditionalStimulus, Integer> csOrderingMap;
+    private Map<String, Stimulus> stimsMap;
     private int phaseId;
-    private int orderCounter;
+    private String description;
 
     public GroupPhase(int phaseId) {
         this.phaseId = phaseId;
         trials = new ArrayList<>();
-        csMap = new HashMap<>();
-        csOrderingMap = new HashMap<>();
-        orderCounter = 0;
+        stimsMap = new HashMap<>();
     }
 
     public GroupPhaseHistory simulateTrials(GammaParameter gamma, SimulatorSettings simulatorSettings) {
-        if(random){
-            return simulateTrialsRandomly(gamma, simulatorSettings);
+        GroupPhaseHistory history;
+        if(random) {
+            history = simulateTrialsRandomly(gamma, simulatorSettings);
+        }else{
+            history = simulateTrialsSequentially(gamma, simulatorSettings);
         }
-        return simulateTrialsSequentially(gamma, simulatorSettings);
+        addInfoToHistory(history);
+        return history;
     }
 
     private GroupPhaseHistory simulateTrialsSequentially(GammaParameter gamma, SimulatorSettings simulatorSettings){
-        GroupPhaseHistory history = new GroupPhaseHistory(this);
+        GroupPhaseHistory history = new GroupPhaseHistory();
         for(int i=0;i<trials.size();i++){
             Trial trial = trials.get(i);
             //The algorithm runs AFTER the trial finishes and gives the predictive value for the following trial.
-            history.recordState(trial);
+            history.recordState(stimsMap.values());
             trial.simulate(calcVNet(), gamma.getValue());
         }
         return history;
@@ -57,11 +58,11 @@ public class GroupPhase implements Serializable {
         //sim phase 1000 times
         for(int simNum = 0;simNum< simulatorSettings.NumberOfRandomCombination; simNum++) {
             resetCues(csCopies);
-            GroupPhaseHistory history = new GroupPhaseHistory(this);
+            GroupPhaseHistory history = new GroupPhaseHistory();
             int[] randomArray = RandomArrayGenerator.createRandomDistinctArray(trials.size());
             for (int trialNo = 0; trialNo < trials.size(); trialNo++) {
                 Trial trial = trials.get(randomArray[trialNo]);
-                history.recordState(trial);
+                history.recordState(stimsMap.values());
                 trial.simulate(calcVNet(), gamma.getValue());
             }
             tempHistories.add(history);
@@ -71,20 +72,26 @@ public class GroupPhase implements Serializable {
 
         //set cs properties to average values
         for(ConditionalStimulus cs : getPhaseCues()) {
-            CsState csState = averageHistory.getState(cs, trials.size()); //get the state of cs after the last trial
-            cs.setAlpha(csState.Alpha);
-            cs.setAssociationExcitatory(csState.Ve);
-            cs.setAssociationInhibitory(csState.Vi);
+            //get the last state of cs
+            ConditionalStimulusState conditionalStimulusState = (ConditionalStimulusState) averageHistory.getState(cs.getName(), trials.size());
+            cs.setAlpha(conditionalStimulusState.Alpha);
+            cs.setAssociationExcitatory(conditionalStimulusState.Ve);
+            cs.setAssociationInhibitory(conditionalStimulusState.Vi);
         }
         return averageHistory;
+    }
+
+    private void addInfoToHistory(GroupPhaseHistory history){
+        history.setPhaseName(toString());
+        history.setNumbetOfTrails(getNumberOfTrials());
+        history.setDescription(description);
+        history.setIsRandom(isRandom());
     }
 
     public void addTrialType(List<Trial> trailType) { //all trials in the param are the same (e.g. 'AB+')
         trials.addAll(trailType);
         Trial firstOfTheType = trailType.get(0);
-        updateCsMap(firstOfTheType);
-        updateOrderingMap(firstOfTheType);
-
+        updateStimsMap(firstOfTheType);
     }
 
     public void reset(){
@@ -95,7 +102,8 @@ public class GroupPhase implements Serializable {
 
     private void resetCues(List<ConditionalStimulus> copies){
         for(ConditionalStimulus copy : copies){
-            csMap.get(copy.Name).reset(copy);
+            ConditionalStimulus cs = (ConditionalStimulus)stimsMap.get(copy.getName());
+            cs.reset(copy);
         }
     }
 
@@ -116,21 +124,18 @@ public class GroupPhase implements Serializable {
     }
 
     public List<ConditionalStimulus> getPhaseCues() {
-        return new ArrayList<>(csMap.values());
-    }
-
-    private void updateCsMap(Trial trial){
-        for(ConditionalStimulus cs : trial.cuesPresent){
-            if(!csMap.containsKey(cs.Name)){
-                csMap.put(cs.Name, cs);
-            }
+        List<ConditionalStimulus> cues = new ArrayList<>();
+        for(Stimulus stim : stimsMap.values()){
+            if(stim instanceof ConditionalStimulus)
+                cues.add((ConditionalStimulus) stim);
         }
+        return cues;
     }
 
-    private void updateOrderingMap(Trial trial){
-        for (ConditionalStimulus cs : trial.cuesPresent) {
-            if(!csOrderingMap.containsKey(cs)) {
-                csOrderingMap.put(cs, orderCounter++);
+    private void updateStimsMap(Trial trial){
+        for(Stimulus stim : trial.cuesPresent){
+            if(!stimsMap.containsKey(stim.getName())){
+                stimsMap.put(stim.getName(), stim);
             }
         }
     }
@@ -149,7 +154,11 @@ public class GroupPhase implements Serializable {
         return GuiStringConstants.getPhaseTitle(phaseId);
     }
 
-    public int getCsOrder(ConditionalStimulus cs){
-        return csOrderingMap.get(cs);
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

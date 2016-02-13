@@ -46,10 +46,12 @@ public class SimulatorBuilder {
             groupPhases = new ArrayList<>();
 
             for(int i=0;i<phaseDescriptions.size();i++){
-                List<PhaseStringTokenizer.TrialTypeTokens> phaseTokens = PhaseStringTokenizer.getPhaseTokens(phaseDescriptions.get(i));
+                String phaseDescription = phaseDescriptions.get(i);
+                List<PhaseStringTokenizer.TrialTypeTokens> phaseTokens = PhaseStringTokenizer.getPhaseTokens(phaseDescription);
                 updateCsMaps(phaseTokens);
                 GroupPhase groupPhase = PhaseParser.ParsePhase(phaseTokens, csMap, i);
                 groupPhase.setRandom(randomSelections.get(i));
+                groupPhase.setDescription(phaseDescription);
                 groupPhases.add(groupPhase);
             }
 

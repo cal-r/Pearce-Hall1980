@@ -2,87 +2,96 @@ package Models.History;
 
 
 import Models.ConditionalStimulus;
-import Models.GroupPhase;
-import Models.Trial;
+import Models.Stimulus.Stimulus;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Rokas on 09/11/2015.
  */
 public class GroupPhaseHistory implements Serializable {
-    private GroupPhase groupPhase;
-    private HashMap<ConditionalStimulus, List<CsState>> csHistoriesMap;
+    private Map<String, List<StimulusState>> stimsHistoriesMap;
     private String groupName;
-    private int trialCounrer;
+    private String phaseName;
+    private int numbetOfTrails;
+    private String description;
+    private boolean isRandom;
 
-    public GroupPhaseHistory(GroupPhase groupPhase){
-        this.groupPhase = groupPhase;
-        initHistoriesMap();
-        trialCounrer = 0;
+    public GroupPhaseHistory(){
+        stimsHistoriesMap = new HashMap<>();
     }
 
-    public List<ConditionalStimulus> getOrderedCues(){
-        List<ConditionalStimulus> orderedCues = new ArrayList<>();
-        for(int i=0;i<csHistoriesMap.size();i++){
-            for(ConditionalStimulus cs : csHistoriesMap.keySet()){
-                if(groupPhase.getCsOrder(cs) == i){
-                    orderedCues.add(cs);
-                }
-            }
-        }
-        return orderedCues;
+    public StimulusState getState(String cueName, int trialNumber) {
+        return stimsHistoriesMap.get(cueName).get(trialNumber - 1);
     }
 
-    public CsState getState(ConditionalStimulus cue, int trialNumber) {
-        return csHistoriesMap.get(cue).get(trialNumber - 1);
+    public List<StimulusState> getStimHistory(String stimName){
+        return stimsHistoriesMap.get(stimName);
     }
 
-    public List<CsState> getCsHistory(ConditionalStimulus cue){
-        return csHistoriesMap.get(cue);
-    }
-
-    public void recordState(Trial trial){
-        trialCounrer++;
-        for(ConditionalStimulus cs : groupPhase.getPhaseCues()) {
-            CsState csState = new CsState();
-            csState.Ve = cs.getAssociationExcitatory();
-            csState.Vi = cs.getAssociationInhibitory();
-            csState.Vnet = cs.getAssociationNet();
-            csState.Alpha = cs.getAlpha();
-            csState.TrialNumber = trialCounrer;
-            csState.TrialDescription = trial.toString();
-            csHistoriesMap.get(cs).add(csState);
+    public void recordState(Collection<Stimulus> stims){
+        for(Stimulus stim : stims) {
+            StimulusState state = createStimState(stim);
+            addToMap(stim.getName(), state);
         }
     }
 
-    private void initHistoriesMap(){
-        csHistoriesMap = new HashMap<>();
-        for(ConditionalStimulus cs : groupPhase.getPhaseCues()){
-            csHistoriesMap.put(cs, new ArrayList<CsState>());
+    private void addToMap(String stimName, StimulusState state){
+        if(!stimsHistoriesMap.containsKey(stimName)){
+            stimsHistoriesMap.put(stimName, new ArrayList<StimulusState>());
         }
+        stimsHistoriesMap.get(stimName).add(state);
     }
 
-    public GroupPhase getGroupPhase(){
-        return groupPhase;
+    private StimulusState createStimState(Stimulus stim){
+        if(stim instanceof ConditionalStimulus){
+            return new ConditionalStimulusState((ConditionalStimulus)stim);
+        }
+        return new StimulusState(stim);
     }
 
     public String getPhaseName(){
-        return groupPhase.toString();
+        return phaseName;
     }
 
     public int getNumberOfTrials(){
-        return groupPhase.getNumberOfTrials();
+        return numbetOfTrails;
     }
 
     public String getGroupName() {
         return groupName;
     }
 
+    public void setNumbetOfTrails(int numbetOfTrails) {
+        this.numbetOfTrails = numbetOfTrails;
+    }
+
+    public Collection<String> getStimsNames(){
+        return stimsHistoriesMap.keySet();
+    }
+
+    public void setPhaseName(String phaseName) {
+        this.phaseName = phaseName;
+    }
+
     public void setGroupName(String groupName) {
         this.groupName = groupName;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public boolean isRandom() {
+        return isRandom;
+    }
+
+    public void setIsRandom(boolean isRandom) {
+        this.isRandom = isRandom;
     }
 }

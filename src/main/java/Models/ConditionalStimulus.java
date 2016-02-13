@@ -1,24 +1,22 @@
 package Models;
 
-import Constants.DefaultValuesConstants;
-import Models.Parameters.CsParameter;
 import Models.Parameters.InitialAlphaParameter;
 import Models.Parameters.SalienceExcitatoryParameter;
 import Models.Parameters.SalienceInhibitoryParameter;
+import Models.Stimulus.Stimulus;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 /**
  * Created by Rokas on 03/11/2015.
  */
-public class ConditionalStimulus implements Serializable {
+public class ConditionalStimulus implements Serializable, Stimulus {
 
     public InitialAlphaParameter InitialAlphaParameter;
     public SalienceExcitatoryParameter SalienceExcitatoryParameter;
     public SalienceInhibitoryParameter SalienceInhibitoryParameter;
 
-    public char Name;
+    private char name;
 
     private double associationInhibitory;
     private double associationExcitatory;
@@ -27,7 +25,7 @@ public class ConditionalStimulus implements Serializable {
     private double alpha;
 
     public ConditionalStimulus(char name, InitialAlphaParameter initialAlphaParameter, SalienceExcitatoryParameter salienceExcitatoryParameter, SalienceInhibitoryParameter salienceInhibitoryParameter){
-        Name = name;
+        this.name = name;
         setInitialValues();
         InitialAlphaParameter = initialAlphaParameter;
         SalienceExcitatoryParameter = salienceExcitatoryParameter;
@@ -44,10 +42,6 @@ public class ConditionalStimulus implements Serializable {
         this.associationExcitatory = associationExcitatory;
         this.associationInhibitory = associationInhibitory;
         setAlpha(alpha);
-    }
-
-    public double getAssociationNet() {
-        return associationExcitatory - associationInhibitory;
     }
 
     public double getAlpha(){
@@ -84,7 +78,7 @@ public class ConditionalStimulus implements Serializable {
     }
 
     public ConditionalStimulus getCopy(){
-        return new ConditionalStimulus(Name, InitialAlphaParameter, SalienceExcitatoryParameter, SalienceInhibitoryParameter, associationExcitatory, associationInhibitory, getAlpha());
+        return new ConditionalStimulus(name, InitialAlphaParameter, SalienceExcitatoryParameter, SalienceInhibitoryParameter, associationExcitatory, associationInhibitory, getAlpha());
     }
 
     public void reset(ConditionalStimulus cs){
@@ -101,5 +95,15 @@ public class ConditionalStimulus implements Serializable {
         associationExcitatory = 0;
         associationInhibitory = 0;
         alphaSet = false;
+    }
+
+    @Override
+    public double getAssociationNet() {
+        return associationExcitatory - associationInhibitory;
+    }
+
+    @Override
+    public String getName() {
+        return String.valueOf(name);
     }
 }

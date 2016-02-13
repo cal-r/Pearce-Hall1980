@@ -6,6 +6,7 @@ import Models.Graphing.GraphLine;
 import Models.History.GroupPhaseHistory;
 import Models.History.PhaseHistory;
 import Models.History.SimulationHistory;
+import Models.Stimulus.Stimulus;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,9 +25,9 @@ public class GraphBuilder {
             int lineDisplayId = 0;
             Graph graph = new Graph(phaseHistory.getPhaseName());
             for(GroupPhaseHistory gpHist : phaseHistory){
-                for(ConditionalStimulus cue : gpHist.getOrderedCues()){
-                    GraphLine line = new GraphLine(String.valueOf(cue.Name));
-                    addLinePoints(line, cue, gpHist);
+                for(String stimName : gpHist.getStimsNames()){
+                    GraphLine line = new GraphLine(String.valueOf(stimName));
+                    addLinePoints(line, stimName, gpHist);
                     graph.addLine(gpHist.getGroupName(), line);
                     setLink(linkedLinesMap, line);
                     line.setDisplayId(lineDisplayId++);
@@ -37,9 +38,9 @@ public class GraphBuilder {
         return graphs;
     }
 
-    private static void addLinePoints(GraphLine line, ConditionalStimulus cue, GroupPhaseHistory gpHist){
+    private static void addLinePoints(GraphLine line, String stimName, GroupPhaseHistory gpHist){
         for(int trialNo = 1; trialNo<=gpHist.getNumberOfTrials(); trialNo++){
-            line.addPoint(trialNo, gpHist.getState(cue, trialNo).Vnet);
+            line.addPoint(trialNo, gpHist.getState(stimName, trialNo).Vnet);
         }
     }
 

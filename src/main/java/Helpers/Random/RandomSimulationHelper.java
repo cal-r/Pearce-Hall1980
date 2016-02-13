@@ -1,10 +1,7 @@
 package Helpers.Random;
 
-import Constants.DefaultValuesConstants;
-import Constants.GuiStringConstants;
-import Models.ConditionalStimulus;
-import Models.History.CsState;
 import Models.History.GroupPhaseHistory;
+import Models.History.StimulusState;
 
 import java.util.List;
 
@@ -13,29 +10,24 @@ import java.util.List;
  */
 public class RandomSimulationHelper {
     public static GroupPhaseHistory getAverageHistory(List<GroupPhaseHistory> list){
+        int numOfRandomCombs = list.size();
         //sum up
         GroupPhaseHistory avgHist = list.get(0);
         for(int i=1;i<list.size();i++){
-            for(ConditionalStimulus cs : avgHist.getOrderedCues()){
-                List<CsState> statesToAdd = list.get(i).getCsHistory(cs);
-                List<CsState> avgStates = avgHist.getCsHistory(cs);
+            for(String stimName : avgHist.getStimsNames()){
+                List<StimulusState> statesToAdd = list.get(i).getStimHistory(stimName);
+                List<StimulusState> avgStates = avgHist.getStimHistory(stimName);
                 for(int stateId=0;stateId<avgStates.size();stateId++){
-                    avgStates.get(stateId).Ve += statesToAdd.get(stateId).Ve;
-                    avgStates.get(stateId).Vi += statesToAdd.get(stateId).Vi;
-                    avgStates.get(stateId).Vnet += statesToAdd.get(stateId).Vnet;
-                    avgStates.get(stateId).Alpha += statesToAdd.get(stateId).Alpha;
-                    avgStates.get(stateId).TrialDescription = GuiStringConstants.RANDOM;
+                    avgStates.get(stateId).addValues(statesToAdd.get(stateId));
                 }
             }
         }
+
         //divide by 1000
-        for(ConditionalStimulus cs : avgHist.getOrderedCues()){
-            List<CsState> avgStates = avgHist.getCsHistory(cs);
+        for(String stimName : avgHist.getStimsNames()){
+            List<StimulusState> avgStates = avgHist.getStimHistory(stimName);
             for(int stateId=0;stateId<avgStates.size();stateId++){
-                avgStates.get(stateId).Ve /= DefaultValuesConstants.NUMBER_OF_RANDOM_COMBINATIONS;
-                avgStates.get(stateId).Vi /= DefaultValuesConstants.NUMBER_OF_RANDOM_COMBINATIONS;
-                avgStates.get(stateId).Vnet /= DefaultValuesConstants.NUMBER_OF_RANDOM_COMBINATIONS;
-                avgStates.get(stateId).Alpha /= DefaultValuesConstants.NUMBER_OF_RANDOM_COMBINATIONS;
+                avgStates.get(stateId).divideValues(numOfRandomCombs);
             }
         }
 

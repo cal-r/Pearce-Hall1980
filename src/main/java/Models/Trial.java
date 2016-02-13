@@ -50,7 +50,7 @@ public class Trial implements Serializable {
     public String toString(){
         String str = "";
         for(ConditionalStimulus cs : cuesPresent){
-            str += cs.Name;
+            str += cs.getName();
         }
         str+= usPresent ? "+" : "-";
         return str;

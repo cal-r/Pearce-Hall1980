@@ -3,7 +3,7 @@ package com;
 import Constants.DefaultValuesConstants;
 import Models.ConditionalStimulus;
 import Models.GroupPhase;
-import Models.History.CsState;
+import Models.History.ConditionalStimulusState;
 import Models.History.GroupPhaseHistory;
 import Models.Parameters.GammaParameter;
 import Models.SimulatorSettings;
@@ -31,8 +31,8 @@ public class PhaseTests extends junit.framework.TestCase {
         //        excel gives 0.08747151
 
         //test return value
-        for(ConditionalStimulus cs : hist.getOrderedCues()) {
-            assertEquals(expectedVnet, hist.getState(cs, 80).Vnet, DefaultValuesConstants.ROUNDING_PRECISION);
+        for(String stimName : hist.getStimsNames()) {
+            assertEquals(expectedVnet, hist.getState(stimName, 80).Vnet, DefaultValuesConstants.ROUNDING_PRECISION);
         }
     }
 
@@ -54,8 +54,8 @@ public class PhaseTests extends junit.framework.TestCase {
         }
 
         //test return value
-        for(ConditionalStimulus cs : hist.getOrderedCues()) {
-            assertEquals(expectedVnet, hist.getState(cs, 79).Vnet, DefaultValuesConstants.ROUNDING_PRECISION);
+        for(String stimName : hist.getStimsNames()) {
+            assertEquals(expectedVnet, hist.getState(stimName, 79).Vnet, DefaultValuesConstants.ROUNDING_PRECISION);
         }
     }
 
@@ -76,11 +76,11 @@ public class PhaseTests extends junit.framework.TestCase {
 
 
         //test return value
-        for(ConditionalStimulus cs : hist.getOrderedCues()) {
-            assertTrue(hist.getState(cs, 80).Vnet > 0.2);
-            assertTrue(hist.getState(cs, 80).Vnet < 0.5);
-            assertTrue(hist.getState(cs, 20).Ve < 0.33);
-            assertTrue(hist.getState(cs, 20).Vi < 0.1);
+        for(String stimName : hist.getStimsNames()) {
+            assertTrue(hist.getState(stimName, 80).Vnet > 0.2);
+            assertTrue(hist.getState(stimName, 80).Vnet < 0.5);
+            assertTrue(((ConditionalStimulusState)hist.getState(stimName, 20)).Ve < 0.33);
+            assertTrue(((ConditionalStimulusState)hist.getState(stimName, 20)).Vi < 0.1);
         }
     }
 
@@ -101,22 +101,13 @@ public class PhaseTests extends junit.framework.TestCase {
         assertEquals(csSeq.getAssociationNet(), csRand.getAssociationNet(), DefaultValuesConstants.ROUNDING_PRECISION);
 
         //test return value
-        for(ConditionalStimulus cs : histRand.getOrderedCues()) {
+        for(String stimName : histRand.getStimsNames()) {
             for(int tNum = 1;tNum<= groupPhaseRand.trials.size();tNum++){
-                assertEquals(getMatchingState(histSeq, cs, tNum).Vnet, histRand.getState(cs, tNum).Vnet, DefaultValuesConstants.ROUNDING_PRECISION);
-                assertEquals(getMatchingState(histSeq, cs, tNum).Vi, histRand.getState(cs, tNum).Vi, DefaultValuesConstants.ROUNDING_PRECISION);
-                assertEquals(getMatchingState(histSeq, cs, tNum).Ve, histRand.getState(cs, tNum).Ve, DefaultValuesConstants.ROUNDING_PRECISION);
+                assertEquals(histSeq.getState(stimName, tNum).Vnet, histRand.getState(stimName, tNum).Vnet, DefaultValuesConstants.ROUNDING_PRECISION);
+                assertEquals(((ConditionalStimulusState)histSeq.getState(stimName, tNum)).Vi, ((ConditionalStimulusState)histRand.getState(stimName, tNum)).Vi, DefaultValuesConstants.ROUNDING_PRECISION);
+                assertEquals(((ConditionalStimulusState)histSeq.getState(stimName, tNum)).Ve, ((ConditionalStimulusState)histRand.getState(stimName, tNum)).Ve, DefaultValuesConstants.ROUNDING_PRECISION);
             }
         }
-    }
-
-    private static CsState getMatchingState(GroupPhaseHistory hist, ConditionalStimulus cs, int trailNumber){
-        for(ConditionalStimulus histCs : hist.getOrderedCues()){
-            if(histCs.Name == cs.Name){
-                return hist.getState(histCs, trailNumber);
-            }
-        }
-        return null;
     }
 
     //40AB+/40AB-
