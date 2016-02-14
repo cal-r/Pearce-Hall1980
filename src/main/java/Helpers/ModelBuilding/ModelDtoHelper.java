@@ -1,6 +1,7 @@
 package Helpers.ModelBuilding;
 
 import Controllers.MainWindowController;
+import Controllers.MenuController;
 import Helpers.GuiHelper;
 import Models.DTOs.ModelDto;
 
@@ -17,10 +18,11 @@ public class ModelDtoHelper {
         return dto;
     }
 
-    public static void loadModelDto(ModelDto dto, MainWindowController mainWindowController){
+    public static void loadModelDto(ModelDto dto, MainWindowController mainWindowController, MenuController menuController){
         mainWindowController.setSimulator(dto.getSimulator());
         mainWindowController.setTrialTableModel(dto.getTrialTableModel());
         mainWindowController.setCsParamsTableModel(dto.getCsParamsTableModel());
         mainWindowController.setGlobalParamsTableModel(dto.getGlobalPramsTableModel());
+        menuController.setSettings(dto.getSimulator());
     }
 }

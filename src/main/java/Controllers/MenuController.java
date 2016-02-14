@@ -5,11 +5,14 @@ import Helpers.Export.ModelExportHelper;
 import Helpers.GuiHelper;
 import Helpers.ModelBuilding.ModelDtoHelper;
 import Models.DTOs.ModelDto;
+import Models.Simulator;
 import Models.SimulatorSettings;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Rokas on 01/02/2016.
@@ -19,15 +22,17 @@ public class MenuController implements ActionListener {
     private SimulatorSettings settings;
     private MainWindowController mainWindowController;
     private JMenuBar menuBar;
+    private Map<String, JCheckBoxMenuItem> checkboxesMap;
 
     public MenuController(MainWindowController mainWindowController) {
         this.mainWindowController = mainWindowController;
-        settings = mainWindowController.getSimulator().getSimulatorSettings();
         initMenuBar();
+        setSettings(mainWindowController.getSimulator());
     }
 
     //init stuff
     private void initMenuBar(){
+        checkboxesMap = new HashMap<>();
         menuBar = new JMenuBar();
         //file menu
         JMenu fileMenu = new JMenu(GuiStringConstants.FILE);
@@ -49,6 +54,9 @@ public class MenuController implements ActionListener {
         menuItem.setActionCommand(nameAndCommand);
         menuItem.addActionListener(this);
         menu.add(menuItem);
+        if(type == MenuItemType.CHECKBOX){
+            checkboxesMap.put(nameAndCommand, (JCheckBoxMenuItem)menuItem);
+        }
     }
 
     //action events
@@ -63,8 +71,10 @@ public class MenuController implements ActionListener {
     private void onLoadModel() {
         try {
             ModelDto modelDto = ModelExportHelper.readModel();
-            ModelDtoHelper.loadModelDto(modelDto, mainWindowController);
-        }catch(Exception ex){}
+            ModelDtoHelper.loadModelDto(modelDto, mainWindowController, this);
+        }catch(Exception ex){
+            GuiHelper.displayErrorMessage(ex.getMessage());
+        }
     }
 
     private void onRandomTrialsSetting(){
@@ -89,6 +99,13 @@ public class MenuController implements ActionListener {
             default:
                 GuiHelper.displayErrorMessage("Nicht implementiert!");
         }
+    }
+
+    public void setSettings(Simulator simulator) {
+        this.settings = simulator.getSimulatorSettings();
+        //set up checkboxes states
+        checkboxesMap.get(GuiStringConstants.COMPOUND_RESULTS_SETTING).setState(settings.CompoundResults);
+        checkboxesMap.get(GuiStringConstants.CONIFGURAL_CUES_SETTING).setState(settings.ConfiguralCues);
     }
 
     //getters

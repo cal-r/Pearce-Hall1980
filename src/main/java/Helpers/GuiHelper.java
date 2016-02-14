@@ -38,7 +38,7 @@ public class GuiHelper {
         try {
             return Integer.parseInt(JOptionPane.showInputDialog(message, defaultValue));
         }catch (Exception ex){
-            return 0;
+            return defaultValue;
         }
     }
 

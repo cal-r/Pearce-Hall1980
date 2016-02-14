@@ -7,6 +7,9 @@ import Models.Stimulus.Stimulus;
  */
 public class StimulusState {
     public double Vnet;
+
+    public StimulusState(){}
+
     public StimulusState(Stimulus stim){
         Vnet = stim.getAssociationNet();
     }
