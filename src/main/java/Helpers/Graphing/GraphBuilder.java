@@ -1,5 +1,6 @@
 package Helpers.Graphing;
 
+import Helpers.StimulusOrderingHelper;
 import Models.Graphing.Graph;
 import Models.Graphing.GraphLine;
 import Models.History.GroupPhaseHistory;
@@ -23,7 +24,7 @@ public class GraphBuilder {
             int lineDisplayId = 0;
             Graph graph = new Graph(phaseHistory.getPhaseName());
             for(GroupPhaseHistory gpHist : phaseHistory){
-                for(String stimName : gpHist.getStimsNames()){
+                for(String stimName : StimulusOrderingHelper.orderStimNamesByDescription(gpHist.getStimsNames(), gpHist.getDescription())){
                     GraphLine line = new GraphLine(String.valueOf(stimName));
                     addLinePoints(line, stimName, gpHist);
                     graph.addLine(gpHist.getGroupName(), line);

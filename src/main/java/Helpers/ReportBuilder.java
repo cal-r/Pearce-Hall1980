@@ -8,6 +8,7 @@ import Models.Parameters.Parameter;
 import ViewModels.GroupReportViewModel;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -73,7 +74,8 @@ public class ReportBuilder {
         int currRowId = rowId;
 
         currRowId++;
-        for(String stimName : groupPhaseHistory.getStimsNames()) {
+        Collection<String> orderedStimNames = StimulusOrderingHelper.orderStimNamesByDescription(groupPhaseHistory.getStimsNames(), groupPhaseHistory.getDescription());
+        for(String stimName : orderedStimNames) {
             report.setCell(currRowId++, 0, stimName);
         }
         currRowId = rowId;
@@ -82,7 +84,7 @@ public class ReportBuilder {
 
         for(int trialNo=1;trialNo<= groupPhaseHistory.getNumberOfTrials();trialNo++) {
             report.setCell(currRowId++, colId, String.format("trial %1$d", trialNo));
-            for(String stimName : groupPhaseHistory.getStimsNames()) {
+            for(String stimName : orderedStimNames) {
                 StimulusState stimState = groupPhaseHistory.getState(stimName, trialNo);
                 if(hasValue(stimState, variable)){
                     report.setCell(currRowId++, colId, getValue(stimState, variable));
