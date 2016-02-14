@@ -1,7 +1,6 @@
 package Models.Parameters;
 
 import Constants.ParameterNamingConstants;
-import Models.ConditionalStimulus;
 
 import java.io.Serializable;
 

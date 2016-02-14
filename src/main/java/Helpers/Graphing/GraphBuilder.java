@@ -1,12 +1,10 @@
 package Helpers.Graphing;
 
-import Models.ConditionalStimulus;
 import Models.Graphing.Graph;
 import Models.Graphing.GraphLine;
 import Models.History.GroupPhaseHistory;
 import Models.History.PhaseHistory;
 import Models.History.SimulationHistory;
-import Models.Stimulus.Stimulus;
 
 import java.util.ArrayList;
 import java.util.HashMap;

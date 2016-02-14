@@ -1,7 +1,7 @@
 package com;
 
 import Helpers.ModelBuilding.SimulatorBuilder;
-import Models.ConditionalStimulus;
+import Models.Stimulus.ConditionalStimulus;
 import Models.Simulator;
 import ViewModels.TableModels.TrialTableModel;
 import org.junit.Test;

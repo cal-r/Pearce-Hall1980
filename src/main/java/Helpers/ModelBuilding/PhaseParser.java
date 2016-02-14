@@ -1,6 +1,6 @@
 package Helpers.ModelBuilding;
 
-import Models.ConditionalStimulus;
+import Models.Stimulus.ConditionalStimulus;
 import Models.GroupPhase;
 import Models.Trial;
 

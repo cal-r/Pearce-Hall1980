@@ -1,8 +1,5 @@
 package Models.Parameters;
 
-import Helpers.DefaultValuesHelper;
-import Models.ConditionalStimulus;
-
 import java.io.Serializable;
 
 /**

@@ -1,7 +1,7 @@
 package com;
 
 import Constants.DefaultValuesConstants;
-import Models.ConditionalStimulus;
+import Models.Stimulus.ConditionalStimulus;
 import Models.Parameters.InitialAlphaParameter;
 import Models.Parameters.SalienceExcitatoryParameter;
 import Models.Parameters.SalienceInhibitoryParameter;

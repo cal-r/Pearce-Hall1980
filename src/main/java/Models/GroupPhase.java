@@ -6,6 +6,7 @@ import Helpers.Random.RandomSimulationHelper;
 import Models.History.ConditionalStimulusState;
 import Models.History.GroupPhaseHistory;
 import Models.Parameters.GammaParameter;
+import Models.Stimulus.ConditionalStimulus;
 import Models.Stimulus.Stimulus;
 
 import java.io.Serializable;

@@ -1,7 +1,7 @@
 package Models.History;
 
 
-import Models.ConditionalStimulus;
+import Models.Stimulus.ConditionalStimulus;
 import Models.Stimulus.Stimulus;
 
 import java.io.Serializable;

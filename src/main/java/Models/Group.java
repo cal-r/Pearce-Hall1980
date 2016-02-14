@@ -1,5 +1,7 @@
 package Models;
 
+import Models.Stimulus.ConditionalStimulus;
+
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;

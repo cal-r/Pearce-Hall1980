@@ -1,7 +1,7 @@
 package com;
 
 import Constants.DefaultValuesConstants;
-import Models.ConditionalStimulus;
+import Models.Stimulus.ConditionalStimulus;
 import Models.GroupPhase;
 import Models.History.ConditionalStimulusState;
 import Models.History.GroupPhaseHistory;

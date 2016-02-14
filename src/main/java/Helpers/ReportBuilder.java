@@ -1,16 +1,13 @@
 package Helpers;
 
 import Constants.GuiStringConstants;
-import Models.ConditionalStimulus;
 import Models.History.*;
 import Models.Parameters.CsParameter;
 import Models.Parameters.CsParameterPool;
 import Models.Parameters.Parameter;
-import Models.Trial;
 import ViewModels.GroupReportViewModel;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
