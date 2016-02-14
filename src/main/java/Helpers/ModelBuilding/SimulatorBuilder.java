@@ -1,10 +1,13 @@
 package Helpers.ModelBuilding;
 
+import Models.SimulatorSettings;
+import Models.Stimulus.CompoundStimulus;
 import Models.Stimulus.ConditionalStimulus;
 import Models.Group;
 import Models.GroupPhase;
 import Models.Parameters.CsParameterPool;
 import Models.Simulator;
+import Models.Stimulus.Stimulus;
 import ViewModels.TableModels.TrialTableModel;
 
 import java.util.ArrayList;
@@ -19,7 +22,7 @@ public class SimulatorBuilder {
 
     public static void initSimulator(TrialTableModel tableModel, Simulator simulator){
         CsParameterPool csParameterPool = new CsParameterPool();
-        GroupBuilder groupBuilder = new GroupBuilder(csParameterPool);
+        GroupBuilder groupBuilder = new GroupBuilder(csParameterPool, simulator.getSimulatorSettings());
 
         List<Group> groups = new ArrayList<>();
         for(int gi=0;gi<tableModel.getGroupCount();gi++){
@@ -34,11 +37,13 @@ public class SimulatorBuilder {
     private static class GroupBuilder{
         private CsParameterPool csParameterPool;
 
+        private SimulatorSettings settings;
         private Map<Character, ConditionalStimulus> csMap;
         private List<GroupPhase> groupPhases;
 
-        private GroupBuilder(CsParameterPool csParameterPool){
+        private GroupBuilder(CsParameterPool csParameterPool, SimulatorSettings settings){
             this.csParameterPool = csParameterPool;
+            this.settings = settings;
         }
 
         private Group buildGroup(String groupName, List<String> phaseDescriptions, List<Boolean> randomSelections){
@@ -49,7 +54,7 @@ public class SimulatorBuilder {
                 String phaseDescription = phaseDescriptions.get(i);
                 List<PhaseStringTokenizer.TrialTypeTokens> phaseTokens = PhaseStringTokenizer.getPhaseTokens(phaseDescription);
                 updateCsMaps(phaseTokens);
-                GroupPhase groupPhase = PhaseParser.ParsePhase(phaseTokens, csMap, i);
+                GroupPhase groupPhase = PhaseParser.ParsePhase(phaseTokens, csMap, i, settings);
                 groupPhase.setRandom(randomSelections.get(i));
                 groupPhase.setDescription(phaseDescription);
                 groupPhases.add(groupPhase);

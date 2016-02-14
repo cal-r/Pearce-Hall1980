@@ -112,7 +112,7 @@ public class ReportBuilder {
             case ALPHA: return ((ConditionalStimulusState)state).Alpha;
             case VE: return ((ConditionalStimulusState)state).Ve;
             case VI: return ((ConditionalStimulusState)state).Vi;
-            default: return ((ConditionalStimulusState)state).Vnet;
+            default: return state.Vnet;
         }
     }
 

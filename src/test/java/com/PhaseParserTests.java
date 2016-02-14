@@ -2,6 +2,7 @@ package com;
 
 import Helpers.ModelBuilding.PhaseParser;
 import Helpers.ModelBuilding.PhaseStringTokenizer;
+import Models.SimulatorSettings;
 import Models.Stimulus.ConditionalStimulus;
 import Models.GroupPhase;
 import Models.Parameters.CsParameterPool;
@@ -26,7 +27,7 @@ public class PhaseParserTests extends junit.framework.TestCase {
         tokensArrayList.add(trialTypeTokens);
         CsParameterPool cspPool = createCsParameterPool(trialTypeTokens.cueNames);
         Map<Character, ConditionalStimulus> csMap = getCsMap(trialTypeTokens.cueNames, cspPool);
-        GroupPhase groupPhase = PhaseParser.ParsePhase(tokensArrayList, csMap, 0);
+        GroupPhase groupPhase = PhaseParser.ParsePhase(tokensArrayList, csMap, 0, new SimulatorSettings());
 
         assertTrue(groupPhase != null);
         assertTrue(groupPhase.trials.size() == 2);
@@ -45,7 +46,7 @@ public class PhaseParserTests extends junit.framework.TestCase {
 
         CsParameterPool cspPool = createCsParameterPool(trialTypeTokens.cueNames);
         Map<Character, ConditionalStimulus> csMap = getCsMap(trialTypeTokens.cueNames, cspPool);
-        GroupPhase groupPhase = PhaseParser.ParsePhase(tokensArrayList, csMap, 0);
+        GroupPhase groupPhase = PhaseParser.ParsePhase(tokensArrayList, csMap, 0, new SimulatorSettings());
 
         assertTrue(groupPhase != null);
         assertTrue(groupPhase.trials.size() == 2);
@@ -64,7 +65,7 @@ public class PhaseParserTests extends junit.framework.TestCase {
 
         CsParameterPool cspPool = createCsParameterPool(trialTypeTokens.cueNames);
         Map<Character, ConditionalStimulus> csMap = getCsMap(trialTypeTokens.cueNames, cspPool);
-        GroupPhase groupPhase = PhaseParser.ParsePhase(tokensArrayList, csMap, 0);
+        GroupPhase groupPhase = PhaseParser.ParsePhase(tokensArrayList, csMap, 0, new SimulatorSettings());
 
         assertTrue(groupPhase != null);
         assertTrue(groupPhase.trials.size() == 1);
@@ -90,7 +91,7 @@ public class PhaseParserTests extends junit.framework.TestCase {
 
         CsParameterPool cspPool = createCsParameterPool(trialTypeTokens.cueNames);
         Map<Character, ConditionalStimulus> csMap = getCsMap(trialTypeTokens.cueNames, cspPool);
-        GroupPhase groupPhase = PhaseParser.ParsePhase(tokensArrayList, csMap, 0);
+        GroupPhase groupPhase = PhaseParser.ParsePhase(tokensArrayList, csMap, 0, new SimulatorSettings());
 
         assertTrue(groupPhase != null);
         assertTrue(groupPhase.trials.size() == 3);
@@ -114,7 +115,7 @@ public class PhaseParserTests extends junit.framework.TestCase {
 
         CsParameterPool cspPool = createCsParameterPool(trialTypeTokens.cueNames);
         Map<Character, ConditionalStimulus> csMap = getCsMap(trialTypeTokens.cueNames, cspPool);
-        GroupPhase groupPhase = PhaseParser.ParsePhase(tokensArrayList, csMap, 0);
+        GroupPhase groupPhase = PhaseParser.ParsePhase(tokensArrayList, csMap, 0, new SimulatorSettings());
 
         assertTrue(groupPhase != null);
         assertTrue(groupPhase.trials.size() == 2);
@@ -141,7 +142,7 @@ public class PhaseParserTests extends junit.framework.TestCase {
 
         CsParameterPool cspPool = createCsParameterPool(trialTypeTokens.cueNames);
         Map<Character, ConditionalStimulus> csMap = getCsMap(trialTypeTokens.cueNames, cspPool);
-        GroupPhase groupPhase = PhaseParser.ParsePhase(tokensArrayList, csMap, 0);
+        GroupPhase groupPhase = PhaseParser.ParsePhase(tokensArrayList, csMap, 0, new SimulatorSettings());
 
         ConditionalStimulus csA_T1 = (ConditionalStimulus)groupPhase.trials.get(0).cuesPresent.get(0);
         ConditionalStimulus csA_T2 = (ConditionalStimulus)groupPhase.trials.get(1).cuesPresent.get(0);

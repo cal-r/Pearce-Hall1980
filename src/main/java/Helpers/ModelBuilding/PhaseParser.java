@@ -1,5 +1,7 @@
 package Helpers.ModelBuilding;
 
+import Models.SimulatorSettings;
+import Models.Stimulus.CompoundStimulus;
 import Models.Stimulus.ConditionalStimulus;
 import Models.GroupPhase;
 import Models.Stimulus.Stimulus;
@@ -15,9 +17,9 @@ import java.util.Map;
  */
 public class PhaseParser {
 
-    public static GroupPhase ParsePhase(List<PhaseStringTokenizer.TrialTypeTokens> trialTypeTokensList, Map<Character, ConditionalStimulus> csMap, int phaseId) {
+    public static GroupPhase ParsePhase(List<PhaseStringTokenizer.TrialTypeTokens> trialTypeTokensList, Map<Character, ConditionalStimulus> csMap, int phaseId, SimulatorSettings settings) {
 
-        TrialTypeParser trialTypeParser = new TrialTypeParser(csMap);
+        TrialTypeParser trialTypeParser = new TrialTypeParser(csMap, settings);
 
         GroupPhase groupPhase = new GroupPhase(phaseId);
 
@@ -32,9 +34,11 @@ public class PhaseParser {
     private static class TrialTypeParser {
 
         private Map<Character, ConditionalStimulus> csMap;
+        private SimulatorSettings settings;
 
-        private TrialTypeParser(Map < Character, ConditionalStimulus > csMap) {
+        private TrialTypeParser(Map < Character, ConditionalStimulus > csMap, SimulatorSettings settings) {
             this.csMap = csMap;
+            this.settings = settings;
         }
 
         private List<Trial> getTrials (PhaseStringTokenizer.TrialTypeTokens trialType){
@@ -67,7 +71,19 @@ public class PhaseParser {
                     added.put(cueName, true);
                 }
             }
+            if(settings.CompoundResults && trialType.cueNames.length > 1){
+                cuesPresent.add(createCompoundStimulus(trialType.cueNames));
+            }
+
             return cuesPresent;
+        }
+
+        private CompoundStimulus createCompoundStimulus(char[] compoundedNames){
+            List<Stimulus> compoundedStims = new ArrayList<>();
+            for(char cueName : compoundedNames){
+                compoundedStims.add(csMap.get(cueName));
+            }
+            return new CompoundStimulus(compoundedStims);
         }
     }
 }
