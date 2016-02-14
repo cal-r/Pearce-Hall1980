@@ -9,11 +9,11 @@ import java.io.Serializable;
  */
 public class SimulatorSettings implements Serializable {
     public boolean CompoundResults;
-    public boolean ConfiguralCues;
+    public boolean ContextSimulation;
     public int NumberOfRandomCombination;
     public SimulatorSettings(){
         CompoundResults = DefaultValuesConstants.COMPOUND_RESULTS;
-        ConfiguralCues = DefaultValuesConstants.CONFIGURAL_CUES;
+        ContextSimulation = DefaultValuesConstants.CONTEXT_SIMULATION;
         NumberOfRandomCombination = DefaultValuesConstants.NUMBER_OF_RANDOM_COMBINATIONS;
     }
 }

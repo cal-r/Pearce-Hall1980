@@ -43,7 +43,7 @@ public class MenuController implements ActionListener {
         JMenu settingsMenu = new JMenu(GuiStringConstants.SETTINGS);
         createMenuItem(settingsMenu, GuiStringConstants.RANDOM_TRIALS_SETTING, MenuItemType.BASIC);
         createMenuItem(settingsMenu, GuiStringConstants.COMPOUND_RESULTS_SETTING, MenuItemType.CHECKBOX);
-        createMenuItem(settingsMenu, GuiStringConstants.CONIFGURAL_CUES_SETTING, MenuItemType.CHECKBOX);
+        createMenuItem(settingsMenu, GuiStringConstants.ContextSimulation, MenuItemType.CHECKBOX);
         menuBar.add(settingsMenu);
     }
 
@@ -74,7 +74,9 @@ public class MenuController implements ActionListener {
             ModelDto modelDto = ModelExportHelper.readModel();
             ModelDtoHelper.loadModelDto(modelDto, mainWindowController, this);
         }catch(Exception ex){
-            GuiHelper.displayErrorMessage(ex.getMessage());
+            if(ex.getMessage().length()>0) {
+                GuiHelper.displayErrorMessage(ex.getMessage());
+            }
         }
     }
 
@@ -106,7 +108,7 @@ public class MenuController implements ActionListener {
         this.settings = simulator.getSimulatorSettings();
         //set up checkboxes states
         checkboxesMap.get(GuiStringConstants.COMPOUND_RESULTS_SETTING).setState(settings.CompoundResults);
-        checkboxesMap.get(GuiStringConstants.CONIFGURAL_CUES_SETTING).setState(settings.ConfiguralCues);
+        checkboxesMap.get(GuiStringConstants.ContextSimulation).setState(settings.ContextSimulation);
     }
 
     //getters

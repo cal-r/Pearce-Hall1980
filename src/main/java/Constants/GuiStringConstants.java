@@ -19,7 +19,7 @@ public class GuiStringConstants {
     public static final String SETTINGS = "Settings";
     public static final String RANDOM_TRIALS_SETTING = "Number of Random Trials Combinations";
     public static final String COMPOUND_RESULTS_SETTING = "Show Compound Results";
-    public static final String CONIFGURAL_CUES_SETTING = "Use Configural Cues";
+    public static final String ContextSimulation = "Context Simulation";
 
 
     public static final String DEFAULT_PHASE = "2A+";
