@@ -1,6 +1,7 @@
 package Models;
 
 import Models.Stimulus.ConditionalStimulus;
+import Models.Stimulus.Stimulus;
 
 import java.io.Serializable;
 import java.util.List;
@@ -10,9 +11,9 @@ import java.util.List;
  */
 public class Trial implements Serializable {
     public boolean usPresent;
-    public List<ConditionalStimulus> cuesPresent;
+    public List<Stimulus> cuesPresent;
 
-    public Trial(boolean usPresent, List<ConditionalStimulus> cuesPresent){
+    public Trial(boolean usPresent, List<Stimulus> cuesPresent){
         this.usPresent = usPresent;
         this.cuesPresent = cuesPresent;
     }
@@ -20,14 +21,17 @@ public class Trial implements Serializable {
     public void simulate(double vNet, double gamma){
         double lambda = getLamba();
         double capitalLambda = lambda - vNet;
-        for(ConditionalStimulus cs : cuesPresent){
-            double newAlpha = getNewAlpha(gamma, lambda, vNet, cs.getAlpha());
-            if(usPresent && capitalLambda > 0) {
-                updateDeltaVe(cs, lambda);
-            }else if (!usPresent && capitalLambda<0) {
-                updateDeltaVi(cs, capitalLambda);
+        for(Stimulus stimulus : cuesPresent){
+            if(stimulus instanceof ConditionalStimulus) {
+                ConditionalStimulus cs = (ConditionalStimulus) stimulus;
+                double newAlpha = getNewAlpha(gamma, lambda, vNet, cs.getAlpha());
+                if (usPresent && capitalLambda > 0) {
+                    updateDeltaVe(cs, lambda);
+                } else if (!usPresent && capitalLambda < 0) {
+                    updateDeltaVi(cs, capitalLambda);
+                }
+                cs.setAlpha(newAlpha);
             }
-            cs.setAlpha(newAlpha);
         }
     }
 
@@ -47,14 +51,5 @@ public class Trial implements Serializable {
 
     private double getNewAlpha(double gamma, double lambda, double vNet, double oldAlpha){
         return gamma * Math.abs(lambda - vNet) + (1 - gamma) * oldAlpha;
-    }
-
-    public String toString(){
-        String str = "";
-        for(ConditionalStimulus cs : cuesPresent){
-            str += cs.getName();
-        }
-        str+= usPresent ? "+" : "-";
-        return str;
     }
 }

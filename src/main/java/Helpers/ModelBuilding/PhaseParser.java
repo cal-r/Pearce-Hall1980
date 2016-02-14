@@ -2,6 +2,7 @@ package Helpers.ModelBuilding;
 
 import Models.Stimulus.ConditionalStimulus;
 import Models.GroupPhase;
+import Models.Stimulus.Stimulus;
 import Models.Trial;
 
 import java.util.ArrayList;
@@ -57,8 +58,8 @@ public class PhaseParser {
             return false;
         }
 
-        private List<ConditionalStimulus> getCuesPresent(PhaseStringTokenizer.TrialTypeTokens trialType) {
-            List<ConditionalStimulus> cuesPresent = new ArrayList<>();
+        private List<Stimulus> getCuesPresent(PhaseStringTokenizer.TrialTypeTokens trialType) {
+            List<Stimulus> cuesPresent = new ArrayList<>();
             Map<Character, Boolean> added = new HashMap<>(); //to prevent same cs being added to trial twice, e.g. in case of AAB+
             for (char cueName : trialType.cueNames) {
                 if(!added.containsKey(cueName)) {

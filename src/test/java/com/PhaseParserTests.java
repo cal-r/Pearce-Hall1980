@@ -143,8 +143,8 @@ public class PhaseParserTests extends junit.framework.TestCase {
         Map<Character, ConditionalStimulus> csMap = getCsMap(trialTypeTokens.cueNames, cspPool);
         GroupPhase groupPhase = PhaseParser.ParsePhase(tokensArrayList, csMap, 0);
 
-        ConditionalStimulus csA_T1 = groupPhase.trials.get(0).cuesPresent.get(0);
-        ConditionalStimulus csA_T2 = groupPhase.trials.get(1).cuesPresent.get(0);
+        ConditionalStimulus csA_T1 = (ConditionalStimulus)groupPhase.trials.get(0).cuesPresent.get(0);
+        ConditionalStimulus csA_T2 = (ConditionalStimulus)groupPhase.trials.get(1).cuesPresent.get(0);
         assertEquals(csA_T1, csA_T2);
     }
 

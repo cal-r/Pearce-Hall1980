@@ -62,6 +62,7 @@ public class MenuController implements ActionListener {
     //action events
     private void onCompoundResultsSettingTicked(boolean isSelected){
         settings.CompoundResults = isSelected;
+        mainWindowController.disableAllButtons();
     }
 
     private void onSaveModel(){

@@ -50,8 +50,8 @@ public class SimulatorBuilderTests extends junit.framework.TestCase {
         assertFalse(sim.getGroups().get(0).groupPhases.get(0).isRandom());
         assertTrue(sim.getGroups().get(0).groupPhases.get(1).trials.size() == 5);
         assertTrue(sim.getGroups().get(0).groupPhases.get(1).isRandom());
-        ConditionalStimulus csB_fromP1 = sim.getGroups().get(0).groupPhases.get(0).trials.get(0).cuesPresent.get(1);
-        ConditionalStimulus csB_fromP2 = sim.getGroups().get(0).groupPhases.get(1).trials.get(0).cuesPresent.get(0);
+        ConditionalStimulus csB_fromP1 = (ConditionalStimulus)sim.getGroups().get(0).groupPhases.get(0).trials.get(0).cuesPresent.get(1);
+        ConditionalStimulus csB_fromP2 = (ConditionalStimulus)sim.getGroups().get(0).groupPhases.get(1).trials.get(0).cuesPresent.get(0);
         assertTrue(csB_fromP1 == csB_fromP2); // has to be the same object!
     }
 
@@ -91,10 +91,10 @@ public class SimulatorBuilderTests extends junit.framework.TestCase {
         assertTrue(sim.getGroups().get(1).groupPhases.get(1).trials.size() == 5);
         assertFalse(sim.getGroups().get(1).groupPhases.get(1).isRandom());
 
-        ConditionalStimulus csB_fromP1G1 = sim.getGroups().get(0).groupPhases.get(0).trials.get(0).cuesPresent.get(1);
-        ConditionalStimulus csB_fromP2G1 = sim.getGroups().get(0).groupPhases.get(1).trials.get(1).cuesPresent.get(0);
-        ConditionalStimulus csB_fromP1G2 = sim.getGroups().get(1).groupPhases.get(0).trials.get(0).cuesPresent.get(1);
-        ConditionalStimulus csB_fromP2G2 = sim.getGroups().get(1).groupPhases.get(1).trials.get(1).cuesPresent.get(0);
+        ConditionalStimulus csB_fromP1G1 = (ConditionalStimulus)sim.getGroups().get(0).groupPhases.get(0).trials.get(0).cuesPresent.get(1);
+        ConditionalStimulus csB_fromP2G1 = (ConditionalStimulus)sim.getGroups().get(0).groupPhases.get(1).trials.get(1).cuesPresent.get(0);
+        ConditionalStimulus csB_fromP1G2 = (ConditionalStimulus)sim.getGroups().get(1).groupPhases.get(0).trials.get(0).cuesPresent.get(1);
+        ConditionalStimulus csB_fromP2G2 = (ConditionalStimulus)sim.getGroups().get(1).groupPhases.get(1).trials.get(1).cuesPresent.get(0);
 
         //cs is shared among phases but not among groups
         //csparam is shared among groups

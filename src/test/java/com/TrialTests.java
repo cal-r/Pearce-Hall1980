@@ -5,6 +5,7 @@ import Models.Stimulus.ConditionalStimulus;
 import Models.Parameters.InitialAlphaParameter;
 import Models.Parameters.SalienceExcitatoryParameter;
 import Models.Parameters.SalienceInhibitoryParameter;
+import Models.Stimulus.Stimulus;
 import Models.Trial;
 import org.junit.Test;
 
@@ -111,7 +112,7 @@ public class TrialTests extends junit.framework.TestCase {
     }
 
     public static Trial createTrial(HashMap<Character, ConditionalStimulus> allCues, char[] presentCss, boolean usPresent){
-        List<ConditionalStimulus> presentCues = new ArrayList<>();
+        List<Stimulus> presentCues = new ArrayList<>();
         for(char c : presentCss) {
             presentCues.add(allCues.get(c));
         }

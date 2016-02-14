@@ -126,7 +126,7 @@ public class MainWindowController implements ActionListener, TableModelListener 
         trialTableModel.removeGroup();
     }
 
-    private void onTrialTableChanged(){
+    public void disableAllButtons(){
         runSimButton.setEnabled(false);
         onSelectionChanged();
     }
@@ -154,7 +154,7 @@ public class MainWindowController implements ActionListener, TableModelListener 
                 break;
             case ActionCommands.REMOVE_PHASE: onPhaseMinus();
                 break;
-            case ActionCommands.TRAIL_TABLE_CHANGED: onTrialTableChanged();
+            case ActionCommands.TRAIL_TABLE_CHANGED: disableAllButtons();
                 break;
             case ActionCommands.CS_PARAMS_TABLE_CHANGED: onParamsTableChanged();
                 break;

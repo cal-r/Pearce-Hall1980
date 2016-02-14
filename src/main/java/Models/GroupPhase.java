@@ -83,7 +83,7 @@ public class GroupPhase implements Serializable {
     }
 
     private void addInfoToHistory(GroupPhaseHistory history){
-        history.setPhaseName(toString());
+        history.setPhaseName(getTitle());
         history.setNumbetOfTrails(getNumberOfTrials());
         history.setDescription(description);
         history.setIsRandom(isRandom());
@@ -151,12 +151,8 @@ public class GroupPhase implements Serializable {
 
     public int getNumberOfTrials(){ return trials.size(); }
 
-    public String toString(){
+    public String getTitle(){
         return GuiStringConstants.getPhaseTitle(phaseId);
-    }
-
-    public String getDescription() {
-        return description;
     }
 
     public void setDescription(String description) {
