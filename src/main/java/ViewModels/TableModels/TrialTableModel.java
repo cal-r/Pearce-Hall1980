@@ -13,8 +13,11 @@ import java.util.List;
  */
 public class TrialTableModel extends BaseTableModel implements Serializable {
 
+	private simulateCompounds;	
+		
     public TrialTableModel(){
         addPhase();
+		simulateCompounds = false;
     }
 
     @Override
@@ -30,7 +33,7 @@ public class TrialTableModel extends BaseTableModel implements Serializable {
         if(columnHeaders==null){
             return 0;
         }
-        return (columnHeaders.size() - 1) / 2;
+        return (columnHeaders.size() - 1) / getGroupPhaseCellsCount();
     }
 
     public int getGroupCount(){
@@ -46,16 +49,46 @@ public class TrialTableModel extends BaseTableModel implements Serializable {
         return data;
     }
 
-    public void addGroup(){
+    public void setSimulateCompounds(boolean simulateCompounds){
+		//copy data
+		int phaseCount = getPhaseCount();
+		List<List<String>> descriptions = new ArrayList<>();
+		List<List<Boolean>> randomSelections = new ArrayList<>();
+		for(int gid=0;gid<getGroupCount();gid++){
+			descriptions.add(getPhaseDescriptions(gid));
+			randomSelections.add(getRandomSelections(gid));
+		}
+		//remove columns (except the first one)
+		while(columnHeaders.size()>1){
+			removeRighmostColumn();
+		}
+		
+		//add phases
+		this.simulateCompounds = simulateCompounds;
+		for(int pid=1;pid<=phaseCount;pid++){
+			addPhase();
+		}
+		
+	}
+	
+	public int getGroupPhaseCellsCount(){
+		return simulateCompounds ? 4 : 2;
+	}
+	
+	public void addGroup(){
         addRow();
         int groupId = getGroupCount()-1;
         setValueAt(GuiStringConstants.getDefaultGroupName(groupId), groupId, 0);
         for(int phaseId = 1;phaseId <= getPhaseCount();phaseId++){
-            setValueAt(GuiStringConstants.DEFAULT_PHASE, groupId, phaseId*2 - 1);
-            setValueAt(DefaultValuesConstants.RANDOM_SELECTION, groupId, phaseId*2);
+            setValueAt(GuiStringConstants.DEFAULT_PHASE, groupId, getColId(phaseId, 1));
+            setValueAt(DefaultValuesConstants.RANDOM_SELECTION, groupId, getColId(phaseId, 2));
+			if(simulateCompounds){
+				setValueAt(69, groupId, getColId(phaseId, 3));
+				setValueAt(69, groupId, getColId(phaseId, 4));
+			}
         }
     }
-
+		
     public void removeGroup(){
         if(getGroupCount()>1){
             removeBottomRow();
@@ -70,15 +103,19 @@ public class TrialTableModel extends BaseTableModel implements Serializable {
     public List<String> getPhaseDescriptions(int groupId) {
         List<String> descriptions = new ArrayList<>();
         for(int p=1;p<=getPhaseCount();p++){
-            descriptions.add((String) getValueAt(groupId, p*2-1));
+            descriptions.add((String) getValueAt(groupId, getColId(p, 1)));
         }
         return descriptions;
     }
+	
+	private int getColId(int phaseId, int groupPhaseColId){ //both 1-based
+		return phaseId*getGroupPhaseCellsCount() - (getGroupPhaseCellsCount() - (getGroupPhaseCellsCount() - groupPhaseColId);
+	}
 
     public List<Boolean> getRandomSelections(int groupId) {
         List<Boolean> selections = new ArrayList<>();
         for(int p=1;p<=getPhaseCount();p++){
-            selections.add((Boolean) getValueAt(groupId, p * 2));
+            selections.add((Boolean) getValueAt(groupId, getColId(p, 2)));
         }
         return selections;
     }
@@ -86,12 +123,17 @@ public class TrialTableModel extends BaseTableModel implements Serializable {
     public void addPhase(){
         addColumn(GuiStringConstants.getPhaseTitle(getPhaseCount()), GuiStringConstants.DEFAULT_PHASE);
         addColumn(GuiStringConstants.RANDOM, DefaultValuesConstants.RANDOM_SELECTION);
+		if(simulateCompounds){
+			addColumn("some val", 69);
+			addColumn("some ratio", 69);
+		}
     }
-
+	
     public void removePhase(){
         if(getPhaseCount()>1) {
-            removeRighmostColumn();
-            removeRighmostColumn();
+            for(int i=0;i<getGroupPhaseCellsCount();i++){
+				removeRighmostColumn();
+			}
         }
     }
 }
