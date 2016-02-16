@@ -37,6 +37,7 @@ public class ContextEditor extends AbstractCellEditor implements ActionListener,
     /** Context editor dialog. **/
     private ContextDialog dialog;
     protected static final String EDIT = "edit";
+    private JTable myTable;
 
     /**
      * Create a new editor.
@@ -87,6 +88,7 @@ public class ContextEditor extends AbstractCellEditor implements ActionListener,
         } else {
             currentConfig = dialog.getConfig();
             dialog.setVisible(false);
+            myTable.repaint();
         }
     }
 
@@ -98,6 +100,7 @@ public class ContextEditor extends AbstractCellEditor implements ActionListener,
                                                  boolean isSelected, int row, int column) {
         currentConfig = (ContextConfig) value;
         dialog.setTitle(((String) table.getValueAt(row, 0))+" Phase "+(column/5 + 1));
+        myTable = table;
         return button;
     }
 

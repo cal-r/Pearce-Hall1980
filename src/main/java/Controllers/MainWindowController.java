@@ -11,6 +11,8 @@ import ViewModels.TableModels.BaseTableModel;
 import ViewModels.TableModels.CSParamsTableModel;
 import ViewModels.TableModels.GlobalPramsTableModel;
 import ViewModels.TableModels.TrialTableModel;
+import _from_RW_simulator.ContextConfig;
+import _from_RW_simulator.ContextEditor;
 
 import javax.swing.*;
 import javax.swing.event.TableModelEvent;
@@ -57,8 +59,9 @@ public class MainWindowController implements ActionListener, TableModelListener 
     }
 
     public void initTrialTable(JTable table) {
-        trialTableModel = new TrialTableModel();
+        trialTableModel = new TrialTableModel(simulator.getSimulatorSettings().ContextSimulation);
         initTableModel(table, trialTableModel);
+        table.setDefaultEditor(ContextConfig.class, new ContextEditor());
     }
 
     public void initCsParamsTable(JTable table) {
@@ -187,6 +190,10 @@ public class MainWindowController implements ActionListener, TableModelListener 
         if(tableClass == GlobalPramsTableModel.class){
             processEvent(ActionCommands.GLOBAL_PARAMS_TABLE_CHANGED);
         }
+    }
+
+    public void onSimulateContextChange(){
+        trialTableModel.setSimulateContext(simulator.getSimulatorSettings().ContextSimulation);
     }
 
     //getters

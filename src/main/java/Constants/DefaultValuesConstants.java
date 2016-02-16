@@ -11,7 +11,8 @@ public class DefaultValuesConstants {
     public static final double ROUNDING_PRECISION = 0.00000001;
     public static final double ASYMPTOTE_EXCEED_ALLOWANCE = 0.01;
     public static final boolean RANDOM_SELECTION = false;
+    public static final int ITI_CS_RATIO = 5;
     public static boolean COMPOUND_RESULTS = true;
-    public static boolean CONTEXT_SIMULATION = false;
+    public static boolean CONTEXT_SIMULATION = true;
     public static final int NUMBER_OF_RANDOM_COMBINATIONS = 1000;
 }

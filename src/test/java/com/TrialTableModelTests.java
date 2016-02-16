@@ -12,7 +12,7 @@ public class TrialTableModelTests  extends TestCase {
 
     @Test
     public void testTrialTableModel() throws Exception{
-        TrialTableModel tableModel = new TrialTableModel();
+        TrialTableModel tableModel = new TrialTableModel(false);
         assertEquals(tableModel.getPhaseCount(), 1);
         assertEquals(tableModel.getGroupCount(), 1);
         assertEquals(tableModel.getGroupName(0), GuiStringConstants.getDefaultGroupName(0));
@@ -22,7 +22,7 @@ public class TrialTableModelTests  extends TestCase {
 
     @Test
     public void testTrialTableModel1() throws Exception {
-        TrialTableModel tableModel = new TrialTableModel();
+        TrialTableModel tableModel = new TrialTableModel(false);
         tableModel.addPhase();
         assertEquals(tableModel.getPhaseCount(), 2);
         assertEquals(tableModel.getGroupCount(), 1);
@@ -34,7 +34,7 @@ public class TrialTableModelTests  extends TestCase {
 
     @Test
     public void testTrialTableModel2() throws Exception {
-        TrialTableModel tableModel = new TrialTableModel();
+        TrialTableModel tableModel = new TrialTableModel(false);
         tableModel.addPhase();
         tableModel.addGroup();
         String group1Name = "testin group1";

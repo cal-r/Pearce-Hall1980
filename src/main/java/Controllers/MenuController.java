@@ -5,7 +5,6 @@ import Helpers.Export.ModelExportHelper;
 import Helpers.GuiHelper;
 import Helpers.ModelBuilding.ModelDtoHelper;
 import Models.DTOs.ModelDto;
-import Models.Simulator;
 import Models.SimulatorSettings;
 
 import javax.swing.*;
@@ -27,7 +26,7 @@ public class MenuController implements ActionListener {
     public MenuController(MainWindowController mainWindowController) {
         this.mainWindowController = mainWindowController;
         initMenuBar();
-        setSettings(mainWindowController.getSimulator());
+        setSettings(mainWindowController.getSimulator().getSimulatorSettings());
     }
 
     //init stuff
@@ -36,14 +35,14 @@ public class MenuController implements ActionListener {
         menuBar = new JMenuBar();
         //file menu
         JMenu fileMenu = new JMenu(GuiStringConstants.FILE);
-        createMenuItem(fileMenu, GuiStringConstants.SAVE, MenuItemType.BASIC);
         createMenuItem(fileMenu, GuiStringConstants.OPEN, MenuItemType.BASIC);
+        createMenuItem(fileMenu, GuiStringConstants.SAVE, MenuItemType.BASIC);
         menuBar.add(fileMenu);
         //settings menu
         JMenu settingsMenu = new JMenu(GuiStringConstants.SETTINGS);
         createMenuItem(settingsMenu, GuiStringConstants.RANDOM_TRIALS_SETTING, MenuItemType.BASIC);
         createMenuItem(settingsMenu, GuiStringConstants.COMPOUND_RESULTS_SETTING, MenuItemType.CHECKBOX);
-        createMenuItem(settingsMenu, GuiStringConstants.ContextSimulation, MenuItemType.CHECKBOX);
+        createMenuItem(settingsMenu, GuiStringConstants.SIMULATE_CONTEXT, MenuItemType.CHECKBOX);
         menuBar.add(settingsMenu);
     }
 
@@ -63,6 +62,11 @@ public class MenuController implements ActionListener {
     private void onCompoundResultsSettingTicked(boolean isSelected){
         settings.CompoundResults = isSelected;
         mainWindowController.disableAllButtons();
+    }
+
+    private void onSimulateContext(boolean isSelected){
+        settings.ContextSimulation = isSelected;
+        mainWindowController.onSimulateContextChange();
     }
 
     private void onSaveModel(){
@@ -99,16 +103,19 @@ public class MenuController implements ActionListener {
             case GuiStringConstants.RANDOM_TRIALS_SETTING:
                 onRandomTrialsSetting();
                 break;
+            case GuiStringConstants.SIMULATE_CONTEXT:
+                onSimulateContext(GuiHelper.isMenuItemSelected(e));
+                break;
             default:
                 GuiHelper.displayErrorMessage("Nicht implementiert!");
         }
     }
 
-    public void setSettings(Simulator simulator) {
-        this.settings = simulator.getSimulatorSettings();
+    public void setSettings(SimulatorSettings settings) {
+        this.settings = settings;
         //set up checkboxes states
         checkboxesMap.get(GuiStringConstants.COMPOUND_RESULTS_SETTING).setState(settings.CompoundResults);
-        checkboxesMap.get(GuiStringConstants.ContextSimulation).setState(settings.ContextSimulation);
+        checkboxesMap.get(GuiStringConstants.SIMULATE_CONTEXT).setState(settings.ContextSimulation);
     }
 
     //getters

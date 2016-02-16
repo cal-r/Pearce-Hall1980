@@ -2,7 +2,8 @@ package ViewModels.TableModels;
 
 import Constants.DefaultValuesConstants;
 import Constants.GuiStringConstants;
-import ViewModels.TableModels.BaseTableModel;
+import Models.SimulatorSettings;
+import _from_RW_simulator.ContextConfig;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -10,14 +11,16 @@ import java.util.List;
 
 /**
  * Created by Rokas on 03/11/2015.
+ *
+ * group ids are 0-based, while phase ids are 1-based, sincere apologies
  */
 public class TrialTableModel extends BaseTableModel implements Serializable {
 
-	private simulateCompounds;	
+	private boolean simulateContext;
 		
-    public TrialTableModel(){
+    public TrialTableModel(boolean simulateContext){
+        this.simulateContext = simulateContext;
         addPhase();
-		simulateCompounds = false;
     }
 
     @Override
@@ -49,7 +52,7 @@ public class TrialTableModel extends BaseTableModel implements Serializable {
         return data;
     }
 
-    public void setSimulateCompounds(boolean simulateCompounds){
+    public void setSimulateContext(boolean simulateContext){
 		//copy data
 		int phaseCount = getPhaseCount();
 		List<List<String>> descriptions = new ArrayList<>();
@@ -64,15 +67,19 @@ public class TrialTableModel extends BaseTableModel implements Serializable {
 		}
 		
 		//add phases
-		this.simulateCompounds = simulateCompounds;
+		this.simulateContext = simulateContext;
 		for(int pid=1;pid<=phaseCount;pid++){
 			addPhase();
 		}
-		
+
+        for(int g=0;g<descriptions.size();g++){
+            setPhaseDescriptions(descriptions.get(g), g);
+            setRandomSelections(randomSelections.get(g), g);
+        }
 	}
 	
 	public int getGroupPhaseCellsCount(){
-		return simulateCompounds ? 4 : 2;
+		return simulateContext ? 4 : 2;
 	}
 	
 	public void addGroup(){
@@ -82,9 +89,9 @@ public class TrialTableModel extends BaseTableModel implements Serializable {
         for(int phaseId = 1;phaseId <= getPhaseCount();phaseId++){
             setValueAt(GuiStringConstants.DEFAULT_PHASE, groupId, getColId(phaseId, 1));
             setValueAt(DefaultValuesConstants.RANDOM_SELECTION, groupId, getColId(phaseId, 2));
-			if(simulateCompounds){
-				setValueAt(69, groupId, getColId(phaseId, 3));
-				setValueAt(69, groupId, getColId(phaseId, 4));
+			if(simulateContext){
+				setValueAt(new ContextConfig(), groupId, getColId(phaseId, 3));
+				setValueAt(DefaultValuesConstants.ITI_CS_RATIO, groupId, getColId(phaseId, 4));
 			}
         }
     }
@@ -107,10 +114,6 @@ public class TrialTableModel extends BaseTableModel implements Serializable {
         }
         return descriptions;
     }
-	
-	private int getColId(int phaseId, int groupPhaseColId){ //both 1-based
-		return phaseId*getGroupPhaseCellsCount() - (getGroupPhaseCellsCount() - (getGroupPhaseCellsCount() - groupPhaseColId);
-	}
 
     public List<Boolean> getRandomSelections(int groupId) {
         List<Boolean> selections = new ArrayList<>();
@@ -120,13 +123,38 @@ public class TrialTableModel extends BaseTableModel implements Serializable {
         return selections;
     }
 
+    private void setPhaseDescriptions(List<String> descriptions, int groupId){
+        for(int p=1;p<=getPhaseCount();p++) {
+            setValueAt(descriptions.get(p - 1), groupId, getColId(p, 1));
+        }
+    }
+
+    private void setRandomSelections(List<Boolean> selections, int groupId){
+        for(int p=1;p<=getPhaseCount();p++) {
+            setValueAt(selections.get(p-1), groupId, getColId(p, 2));
+        }
+    }
+
+	private int getColId(int phaseId, int groupPhaseColId){ //both 1-based
+		return phaseId*getGroupPhaseCellsCount() - (getGroupPhaseCellsCount() - groupPhaseColId);
+	}
+
     public void addPhase(){
         addColumn(GuiStringConstants.getPhaseTitle(getPhaseCount()), GuiStringConstants.DEFAULT_PHASE);
         addColumn(GuiStringConstants.RANDOM, DefaultValuesConstants.RANDOM_SELECTION);
-		if(simulateCompounds){
-			addColumn("some val", 69);
-			addColumn("some ratio", 69);
+		if(simulateContext){
+			addContextColumn();
+			addColumn(GuiStringConstants.ITI_CS_RATION, DefaultValuesConstants.ITI_CS_RATIO);
 		}
+    }
+
+    private void addContextColumn(){
+        addColumn(GuiStringConstants.CONTEXT, new ContextConfig());
+        //need to do this, otherwise entire column is pointing to the same object
+        int lastColId = getColumnCount() - 1;
+        for(int r=0;r<getRowCount();r++){
+            setValueAt(new ContextConfig(), r, lastColId);
+        }
     }
 	
     public void removePhase(){

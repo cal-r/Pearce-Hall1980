@@ -66,10 +66,6 @@ public abstract class BaseTableModel extends AbstractTableModel  {
         fireTableChanged(new TableModelEvent(this));
     }
 
-    public List<String> getRow(int rowId){
-        return (List<String>)(List<?>) data.get(rowId);
-    }
-
     protected void addColumn(String colName, Object defaultValue){
         for(List<Object> row : data){
             row.add(defaultValue);

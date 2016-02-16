@@ -13,7 +13,7 @@ public class SimulatorBuilderTests extends junit.framework.TestCase {
 
     @Test
     public void testSimBuilder1() throws Exception{
-        TrialTableModel tableModel = new TrialTableModel();
+        TrialTableModel tableModel = new TrialTableModel(false);
         tableModel.setValueAt("group name test", 0, 0);
         tableModel.setValueAt("2AB+", 0, 1);
         Simulator sim = new Simulator();
@@ -31,7 +31,7 @@ public class SimulatorBuilderTests extends junit.framework.TestCase {
 
     @Test
     public void testSimBuilder2() throws Exception{
-        TrialTableModel tableModel = new TrialTableModel();
+        TrialTableModel tableModel = new TrialTableModel(false);
         tableModel.setValueAt("group name test", 0, 0);
         tableModel.setValueAt("2AAB+", 0, 1);
         tableModel.addPhase();
@@ -57,7 +57,7 @@ public class SimulatorBuilderTests extends junit.framework.TestCase {
 
     @Test
     public void testSimBuilder3() throws Exception {
-        TrialTableModel tableModel = new TrialTableModel();
+        TrialTableModel tableModel = new TrialTableModel(false);
         tableModel.addGroup();
         tableModel.addPhase();
         //group 1

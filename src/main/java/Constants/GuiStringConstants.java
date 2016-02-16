@@ -12,6 +12,8 @@ public class GuiStringConstants {
     public static final String GLOBAL_PARAMETER = "Global Parameter";
     public static final String VALUE = "Value";
     public static final String RANDOM = "Random";
+    public static final String CONTEXT = "Context";
+    public static final String ITI_CS_RATION = "ITI/CS Ratio";
 
     public static final String FILE = "File";
     public static final String SAVE = "Save";
@@ -19,7 +21,7 @@ public class GuiStringConstants {
     public static final String SETTINGS = "Settings";
     public static final String RANDOM_TRIALS_SETTING = "Number of Random Trials Combinations";
     public static final String COMPOUND_RESULTS_SETTING = "Show Compound Results";
-    public static final String ContextSimulation = "Context Simulation";
+    public static final String SIMULATE_CONTEXT = "Context Simulation";
 
 
     public static final String DEFAULT_PHASE = "2A+";

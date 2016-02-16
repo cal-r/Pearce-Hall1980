@@ -23,6 +23,6 @@ public class ModelDtoHelper {
         mainWindowController.setTrialTableModel(dto.getTrialTableModel());
         mainWindowController.setCsParamsTableModel(dto.getCsParamsTableModel());
         mainWindowController.setGlobalParamsTableModel(dto.getGlobalPramsTableModel());
-        menuController.setSettings(dto.getSimulator());
+        menuController.setSettings(dto.getSimulator().getSimulatorSettings());
     }
 }
