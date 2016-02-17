@@ -9,6 +9,7 @@ import Models.Parameters.CsParameterPool;
 import Models.Simulator;
 import Models.Stimulus.Stimulus;
 import ViewModels.TableModels.TrialTableModel;
+import _from_RW_simulator.ContextConfig;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,6 +28,7 @@ public class SimulatorBuilder {
         List<Group> groups = new ArrayList<>();
         for(int gi=0;gi<tableModel.getGroupCount();gi++){
             Group group = groupBuilder.buildGroup(tableModel.getGroupName(gi), tableModel.getPhaseDescriptions(gi), tableModel.getRandomSelections(gi));
+            List<ContextConfig> confs = tableModel.getContextConfigs(gi);
             groups.add(group);
         }
 

@@ -123,6 +123,14 @@ public class TrialTableModel extends BaseTableModel implements Serializable {
         return selections;
     }
 
+    public List<ContextConfig> getContextConfigs(int groupId){
+        List<ContextConfig> configs = new ArrayList<>();
+        for(int p=1;p<=getPhaseCount();p++) {
+            configs.add((ContextConfig) getValueAt(groupId, getColId(p, 3)));
+        }
+        return configs;
+    }
+
     private void setPhaseDescriptions(List<String> descriptions, int groupId){
         for(int p=1;p<=getPhaseCount();p++) {
             setValueAt(descriptions.get(p - 1), groupId, getColId(p, 1));
