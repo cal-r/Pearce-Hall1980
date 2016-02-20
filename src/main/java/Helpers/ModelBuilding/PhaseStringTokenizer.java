@@ -24,7 +24,7 @@ import java.util.regex.Pattern;
  */
 public class PhaseStringTokenizer {
 
-    private static final String TRAIL_TYPE_REGEX = "(\\d*)([a-zA-Z]+)([\\+\\-])";
+    private static final String TRAIL_TYPE_REGEX = "(\\d*)([a-zA-Z]*)([\\+\\-])";
 
     public static List<TrialTypeTokens> getPhaseTokens(String phaseDescription) throws IllegalArgumentException {
 

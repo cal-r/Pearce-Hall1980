@@ -31,8 +31,8 @@ public class PhaseParser {
 
         for(PhaseStringTokenizer.TrialTypeTokens trialType : trialTypeTokensList){
             List<Trial> newTrials =trialTypeParser.getTrials(trialType);
-            if(settings.ContextSimulation){
-                trialTypeParser.insertContextTrials(newTrials);
+            if (settings.ContextSimulation) {
+                trialTypeParser.insertContextTrials(newTrials, trialTypeParser.getUsPresent(trialType));
             }
             groupPhase.addTrials(newTrials);
         }
@@ -64,11 +64,9 @@ public class PhaseParser {
             return trials;
         }
 
-        private void insertContextTrials(List<Trial> trials){
+        private void insertContextTrials(List<Trial> trials, boolean usPresent){
             int numberOfActiveTrials = trials.size();
             int contextTrialsAdded = 0;
-            boolean usPresent = trials.get(0).usPresent;
-
             int i = 1;
             while(contextTrialsAdded < numberOfActiveTrials*itiRatio){
                 for(int j=0;j<itiRatio;j++){
