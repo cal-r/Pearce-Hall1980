@@ -19,7 +19,7 @@ import java.util.Map;
 public class PhaseParser {
 
     public static GroupPhase ParsePhase(List<PhaseStringTokenizer.TrialTypeTokens> trialTypeTokensList,
-                                        Map<Character, ConditionalStimulus> csMap,
+                                        Map<String, ConditionalStimulus> csMap,
                                         int phaseId,
                                         SimulatorSettings settings,
                                         ContextStimulus context,
@@ -42,12 +42,12 @@ public class PhaseParser {
 
     private static class TrialTypeParser {
 
-        private Map<Character, ConditionalStimulus> csMap;
+        private Map<String, ConditionalStimulus> csMap;
         private SimulatorSettings settings;
         private ContextStimulus context;
         private int itiRatio;
 
-        private TrialTypeParser(Map<Character, ConditionalStimulus> csMap, SimulatorSettings settings, ContextStimulus context, Integer itiRatio) {
+        private TrialTypeParser(Map<String, ConditionalStimulus> csMap, SimulatorSettings settings, ContextStimulus context, Integer itiRatio) {
             this.csMap = csMap;
             this.settings = settings;
             this.context = context;
@@ -87,8 +87,8 @@ public class PhaseParser {
 
         private List<Stimulus> getCuesPresent(PhaseStringTokenizer.TrialTypeTokens trialType) {
             List<Stimulus> cuesPresent = new ArrayList<>();
-            Map<Character, Boolean> added = new HashMap<>(); //to prevent same cs being added to trial twice, e.g. in case of AAB+
-            for (char cueName : trialType.cueNames) {
+            Map<String, Boolean> added = new HashMap<>(); //to prevent same cs being added to trial twice, e.g. in case of AAB+
+            for (String cueName : trialType.cueNames) {
                 if(!added.containsKey(cueName)) {
                     cuesPresent.add(csMap.get(cueName));
                     added.put(cueName, true);
@@ -107,9 +107,9 @@ public class PhaseParser {
             return contextStimList;
         }
 
-        private CompoundStimulus createCompoundStimulus(char[] compoundedNames){
+        private CompoundStimulus createCompoundStimulus(String[] compoundedNames){
             List<Stimulus> compoundedStims = new ArrayList<>();
-            for(char cueName : compoundedNames){
+            for(String cueName : compoundedNames){
                 compoundedStims.add(csMap.get(cueName));
             }
             return new CompoundStimulus(compoundedStims);

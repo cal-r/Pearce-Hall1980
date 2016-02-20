@@ -7,9 +7,9 @@ import java.io.Serializable;
  */
 public abstract class CsParameter extends Parameter implements Serializable {
 
-    public char CueName;
+    public String CueName;
 
-    public CsParameter(char cueName, String name) {
+    public CsParameter(String cueName, String name) {
         super(name);
         CueName = cueName;
     }

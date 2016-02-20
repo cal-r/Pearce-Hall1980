@@ -8,7 +8,7 @@ import java.io.Serializable;
  * Created by Rokas on 05/11/2015.
  */
 public class SalienceExcitatoryParameter extends CsParameter implements Serializable {
-    public SalienceExcitatoryParameter(char cue) {
+    public SalienceExcitatoryParameter(String cue) {
         super(cue, ParameterNamingConstants.SALIENCE_EXCITATORY);
     }
 }

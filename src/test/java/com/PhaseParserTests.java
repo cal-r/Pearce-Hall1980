@@ -1,5 +1,6 @@
 package com;
 
+import Helpers.ListCaster;
 import Helpers.ModelBuilding.PhaseParser;
 import Helpers.ModelBuilding.PhaseStringTokenizer;
 import Models.SimulatorSettings;
@@ -20,13 +21,13 @@ public class PhaseParserTests extends junit.framework.TestCase {
     public void testParsePhase1() throws Exception {
 
         PhaseStringTokenizer.TrialTypeTokens trialTypeTokens = new PhaseStringTokenizer.TrialTypeTokens();
-        trialTypeTokens.cueNames = "A".toCharArray();
+        trialTypeTokens.cueNames = ListCaster.toStringArray("A");
         trialTypeTokens.numberOfTrials = 2;
         trialTypeTokens.reinforcer = '+';
         ArrayList<PhaseStringTokenizer.TrialTypeTokens> tokensArrayList = new ArrayList<>();
         tokensArrayList.add(trialTypeTokens);
         CsParameterPool cspPool = createCsParameterPool(trialTypeTokens.cueNames);
-        Map<Character, ConditionalStimulus> csMap = getCsMap(trialTypeTokens.cueNames, cspPool);
+        Map<String, ConditionalStimulus> csMap = getCsMap(trialTypeTokens.cueNames, cspPool);
         GroupPhase groupPhase = PhaseParser.ParsePhase(tokensArrayList, csMap, 0, getTestSettings(), null, 0);
 
         assertTrue(groupPhase != null);
@@ -38,14 +39,14 @@ public class PhaseParserTests extends junit.framework.TestCase {
     @org.junit.Test
     public void testParsePhase2() throws Exception {
         PhaseStringTokenizer.TrialTypeTokens trialTypeTokens = new PhaseStringTokenizer.TrialTypeTokens();
-        trialTypeTokens.cueNames = "AB".toCharArray();
+        trialTypeTokens.cueNames = ListCaster.toStringArray("AB");
         trialTypeTokens.numberOfTrials = 2;
         trialTypeTokens.reinforcer = '+';
         ArrayList<PhaseStringTokenizer.TrialTypeTokens> tokensArrayList = new ArrayList<>();
         tokensArrayList.add(trialTypeTokens);
 
         CsParameterPool cspPool = createCsParameterPool(trialTypeTokens.cueNames);
-        Map<Character, ConditionalStimulus> csMap = getCsMap(trialTypeTokens.cueNames, cspPool);
+        Map<String, ConditionalStimulus> csMap = getCsMap(trialTypeTokens.cueNames, cspPool);
         GroupPhase groupPhase = PhaseParser.ParsePhase(tokensArrayList, csMap, 0, getTestSettings(), null, 0);
 
         assertTrue(groupPhase != null);
@@ -57,14 +58,14 @@ public class PhaseParserTests extends junit.framework.TestCase {
     @org.junit.Test
     public void testParsePhase3() throws Exception {
         PhaseStringTokenizer.TrialTypeTokens trialTypeTokens = new PhaseStringTokenizer.TrialTypeTokens();
-        trialTypeTokens.cueNames = "AB".toCharArray();
+        trialTypeTokens.cueNames = ListCaster.toStringArray("AB");
         trialTypeTokens.numberOfTrials = 1;
         trialTypeTokens.reinforcer = '-';
         ArrayList<PhaseStringTokenizer.TrialTypeTokens> tokensArrayList = new ArrayList<>();
         tokensArrayList.add(trialTypeTokens);
 
         CsParameterPool cspPool = createCsParameterPool(trialTypeTokens.cueNames);
-        Map<Character, ConditionalStimulus> csMap = getCsMap(trialTypeTokens.cueNames, cspPool);
+        Map<String, ConditionalStimulus> csMap = getCsMap(trialTypeTokens.cueNames, cspPool);
         GroupPhase groupPhase = PhaseParser.ParsePhase(tokensArrayList, csMap, 0, getTestSettings(), null, 0);
 
         assertTrue(groupPhase != null);
@@ -76,12 +77,12 @@ public class PhaseParserTests extends junit.framework.TestCase {
     public void testParsePhase4() throws Exception {
 
         PhaseStringTokenizer.TrialTypeTokens trialTypeTokens = new PhaseStringTokenizer.TrialTypeTokens();
-        trialTypeTokens.cueNames = "AB".toCharArray();
+        trialTypeTokens.cueNames = ListCaster.toStringArray("AB");
         trialTypeTokens.numberOfTrials = 2;
         trialTypeTokens.reinforcer = '+';
 
         PhaseStringTokenizer.TrialTypeTokens trialTypeTokens2 = new PhaseStringTokenizer.TrialTypeTokens();
-        trialTypeTokens2.cueNames = "A".toCharArray();
+        trialTypeTokens2.cueNames = ListCaster.toStringArray("A");
         trialTypeTokens2.numberOfTrials = 1;
         trialTypeTokens2.reinforcer = '-';
 
@@ -90,7 +91,7 @@ public class PhaseParserTests extends junit.framework.TestCase {
         tokensArrayList.add(trialTypeTokens2);
 
         CsParameterPool cspPool = createCsParameterPool(trialTypeTokens.cueNames);
-        Map<Character, ConditionalStimulus> csMap = getCsMap(trialTypeTokens.cueNames, cspPool);
+        Map<String, ConditionalStimulus> csMap = getCsMap(trialTypeTokens.cueNames, cspPool);
         GroupPhase groupPhase = PhaseParser.ParsePhase(tokensArrayList, csMap, 0, getTestSettings(), null, 0);
 
         assertTrue(groupPhase != null);
@@ -106,7 +107,7 @@ public class PhaseParserTests extends junit.framework.TestCase {
     public void testParsePhase5() throws Exception {
 
         PhaseStringTokenizer.TrialTypeTokens trialTypeTokens = new PhaseStringTokenizer.TrialTypeTokens();
-        trialTypeTokens.cueNames = "AAA".toCharArray();
+        trialTypeTokens.cueNames = ListCaster.toStringArray("AAA");
         trialTypeTokens.numberOfTrials = 2;
         trialTypeTokens.reinforcer = '+';
 
@@ -114,7 +115,7 @@ public class PhaseParserTests extends junit.framework.TestCase {
         tokensArrayList.add(trialTypeTokens);
 
         CsParameterPool cspPool = createCsParameterPool(trialTypeTokens.cueNames);
-        Map<Character, ConditionalStimulus> csMap = getCsMap(trialTypeTokens.cueNames, cspPool);
+        Map<String, ConditionalStimulus> csMap = getCsMap(trialTypeTokens.cueNames, cspPool);
         GroupPhase groupPhase = PhaseParser.ParsePhase(tokensArrayList, csMap, 0, getTestSettings(), null, 0);
 
         assertTrue(groupPhase != null);
@@ -127,12 +128,12 @@ public class PhaseParserTests extends junit.framework.TestCase {
     public void testParsePhase6() throws Exception {
 
         PhaseStringTokenizer.TrialTypeTokens trialTypeTokens = new PhaseStringTokenizer.TrialTypeTokens();
-        trialTypeTokens.cueNames = "AB".toCharArray();
+        trialTypeTokens.cueNames = ListCaster.toStringArray("AB");
         trialTypeTokens.numberOfTrials = 2;
         trialTypeTokens.reinforcer = '+';
 
         PhaseStringTokenizer.TrialTypeTokens trialTypeTokens2 = new PhaseStringTokenizer.TrialTypeTokens();
-        trialTypeTokens2.cueNames = "A".toCharArray();
+        trialTypeTokens2.cueNames = ListCaster.toStringArray("A");
         trialTypeTokens2.numberOfTrials = 1;
         trialTypeTokens2.reinforcer = '-';
 
@@ -141,7 +142,7 @@ public class PhaseParserTests extends junit.framework.TestCase {
         tokensArrayList.add(trialTypeTokens2);
 
         CsParameterPool cspPool = createCsParameterPool(trialTypeTokens.cueNames);
-        Map<Character, ConditionalStimulus> csMap = getCsMap(trialTypeTokens.cueNames, cspPool);
+        Map<String, ConditionalStimulus> csMap = getCsMap(trialTypeTokens.cueNames, cspPool);
         GroupPhase groupPhase = PhaseParser.ParsePhase(tokensArrayList, csMap, 0, getTestSettings(), null, 0);
 
         ConditionalStimulus csA_T1 = (ConditionalStimulus)groupPhase.trials.get(0).cuesPresent.get(0);
@@ -149,17 +150,17 @@ public class PhaseParserTests extends junit.framework.TestCase {
         assertEquals(csA_T1, csA_T2);
     }
 
-    private CsParameterPool createCsParameterPool(char[] cueNames){
+    private CsParameterPool createCsParameterPool(String[] cueNames){
         CsParameterPool pool = new CsParameterPool();
-        for(char cueName : cueNames){
+        for(String cueName : cueNames){
             pool.createParameters(cueName);
         }
         return pool;
     }
 
-    private Map<Character, ConditionalStimulus> getCsMap(char[] cueNames, CsParameterPool csParameterPool){
-        Map<Character, ConditionalStimulus> csMap = new HashMap<>();
-        for(char cueName : cueNames){
+    private Map<String, ConditionalStimulus> getCsMap(String[] cueNames, CsParameterPool csParameterPool){
+        Map<String, ConditionalStimulus> csMap = new HashMap<>();
+        for(String cueName : cueNames){
             csMap.put(cueName, new ConditionalStimulus(
                     cueName,
                     csParameterPool.getInitialAlpha(cueName),

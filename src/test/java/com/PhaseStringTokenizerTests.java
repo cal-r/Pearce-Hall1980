@@ -21,7 +21,7 @@ public class PhaseStringTokenizerTests extends junit.framework.TestCase {
         assertTrue(tokens.get(0).numberOfTrials == 2);
         assertTrue(tokens.get(0).reinforcer == '+');
         assertTrue(tokens.get(0).cueNames.length==1);
-        assertTrue(tokens.get(0).cueNames[0]=='A');
+        assertTrue(tokens.get(0).cueNames[0].equals("A"));
     }
 
     @Test
@@ -32,8 +32,8 @@ public class PhaseStringTokenizerTests extends junit.framework.TestCase {
         assertTrue(tokens.get(0).numberOfTrials == 2);
         assertTrue(tokens.get(0).reinforcer == '+');
         assertTrue(tokens.get(0).cueNames.length==2);
-        assertTrue(tokens.get(0).cueNames[0]=='A');
-        assertTrue(tokens.get(0).cueNames[1]=='B');
+        assertTrue(tokens.get(0).cueNames[0].equals("A"));
+        assertTrue(tokens.get(0).cueNames[1].equals("B"));
     }
 
     @Test
@@ -44,8 +44,8 @@ public class PhaseStringTokenizerTests extends junit.framework.TestCase {
         assertTrue(tokens.get(0).numberOfTrials == 1);
         assertTrue(tokens.get(0).reinforcer == '-');
         assertTrue(tokens.get(0).cueNames.length==2);
-        assertTrue(tokens.get(0).cueNames[0]=='A');
-        assertTrue(tokens.get(0).cueNames[1]=='B');
+        assertTrue(tokens.get(0).cueNames[0].equals("A"));
+        assertTrue(tokens.get(0).cueNames[1].equals("B"));
     }
 
     @Test
@@ -56,13 +56,13 @@ public class PhaseStringTokenizerTests extends junit.framework.TestCase {
         assertTrue(tokens.get(0).numberOfTrials == 2);
         assertTrue(tokens.get(0).reinforcer == '+');
         assertTrue(tokens.get(0).cueNames.length==2);
-        assertTrue(tokens.get(0).cueNames[0]=='A');
-        assertTrue(tokens.get(0).cueNames[1]=='B');
+        assertTrue(tokens.get(0).cueNames[0].equals("A"));
+        assertTrue(tokens.get(0).cueNames[1].equals("B"));
 
         assertTrue(tokens.get(1).numberOfTrials == 1);
         assertTrue(tokens.get(1).reinforcer == '-');
         assertTrue(tokens.get(1).cueNames.length==1);
-        assertTrue(tokens.get(1).cueNames[0]=='A');
+        assertTrue(tokens.get(1).cueNames[0].equals("A"));
     }
 
     @Test
@@ -73,26 +73,26 @@ public class PhaseStringTokenizerTests extends junit.framework.TestCase {
         assertTrue(tokens.get(0).numberOfTrials == 60);
         assertTrue(tokens.get(0).reinforcer == '+');
         assertTrue(tokens.get(0).cueNames.length==2);
-        assertTrue(tokens.get(0).cueNames[0]=='A');
-        assertTrue(tokens.get(0).cueNames[1]=='X');
+        assertTrue(tokens.get(0).cueNames[0].equals("A"));
+        assertTrue(tokens.get(0).cueNames[1].equals("X"));
 
         assertTrue(tokens.get(1).numberOfTrials == 60);
         assertTrue(tokens.get(1).reinforcer == '-');
         assertTrue(tokens.get(1).cueNames.length==2);
-        assertTrue(tokens.get(1).cueNames[0]=='A');
-        assertTrue(tokens.get(1).cueNames[1]=='Y');
+        assertTrue(tokens.get(1).cueNames[0].equals("A"));
+        assertTrue(tokens.get(1).cueNames[1].equals("Y"));
 
         assertTrue(tokens.get(2).numberOfTrials == 69);
         assertTrue(tokens.get(2).reinforcer == '-');
         assertTrue(tokens.get(2).cueNames.length==2);
-        assertTrue(tokens.get(2).cueNames[0]=='B');
-        assertTrue(tokens.get(2).cueNames[1]=='X');
+        assertTrue(tokens.get(2).cueNames[0].equals("B"));
+        assertTrue(tokens.get(2).cueNames[1].equals("X"));
 
         assertTrue(tokens.get(3).numberOfTrials == 60);
         assertTrue(tokens.get(3).reinforcer == '+');
         assertTrue(tokens.get(3).cueNames.length==2);
-        assertTrue(tokens.get(3).cueNames[0]=='B');
-        assertTrue(tokens.get(3).cueNames[1]=='Y');
+        assertTrue(tokens.get(3).cueNames[0].equals("B"));
+        assertTrue(tokens.get(3).cueNames[1].equals("Y"));
     }
 
     @Test

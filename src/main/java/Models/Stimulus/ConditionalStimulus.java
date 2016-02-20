@@ -15,7 +15,7 @@ public class ConditionalStimulus implements Serializable, Stimulus {
     public SalienceExcitatoryParameter SalienceExcitatoryParameter;
     public SalienceInhibitoryParameter SalienceInhibitoryParameter;
 
-    private char name;
+    private String name;
 
     private double associationInhibitory;
     private double associationExcitatory;
@@ -23,7 +23,7 @@ public class ConditionalStimulus implements Serializable, Stimulus {
     private boolean alphaSet;
     private double alpha;
 
-    public ConditionalStimulus(char name, InitialAlphaParameter initialAlphaParameter, SalienceExcitatoryParameter salienceExcitatoryParameter, SalienceInhibitoryParameter salienceInhibitoryParameter){
+    public ConditionalStimulus(String name, InitialAlphaParameter initialAlphaParameter, SalienceExcitatoryParameter salienceExcitatoryParameter, SalienceInhibitoryParameter salienceInhibitoryParameter){
         this.name = name;
         setInitialValues();
         InitialAlphaParameter = initialAlphaParameter;
@@ -31,7 +31,7 @@ public class ConditionalStimulus implements Serializable, Stimulus {
         SalienceInhibitoryParameter = salienceInhibitoryParameter;
     }
 
-    public ConditionalStimulus(char name, InitialAlphaParameter initialAlphaParameter,
+    public ConditionalStimulus(String name, InitialAlphaParameter initialAlphaParameter,
                                SalienceExcitatoryParameter salienceExcitatoryParameter,
                                SalienceInhibitoryParameter salienceInhibitoryParameter,
                                double associationExcitatory,

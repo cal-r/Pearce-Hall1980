@@ -9,20 +9,11 @@ import Models.Parameters.SalienceInhibitoryParameter;
  */
 public class ContextStimulus extends ConditionalStimulus {
 
-    private String name;
-
     public ContextStimulus(String name, Models.Parameters.InitialAlphaParameter initialAlphaParameter, Models.Parameters.SalienceExcitatoryParameter salienceExcitatoryParameter, Models.Parameters.SalienceInhibitoryParameter salienceInhibitoryParameter) {
-        super('_', initialAlphaParameter, salienceExcitatoryParameter, salienceInhibitoryParameter);
-        this.name = name;
+        super(name, initialAlphaParameter, salienceExcitatoryParameter, salienceInhibitoryParameter);
     }
 
     public ContextStimulus(String name, Models.Parameters.InitialAlphaParameter initialAlphaParameter, Models.Parameters.SalienceExcitatoryParameter salienceExcitatoryParameter, Models.Parameters.SalienceInhibitoryParameter salienceInhibitoryParameter, double associationExcitatory, double associationInhibitory, double alpha) {
-        super('_', initialAlphaParameter, salienceExcitatoryParameter, salienceInhibitoryParameter, associationExcitatory, associationInhibitory, alpha);
-        this.name = name;
-    }
-
-    @Override
-    public String getName() {
-        return name;
+        super(name, initialAlphaParameter, salienceExcitatoryParameter, salienceInhibitoryParameter, associationExcitatory, associationInhibitory, alpha);
     }
 }

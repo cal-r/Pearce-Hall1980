@@ -11,13 +11,13 @@ import _from_RW_simulator.ContextConfig;
  */
 public class ContextBuilder {
     public static ContextStimulus buildContext(ContextConfig config){
-        InitialAlphaParameter initialAlphaParameter = new InitialAlphaParameter('_');
+        InitialAlphaParameter initialAlphaParameter = new InitialAlphaParameter(config.getSymbol());
         initialAlphaParameter.setValue(config.getAlpha());
 
-        SalienceExcitatoryParameter salienceExcitatoryParameter = new SalienceExcitatoryParameter('_');
+        SalienceExcitatoryParameter salienceExcitatoryParameter = new SalienceExcitatoryParameter(config.getSymbol());
         salienceExcitatoryParameter.setValue(config.getSe());
 
-        SalienceInhibitoryParameter salienceInhibitoryParameter = new SalienceInhibitoryParameter('_');
+        SalienceInhibitoryParameter salienceInhibitoryParameter = new SalienceInhibitoryParameter(config.getSymbol());
         salienceInhibitoryParameter.setValue(config.getSi());
 
         return new ContextStimulus(

@@ -1,6 +1,7 @@
 package com;
 
 import Constants.DefaultValuesConstants;
+import Helpers.ListCaster;
 import Models.Stimulus.ConditionalStimulus;
 import Models.GroupPhase;
 import Models.History.ConditionalStimulusState;
@@ -80,7 +81,7 @@ public class PhaseTests extends junit.framework.TestCase {
             assertTrue(hist.getState(stimName, 80).Vnet > 0.2);
             assertTrue(hist.getState(stimName, 80).Vnet < 0.5);
             assertTrue(((ConditionalStimulusState)hist.getState(stimName, 20)).Ve < 0.33);
-            assertTrue(((ConditionalStimulusState)hist.getState(stimName, 20)).Vi < 0.1);
+            assertTrue(((ConditionalStimulusState) hist.getState(stimName, 20)).Vi < 0.1);
         }
     }
 
@@ -113,17 +114,17 @@ public class PhaseTests extends junit.framework.TestCase {
     //40AB+/40AB-
     private static GroupPhase CreatePhase40(boolean usPresent1, boolean usPresent2, boolean isRandom){
         GroupPhase groupPhase = new GroupPhase(1);
-        HashMap<Character, ConditionalStimulus> phaseCues = TrialTests.createCsMap("AB".toCharArray());
+        HashMap<String, ConditionalStimulus> phaseCues = TrialTests.createCsMap(ListCaster.toStringArray("AB"));
         groupPhase.addTrials(createTrialType(phaseCues, "AB", 40, usPresent1));
         groupPhase.addTrials(createTrialType(phaseCues, "AB", 40, usPresent2));
         groupPhase.setRandom(isRandom);
         return groupPhase;
     }
 
-    private static List<Trial> createTrialType(HashMap<Character, ConditionalStimulus> phaseCues, String presentCSs, int count, boolean usPresent){
+    private static List<Trial> createTrialType(HashMap<String, ConditionalStimulus> phaseCues, String presentCSs, int count, boolean usPresent){
         List<Trial> trialType = new ArrayList<>();
         for(int i=0;i<count;i++){
-            trialType.add(TrialTests.createTrial(phaseCues, presentCSs.toCharArray(), usPresent));
+            trialType.add(TrialTests.createTrial(phaseCues, ListCaster.toStringArray(presentCSs), usPresent));
         }
         return trialType;
     }

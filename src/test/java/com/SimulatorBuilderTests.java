@@ -21,12 +21,12 @@ public class SimulatorBuilderTests extends junit.framework.TestCase {
         tableModel.setValueAt("2AB+", 0, 1);
         Simulator sim = getSimulatorWithTestSettings();
         SimulatorBuilder.initSimulator(tableModel, sim);
-        assertTrue(sim!=null);
+        assertTrue(sim != null);
         assertTrue(sim.getGroups().size() == 1);
         assertTrue(sim.getGroups().get(0).Name == "group name test");
         assertTrue(sim.getCsParameters().size()==2*3);
-        assertTrue(sim.getCsParameters().get(0).CueName == 'A');
-        assertTrue(sim.getCsParameters().get(1).CueName == 'B');
+        assertTrue(sim.getCsParameters().get(0).CueName.equals("A"));
+        assertTrue(sim.getCsParameters().get(1).CueName.equals("B"));
         assertTrue(sim.getGroups().get(0).groupPhases.size()==1);
         assertTrue(sim.getGroups().get(0).groupPhases.get(0).trials.size()==2);
         assertFalse(sim.getGroups().get(0).groupPhases.get(0).isRandom());
@@ -46,8 +46,8 @@ public class SimulatorBuilderTests extends junit.framework.TestCase {
         assertTrue(sim.getGroups().size() == 1);
         assertTrue(sim.getGroups().get(0).Name == "group name test");
         assertTrue(sim.getCsParameters().size() == 2 * 3);
-        assertTrue(sim.getCsParameters().get(0).CueName == 'A');
-        assertTrue(sim.getCsParameters().get(1).CueName == 'B');
+        assertTrue(sim.getCsParameters().get(0).CueName.equals("A"));
+        assertTrue(sim.getCsParameters().get(1).CueName.equals("B"));
         assertTrue(sim.getGroups().get(0).groupPhases.size() == 2);
         assertTrue(sim.getGroups().get(0).groupPhases.get(0).trials.size() == 2);
         assertFalse(sim.getGroups().get(0).groupPhases.get(0).isRandom());
@@ -80,8 +80,8 @@ public class SimulatorBuilderTests extends junit.framework.TestCase {
         assertTrue(sim.getGroups().get(0).Name == "group name test");
         assertTrue(sim.getGroups().get(1).Name == "group2 name test");
         assertTrue(sim.getCsParameters().size()==3*3);
-        assertTrue(sim.getCsParameters().get(0).CueName == 'A');
-        assertTrue(sim.getCsParameters().get(1).CueName == 'B');
+        assertTrue(sim.getCsParameters().get(0).CueName.equals("A"));
+        assertTrue(sim.getCsParameters().get(1).CueName.equals("B"));
         //group 1
         assertTrue(sim.getGroups().get(0).groupPhases.size() == 2);
         assertTrue(sim.getGroups().get(0).groupPhases.get(0).trials.size() == 2);

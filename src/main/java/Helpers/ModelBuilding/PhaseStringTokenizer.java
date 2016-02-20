@@ -1,6 +1,7 @@
 package Helpers.ModelBuilding;
 
 import Constants.GuiStringConstants;
+import Helpers.ListCaster;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,8 +58,8 @@ public class PhaseStringTokenizer {
         return Integer.parseInt(str);
     }
 
-    private static char[] getCueNames(Matcher matcher){
-        return matcher.group(2).toCharArray();
+    private static String[] getCueNames(Matcher matcher){
+        return ListCaster.toStringArray(matcher.group(2).toCharArray());
     }
 
     private static char getReinforcer(Matcher matcher){
@@ -86,11 +87,11 @@ public class PhaseStringTokenizer {
 
     public static class TrialTypeTokens {
         public int numberOfTrials;
-        public char[] cueNames;
+        public String[] cueNames;
         public char reinforcer;
         public TrialTypeTokens(){
             numberOfTrials = 0;
-            cueNames = new char[0];
+            cueNames = new String[0];
         }
     }
 }

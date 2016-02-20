@@ -38,7 +38,7 @@ public class SimulatorBuilder {
         private CsParameterPool csParameterPool;
 
         private SimulatorSettings settings;
-        private Map<Character, ConditionalStimulus> csMap;
+        private Map<String, ConditionalStimulus> csMap;
         private List<GroupPhase> groupPhases;
         private TrialTableModel tableModel;
 
@@ -87,7 +87,7 @@ public class SimulatorBuilder {
 
         private void updateCsMaps(List<PhaseStringTokenizer.TrialTypeTokens> phaseTokens){
             for(PhaseStringTokenizer.TrialTypeTokens trialTypeTokens : phaseTokens){
-                for(char cueName : trialTypeTokens.cueNames){
+                for(String cueName : trialTypeTokens.cueNames){
                     if(!csParameterPool.contains(cueName)){
                         csParameterPool.createParameters(cueName);
                     }
@@ -98,7 +98,7 @@ public class SimulatorBuilder {
             }
         }
 
-        private ConditionalStimulus createCs(char cueName){
+        private ConditionalStimulus createCs(String cueName){
             return new ConditionalStimulus(
                     cueName,
                     csParameterPool.getInitialAlpha(cueName),
