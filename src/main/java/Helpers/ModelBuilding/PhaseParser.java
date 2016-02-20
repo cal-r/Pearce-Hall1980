@@ -6,7 +6,8 @@ import Models.Stimulus.ConditionalStimulus;
 import Models.GroupPhase;
 import Models.Stimulus.ContextStimulus;
 import Models.Stimulus.Stimulus;
-import Models.Trial;
+import Models.Trail.LearningPeriod;
+import Models.Trail.Trial;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,11 +31,7 @@ public class PhaseParser {
         GroupPhase groupPhase = new GroupPhase(phaseId);
 
         for(PhaseStringTokenizer.TrialTypeTokens trialType : trialTypeTokensList){
-            List<Trial> newTrials =trialTypeParser.getTrials(trialType);
-            if (settings.ContextSimulation) {
-                trialTypeParser.insertContextTrials(newTrials, trialTypeParser.getUsPresent(trialType));
-            }
-            groupPhase.addTrials(newTrials);
+            groupPhase.addTrials(trialTypeParser.getTrials(trialType));
         }
 
         return groupPhase;
@@ -57,25 +54,23 @@ public class PhaseParser {
         private List<Trial> getTrials (PhaseStringTokenizer.TrialTypeTokens trialType){
             List<Trial> trials = new ArrayList<>();
             for (int i = 0; i < trialType.numberOfTrials; i++) {
-                trials.add(new Trial(
-                        getUsPresent(trialType),
-                        getCuesPresent(trialType)));
+                trials.add(createTrial(getUsPresent(trialType), getStims(trialType)));
             }
             return trials;
         }
 
-        private void insertContextTrials(List<Trial> trials, boolean usPresent){
-            int numberOfActiveTrials = trials.size();
-            int contextTrialsAdded = 0;
-            int i = 1;
-            while(contextTrialsAdded < numberOfActiveTrials*itiRatio){
-                for(int j=0;j<itiRatio;j++){
-                    trials.add(i, new Trial(usPresent, getContextStimList()));
-                    contextTrialsAdded++;
+        private Trial createTrial(boolean usPresent, List<Stimulus> cues){
+            List<LearningPeriod> learningPeriods = new ArrayList<>();
+
+            if(settings.ContextSimulation){
+                for(int i=0;i<itiRatio;i++) {
+                    learningPeriods.add(new LearningPeriod(usPresent, getContextStimList()));
                 }
-                i = i + itiRatio + 1;
             }
 
+            learningPeriods.add(new LearningPeriod(usPresent, cues));
+
+            return new Trial(learningPeriods);
         }
 
         private boolean getUsPresent(PhaseStringTokenizer.TrialTypeTokens trialType) {
@@ -85,7 +80,7 @@ public class PhaseParser {
             return false;
         }
 
-        private List<Stimulus> getCuesPresent(PhaseStringTokenizer.TrialTypeTokens trialType) {
+        private List<Stimulus> getStims(PhaseStringTokenizer.TrialTypeTokens trialType) {
             List<Stimulus> cuesPresent = new ArrayList<>();
             Map<String, Boolean> added = new HashMap<>(); //to prevent same cs being added to trial twice, e.g. in case of AAB+
             for (String cueName : trialType.cueNames) {

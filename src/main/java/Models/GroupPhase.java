@@ -8,6 +8,7 @@ import Models.History.GroupPhaseHistory;
 import Models.Parameters.GammaParameter;
 import Models.Stimulus.ConditionalStimulus;
 import Models.Stimulus.Stimulus;
+import Models.Trail.Trial;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -48,7 +49,7 @@ public class GroupPhase implements Serializable {
             Trial trial = trials.get(i);
             //The algorithm runs AFTER the trial finishes and gives the predictive value for the following trial.
             history.recordState(stimsMap.values());
-            trial.simulate(calcVNet(), gamma.getValue());
+            trial.simulate(this, gamma.getValue());
         }
         return history;
     }
@@ -64,7 +65,7 @@ public class GroupPhase implements Serializable {
             for (int trialNo = 0; trialNo < trials.size(); trialNo++) {
                 Trial trial = trials.get(randomArray[trialNo]);
                 history.recordState(stimsMap.values());
-                trial.simulate(calcVNet(), gamma.getValue());
+                trial.simulate(this, gamma.getValue());
             }
             tempHistories.add(history);
         }
@@ -117,7 +118,7 @@ public class GroupPhase implements Serializable {
         return copies;
     }
 
-    private double calcVNet(){
+    public double calcVNetValue(){
         double vNet = 0;
         for(ConditionalStimulus cs : getPhaseCues()){
             vNet += cs.getAssociationNet();
@@ -135,7 +136,7 @@ public class GroupPhase implements Serializable {
     }
 
     private void updateStimsMap(Trial trial){
-        for(Stimulus stim : trial.cuesPresent){
+        for(Stimulus stim : trial.getStims()){
             if(!stimsMap.containsKey(stim.getName())){
                 stimsMap.put(stim.getName(), stim);
             }

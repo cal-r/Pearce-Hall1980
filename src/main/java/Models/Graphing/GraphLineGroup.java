@@ -2,10 +2,7 @@ package Models.Graphing;
 
 import Helpers.Graphing.GraphStringsHelper;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Rokas on 21/01/2016.
@@ -26,8 +23,10 @@ public class GraphLineGroup implements Comparable<GraphLineGroup> {
         line.setGroup(this);
     }
 
-    public List<GraphLine> getLines(){
-        return  new ArrayList<>(linesMap.values());
+    public List<GraphLine> getLines() {
+        List<GraphLine> lines = new ArrayList<>(linesMap.values());
+        Collections.sort(lines);
+        return lines;
     }
 
     public void setVisible(String command, boolean visible){

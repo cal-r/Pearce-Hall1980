@@ -19,7 +19,20 @@ public class StimulusOrderingHelper {
                 }
             }
         }
-        orderedNames.addAll(stimNamesList);
+
+        //order remainder by lenght
+        int len = 0;
+        List<String> stimNamesRemainderList = new ArrayList<>(stimNamesList);
+        while(!stimNamesRemainderList.isEmpty()){
+            for(String name : stimNamesList){
+                if(name.length()==len) {
+                    orderedNames.add(name);
+                    stimNamesRemainderList.remove(name);
+                }
+            }
+            len++;
+        }
+
         return orderedNames;
     }
 }
