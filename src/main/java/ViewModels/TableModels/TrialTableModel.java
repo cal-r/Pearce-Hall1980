@@ -131,6 +131,14 @@ public class TrialTableModel extends BaseTableModel implements Serializable {
         return configs;
     }
 
+    public List<Integer> getItiRatios(int gi) {
+        List<Integer> ratios = new ArrayList<>();
+        for(int p=1;p<=getPhaseCount();p++) {
+            ratios.add((int) getValueAt(gi, getColId(p, 4)));
+        }
+        return ratios;
+    }
+
     private void setPhaseDescriptions(List<String> descriptions, int groupId){
         for(int p=1;p<=getPhaseCount();p++) {
             setValueAt(descriptions.get(p - 1), groupId, getColId(p, 1));

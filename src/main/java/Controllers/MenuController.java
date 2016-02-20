@@ -26,7 +26,7 @@ public class MenuController implements ActionListener {
     public MenuController(MainWindowController mainWindowController) {
         this.mainWindowController = mainWindowController;
         initMenuBar();
-        setSettings(mainWindowController.getSimulator().getSimulatorSettings());
+        setSettings(mainWindowController.getSimulator().getSettings());
     }
 
     //init stuff

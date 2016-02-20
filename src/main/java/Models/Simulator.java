@@ -88,7 +88,7 @@ public class Simulator implements Serializable{
         return simulationHistory;
     }
 
-    public SimulatorSettings getSimulatorSettings(){
+    public SimulatorSettings getSettings(){
         return settings;
     }
 }

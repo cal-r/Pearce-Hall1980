@@ -4,6 +4,7 @@ import Models.SimulatorSettings;
 import Models.Stimulus.CompoundStimulus;
 import Models.Stimulus.ConditionalStimulus;
 import Models.GroupPhase;
+import Models.Stimulus.ContextStimulus;
 import Models.Stimulus.Stimulus;
 import Models.Trial;
 
@@ -17,15 +18,23 @@ import java.util.Map;
  */
 public class PhaseParser {
 
-    public static GroupPhase ParsePhase(List<PhaseStringTokenizer.TrialTypeTokens> trialTypeTokensList, Map<Character, ConditionalStimulus> csMap, int phaseId, SimulatorSettings settings) {
+    public static GroupPhase ParsePhase(List<PhaseStringTokenizer.TrialTypeTokens> trialTypeTokensList,
+                                        Map<Character, ConditionalStimulus> csMap,
+                                        int phaseId,
+                                        SimulatorSettings settings,
+                                        ContextStimulus context,
+                                        Integer itiRatio) {
 
-        TrialTypeParser trialTypeParser = new TrialTypeParser(csMap, settings);
+        TrialTypeParser trialTypeParser = new TrialTypeParser(csMap, settings, context, itiRatio);
 
         GroupPhase groupPhase = new GroupPhase(phaseId);
 
         for(PhaseStringTokenizer.TrialTypeTokens trialType : trialTypeTokensList){
             List<Trial> newTrials =trialTypeParser.getTrials(trialType);
-            groupPhase.addTrialType(newTrials);
+            if(settings.ContextSimulation){
+                trialTypeParser.insertContextTrials(newTrials);
+            }
+            groupPhase.addTrials(newTrials);
         }
 
         return groupPhase;
@@ -35,24 +44,40 @@ public class PhaseParser {
 
         private Map<Character, ConditionalStimulus> csMap;
         private SimulatorSettings settings;
+        private ContextStimulus context;
+        private int itiRatio;
 
-        private TrialTypeParser(Map < Character, ConditionalStimulus > csMap, SimulatorSettings settings) {
+        private TrialTypeParser(Map<Character, ConditionalStimulus> csMap, SimulatorSettings settings, ContextStimulus context, Integer itiRatio) {
             this.csMap = csMap;
             this.settings = settings;
+            this.context = context;
+            this.itiRatio = itiRatio;
         }
 
         private List<Trial> getTrials (PhaseStringTokenizer.TrialTypeTokens trialType){
             List<Trial> trials = new ArrayList<>();
-
-            Trial trial = new Trial(
-                    getUsPresent(trialType),
-                    getCuesPresent(trialType));
-
             for (int i = 0; i < trialType.numberOfTrials; i++) {
-                trials.add(trial);
+                trials.add(new Trial(
+                        getUsPresent(trialType),
+                        getCuesPresent(trialType)));
+            }
+            return trials;
+        }
+
+        private void insertContextTrials(List<Trial> trials){
+            int numberOfActiveTrials = trials.size();
+            int contextTrialsAdded = 0;
+            boolean usPresent = trials.get(0).usPresent;
+
+            int i = 1;
+            while(contextTrialsAdded < numberOfActiveTrials*itiRatio){
+                for(int j=0;j<itiRatio;j++){
+                    trials.add(i, new Trial(usPresent, getContextStimList()));
+                    contextTrialsAdded++;
+                }
+                i = i + itiRatio + 1;
             }
 
-            return trials;
         }
 
         private boolean getUsPresent(PhaseStringTokenizer.TrialTypeTokens trialType) {
@@ -76,6 +101,12 @@ public class PhaseParser {
             }
 
             return cuesPresent;
+        }
+
+        private List<Stimulus> getContextStimList(){
+            List<Stimulus> contextStimList = new ArrayList<>();
+            contextStimList.add(context);
+            return contextStimList;
         }
 
         private CompoundStimulus createCompoundStimulus(char[] compoundedNames){

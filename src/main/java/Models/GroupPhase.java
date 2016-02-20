@@ -89,10 +89,11 @@ public class GroupPhase implements Serializable {
         history.setIsRandom(isRandom());
     }
 
-    public void addTrialType(List<Trial> trailType) { //all trials in the param are the same (e.g. 'AB+')
-        trials.addAll(trailType);
-        Trial firstOfTheType = trailType.get(0);
-        updateStimsMap(firstOfTheType);
+    public void addTrials(List<Trial> trials) {
+        this.trials.addAll(trials);
+        for(Trial trial : trials) {
+            updateStimsMap(trial);
+        }
     }
 
     public void reset(){

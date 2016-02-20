@@ -27,7 +27,7 @@ public class PhaseParserTests extends junit.framework.TestCase {
         tokensArrayList.add(trialTypeTokens);
         CsParameterPool cspPool = createCsParameterPool(trialTypeTokens.cueNames);
         Map<Character, ConditionalStimulus> csMap = getCsMap(trialTypeTokens.cueNames, cspPool);
-        GroupPhase groupPhase = PhaseParser.ParsePhase(tokensArrayList, csMap, 0, new SimulatorSettings());
+        GroupPhase groupPhase = PhaseParser.ParsePhase(tokensArrayList, csMap, 0, getTestSettings(), null, 0);
 
         assertTrue(groupPhase != null);
         assertTrue(groupPhase.trials.size() == 2);
@@ -46,7 +46,7 @@ public class PhaseParserTests extends junit.framework.TestCase {
 
         CsParameterPool cspPool = createCsParameterPool(trialTypeTokens.cueNames);
         Map<Character, ConditionalStimulus> csMap = getCsMap(trialTypeTokens.cueNames, cspPool);
-        GroupPhase groupPhase = PhaseParser.ParsePhase(tokensArrayList, csMap, 0, new SimulatorSettings());
+        GroupPhase groupPhase = PhaseParser.ParsePhase(tokensArrayList, csMap, 0, getTestSettings(), null, 0);
 
         assertTrue(groupPhase != null);
         assertTrue(groupPhase.trials.size() == 2);
@@ -65,7 +65,7 @@ public class PhaseParserTests extends junit.framework.TestCase {
 
         CsParameterPool cspPool = createCsParameterPool(trialTypeTokens.cueNames);
         Map<Character, ConditionalStimulus> csMap = getCsMap(trialTypeTokens.cueNames, cspPool);
-        GroupPhase groupPhase = PhaseParser.ParsePhase(tokensArrayList, csMap, 0, new SimulatorSettings());
+        GroupPhase groupPhase = PhaseParser.ParsePhase(tokensArrayList, csMap, 0, getTestSettings(), null, 0);
 
         assertTrue(groupPhase != null);
         assertTrue(groupPhase.trials.size() == 1);
@@ -91,7 +91,7 @@ public class PhaseParserTests extends junit.framework.TestCase {
 
         CsParameterPool cspPool = createCsParameterPool(trialTypeTokens.cueNames);
         Map<Character, ConditionalStimulus> csMap = getCsMap(trialTypeTokens.cueNames, cspPool);
-        GroupPhase groupPhase = PhaseParser.ParsePhase(tokensArrayList, csMap, 0, new SimulatorSettings());
+        GroupPhase groupPhase = PhaseParser.ParsePhase(tokensArrayList, csMap, 0, getTestSettings(), null, 0);
 
         assertTrue(groupPhase != null);
         assertTrue(groupPhase.trials.size() == 3);
@@ -115,7 +115,7 @@ public class PhaseParserTests extends junit.framework.TestCase {
 
         CsParameterPool cspPool = createCsParameterPool(trialTypeTokens.cueNames);
         Map<Character, ConditionalStimulus> csMap = getCsMap(trialTypeTokens.cueNames, cspPool);
-        GroupPhase groupPhase = PhaseParser.ParsePhase(tokensArrayList, csMap, 0, new SimulatorSettings());
+        GroupPhase groupPhase = PhaseParser.ParsePhase(tokensArrayList, csMap, 0, getTestSettings(), null, 0);
 
         assertTrue(groupPhase != null);
         assertTrue(groupPhase.trials.size() == 2);
@@ -142,7 +142,7 @@ public class PhaseParserTests extends junit.framework.TestCase {
 
         CsParameterPool cspPool = createCsParameterPool(trialTypeTokens.cueNames);
         Map<Character, ConditionalStimulus> csMap = getCsMap(trialTypeTokens.cueNames, cspPool);
-        GroupPhase groupPhase = PhaseParser.ParsePhase(tokensArrayList, csMap, 0, new SimulatorSettings());
+        GroupPhase groupPhase = PhaseParser.ParsePhase(tokensArrayList, csMap, 0, getTestSettings(), null, 0);
 
         ConditionalStimulus csA_T1 = (ConditionalStimulus)groupPhase.trials.get(0).cuesPresent.get(0);
         ConditionalStimulus csA_T2 = (ConditionalStimulus)groupPhase.trials.get(1).cuesPresent.get(0);
@@ -167,5 +167,12 @@ public class PhaseParserTests extends junit.framework.TestCase {
                     csParameterPool.getSiParamter(cueName)));
         }
         return csMap;
+    }
+
+    private SimulatorSettings getTestSettings(){
+        SimulatorSettings testSettings = new SimulatorSettings();
+        testSettings.CompoundResults = false;
+        testSettings.ContextSimulation = false;
+        return testSettings;
     }
 }

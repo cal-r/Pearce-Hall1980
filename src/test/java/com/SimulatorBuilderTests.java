@@ -1,9 +1,12 @@
 package com;
 
+import Constants.DefaultValuesConstants;
 import Helpers.ModelBuilding.SimulatorBuilder;
 import Models.Stimulus.ConditionalStimulus;
 import Models.Simulator;
+import Models.Stimulus.ContextStimulus;
 import ViewModels.TableModels.TrialTableModel;
+import _from_RW_simulator.ContextConfig;
 import org.junit.Test;
 
 /**
@@ -16,7 +19,7 @@ public class SimulatorBuilderTests extends junit.framework.TestCase {
         TrialTableModel tableModel = new TrialTableModel(false);
         tableModel.setValueAt("group name test", 0, 0);
         tableModel.setValueAt("2AB+", 0, 1);
-        Simulator sim = new Simulator();
+        Simulator sim = getSimulatorWithTestSettings();
         SimulatorBuilder.initSimulator(tableModel, sim);
         assertTrue(sim!=null);
         assertTrue(sim.getGroups().size() == 1);
@@ -37,12 +40,12 @@ public class SimulatorBuilderTests extends junit.framework.TestCase {
         tableModel.addPhase();
         tableModel.setValueAt("5B-", 0, 3);
         tableModel.setValueAt(true, 0, 4);
-        Simulator sim = new Simulator();
+        Simulator sim = getSimulatorWithTestSettings();
         SimulatorBuilder.initSimulator(tableModel, sim);
         assertTrue(sim!=null);
         assertTrue(sim.getGroups().size() == 1);
         assertTrue(sim.getGroups().get(0).Name == "group name test");
-        assertTrue(sim.getCsParameters().size()==2*3);
+        assertTrue(sim.getCsParameters().size() == 2 * 3);
         assertTrue(sim.getCsParameters().get(0).CueName == 'A');
         assertTrue(sim.getCsParameters().get(1).CueName == 'B');
         assertTrue(sim.getGroups().get(0).groupPhases.size() == 2);
@@ -56,7 +59,7 @@ public class SimulatorBuilderTests extends junit.framework.TestCase {
     }
 
     @Test
-    public void testSimBuilder3() throws Exception {
+      public void testSimBuilder3() throws Exception {
         TrialTableModel tableModel = new TrialTableModel(false);
         tableModel.addGroup();
         tableModel.addPhase();
@@ -69,7 +72,7 @@ public class SimulatorBuilderTests extends junit.framework.TestCase {
         tableModel.setValueAt("ABC+", 1, 1);
         tableModel.setValueAt(true, 1, 2);
         tableModel.setValueAt("5B-", 1, 3);
-        Simulator sim = new Simulator();
+        Simulator sim = getSimulatorWithTestSettings();
         SimulatorBuilder.initSimulator(tableModel, sim);
 
         assertTrue(sim != null);
@@ -106,5 +109,50 @@ public class SimulatorBuilderTests extends junit.framework.TestCase {
         assertTrue(csB_fromP1G1.InitialAlphaParameter == csB_fromP1G1.InitialAlphaParameter);
         assertTrue(csB_fromP1G1.SalienceExcitatoryParameter == csB_fromP1G1.SalienceExcitatoryParameter);
         assertTrue(csB_fromP1G1.SalienceInhibitoryParameter == csB_fromP1G1.SalienceInhibitoryParameter);
+    }
+
+    @Test
+    public void testSimBuilder4() throws Exception {
+        //test context
+        Simulator sim = getSimulatorWithTestSettings();
+        sim.getSettings().ContextSimulation = true;
+
+        TrialTableModel tableModel = new TrialTableModel(true);
+        //group 1
+        tableModel.setValueAt("group name test", 0, 0);
+        tableModel.setValueAt("2AB+", 0, 1); //phase description
+        tableModel.setValueAt(false, 0, 2); //random
+        tableModel.setValueAt(new ContextConfig(), 0, 3); //context config
+        tableModel.setValueAt(5, 0, 4); //iti ratio
+
+
+        SimulatorBuilder.initSimulator(tableModel, sim);
+
+        assertTrue(sim != null);
+        assertTrue(sim.getGroups().size() == 1);
+        assertTrue(sim.getGroups().get(0).Name == "group name test");
+
+        //group 1
+        assertTrue(sim.getGroups().get(0).groupPhases.size() == 1);
+        assertFalse(sim.getGroups().get(0).groupPhases.get(0).isRandom());
+        assertTrue(sim.getGroups().get(0).groupPhases.get(0).trials.size() == 12);
+
+        assertTrue(sim.getGroups().get(0).groupPhases.get(0).trials.get(0).cuesPresent.size() == 2);
+        assertTrue(sim.getGroups().get(0).groupPhases.get(0).trials.get(0).cuesPresent.get(0) instanceof ConditionalStimulus);
+        assertTrue(sim.getGroups().get(0).groupPhases.get(0).trials.get(0).cuesPresent.get(0).getName().equals("A"));
+        assertTrue(sim.getGroups().get(0).groupPhases.get(0).trials.get(0).cuesPresent.get(1) instanceof ConditionalStimulus);
+        assertTrue(sim.getGroups().get(0).groupPhases.get(0).trials.get(0).cuesPresent.get(1).getName().equals("B"));
+        for(int i=1;i<6;i++) {
+            assertTrue(sim.getGroups().get(0).groupPhases.get(0).trials.get(i).cuesPresent.size() == 1);
+            assertTrue(sim.getGroups().get(0).groupPhases.get(0).trials.get(i).cuesPresent.get(0) instanceof ContextStimulus);
+            assertTrue(sim.getGroups().get(0).groupPhases.get(0).trials.get(i).cuesPresent.get(0).getName().equals(ContextConfig.Context.PHI.toString()));
+        }
+    }
+
+    private Simulator getSimulatorWithTestSettings(){
+        Simulator testSimulator = new Simulator();
+        testSimulator.getSettings().CompoundResults = false;
+        testSimulator.getSettings().ContextSimulation = false;
+        return testSimulator;
     }
 }

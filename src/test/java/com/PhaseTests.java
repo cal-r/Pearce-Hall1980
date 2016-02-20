@@ -114,8 +114,8 @@ public class PhaseTests extends junit.framework.TestCase {
     private static GroupPhase CreatePhase40(boolean usPresent1, boolean usPresent2, boolean isRandom){
         GroupPhase groupPhase = new GroupPhase(1);
         HashMap<Character, ConditionalStimulus> phaseCues = TrialTests.createCsMap("AB".toCharArray());
-        groupPhase.addTrialType(createTrialType(phaseCues, "AB", 40, usPresent1));
-        groupPhase.addTrialType(createTrialType(phaseCues, "AB", 40, usPresent2));
+        groupPhase.addTrials(createTrialType(phaseCues, "AB", 40, usPresent1));
+        groupPhase.addTrials(createTrialType(phaseCues, "AB", 40, usPresent2));
         groupPhase.setRandom(isRandom);
         return groupPhase;
     }
