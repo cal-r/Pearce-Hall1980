@@ -94,8 +94,9 @@ public class PhaseParser {
                     added.put(cueName, true);
                 }
             }
-            if(settings.CompoundResults && trialType.cueNames.length > 1){
-                cuesPresent.add(createCompoundStimulus(trialType.cueNames));
+            Stimulus compound = createCompoundStimulus(trialType.cueNames);
+            if(compound!=null){
+                cuesPresent.add(compound);
             }
 
             return cuesPresent;
@@ -108,7 +109,14 @@ public class PhaseParser {
         }
 
         private CompoundStimulus createCompoundStimulus(String[] compoundedNames){
+            if(compoundedNames.length < 2 && !settings.ContextSimulation || compoundedNames.length < 1){
+                return null;
+            } 
+
             List<Stimulus> compoundedStims = new ArrayList<>();
+            if(settings.ContextSimulation){
+                compoundedStims.add(context);
+            }
             for(String cueName : compoundedNames){
                 compoundedStims.add(csMap.get(cueName));
             }
