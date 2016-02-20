@@ -10,6 +10,7 @@ import Models.Stimulus.ContextStimulus;
 import ViewModels.TableModels.TrialTableModel;
 import _from_RW_simulator.ContextConfig;
 
+import javax.naming.Context;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -71,7 +72,9 @@ public class SimulatorBuilder {
                 GroupPhase groupPhase;
 
                 if(settings.ContextSimulation) {
-                    ContextStimulus context = ContextBuilder.buildContext(contextConfigs.get(i));
+                    ContextConfig contextConfig = contextConfigs.get(i);
+                    updateCsMap(contextConfig);
+                    ContextStimulus context = (ContextStimulus)csMap.get(contextConfig.getSymbol());
                     groupPhase = PhaseParser.ParsePhase(phaseTokens, csMap, i, settings, context, itiRatios.get(i));
                 }else{
                     groupPhase = PhaseParser.ParsePhase(phaseTokens, csMap, i, settings, null, 0);
@@ -95,6 +98,12 @@ public class SimulatorBuilder {
                         csMap.put(cueName, createCs(cueName));
                     }
                 }
+            }
+        }
+
+        private void updateCsMap(ContextConfig contextConfig){
+            if(!csMap.containsKey(contextConfig.getSymbol())){
+                csMap.put(contextConfig.getSymbol(), ContextBuilder.buildContext(contextConfig));
             }
         }
 
