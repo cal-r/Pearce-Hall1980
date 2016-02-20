@@ -82,7 +82,7 @@ public class SimulatorBuilder {
                 groupPhases.add(groupPhase);
             }
 
-            return new Group(groupName, csMap, groupPhases);
+            return new Group(groupName, groupPhases);
         }
 
         private void updateCsMaps(List<PhaseStringTokenizer.TrialTypeTokens> phaseTokens){
