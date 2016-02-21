@@ -2,7 +2,6 @@ package Models.Trail;
 
 import Models.GroupPhase;
 import Models.Stimulus.Stimulus;
-import org.apache.commons.collections.map.HashedMap;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -21,6 +20,7 @@ public class Trial implements Serializable{
 
     public void simulate(GroupPhase groupPhase, double gammaValue) {
         for(LearningPeriod period : learningPeriods){
+            groupPhase.recordPeriod();
             period.learn(groupPhase.calcVNetValue(), gammaValue);
         }
     }

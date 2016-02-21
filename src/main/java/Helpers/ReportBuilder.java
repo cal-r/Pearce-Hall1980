@@ -82,10 +82,10 @@ public class ReportBuilder {
         int colId = 1;
         int maxRow = currRowId;
 
-        for(int trialNo=1;trialNo<= groupPhaseHistory.getNumberOfTrials();trialNo++) {
-            report.setCell(currRowId++, colId, String.format("trial %1$d", trialNo));
+        for(int periodNo=1;periodNo<= groupPhaseHistory.getNumberOfPeriods();periodNo++) {
+            report.setCell(currRowId++, colId, String.format("trial %1$d", periodNo));
             for(String stimName : orderedStimNames) {
-                StimulusState stimState = groupPhaseHistory.getState(stimName, trialNo);
+                StimulusState stimState = groupPhaseHistory.getState(stimName, periodNo);
                 if(hasValue(stimState, variable)){
                     report.setCell(currRowId++, colId, getValue(stimState, variable));
                     maxRow = Math.max(maxRow, currRowId);

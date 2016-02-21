@@ -32,35 +32,33 @@ public class GroupPhase implements Serializable {
         stimsMap = new HashMap<>();
     }
 
+    private GroupPhaseHistory history;
+
     public GroupPhaseHistory simulateTrials(GammaParameter gamma, SimulatorSettings simulatorSettings) {
-        GroupPhaseHistory history;
+        history = new GroupPhaseHistory();
         if(random) {
-            history = simulateTrialsRandomly(gamma, simulatorSettings);
+            simulateTrialsRandomly(gamma, simulatorSettings);
         }else{
-            history = simulateTrialsSequentially(gamma, simulatorSettings);
+            simulateTrialsSequentially(gamma, simulatorSettings);
         }
         addInfoToHistory(history);
         return history;
     }
 
-    private GroupPhaseHistory simulateTrialsSequentially(GammaParameter gamma, SimulatorSettings simulatorSettings){
-        GroupPhaseHistory history = new GroupPhaseHistory();
+    private void simulateTrialsSequentially(GammaParameter gamma, SimulatorSettings simulatorSettings){
         for(int i=0;i<trials.size();i++){
             Trial trial = trials.get(i);
-            //The algorithm runs AFTER the trial finishes and gives the predictive value for the following trial.
-            history.recordState(stimsMap.values());
             trial.simulate(this, gamma.getValue());
         }
-        return history;
     }
 
-    private GroupPhaseHistory simulateTrialsRandomly(GammaParameter gamma, SimulatorSettings simulatorSettings) {
+    private void simulateTrialsRandomly(GammaParameter gamma, SimulatorSettings simulatorSettings) {
         List<ConditionalStimulus> csCopies = getCsCopies(); //preserve initial state of CSs
         List<GroupPhaseHistory> tempHistories = new ArrayList<>(); //stores every simulation
         //sim phase 1000 times
         for(int simNum = 0;simNum< simulatorSettings.NumberOfRandomCombination; simNum++) {
             resetCues(csCopies);
-            GroupPhaseHistory history = new GroupPhaseHistory();
+            history = new GroupPhaseHistory();
             int[] randomArray = RandomArrayGenerator.createRandomDistinctArray(trials.size());
             for (int trialNo = 0; trialNo < trials.size(); trialNo++) {
                 Trial trial = trials.get(randomArray[trialNo]);
@@ -80,12 +78,15 @@ public class GroupPhase implements Serializable {
             cs.setAssociationExcitatory(conditionalStimulusState.Ve);
             cs.setAssociationInhibitory(conditionalStimulusState.Vi);
         }
-        return averageHistory;
+        history = averageHistory;
+    }
+
+    public void recordPeriod(){
+        history.recordState(stimsMap.values());
     }
 
     private void addInfoToHistory(GroupPhaseHistory history){
         history.setPhaseName(getTitle());
-        history.setNumbetOfTrails(getNumberOfTrials());
         history.setDescription(description);
         history.setIsRandom(isRandom());
     }

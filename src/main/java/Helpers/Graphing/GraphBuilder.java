@@ -38,8 +38,8 @@ public class GraphBuilder {
     }
 
     private static void addLinePoints(GraphLine line, String stimName, GroupPhaseHistory gpHist){
-        for(int trialNo = 1; trialNo<=gpHist.getNumberOfTrials(); trialNo++){
-            line.addPoint(trialNo, gpHist.getState(stimName, trialNo).Vnet);
+        for(int periodNo = 1; periodNo<=gpHist.getNumberOfPeriods(); periodNo++){
+            line.addPoint(periodNo, gpHist.getState(stimName, periodNo).Vnet);
         }
     }
 

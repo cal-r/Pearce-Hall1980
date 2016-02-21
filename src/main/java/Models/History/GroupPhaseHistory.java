@@ -14,12 +14,13 @@ public class GroupPhaseHistory implements Serializable {
     private Map<String, List<StimulusState>> stimsHistoriesMap;
     private String groupName;
     private String phaseName;
-    private int numbetOfTrails;
+    private int numberOfPeriods;
     private String description;
     private boolean isRandom;
 
     public GroupPhaseHistory(){
         stimsHistoriesMap = new HashMap<>();
+        numberOfPeriods = 0;
     }
 
     public StimulusState getState(String cueName, int trialNumber) {
@@ -35,6 +36,7 @@ public class GroupPhaseHistory implements Serializable {
             StimulusState state = createStimState(stim);
             addToMap(stim.getName(), state);
         }
+        numberOfPeriods++;
     }
 
     private void addToMap(String stimName, StimulusState state){
@@ -55,16 +57,12 @@ public class GroupPhaseHistory implements Serializable {
         return phaseName;
     }
 
-    public int getNumberOfTrials(){
-        return numbetOfTrails;
+    public int getNumberOfPeriods(){
+        return numberOfPeriods;
     }
 
     public String getGroupName() {
         return groupName;
-    }
-
-    public void setNumbetOfTrails(int numbetOfTrails) {
-        this.numbetOfTrails = numbetOfTrails;
     }
 
     public Collection<String> getStimsNames(){
