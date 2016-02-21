@@ -1,11 +1,13 @@
 package Helpers.ModelBuilding;
 
+import Helpers.ListCaster;
 import Models.SimulatorSettings;
 import Models.Stimulus.CompoundStimulus;
 import Models.Stimulus.ConditionalStimulus;
 import Models.GroupPhase;
 import Models.Stimulus.ContextStimulus;
 import Models.Stimulus.Stimulus;
+import Models.Trail.ItiPeriod;
 import Models.Trail.LearningPeriod;
 import Models.Trail.Trial;
 
@@ -54,23 +56,32 @@ public class PhaseParser {
         private List<Trial> getTrials (PhaseStringTokenizer.TrialTypeTokens trialType){
             List<Trial> trials = new ArrayList<>();
             for (int i = 0; i < trialType.numberOfTrials; i++) {
-                trials.add(createTrial(getUsPresent(trialType), getStims(trialType)));
+                boolean isLastTrial = i == (trialType.numberOfTrials -1);
+                trials.add(createTrial(getUsPresent(trialType), getStims(trialType), isLastTrial));
             }
             return trials;
         }
 
-        private Trial createTrial(boolean usPresent, List<Stimulus> cues){
+        private Trial createTrial(boolean usPresent, List<Stimulus> cues, boolean isLastTrial){
             List<LearningPeriod> learningPeriods = new ArrayList<>();
 
             if(settings.ContextSimulation){
-                for(int i=0;i<itiRatio;i++) {
-                    learningPeriods.add(new LearningPeriod(usPresent, getContextStimList()));
-                }
+                addItiPeriods(learningPeriods);
             }
 
             learningPeriods.add(new LearningPeriod(usPresent, cues));
 
+            if(isLastTrial && settings.ContextSimulation){
+                addItiPeriods(learningPeriods);
+            }
+
             return new Trial(learningPeriods);
+        }
+
+        private void addItiPeriods(List<LearningPeriod> learningPeriods){
+            for(int i=0;i<itiRatio;i++) {
+                learningPeriods.add(new ItiPeriod(context));
+            }
         }
 
         private boolean getUsPresent(PhaseStringTokenizer.TrialTypeTokens trialType) {
@@ -89,33 +100,24 @@ public class PhaseParser {
                     added.put(cueName, true);
                 }
             }
-            Stimulus compound = createCompoundStimulus(trialType.cueNames);
-            if(compound!=null){
-                cuesPresent.add(compound);
-            }
 
+            if(settings.ContextSimulation){
+                cuesPresent.add(context);
+            }
+            if(settings.CompoundResults) {
+                addCompoundStim(cuesPresent);
+            }
             return cuesPresent;
         }
 
-        private List<Stimulus> getContextStimList(){
-            List<Stimulus> contextStimList = new ArrayList<>();
-            contextStimList.add(context);
-            return contextStimList;
-        }
-
-        private CompoundStimulus createCompoundStimulus(String[] compoundedNames){
-            if(compoundedNames.length < 2 && !settings.ContextSimulation || compoundedNames.length < 1){
-                return null;
-            } 
-
-            List<Stimulus> compoundedStims = new ArrayList<>();
-            if(settings.ContextSimulation){
-                compoundedStims.add(context);
+        private void addCompoundStim(List<Stimulus> stims){
+            if(stims.size() < 2){
+                return;
             }
-            for(String cueName : compoundedNames){
-                compoundedStims.add(csMap.get(cueName));
-            }
-            return new CompoundStimulus(compoundedStims);
+            //copy and cast
+            List<Stimulus> compounded = ListCaster.cast(new ArrayList<>(stims));
+            CompoundStimulus compound = new CompoundStimulus(compounded);
+            stims.add(compound);
         }
     }
 }

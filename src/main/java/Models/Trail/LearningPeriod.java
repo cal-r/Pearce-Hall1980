@@ -26,7 +26,7 @@ public class LearningPeriod implements Serializable {
                 ConditionalStimulus cs = (ConditionalStimulus) stimulus;
                 double newAlpha = getNewAlpha(gamma, lambda, vNet, cs.getAlpha());
                 if (usPresent && capitalLambda > 0) {
-                    updateDeltaVe(cs, lambda);
+                        updateDeltaVe(cs, lambda);
                 } else if (!usPresent && capitalLambda < 0) {
                     updateDeltaVi(cs, capitalLambda);
                 }
