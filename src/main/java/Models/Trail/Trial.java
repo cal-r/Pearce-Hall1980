@@ -38,4 +38,8 @@ public class Trial implements Serializable{
         }
         return cues;
     }
+
+    public List<LearningPeriod> getLearningPeriods(){
+        return learningPeriods;
+    }
 }
