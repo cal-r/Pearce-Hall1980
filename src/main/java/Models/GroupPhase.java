@@ -62,7 +62,6 @@ public class GroupPhase implements Serializable {
             int[] randomArray = RandomArrayGenerator.createRandomDistinctArray(trials.size());
             for (int trialNo = 0; trialNo < trials.size(); trialNo++) {
                 Trial trial = trials.get(randomArray[trialNo]);
-                history.recordState(stimsMap.values());
                 trial.simulate(this, gamma.getValue());
             }
             tempHistories.add(history);
