@@ -36,6 +36,7 @@ public class SimulatorBuilder {
     }
 
     private static class GroupBuilder{
+        private CsParameterPool contextParameters;
         private CsParameterPool csParameterPool;
 
         private SimulatorSettings settings;
@@ -52,6 +53,7 @@ public class SimulatorBuilder {
         private Group buildGroup(int gi){
             List<ContextConfig> contextConfigs = new ArrayList<>();
             List<Integer> itiRatios = new ArrayList<>();
+            contextParameters = new CsParameterPool();
 
             String groupName = tableModel.getGroupName(gi);
             List<String> phaseDescriptions = tableModel.getPhaseDescriptions(gi);
@@ -85,7 +87,11 @@ public class SimulatorBuilder {
                 groupPhases.add(groupPhase);
             }
 
-            return new Group(groupName, groupPhases);
+            Group group = new Group(groupName, groupPhases);
+            if(settings.ContextSimulation){
+                group.setContextParameterPool(contextParameters);
+            }
+            return group;
         }
 
         private void updateCsMaps(List<PhaseStringTokenizer.TrialTypeTokens> phaseTokens){
@@ -103,7 +109,7 @@ public class SimulatorBuilder {
 
         private void updateCsMap(ContextConfig contextConfig){
             if(!csMap.containsKey(contextConfig.getSymbol())){
-                csMap.put(contextConfig.getSymbol(), ContextBuilder.buildContext(contextConfig));
+                csMap.put(contextConfig.getSymbol(), ContextBuilder.buildContext(contextConfig, contextParameters));
             }
         }
 

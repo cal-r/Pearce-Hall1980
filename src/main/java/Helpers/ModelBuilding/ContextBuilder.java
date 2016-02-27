@@ -1,5 +1,6 @@
 package Helpers.ModelBuilding;
 
+import Models.Parameters.CsParameterPool;
 import Models.Parameters.InitialAlphaParameter;
 import Models.Parameters.SalienceExcitatoryParameter;
 import Models.Parameters.SalienceInhibitoryParameter;
@@ -10,20 +11,17 @@ import _from_RW_simulator.ContextConfig;
  * Created by Rokas on 19/02/2016.
  */
 public class ContextBuilder {
-    public static ContextStimulus buildContext(ContextConfig config){
-        InitialAlphaParameter initialAlphaParameter = new InitialAlphaParameter(config.getSymbol());
-        initialAlphaParameter.setValue(config.getAlpha());
-
-        SalienceExcitatoryParameter salienceExcitatoryParameter = new SalienceExcitatoryParameter(config.getSymbol());
-        salienceExcitatoryParameter.setValue(config.getSe());
-
-        SalienceInhibitoryParameter salienceInhibitoryParameter = new SalienceInhibitoryParameter(config.getSymbol());
-        salienceInhibitoryParameter.setValue(config.getSi());
+    public static ContextStimulus buildContext(ContextConfig config, CsParameterPool contextParameters){
+        String contextName = config.getSymbol();
+        contextParameters.createParameters(contextName);
+        contextParameters.getInitialAlpha(contextName).setValue(config.getAlpha());
+        contextParameters.getSeParameter(contextName).setValue(config.getSe());
+        contextParameters.getSiParamter(contextName).setValue(config.getSi());
 
         return new ContextStimulus(
-                config.getSymbol(),
-                initialAlphaParameter,
-                salienceExcitatoryParameter,
-                salienceInhibitoryParameter);
+                contextName,
+                contextParameters.getInitialAlpha(contextName),
+                contextParameters.getSeParameter(contextName),
+                contextParameters.getSiParamter(contextName));
     }
 }

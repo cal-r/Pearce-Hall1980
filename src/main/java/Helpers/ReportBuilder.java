@@ -28,7 +28,9 @@ public class ReportBuilder {
         GroupReportViewModel report = new GroupReportViewModel(groupHistory.group.Name);
         int rowId = 0;
         report.setCell(rowId++, 0, "P&H parameters:");
-        rowId = insertCsParameterTable(report, rowId, groupHistory.csParameterPool) +1;
+
+        rowId = insertCsParameterTable(report, rowId, groupHistory) +1;
+
         rowId = insertGlobalParameterTable(report, rowId, groupHistory.globalParameters) + 2;
 
         report.setCell(rowId++, 0, groupHistory.group.Name);
@@ -46,10 +48,18 @@ public class ReportBuilder {
         return report;
     }
 
-    private static int insertCsParameterTable(GroupReportViewModel report, int rowId, CsParameterPool pool){
+    private static int insertCsParameterTable(GroupReportViewModel report, int rowId, GroupHistory groupHistory) {
         report.setCell(rowId, 0, GuiStringConstants.CS_PARAMETER);
         report.setCell(rowId, 1, GuiStringConstants.VALUE);
         rowId++;
+        rowId = insertCsParameterTable(report, rowId, groupHistory.csParameterPool);
+        if(groupHistory.contextParameterPool != null){
+            rowId = insertCsParameterTable(report, rowId, groupHistory.contextParameterPool);
+        }
+        return rowId;
+    }
+
+    private static int insertCsParameterTable(GroupReportViewModel report, int rowId, CsParameterPool pool){
         for(CsParameter csParameter : pool.getAllParameters()){
             report.setCell(rowId, 0, csParameter.getDisplayName());
             report.setCell(rowId, 1, csParameter.getValue());

@@ -15,6 +15,7 @@ public class GroupHistory implements Serializable {
     public Group group;
     private List<GroupPhaseHistory> phaseHistories;
     public CsParameterPool csParameterPool;
+    public CsParameterPool contextParameterPool;
     public List<Parameter> globalParameters;
     public GroupHistory(Group group, CsParameterPool csParameterPool, List<Parameter> globalParameters){
         this.group = group;
@@ -33,5 +34,13 @@ public class GroupHistory implements Serializable {
 
     public int getNumberOfPhases(){
         return phaseHistories.size();
+    }
+
+    public CsParameterPool getContextParameterPool() {
+        return contextParameterPool;
+    }
+
+    public void setContextParameterPool(CsParameterPool contextParameterPool) {
+        this.contextParameterPool = contextParameterPool;
     }
 }
