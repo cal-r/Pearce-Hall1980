@@ -121,7 +121,7 @@ public class ContextConfig implements Serializable {
 
     public ContextConfig() {
         context = defaultContext;
-        alpha = DefaultValuesConstants.INITIAL_ALPHA;
+        alpha = DefaultValuesConstants.INITIAL_ALPHA_FOR_CONTEXT;
         se = DefaultValuesConstants.SALIENCE_EXCITATORY;
         si = DefaultValuesConstants.SALIENCE_INHIBATORY;
     }
