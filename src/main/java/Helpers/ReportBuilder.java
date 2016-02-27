@@ -76,7 +76,9 @@ public class ReportBuilder {
         currRowId++;
         Collection<String> orderedStimNames = StimulusOrderingHelper.orderStimNamesByDescription(groupPhaseHistory.getStimsNames(), groupPhaseHistory.getDescription());
         for(String stimName : orderedStimNames) {
-            report.setCell(currRowId++, 0, stimName);
+            if(hasValue(groupPhaseHistory, stimName, variable)) {
+                report.setCell(currRowId++, 0, stimName);
+            }
         }
         currRowId = rowId;
         int colId = 1;
@@ -121,5 +123,10 @@ public class ReportBuilder {
 
     private static boolean hasValue(StimulusState state, Variable variable){
         return variable == Variable.VNET || state instanceof ConditionalStimulusState;
+    }
+
+    private static boolean hasValue(GroupPhaseHistory gpHist, String stimName, Variable variable){
+        StimulusState firstState = gpHist.getState(stimName, 1);
+        return hasValue(firstState, variable);
     }
 }
