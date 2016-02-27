@@ -60,9 +60,16 @@ public class GraphWindowController implements ActionListener {
     }
 
     private void refreshView(){
+        int maxX = -1;
         for (GraphLine line : graphData.getAllLines()) {
             renderer.setSeriesLinesVisible(line.getDisplayId(), line.isVisible());
             renderer.setSeriesShapesVisible(line.getDisplayId(), line.isVisible());
+            if(line.isVisible()) {
+                maxX = Math.max(line.getDataPoints().size(), maxX);
+            }
+        }
+        if(maxX>0) {
+            getDomainAxis(chart).setRange(1, maxX);
         }
     }
 
@@ -79,7 +86,7 @@ public class GraphWindowController implements ActionListener {
 
         chart.getXYPlot().setRenderer(renderer);
 
-        NumberAxis domainAxis = (NumberAxis) chart.getXYPlot().getDomainAxis();
+        NumberAxis domainAxis = getDomainAxis(chart);
         domainAxis.setAutoRange(true);
         domainAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
 
@@ -134,6 +141,10 @@ public class GraphWindowController implements ActionListener {
         checkBox.addActionListener(this);
         checkBox.setActionCommand(command);
         return checkBox;
+    }
+
+    private NumberAxis getDomainAxis(JFreeChart chart){
+        return (NumberAxis) chart.getXYPlot().getDomainAxis();
     }
 
     static void showGraphs(SimulationHistory history){

@@ -2,3 +2,4 @@
 .idea/workspace.xml
 out/artifacts/PHSimulator_jar/PHSimulator.jar
 out/artifacts/PHSimulator_jar/PHSimulator20151229.jar
+*.jar
