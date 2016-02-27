@@ -24,7 +24,15 @@ public class GroupPhaseHistory implements Serializable {
     }
 
     public StimulusState getState(String cueName, int trialNumber) {
+        if(stimsHistoriesMap.get(cueName).size() < trialNumber){
+            return null;
+        }
         return stimsHistoriesMap.get(cueName).get(trialNumber - 1);
+    }
+
+    public StimulusState getLastState(String cueName){
+        List<StimulusState> cueHistory = stimsHistoriesMap.get(cueName);
+        return cueHistory.get(cueHistory.size()-1);
     }
 
     public List<StimulusState> getStimHistory(String stimName){

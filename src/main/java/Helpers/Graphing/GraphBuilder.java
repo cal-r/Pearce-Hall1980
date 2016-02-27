@@ -6,6 +6,7 @@ import Models.Graphing.GraphLine;
 import Models.History.GroupPhaseHistory;
 import Models.History.PhaseHistory;
 import Models.History.SimulationHistory;
+import Models.History.StimulusState;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,7 +40,10 @@ public class GraphBuilder {
 
     private static void addLinePoints(GraphLine line, String stimName, GroupPhaseHistory gpHist){
         for(int periodNo = 1; periodNo<=gpHist.getNumberOfPeriods(); periodNo++){
-            line.addPoint(periodNo, gpHist.getState(stimName, periodNo).Vnet);
+            StimulusState state = gpHist.getState(stimName, periodNo);
+            if(state!=null) {
+                line.addPoint(periodNo, state.Vnet);
+            }
         }
     }
 

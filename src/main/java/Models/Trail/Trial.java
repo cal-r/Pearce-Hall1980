@@ -20,8 +20,13 @@ public class Trial implements Serializable{
 
     public void simulate(GroupPhase groupPhase, double gammaValue) {
         for(LearningPeriod period : learningPeriods){
-            groupPhase.recordPeriod();
-            period.learn(groupPhase.calcVNetValue(), gammaValue);
+            if(period instanceof ItiPeriod) {
+                groupPhase.recordItiPeriod(period.stims);
+                ((ItiPeriod)period).learn(gammaValue);
+            }else {
+                groupPhase.recordPeriod();
+                period.learn(groupPhase.calcVNetValue(), gammaValue);
+            }
         }
     }
 

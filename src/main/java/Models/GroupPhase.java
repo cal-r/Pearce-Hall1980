@@ -72,7 +72,7 @@ public class GroupPhase implements Serializable {
         //set cs properties to average values
         for(ConditionalStimulus cs : getPhaseCues()) {
             //get the last state of cs
-            ConditionalStimulusState conditionalStimulusState = (ConditionalStimulusState) averageHistory.getState(cs.getName(), trials.size());
+            ConditionalStimulusState conditionalStimulusState = (ConditionalStimulusState) averageHistory.getLastState(cs.getName());
             cs.setAlpha(conditionalStimulusState.Alpha);
             cs.setAssociationExcitatory(conditionalStimulusState.Ve);
             cs.setAssociationInhibitory(conditionalStimulusState.Vi);
@@ -82,6 +82,10 @@ public class GroupPhase implements Serializable {
 
     public void recordPeriod(){
         history.recordState(stimsMap.values());
+    }
+
+    public void recordItiPeriod(List<Stimulus> context){
+        history.recordState(context);
     }
 
     private void addInfoToHistory(GroupPhaseHistory history){
