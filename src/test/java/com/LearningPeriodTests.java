@@ -118,7 +118,7 @@ public class LearningPeriodTests extends junit.framework.TestCase {
         for(String c : presentCss) {
             presentCues.add(allCues.get(c));
         }
-        return new LearningPeriod(usPresent, presentCues);
+        return new LearningPeriod(usPresent, usPresent ? '+' : '-', presentCues);
     }
 
     public static HashMap<String, ConditionalStimulus> createCsMap(String[] chars){

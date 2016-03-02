@@ -15,7 +15,7 @@ public class ItiPeriod extends LearningPeriod {
     private ContextStimulus context;
 
     public ItiPeriod(ContextStimulus context){
-        super(false, makeList(context));
+        super(false, '-', makeList(context));
         this.context = context;
     }
 

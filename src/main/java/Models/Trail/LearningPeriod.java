@@ -13,9 +13,10 @@ import java.util.List;
  */
 public class LearningPeriod implements Serializable {
     public boolean usPresent;
+    public char reinforcer;
     public List<Stimulus> stims;
 
-    public LearningPeriod(boolean usPresent, List<Stimulus> stims) {
+    public LearningPeriod(boolean usPresent, char reinforcer, List<Stimulus> stims) {
         this.usPresent = usPresent;
         this.stims = stims;
     }

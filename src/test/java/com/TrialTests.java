@@ -99,7 +99,7 @@ public class TrialTests extends TestCase {
             learningPeriods.add(new ItiPeriod(contextStim));
         }
         cs.add(contextStim);
-        learningPeriods.add(new LearningPeriod(usPresent, cs));
+        learningPeriods.add(new LearningPeriod(usPresent, usPresent ? '+' : '-', cs));
         return new Trial(learningPeriods);
     }
 

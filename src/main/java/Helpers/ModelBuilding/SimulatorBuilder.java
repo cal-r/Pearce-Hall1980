@@ -69,7 +69,7 @@ public class SimulatorBuilder {
 
             for(int i=0;i<phaseDescriptions.size();i++){
                 String phaseDescription = phaseDescriptions.get(i);
-                List<PhaseStringTokenizer.TrialTypeTokens> phaseTokens = PhaseStringTokenizer.getPhaseTokens(phaseDescription);
+                List<PhaseStringTokenizer.TrialTypeTokens> phaseTokens = PhaseStringTokenizer.getPhaseTokens(settings, phaseDescription);
                 updateCsMaps(phaseTokens);
                 GroupPhase groupPhase;
 

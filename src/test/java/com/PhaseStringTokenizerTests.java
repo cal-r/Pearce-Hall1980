@@ -1,6 +1,8 @@
 package com;
 
 import Helpers.ModelBuilding.PhaseStringTokenizer;
+import Models.Simulator;
+import Models.SimulatorSettings;
 import org.junit.Test;
 
 import java.util.List;
@@ -15,7 +17,7 @@ public class PhaseStringTokenizerTests extends junit.framework.TestCase {
 
     @Test
     public void testParsePhaseDescription1() throws Exception {
-        List<PhaseStringTokenizer.TrialTypeTokens> tokens = PhaseStringTokenizer.getPhaseTokens("2A+");
+        List<PhaseStringTokenizer.TrialTypeTokens> tokens = PhaseStringTokenizer.getPhaseTokens(getTestSettings(), "2A+");
         assertTrue(tokens != null);
         assertTrue(tokens.size() == 1);
         assertTrue(tokens.get(0).numberOfTrials == 2);
@@ -26,7 +28,7 @@ public class PhaseStringTokenizerTests extends junit.framework.TestCase {
 
     @Test
     public void testParsePhaseDescription2() throws Exception {
-        List<PhaseStringTokenizer.TrialTypeTokens> tokens = PhaseStringTokenizer.getPhaseTokens("2AB+");
+        List<PhaseStringTokenizer.TrialTypeTokens> tokens = PhaseStringTokenizer.getPhaseTokens(getTestSettings(), "2AB+");
         assertTrue(tokens != null);
         assertTrue(tokens.size() == 1);
         assertTrue(tokens.get(0).numberOfTrials == 2);
@@ -38,7 +40,7 @@ public class PhaseStringTokenizerTests extends junit.framework.TestCase {
 
     @Test
     public void testParsePhaseDescription3() throws Exception {
-        List<PhaseStringTokenizer.TrialTypeTokens> tokens = PhaseStringTokenizer.getPhaseTokens("AB-");
+        List<PhaseStringTokenizer.TrialTypeTokens> tokens = PhaseStringTokenizer.getPhaseTokens(getTestSettings(), "AB-");
         assertTrue(tokens != null);
         assertTrue(tokens.size() == 1);
         assertTrue(tokens.get(0).numberOfTrials == 1);
@@ -50,7 +52,7 @@ public class PhaseStringTokenizerTests extends junit.framework.TestCase {
 
     @Test
     public void testParsePhaseDescription4() throws Exception {
-        List<PhaseStringTokenizer.TrialTypeTokens> tokens = PhaseStringTokenizer.getPhaseTokens("2AB+/A-");
+        List<PhaseStringTokenizer.TrialTypeTokens> tokens = PhaseStringTokenizer.getPhaseTokens(getTestSettings(), "2AB+/A-");
         assertTrue(tokens != null);
         assertTrue(tokens.size() == 2);
         assertTrue(tokens.get(0).numberOfTrials == 2);
@@ -67,7 +69,7 @@ public class PhaseStringTokenizerTests extends junit.framework.TestCase {
 
     @Test
     public void testParsePhaseDescription5() throws Exception {
-        List<PhaseStringTokenizer.TrialTypeTokens> tokens = PhaseStringTokenizer.getPhaseTokens("60AX+/60AY-/69BX-/60BY+");
+        List<PhaseStringTokenizer.TrialTypeTokens> tokens = PhaseStringTokenizer.getPhaseTokens(getTestSettings(),"60AX+/60AY-/69BX-/60BY+");
         assertTrue(tokens != null);
         assertTrue(tokens.size() == 4);
         assertTrue(tokens.get(0).numberOfTrials == 60);
@@ -98,7 +100,7 @@ public class PhaseStringTokenizerTests extends junit.framework.TestCase {
     @Test
     public void testParsePhaseDescription6() throws Exception {
         try {
-            PhaseStringTokenizer.getPhaseTokens("2AB");
+            PhaseStringTokenizer.getPhaseTokens(getTestSettings(),"2AB");
             fail("No exception was thrown");
         }catch (IllegalArgumentException ex) {}
     }
@@ -106,7 +108,7 @@ public class PhaseStringTokenizerTests extends junit.framework.TestCase {
     @Test
     public void testParsePhaseDescription7() throws Exception {
         try {
-            PhaseStringTokenizer.getPhaseTokens("-2+");
+            PhaseStringTokenizer.getPhaseTokens(getTestSettings(),"-2+");
             fail("No exception was thrown");
         }catch (IllegalArgumentException ex) {}
     }
@@ -114,8 +116,31 @@ public class PhaseStringTokenizerTests extends junit.framework.TestCase {
     @Test
     public void testParsePhaseDescription8() throws Exception {
         try {
-            PhaseStringTokenizer.getPhaseTokens("A+2B+");
+            PhaseStringTokenizer.getPhaseTokens(getTestSettings(), "A+2B+");
             fail("No exception was thrown");
         }catch (IllegalArgumentException ex) {}
+    }
+
+    @Test
+    public void testParsePhaseDescription9() throws Exception {
+        List<PhaseStringTokenizer.TrialTypeTokens> tokens = PhaseStringTokenizer.getPhaseTokens(getTestSettings(), "2AB#/A-");
+        assertTrue(tokens != null);
+        assertTrue(tokens.size() == 2);
+        assertTrue(tokens.get(0).numberOfTrials == 2);
+        assertTrue(tokens.get(0).reinforcer == '#');
+        assertTrue(tokens.get(0).cueNames.length==2);
+        assertTrue(tokens.get(0).cueNames[0].equals("A"));
+        assertTrue(tokens.get(0).cueNames[1].equals("B"));
+
+        assertTrue(tokens.get(1).numberOfTrials == 1);
+        assertTrue(tokens.get(1).reinforcer == '-');
+        assertTrue(tokens.get(1).cueNames.length==1);
+        assertTrue(tokens.get(1).cueNames[0].equals("A"));
+    }
+
+    private SimulatorSettings getTestSettings(){
+        SimulatorSettings settings = new SimulatorSettings();
+        settings.UseDifferentUs = true;
+        return settings;
     }
 }

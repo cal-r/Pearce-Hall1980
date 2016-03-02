@@ -57,19 +57,19 @@ public class PhaseParser {
             List<Trial> trials = new ArrayList<>();
             for (int i = 0; i < trialType.numberOfTrials; i++) {
                 boolean isLastTrial = i == (trialType.numberOfTrials -1);
-                trials.add(createTrial(getUsPresent(trialType), getStims(trialType), isLastTrial));
+                trials.add(createTrial(trialType.reinforcer, getStims(trialType), isLastTrial));
             }
             return trials;
         }
 
-        private Trial createTrial(boolean usPresent, List<Stimulus> cues, boolean isLastTrial){
+        private Trial createTrial(char reinforcer, List<Stimulus> cues, boolean isLastTrial){
             List<LearningPeriod> learningPeriods = new ArrayList<>();
 
             if(settings.ContextSimulation){
                 addItiPeriods(learningPeriods);
             }
 
-            learningPeriods.add(new LearningPeriod(usPresent, cues));
+            learningPeriods.add(new LearningPeriod(getUsPresent(reinforcer), reinforcer, cues));
 
             if(isLastTrial && settings.ContextSimulation){
                 addItiPeriods(learningPeriods);
@@ -84,8 +84,8 @@ public class PhaseParser {
             }
         }
 
-        private boolean getUsPresent(PhaseStringTokenizer.TrialTypeTokens trialType) {
-            if (trialType.reinforcer == '+') {
+        private boolean getUsPresent(char reinforcer) {
+            if (reinforcer == '+') {
                 return true;
             }
             return false;

@@ -2,6 +2,7 @@ package Helpers.ModelBuilding;
 
 import Constants.GuiStringConstants;
 import Helpers.ListCaster;
+import Models.SimulatorSettings;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,8 +27,9 @@ import java.util.regex.Pattern;
 public class PhaseStringTokenizer {
 
     private static final String TRAIL_TYPE_REGEX = "(\\d*)([a-zA-Z]*)([\\+\\-])";
+    private static final String TRAIL_TYPE_REGEX_MULTIPLE_US = "(\\d*)([a-zA-Z]*)([\\+\\*\\#\\$\\-])";
 
-    public static List<TrialTypeTokens> getPhaseTokens(String phaseDescription) throws IllegalArgumentException {
+    public static List<TrialTypeTokens> getPhaseTokens(SimulatorSettings settings, String phaseDescription) throws IllegalArgumentException {
 
         List<TrialTypeTokens> tokensList = new ArrayList<>();
 
@@ -37,7 +39,7 @@ public class PhaseStringTokenizer {
 
             if(!isEmpty(trialTypeDescription)) {
 
-                Matcher matcher = matchTrialType(trialTypeDescription);
+                Matcher matcher = matchTrialType(trialTypeDescription, settings);
 
                 trialTokens.numberOfTrials = getNumberOfTrials(matcher);
                 trialTokens.cueNames = getCueNames(matcher);
@@ -70,8 +72,9 @@ public class PhaseStringTokenizer {
         return phaseDescription.split(GuiStringConstants.TRAIL_TYPE_SEPARATOR);
     }
 
-    private static Matcher matchTrialType(String trialTypeDescription) throws IllegalArgumentException {
-        Pattern pattern = Pattern.compile(TRAIL_TYPE_REGEX);
+    private static Matcher matchTrialType(String trialTypeDescription, SimulatorSettings settings) throws IllegalArgumentException {
+        String regexToUse = settings.UseDifferentUs ? TRAIL_TYPE_REGEX_MULTIPLE_US : TRAIL_TYPE_REGEX;
+        Pattern pattern = Pattern.compile(regexToUse);
         Matcher matcher = pattern.matcher(trialTypeDescription);
 
         if (!matcher.matches()) {
