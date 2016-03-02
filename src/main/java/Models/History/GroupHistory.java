@@ -1,7 +1,7 @@
 package Models.History;
 
 import Models.Group;
-import Models.Parameters.CsParameterPool;
+import Models.Parameters.Pools.CsParameterPool;
 import Models.Parameters.Parameter;
 
 import java.io.Serializable;

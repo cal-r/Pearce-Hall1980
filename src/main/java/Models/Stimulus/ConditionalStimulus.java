@@ -1,8 +1,8 @@
 package Models.Stimulus;
 
-import Models.Parameters.InitialAlphaParameter;
-import Models.Parameters.SalienceExcitatoryParameter;
-import Models.Parameters.SalienceInhibitoryParameter;
+import Models.Parameters.ConditionalStimulus.InitialAlphaParameter;
+import Models.Parameters.ConditionalStimulus.SalienceExcitatoryParameter;
+import Models.Parameters.ConditionalStimulus.SalienceInhibitoryParameter;
 
 import java.io.Serializable;
 

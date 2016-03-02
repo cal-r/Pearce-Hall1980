@@ -7,12 +7,12 @@ import java.io.Serializable;
 /**
  * Created by Rokas on 07/11/2015.
  */
-public abstract class Parameter implements Serializable {
+public class Parameter implements Serializable {
     protected double value;
     protected boolean isSet;
     protected String name;
 
-    protected Parameter(String name){
+    public Parameter(String name){
         this.name = name;
         isSet = false;
     }

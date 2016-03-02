@@ -1,11 +1,9 @@
 package Models;
 
-import Models.Parameters.CsParameterPool;
-import Models.Stimulus.ConditionalStimulus;
+import Models.Parameters.Pools.CsParameterPool;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Rokas on 13/11/2015.

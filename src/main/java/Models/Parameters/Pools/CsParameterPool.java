@@ -1,4 +1,9 @@
-package Models.Parameters;
+package Models.Parameters.Pools;
+
+import Models.Parameters.ConditionalStimulus.CsParameter;
+import Models.Parameters.ConditionalStimulus.InitialAlphaParameter;
+import Models.Parameters.ConditionalStimulus.SalienceExcitatoryParameter;
+import Models.Parameters.ConditionalStimulus.SalienceInhibitoryParameter;
 
 import java.io.Serializable;
 import java.util.ArrayList;

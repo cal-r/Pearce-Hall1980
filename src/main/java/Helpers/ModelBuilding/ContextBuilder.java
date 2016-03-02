@@ -1,9 +1,6 @@
 package Helpers.ModelBuilding;
 
-import Models.Parameters.CsParameterPool;
-import Models.Parameters.InitialAlphaParameter;
-import Models.Parameters.SalienceExcitatoryParameter;
-import Models.Parameters.SalienceInhibitoryParameter;
+import Models.Parameters.Pools.CsParameterPool;
 import Models.Stimulus.ContextStimulus;
 import _from_RW_simulator.ContextConfig;
 

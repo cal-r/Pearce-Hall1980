@@ -43,6 +43,7 @@ public class MenuController implements ActionListener {
         createMenuItem(settingsMenu, GuiStringConstants.RANDOM_TRIALS_SETTING, MenuItemType.BASIC);
         createMenuItem(settingsMenu, GuiStringConstants.COMPOUND_RESULTS_SETTING, MenuItemType.CHECKBOX);
         createMenuItem(settingsMenu, GuiStringConstants.SIMULATE_CONTEXT, MenuItemType.CHECKBOX);
+        createMenuItem(settingsMenu, GuiStringConstants.USE_DIFFERENT_US, MenuItemType.CHECKBOX);
         menuBar.add(settingsMenu);
     }
 
@@ -88,6 +89,11 @@ public class MenuController implements ActionListener {
         settings.NumberOfRandomCombination = GuiHelper.getIntFromUser(GuiStringConstants.RANDOM_TRIALS_SETTING, settings.NumberOfRandomCombination);
     }
 
+    private void onUseDifferentUs(boolean menuItemSelected) {
+        settings.UseDifferentUs = menuItemSelected;
+        mainWindowController.onUseDifferentUsChange();
+    }
+
     @Override
     public void actionPerformed(ActionEvent e){
         switch (e.getActionCommand()){
@@ -106,6 +112,9 @@ public class MenuController implements ActionListener {
             case GuiStringConstants.SIMULATE_CONTEXT:
                 onSimulateContext(GuiHelper.isMenuItemSelected(e));
                 break;
+            case GuiStringConstants.USE_DIFFERENT_US:
+               onUseDifferentUs(GuiHelper.isMenuItemSelected(e));
+                break;
             default:
                 GuiHelper.displayErrorMessage("Nicht implementiert!");
         }
@@ -116,6 +125,7 @@ public class MenuController implements ActionListener {
         //set up checkboxes states
         checkboxesMap.get(GuiStringConstants.COMPOUND_RESULTS_SETTING).setState(settings.CompoundResults);
         checkboxesMap.get(GuiStringConstants.SIMULATE_CONTEXT).setState(settings.ContextSimulation);
+        checkboxesMap.get(GuiStringConstants.USE_DIFFERENT_US).setState(settings.UseDifferentUs);
     }
 
     //getters

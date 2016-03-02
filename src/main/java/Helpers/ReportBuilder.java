@@ -2,8 +2,8 @@ package Helpers;
 
 import Constants.GuiStringConstants;
 import Models.History.*;
-import Models.Parameters.CsParameter;
-import Models.Parameters.CsParameterPool;
+import Models.Parameters.ConditionalStimulus.CsParameter;
+import Models.Parameters.Pools.CsParameterPool;
 import Models.Parameters.Parameter;
 import ViewModels.GroupReportViewModel;
 

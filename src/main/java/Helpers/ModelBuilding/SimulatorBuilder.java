@@ -1,16 +1,16 @@
 package Helpers.ModelBuilding;
 
+import Models.Parameters.Pools.GlobalParameterPool;
 import Models.SimulatorSettings;
 import Models.Stimulus.ConditionalStimulus;
 import Models.Group;
 import Models.GroupPhase;
-import Models.Parameters.CsParameterPool;
+import Models.Parameters.Pools.CsParameterPool;
 import Models.Simulator;
 import Models.Stimulus.ContextStimulus;
 import ViewModels.TableModels.TrialTableModel;
 import _from_RW_simulator.ContextConfig;
 
-import javax.naming.Context;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

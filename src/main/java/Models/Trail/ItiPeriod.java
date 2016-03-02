@@ -1,5 +1,6 @@
 package Models.Trail;
 
+import Models.Parameters.Pools.GlobalParameterPool;
 import Models.Stimulus.ContextStimulus;
 import Models.Stimulus.Stimulus;
 
@@ -24,7 +25,7 @@ public class ItiPeriod extends LearningPeriod {
         return list;
     }
 
-    public void learn(double gamma) {
-        learn(context.getAssociationNet(), gamma);
+    public void learn(GlobalParameterPool globalParams) {
+        learn(context.getAssociationNet(), globalParams);
     }
 }

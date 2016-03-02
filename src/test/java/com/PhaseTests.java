@@ -2,11 +2,11 @@ package com;
 
 import Constants.DefaultValuesConstants;
 import Helpers.ListCaster;
+import Models.Parameters.Pools.GlobalParameterPool;
 import Models.Stimulus.ConditionalStimulus;
 import Models.GroupPhase;
 import Models.History.ConditionalStimulusState;
 import Models.History.GroupPhaseHistory;
-import Models.Parameters.GammaParameter;
 import Models.SimulatorSettings;
 import Models.Trail.LearningPeriod;
 import Models.Trail.Trial;
@@ -22,12 +22,11 @@ public class PhaseTests extends junit.framework.TestCase {
 
     @org.junit.Test
     public void testSimPhase1() throws Exception{
-        GammaParameter gamma = new GammaParameter();
-        gamma.setValue(0.1);
+        GlobalParameterPool globals = getGlobals();
 
         //40AB+/40AB-
         GroupPhase groupPhase = CreatePhase40(true, false, false);
-        GroupPhaseHistory hist = groupPhase.simulateTrials(gamma, new SimulatorSettings());
+        GroupPhaseHistory hist = groupPhase.simulateTrials(globals, new SimulatorSettings());
 
         double expectedVnet = 0.08724879;
         //        excel gives 0.08747151
@@ -40,12 +39,11 @@ public class PhaseTests extends junit.framework.TestCase {
 
     @org.junit.Test
     public void testSimPhase2() throws Exception{
-        GammaParameter gamma = new GammaParameter();
-        gamma.setValue(0.1);
+        GlobalParameterPool globals = getGlobals();
 
         //40AB+/40AB-
         GroupPhase groupPhase = CreatePhase40(false, true, false);
-        GroupPhaseHistory hist = groupPhase.simulateTrials(gamma, new SimulatorSettings());
+        GroupPhaseHistory hist = groupPhase.simulateTrials(globals, new SimulatorSettings());
 
         double expectedVnet = 0.500572221;
         //        excel gives 0.500433494
@@ -63,12 +61,11 @@ public class PhaseTests extends junit.framework.TestCase {
 
     @org.junit.Test
       public void testSimPhase3() throws Exception{
-        GammaParameter gamma = new GammaParameter();
-        gamma.setValue(0.1);
+        GlobalParameterPool globals = getGlobals();
 
         //random test
         GroupPhase groupPhase = CreatePhase40(false, true, true);
-        GroupPhaseHistory hist = groupPhase.simulateTrials(gamma, new SimulatorSettings());
+        GroupPhaseHistory hist = groupPhase.simulateTrials(globals, new SimulatorSettings());
 
         //test state of cues after simulation
         for(ConditionalStimulus cs : groupPhase.getPhaseCues()) {
@@ -88,14 +85,13 @@ public class PhaseTests extends junit.framework.TestCase {
 
     @org.junit.Test
     public void testSimPhase4() throws Exception{
-        GammaParameter gamma = new GammaParameter();
-        gamma.setValue(0.1);
+        GlobalParameterPool globals = getGlobals();
 
         //should be the same
         GroupPhase groupPhaseRand = CreatePhase40(true, true, true);
         GroupPhase groupPhaseSeq = CreatePhase40(true, true, false);
-        GroupPhaseHistory histRand = groupPhaseRand.simulateTrials(gamma, new SimulatorSettings());
-        GroupPhaseHistory histSeq = groupPhaseSeq.simulateTrials(gamma, new SimulatorSettings());
+        GroupPhaseHistory histRand = groupPhaseRand.simulateTrials(globals, new SimulatorSettings());
+        GroupPhaseHistory histSeq = groupPhaseSeq.simulateTrials(globals, new SimulatorSettings());
 
         //test state of cues after simulation
         ConditionalStimulus csRand = groupPhaseRand.getPhaseCues().get(0);
@@ -130,5 +126,12 @@ public class PhaseTests extends junit.framework.TestCase {
             trialType.add(new Trial(periods));
         }
         return trialType;
+    }
+
+    private GlobalParameterPool getGlobals(){
+        GlobalParameterPool globals = new GlobalParameterPool();
+        globals.getGamma().setValue(0.1);
+        globals.getLambda('+').setValue(1);
+        return globals;
     }
 }

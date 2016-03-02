@@ -1,4 +1,6 @@
-package Models.Parameters;
+package Models.Parameters.ConditionalStimulus;
+
+import Models.Parameters.Parameter;
 
 import java.io.Serializable;
 

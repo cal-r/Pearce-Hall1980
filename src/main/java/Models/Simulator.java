@@ -3,10 +3,10 @@ package Models;
 import Helpers.ReportBuilder;
 import Models.History.GroupHistory;
 import Models.History.SimulationHistory;
-import Models.Parameters.CsParameter;
-import Models.Parameters.GammaParameter;
+import Models.Parameters.ConditionalStimulus.CsParameter;
 import Models.Parameters.Parameter;
-import Models.Parameters.CsParameterPool;
+import Models.Parameters.Pools.CsParameterPool;
+import Models.Parameters.Pools.GlobalParameterPool;
 import ViewModels.GroupReportViewModel;
 
 import java.io.Serializable;
@@ -18,16 +18,15 @@ import java.util.List;
  */
 public class Simulator implements Serializable{
     private SimulatorSettings settings;
-
     private List<Group> groups;
-    private GammaParameter gamma;
     private CsParameterPool csParameterPool;
+    private GlobalParameterPool globalParameterPool;
     private List<GroupReportViewModel> report;
     private SimulationHistory simulationHistory;
 
     public Simulator(){
         settings = new SimulatorSettings();
-        gamma = new GammaParameter();
+        globalParameterPool = new GlobalParameterPool();
     }
 
     public void setCsParameterPool(CsParameterPool csParameterPool){
@@ -42,11 +41,7 @@ public class Simulator implements Serializable{
         return csParameterPool.getAllParameters();
     }
 
-    public List<Parameter> getGlobalParameters(){
-        List<Parameter> globals = new ArrayList<>();
-        globals.add(gamma);
-        return globals;
-    }
+    public List<Parameter> getGlobalParameters(){ return globalParameterPool.getParameters(); }
 
     public List<Group> getGroups(){
         return groups;
@@ -59,7 +54,7 @@ public class Simulator implements Serializable{
             GroupHistory groupHistory = createGroupHistory(group);
             for(GroupPhase groupPhase : group.groupPhases) {
                 groupHistory.add(
-                        groupPhase.simulateTrials(gamma, settings));
+                        groupPhase.simulateTrials(globalParameterPool, settings));
             }
             simHistory.add(groupHistory);
         }

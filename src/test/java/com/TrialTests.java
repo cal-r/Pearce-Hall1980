@@ -3,10 +3,10 @@ package com;
 import Constants.DefaultValuesConstants;
 import Models.GroupPhase;
 import Models.History.GroupPhaseHistory;
-import Models.Parameters.GammaParameter;
-import Models.Parameters.InitialAlphaParameter;
-import Models.Parameters.SalienceExcitatoryParameter;
-import Models.Parameters.SalienceInhibitoryParameter;
+import Models.Parameters.ConditionalStimulus.InitialAlphaParameter;
+import Models.Parameters.ConditionalStimulus.SalienceExcitatoryParameter;
+import Models.Parameters.ConditionalStimulus.SalienceInhibitoryParameter;
+import Models.Parameters.Pools.GlobalParameterPool;
 import Models.SimulatorSettings;
 import Models.Stimulus.ConditionalStimulus;
 import Models.Stimulus.ContextStimulus;
@@ -40,7 +40,7 @@ public class TrialTests extends TestCase {
         trials.add(createTrial(true, getStims(allStims, "A"), contextStimulus));
         GroupPhase groupPhase = new GroupPhase(1);
         groupPhase.addTrials(trials);
-        GroupPhaseHistory history = groupPhase.simulateTrials(getGamma(), getSimulatorSettings());
+        GroupPhaseHistory history = groupPhase.simulateTrials(getGlobals(), getSimulatorSettings());
         assertEquals(history.getState(contextName, 1).Vnet, 0.0);
         assertEquals(history.getState(contextName, 2).Vnet, 0.0);
         assertEquals(history.getState(contextName, 3).Vnet, 0.0);
@@ -79,10 +79,11 @@ public class TrialTests extends TestCase {
         return ret;
     }
 
-    private GammaParameter getGamma(){
-        GammaParameter gammaParameter = new GammaParameter();
-        gammaParameter.setValue(0.1);
-        return gammaParameter;
+    private GlobalParameterPool getGlobals(){
+        GlobalParameterPool globals = new GlobalParameterPool();
+        globals.getGamma().setValue(0.1);
+        globals.getLambda('+').setValue(1);
+        return globals;
     }
 
     private SimulatorSettings getSimulatorSettings(){

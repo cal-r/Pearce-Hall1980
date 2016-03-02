@@ -196,6 +196,10 @@ public class MainWindowController implements ActionListener, TableModelListener 
         trialTableModel.setSimulateContext(simulator.getSettings().ContextSimulation);
     }
 
+    public void onUseDifferentUsChange() {
+
+    }
+
     //getters
     public Simulator getSimulator(){
         return simulator;

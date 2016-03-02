@@ -1,5 +1,7 @@
 package Models.Trail;
 
+import Models.Parameters.Parameter;
+import Models.Parameters.Pools.GlobalParameterPool;
 import Models.Stimulus.ConditionalStimulus;
 import Models.Stimulus.Stimulus;
 
@@ -18,13 +20,13 @@ public class LearningPeriod implements Serializable {
         this.stims = stims;
     }
 
-    public void learn(double vNet, double gamma) {
-        double lambda = getLamba();
+    public void learn(double vNet, GlobalParameterPool globalParams) {
+        double lambda = getLamba(globalParams);
         double capitalLambda = lambda - vNet;
         for (Stimulus stimulus : stims) {
             if (stimulus instanceof ConditionalStimulus) {
                 ConditionalStimulus cs = (ConditionalStimulus) stimulus;
-                double newAlpha = getNewAlpha(gamma, lambda, vNet, cs.getAlpha());
+                double newAlpha = getNewAlpha(globalParams.getGamma(), lambda, vNet, cs.getAlpha());
                 if (usPresent && capitalLambda > 0) {
                         updateDeltaVe(cs, lambda);
                 } else if (!usPresent && capitalLambda < 0) {
@@ -45,11 +47,15 @@ public class LearningPeriod implements Serializable {
         cs.updateAssociationInhibitory(deltaVi);
     }
 
-    private double getLamba() {
-        return usPresent ? 1 : 0;
+    private double getLamba(GlobalParameterPool globals)
+    {
+        if(!usPresent){
+            return 0;
+        }
+        return globals.getLambda('+').getValue();
     }
 
-    private double getNewAlpha(double gamma, double lambda, double vNet, double oldAlpha) {
-        return gamma * Math.abs(lambda - vNet) + (1 - gamma) * oldAlpha;
+    private double getNewAlpha(Parameter gamma, double lambda, double vNet, double oldAlpha) {
+        return gamma.getValue() * Math.abs(lambda - vNet) + (1 - gamma.getValue()) * oldAlpha;
     }
 }

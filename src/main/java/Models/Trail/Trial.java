@@ -1,6 +1,7 @@
 package Models.Trail;
 
 import Models.GroupPhase;
+import Models.Parameters.Pools.GlobalParameterPool;
 import Models.Stimulus.Stimulus;
 
 import java.io.Serializable;
@@ -18,14 +19,14 @@ public class Trial implements Serializable{
         this.learningPeriods = learningPeriods;
     }
 
-    public void simulate(GroupPhase groupPhase, double gammaValue) {
+    public void simulate(GroupPhase groupPhase, GlobalParameterPool globalParams) {
         for(LearningPeriod period : learningPeriods){
             if(period instanceof ItiPeriod) {
                 groupPhase.recordItiPeriod(period.stims);
-                ((ItiPeriod)period).learn(gammaValue);
+                ((ItiPeriod)period).learn(globalParams);
             }else {
                 groupPhase.recordPeriod();
-                period.learn(groupPhase.calcVNetValue(), gammaValue);
+                period.learn(groupPhase.calcVNetValue(), globalParams);
             }
         }
     }
