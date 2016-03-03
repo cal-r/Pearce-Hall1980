@@ -10,6 +10,9 @@ import java.util.*;
  * Created by Rokas on 27/02/2016.
  */
 public class GlobalParameterPool {
+
+    private static final String extraUsSymbols = "#$*";
+
     private Map<String, Parameter> parameterMap;
     public GlobalParameterPool(){
         parameterMap = new HashMap<>();
@@ -25,16 +28,34 @@ public class GlobalParameterPool {
         return parameterMap.get(ParameterNamingConstants.GAMMA);
     }
 
-    public Parameter getLambda(char us){
-        return parameterMap.get(ParameterNamingConstants.LAMBDA_PLUS);
+    public Parameter getLambda(char usSymbol){
+        return parameterMap.get(getLambdaName(usSymbol));
+    }
+
+    public void addExtraLambdas(){
+        for(char symbol : extraUsSymbols.toCharArray()){
+            String lambdaName = getLambdaName(symbol);
+            if(!parameterMap.containsKey(lambdaName)) {
+                addParameter(createParameter(lambdaName, DefaultValuesConstants.LAMBDA));
+            }
+        }
+    }
+
+    public void removeExtraLamdbas(){
+        for(char symbol : extraUsSymbols.toCharArray()){
+            String lambdaName = getLambdaName(symbol);
+            if(parameterMap.containsKey(lambdaName)) {
+                parameterMap.remove(lambdaName);
+            }
+        }
     }
 
     private Parameter createGamma(){
         return createParameter(ParameterNamingConstants.GAMMA, DefaultValuesConstants.GAMMA);
     }
 
-    private Parameter createLambdaPlus(){
-        return createParameter(ParameterNamingConstants.LAMBDA_PLUS, DefaultValuesConstants.LAMBDA);
+    private Parameter createLambdaPlus() {
+        return createParameter(getLambdaName('+'), DefaultValuesConstants.LAMBDA);
     }
 
     private Parameter createParameter(String name, double value){
@@ -45,6 +66,10 @@ public class GlobalParameterPool {
 
     private void addParameter(Parameter param){
         parameterMap.put(param.getDisplayName(), param);
+    }
+
+    private String getLambdaName(char us){
+        return String.format("%s %s", ParameterNamingConstants.LAMBDA, us);
     }
 
 }

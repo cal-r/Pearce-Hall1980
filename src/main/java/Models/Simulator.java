@@ -41,7 +41,10 @@ public class Simulator implements Serializable{
         return csParameterPool.getAllParameters();
     }
 
-    public List<Parameter> getGlobalParameters(){ return globalParameterPool.getParameters(); }
+    public List<Parameter> getGlobalParameters(){
+        adjustGlobalParameters();
+        return globalParameterPool.getParameters();
+    }
 
     public List<Group> getGroups(){
         return groups;
@@ -89,5 +92,13 @@ public class Simulator implements Serializable{
 
     public SimulatorSettings getSettings(){
         return settings;
+    }
+
+    private void adjustGlobalParameters() {
+        if(settings.UseDifferentUs){
+            globalParameterPool.addExtraLambdas();
+        }else{
+            globalParameterPool.removeExtraLamdbas();
+        }
     }
 }

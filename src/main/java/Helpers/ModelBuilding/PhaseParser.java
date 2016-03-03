@@ -85,7 +85,7 @@ public class PhaseParser {
         }
 
         private boolean getUsPresent(char reinforcer) {
-            if (reinforcer == '+') {
+            if (reinforcer != '-') {
                 return true;
             }
             return false;

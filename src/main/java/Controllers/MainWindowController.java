@@ -197,7 +197,7 @@ public class MainWindowController implements ActionListener, TableModelListener 
     }
 
     public void onUseDifferentUsChange() {
-
+        globalParamsTableModel.setUpParameters(simulator.getGlobalParameters());
     }
 
     //getters

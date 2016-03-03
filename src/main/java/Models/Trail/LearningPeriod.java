@@ -19,6 +19,7 @@ public class LearningPeriod implements Serializable {
     public LearningPeriod(boolean usPresent, char reinforcer, List<Stimulus> stims) {
         this.usPresent = usPresent;
         this.stims = stims;
+        this.reinforcer = reinforcer;
     }
 
     public void learn(double vNet, GlobalParameterPool globalParams) {
@@ -53,7 +54,7 @@ public class LearningPeriod implements Serializable {
         if(!usPresent){
             return 0;
         }
-        return globals.getLambda('+').getValue();
+        return globals.getLambda(reinforcer).getValue();
     }
 
     private double getNewAlpha(Parameter gamma, double lambda, double vNet, double oldAlpha) {

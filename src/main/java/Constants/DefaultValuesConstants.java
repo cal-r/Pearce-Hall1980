@@ -14,8 +14,8 @@ public class DefaultValuesConstants {
     public static final boolean RANDOM_SELECTION = false;
     public static final int ITI_CS_RATIO = 5;
     public static boolean COMPOUND_RESULTS = true;
-    public static boolean CONTEXT_SIMULATION = true;
-    public static boolean USE_DIFFERENT_US = true;
+    public static boolean CONTEXT_SIMULATION = false;
+    public static boolean USE_DIFFERENT_US = false;
     public static final int NUMBER_OF_RANDOM_COMBINATIONS = 1000;
     public static final double LAMBDA = 1;
 }
