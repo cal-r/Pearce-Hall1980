@@ -10,6 +10,7 @@ public class GuiStringConstants {
     public static final String GROUP_NAME = "Group Name";
     public static final String CS_PARAMETER = "Cs Parameter";
     public static final String GLOBAL_PARAMETER = "Global Parameter";
+    public static final String US_PARAMETER = "US Parameter";
     public static final String VALUE = "Value";
     public static final String RANDOM = "Random";
     public static final String CONTEXT = "Context";
@@ -22,8 +23,8 @@ public class GuiStringConstants {
     public static final String RANDOM_TRIALS_SETTING = "Number of Random Trials Combinations";
     public static final String COMPOUND_RESULTS_SETTING = "Show Compound Results";
     public static final String SIMULATE_CONTEXT = "Context Simulation";
-    public static final String USE_DIFFERENT_US = "Use Different US per Phase";
-
+    public static final String USE_DIFFERENT_US_STRENGTHS = "Use Different US Strengts";
+	public static final String USE_DIFFERENT_US = "Use Different US";
 
     public static final String DEFAULT_PHASE = "2A+";
     public static final String TRAIL_TYPE_SEPARATOR = "/";

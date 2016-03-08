@@ -7,10 +7,7 @@ import Helpers.Export.ExcelExportHelper;
 import Helpers.ModelBuilding.SimulatorBuilder;
 import Models.Parameters.Parameter;
 import Models.Simulator;
-import ViewModels.TableModels.BaseTableModel;
-import ViewModels.TableModels.CSParamsTableModel;
-import ViewModels.TableModels.GlobalPramsTableModel;
-import ViewModels.TableModels.TrialTableModel;
+import ViewModels.TableModels.*;
 import _from_RW_simulator.ContextConfig;
 import _from_RW_simulator.ContextEditor;
 
@@ -31,6 +28,7 @@ public class MainWindowController implements ActionListener, TableModelListener 
     private List<JButton> exportButtons;
 
     private GlobalPramsTableModel globalParamsTableModel;
+    private UsParamsTableModel usParamsTableModel;
     private CSParamsTableModel csParamsTableModel;
     private TrialTableModel trialTableModel;
     private JTextArea simOutputArea;
@@ -72,6 +70,11 @@ public class MainWindowController implements ActionListener, TableModelListener 
     public void initGlobalParamsTable(JTable table){
         globalParamsTableModel = new GlobalPramsTableModel();
         initTableModel(table, globalParamsTableModel);
+    }
+
+    public void initUsParamsTable(JTable usParamsTable) {
+        usParamsTableModel = new UsParamsTableModel();
+        initTableModel(usParamsTable, usParamsTableModel);
     }
 
     private void initTableModel(JTable table, BaseTableModel tableModel){

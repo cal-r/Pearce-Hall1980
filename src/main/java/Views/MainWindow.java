@@ -26,6 +26,7 @@ public class MainWindow extends JFrame{
     private JButton xlsExportButton;
     private JButton graphsButton;
     private JPanel footerPanel;
+    private JTable usParamsTable;
 
     private MainWindowController controller;
     private MenuController menuController;
@@ -46,6 +47,7 @@ public class MainWindow extends JFrame{
         controller.initTrialTable(trialTable);
         controller.initCsParamsTable(csParamsTable);
         controller.initGlobalParamsTable(globalParamsTable);
+        controller.initUsParamsTable(usParamsTable);
         //buttons
         controller.initButton(setParamsButton, ActionCommands.SET_PARAMETERS);
         controller.initButton(plusPhaseButton, ActionCommands.ADD_PHASE);
