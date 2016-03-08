@@ -13,29 +13,37 @@ public class GlobalParameterPool {
 
     private static final String extraUsSymbols = "#$*";
 
-    private Map<String, Parameter> parameterMap;
+    private List<Parameter> globalParameters;
+    private Map<String, Parameter> usParameterMap;
     public GlobalParameterPool(){
-        parameterMap = new HashMap<>();
-        addParameter(createGamma());
+        //globals
+        globalParameters = new ArrayList<>();
+        globalParameters.add(createGamma());
+        //us
+        usParameterMap = new HashMap<>();
         addParameter(createLambdaPlus());
     }
 
-    public List<Parameter> getParameters(){
-        return new ArrayList<>(parameterMap.values());
+    public List<Parameter> getUsParameters(){
+        return new ArrayList<>(usParameterMap.values());
+    }
+
+    public List<Parameter> getGlobalParameters(){
+        return globalParameters;
     }
 
     public Parameter getGamma(){
-        return parameterMap.get(ParameterNamingConstants.GAMMA);
+        return globalParameters.get(0);
     }
 
     public Parameter getLambda(char usSymbol){
-        return parameterMap.get(getLambdaName(usSymbol));
+        return usParameterMap.get(getLambdaName(usSymbol));
     }
 
     public void addExtraLambdas(){
         for(char symbol : extraUsSymbols.toCharArray()){
             String lambdaName = getLambdaName(symbol);
-            if(!parameterMap.containsKey(lambdaName)) {
+            if(!usParameterMap.containsKey(lambdaName)) {
                 addParameter(createParameter(lambdaName, DefaultValuesConstants.LAMBDA));
             }
         }
@@ -44,8 +52,8 @@ public class GlobalParameterPool {
     public void removeExtraLamdbas(){
         for(char symbol : extraUsSymbols.toCharArray()){
             String lambdaName = getLambdaName(symbol);
-            if(parameterMap.containsKey(lambdaName)) {
-                parameterMap.remove(lambdaName);
+            if(usParameterMap.containsKey(lambdaName)) {
+                usParameterMap.remove(lambdaName);
             }
         }
     }
@@ -65,7 +73,7 @@ public class GlobalParameterPool {
     }
 
     private void addParameter(Parameter param){
-        parameterMap.put(param.getDisplayName(), param);
+        usParameterMap.put(param.getDisplayName(), param);
     }
 
     private String getLambdaName(char us){

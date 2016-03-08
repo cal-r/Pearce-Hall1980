@@ -10,7 +10,6 @@ import Models.Parameters.Pools.GlobalParameterPool;
 import ViewModels.GroupReportViewModel;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -41,9 +40,13 @@ public class Simulator implements Serializable{
         return csParameterPool.getAllParameters();
     }
 
+    public List<Parameter> getUsParameters(){
+        adjustUsParameters();
+        return globalParameterPool.getUsParameters();
+    }
+
     public List<Parameter> getGlobalParameters(){
-        adjustGlobalParameters();
-        return globalParameterPool.getParameters();
+        return globalParameterPool.getGlobalParameters();
     }
 
     public List<Group> getGroups(){
@@ -67,7 +70,7 @@ public class Simulator implements Serializable{
     }
 
     private GroupHistory createGroupHistory(Group group){
-        GroupHistory history = new GroupHistory(group, csParameterPool, getGlobalParameters());
+        GroupHistory history = new GroupHistory(group, csParameterPool, getUsParameters());
         if(settings.ContextSimulation){
             history.setContextParameterPool(group.getContextParameterPool());;
         }
@@ -94,7 +97,7 @@ public class Simulator implements Serializable{
         return settings;
     }
 
-    private void adjustGlobalParameters() {
+    private void adjustUsParameters() {
         if(settings.UseDifferentUs){
             globalParameterPool.addExtraLambdas();
         }else{

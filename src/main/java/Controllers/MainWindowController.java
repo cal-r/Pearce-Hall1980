@@ -91,9 +91,9 @@ public class MainWindowController implements ActionListener, TableModelListener 
         try {
             SimulatorBuilder.initSimulator(trialTableModel, simulator);
             List<Parameter> csParameters = ListCaster.cast(simulator.getCsParameters());
-            List<Parameter> globalParameters = simulator.getGlobalParameters();
             csParamsTableModel.setUpParameters(csParameters);
-            globalParamsTableModel.setUpParameters(globalParameters);
+            globalParamsTableModel.setUpParameters(simulator.getGlobalParameters());
+            usParamsTableModel.setUpParameters(simulator.getUsParameters());
             runSimButton.setEnabled(true);
         }catch (IllegalArgumentException ex){
             GuiHelper.displayErrorMessage(GuiStringConstants.TRAIL_TABLE_ERROR);
@@ -200,7 +200,7 @@ public class MainWindowController implements ActionListener, TableModelListener 
     }
 
     public void onUseDifferentUsChange() {
-        globalParamsTableModel.setUpParameters(simulator.getGlobalParameters());
+        usParamsTableModel.setUpParameters(simulator.getUsParameters());
     }
 
     //getters
