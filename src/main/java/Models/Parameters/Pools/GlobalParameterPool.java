@@ -14,19 +14,16 @@ public class GlobalParameterPool {
     private static final String extraUsSymbols = "#$*";
 
     private List<Parameter> globalParameters;
-    private Map<String, Parameter> usParameterMap;
     public GlobalParameterPool(){
         //globals
         globalParameters = new ArrayList<>();
         globalParameters.add(createGamma());
         //us
-        usParameterMap = new HashMap<>();
+
         addParameter(createLambdaPlus());
     }
 
-    public List<Parameter> getUsParameters(){
-        return new ArrayList<>(usParameterMap.values());
-    }
+
 
     public List<Parameter> getGlobalParameters(){
         return globalParameters;
@@ -36,9 +33,7 @@ public class GlobalParameterPool {
         return globalParameters.get(0);
     }
 
-    public Parameter getLambda(char usSymbol){
-        return usParameterMap.get(getLambdaName(usSymbol));
-    }
+
 
     public void addExtraLambdas(){
         for(char symbol : extraUsSymbols.toCharArray()){
