@@ -11,19 +11,15 @@ import java.util.*;
  */
 public class GlobalParameterPool {
 
-    private static final String extraUsSymbols = "#$*";
-
     private List<Parameter> globalParameters;
+
+    private UsParameterPool usParameterPool;
+
     public GlobalParameterPool(){
-        //globals
         globalParameters = new ArrayList<>();
         globalParameters.add(createGamma());
-        //us
-
-        addParameter(createLambdaPlus());
+        usParameterPool = new UsParameterPool();
     }
-
-
 
     public List<Parameter> getGlobalParameters(){
         return globalParameters;
@@ -33,32 +29,8 @@ public class GlobalParameterPool {
         return globalParameters.get(0);
     }
 
-
-
-    public void addExtraLambdas(){
-        for(char symbol : extraUsSymbols.toCharArray()){
-            String lambdaName = getLambdaName(symbol);
-            if(!usParameterMap.containsKey(lambdaName)) {
-                addParameter(createParameter(lambdaName, DefaultValuesConstants.LAMBDA));
-            }
-        }
-    }
-
-    public void removeExtraLamdbas(){
-        for(char symbol : extraUsSymbols.toCharArray()){
-            String lambdaName = getLambdaName(symbol);
-            if(usParameterMap.containsKey(lambdaName)) {
-                usParameterMap.remove(lambdaName);
-            }
-        }
-    }
-
     private Parameter createGamma(){
         return createParameter(ParameterNamingConstants.GAMMA, DefaultValuesConstants.GAMMA);
-    }
-
-    private Parameter createLambdaPlus() {
-        return createParameter(getLambdaName('+'), DefaultValuesConstants.LAMBDA);
     }
 
     private Parameter createParameter(String name, double value){
@@ -67,12 +39,8 @@ public class GlobalParameterPool {
         return param;
     }
 
-    private void addParameter(Parameter param){
-        usParameterMap.put(param.getDisplayName(), param);
-    }
-
-    private String getLambdaName(char us){
-        return String.format("%s %s", ParameterNamingConstants.LAMBDA, us);
+    public UsParameterPool getUsParameterPool() {
+        return usParameterPool;
     }
 
 }

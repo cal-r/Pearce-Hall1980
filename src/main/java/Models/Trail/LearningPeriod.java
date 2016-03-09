@@ -22,8 +22,8 @@ public class LearningPeriod implements Serializable {
         this.reinforcer = reinforcer;
     }
 
-    public void learn(double vNet, GlobalParameterPool globalParams) {
-        double lambda = getLamba(globalParams);
+    public void learn(double vNet, GlobalParameterPool globalParams, int phaseNumber) {
+        double lambda = getLamba(globalParams, phaseNumber);
         double capitalLambda = lambda - vNet;
         for (Stimulus stimulus : stims) {
             if (stimulus instanceof ConditionalStimulus) {
@@ -49,12 +49,11 @@ public class LearningPeriod implements Serializable {
         cs.updateAssociationInhibitory(deltaVi);
     }
 
-    private double getLamba(GlobalParameterPool globals)
-    {
+    private double getLamba(GlobalParameterPool globals, int phaseNumber) {
         if(!usPresent){
             return 0;
         }
-        return globals.getLambda(reinforcer).getValue();
+        return globals.getUsParameterPool().getLambda(reinforcer).getValue(phaseNumber);
     }
 
     private double getNewAlpha(Parameter gamma, double lambda, double vNet, double oldAlpha) {

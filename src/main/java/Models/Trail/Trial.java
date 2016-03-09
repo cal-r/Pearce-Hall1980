@@ -26,7 +26,7 @@ public class Trial implements Serializable{
                 ((ItiPeriod)period).learn(globalParams);
             }else {
                 groupPhase.recordPeriod();
-                period.learn(groupPhase.calcVNetValue(), globalParams);
+                period.learn(groupPhase.calcVNetValue(), globalParams, groupPhase.getPhaseId());
             }
         }
     }

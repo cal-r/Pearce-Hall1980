@@ -26,6 +26,6 @@ public class ItiPeriod extends LearningPeriod {
     }
 
     public void learn(GlobalParameterPool globalParams) {
-        learn(context.getAssociationNet(), globalParams);
+        learn(context.getAssociationNet(), globalParams, -1);
     }
 }

@@ -7,6 +7,7 @@ import Models.Parameters.ConditionalStimulus.CsParameter;
 import Models.Parameters.Parameter;
 import Models.Parameters.Pools.CsParameterPool;
 import Models.Parameters.Pools.GlobalParameterPool;
+import Models.Parameters.Pools.UsParameterPool;
 import ViewModels.GroupReportViewModel;
 
 import java.io.Serializable;
@@ -40,9 +41,9 @@ public class Simulator implements Serializable{
         return csParameterPool.getAllParameters();
     }
 
-    public List<Parameter> getUsParameters(){
+    public UsParameterPool getUsParameters(){
         adjustUsParameters();
-        return globalParameterPool.getUsParameters();
+        return globalParameterPool.getUsParameterPool();
     }
 
     public List<Parameter> getGlobalParameters(){
@@ -99,9 +100,7 @@ public class Simulator implements Serializable{
 
     private void adjustUsParameters() {
         if(settings.UseDifferentUs){
-            globalParameterPool.addExtraLambdas();
-        }else{
-            globalParameterPool.removeExtraLamdbas();
+            globalParameterPool.getUsParameterPool().adjustLamdbas(groups);
         }
     }
 }

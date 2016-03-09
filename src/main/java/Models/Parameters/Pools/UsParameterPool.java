@@ -45,9 +45,8 @@ public class UsParameterPool {
         }
 
         for(UsParameter usParameter : usParameterMap.values()){
-            usParameter.adjust(lambdaAvailabilityMap.get(usParameter.getDisplayName()));
+            usParameter.adjust(lambdaAvailabilityMap.get(usParameter.getDisplayName()), groups.get(0).groupPhases.size());
         }
-        
     }
 
     public List<UsParameter> getUsParameters(){

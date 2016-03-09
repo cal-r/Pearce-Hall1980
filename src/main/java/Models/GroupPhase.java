@@ -23,6 +23,7 @@ public class GroupPhase implements Serializable {
     public ArrayList<Trial> trials;
     private boolean random;
     private Map<String, Stimulus> stimsMap;
+
     private int phaseId;
     private String description;
 
@@ -155,7 +156,9 @@ public class GroupPhase implements Serializable {
         this.random = isRandom;
     }
 
-    public int getNumberOfTrials(){ return trials.size(); }
+    public int getPhaseId() {
+        return phaseId;
+    }
 
     public String getTitle(){
         return GuiStringConstants.getPhaseTitle(phaseId);
