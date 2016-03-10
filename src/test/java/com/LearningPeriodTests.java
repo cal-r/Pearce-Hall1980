@@ -25,7 +25,7 @@ public class LearningPeriodTests extends junit.framework.TestCase {
         GlobalParameterPool globals = getGlobals();
         HashMap<String, ConditionalStimulus> allCues = createCsMap(ListCaster.toStringArray("AB"));
         LearningPeriod period = createLearningPeriod(allCues, ListCaster.toStringArray("A"), true);
-        period.learn(0, globals);
+        period.learn(0, globals, 1);
         assertEquals(0.025, allCues.get("A").getAssociationExcitatory(), DefaultValuesConstants.ROUNDING_PRECISION);
         assertEquals(0, allCues.get("A").getAssociationInhibitory(), DefaultValuesConstants.ROUNDING_PRECISION);
         assertEquals(0.55, allCues.get("A").getAlpha(), DefaultValuesConstants.ROUNDING_PRECISION);
@@ -40,10 +40,10 @@ public class LearningPeriodTests extends junit.framework.TestCase {
         GlobalParameterPool globals = getGlobals();
         HashMap<String, ConditionalStimulus> allCues = createCsMap(ListCaster.toStringArray("AB"));
         LearningPeriod period = createLearningPeriod(allCues, ListCaster.toStringArray("A"), true);
-        period.learn(0, globals);
+        period.learn(0, globals, 1);
 
         period = createLearningPeriod(allCues, ListCaster.toStringArray("A"), true);
-        period.learn(0.025, globals);
+        period.learn(0.025, globals, 1);
         assertEquals(0.0525, allCues.get("A").getAssociationExcitatory(), DefaultValuesConstants.ROUNDING_PRECISION);
         assertEquals(0, allCues.get("A").getAssociationInhibitory(), DefaultValuesConstants.ROUNDING_PRECISION);
         assertEquals(0.5925, allCues.get("A").getAlpha(), DefaultValuesConstants.ROUNDING_PRECISION);
@@ -58,13 +58,13 @@ public class LearningPeriodTests extends junit.framework.TestCase {
         GlobalParameterPool globals = getGlobals();
         HashMap<String, ConditionalStimulus> allCues = createCsMap(ListCaster.toStringArray("AB"));
         LearningPeriod learn = createLearningPeriod(allCues, ListCaster.toStringArray("A"), true);
-        learn.learn(0, globals);
+        learn.learn(0, globals, 1);
 
         learn = createLearningPeriod(allCues, ListCaster.toStringArray("A"), true);
-        learn.learn(0.025, globals);
+        learn.learn(0.025, globals, 1);
 
         learn = createLearningPeriod(allCues, ListCaster.toStringArray("AB"), true);
-        learn.learn(0.0525, globals);
+        learn.learn(0.0525, globals, 1);
         assertEquals(0.082125, allCues.get("A").getAssociationExcitatory(), DefaultValuesConstants.ROUNDING_PRECISION);
         assertEquals(0, allCues.get("A").getAssociationInhibitory(), DefaultValuesConstants.ROUNDING_PRECISION);
         assertEquals(0.628, allCues.get("A").getAlpha(), DefaultValuesConstants.ROUNDING_PRECISION);
@@ -79,16 +79,16 @@ public class LearningPeriodTests extends junit.framework.TestCase {
         GlobalParameterPool globals = getGlobals();
         HashMap<String, ConditionalStimulus> allCues = createCsMap(ListCaster.toStringArray("AB"));
         LearningPeriod period = createLearningPeriod(allCues, ListCaster.toStringArray("A"), true);
-        period.learn(0, globals);
+        period.learn(0, globals, 1);
 
         period = createLearningPeriod(allCues, ListCaster.toStringArray("A"), true);
-        period.learn(0.025, globals);
+        period.learn(0.025, globals, 1);
 
         period = createLearningPeriod(allCues, ListCaster.toStringArray("AB"), true);
-        period.learn(0.0525, globals);
+        period.learn(0.0525, globals, 1);
 
         period = createLearningPeriod(allCues, ListCaster.toStringArray("A"), true);
-        period.learn(0.107125, globals);
+        period.learn(0.107125, globals, 1);
         assertEquals(0.113525, allCues.get("A").getAssociationExcitatory(), DefaultValuesConstants.ROUNDING_PRECISION);
         assertEquals(0, allCues.get("A").getAssociationInhibitory(), DefaultValuesConstants.ROUNDING_PRECISION);
         assertEquals(0.6544875, allCues.get("A").getAlpha(), DefaultValuesConstants.ROUNDING_PRECISION);
@@ -105,7 +105,7 @@ public class LearningPeriodTests extends junit.framework.TestCase {
         HashMap<String, ConditionalStimulus> allCues = createCsMap(ListCaster.toStringArray("A"));
         LearningPeriod period = createLearningPeriod(allCues, ListCaster.toStringArray("A"), true);
         for(int i=0;i<2000;i++) {
-            period.learn(allCues.get("A").getAssociationNet(), globals);
+            period.learn(allCues.get("A").getAssociationNet(), globals, 1);
         }
 
         assertEquals(1, allCues.get("A").getAssociationExcitatory(), DefaultValuesConstants.ASYMPTOTE_EXCEED_ALLOWANCE);
@@ -134,7 +134,6 @@ public class LearningPeriodTests extends junit.framework.TestCase {
     private GlobalParameterPool getGlobals(){
         GlobalParameterPool globals = new GlobalParameterPool();
         globals.getGamma().setValue(0.1);
-        globals.getLambda('+').setValue(1);
         return globals;
     }
 }

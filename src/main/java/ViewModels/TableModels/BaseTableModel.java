@@ -74,6 +74,10 @@ public abstract class BaseTableModel extends AbstractTableModel  {
         fireTableStructureChanged();
     }
 
+    protected void addColumn(String colName){
+        addColumn(colName, "");
+    }
+
     protected void addRow(){
         List newRow = new ArrayList<>();
         for(int col=0;col<getColumnCount();col++){

@@ -21,6 +21,12 @@ public class UsParameterPool {
 
     public UsParameterPool(){
         usParameterMap = new HashMap<>();
+        addLambdaPlus();
+    }
+
+    private void addLambdaPlus(){
+        String name = getLambdaName('+');
+        usParameterMap.put(name, new UsParameter(name));
     }
 
     public void adjustLamdbas(List<Group> groups){
@@ -44,8 +50,16 @@ public class UsParameterPool {
             }
         }
 
+        List<String> keysToRemove = new ArrayList<>();
         for(UsParameter usParameter : usParameterMap.values()){
-            usParameter.adjust(lambdaAvailabilityMap.get(usParameter.getDisplayName()), groups.get(0).groupPhases.size());
+            if(lambdaAvailabilityMap.containsKey(usParameter.getDisplayName())) {
+                usParameter.adjust(lambdaAvailabilityMap.get(usParameter.getDisplayName()), groups.get(0).groupPhases.size());
+            }else {
+                keysToRemove.add(usParameter.getDisplayName());
+            }
+        }
+        for(String key : keysToRemove){
+            usParameterMap.remove(key);
         }
     }
 

@@ -3,6 +3,7 @@ package Models.History;
 import Models.Group;
 import Models.Parameters.Pools.CsParameterPool;
 import Models.Parameters.Parameter;
+import Models.Parameters.UsParameter;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ public class GroupHistory implements Serializable {
     public CsParameterPool csParameterPool;
     public CsParameterPool contextParameterPool;
     public List<Parameter> globalParameters;
-    public GroupHistory(Group group, CsParameterPool csParameterPool, List<Parameter> globalParameters){
+    public GroupHistory(Group group, CsParameterPool csParameterPool, List<Parameter> globalParameters, List<UsParameter> usParameters){
         this.group = group;
         this.csParameterPool = csParameterPool;
         this.globalParameters = globalParameters;

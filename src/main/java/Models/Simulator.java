@@ -41,7 +41,7 @@ public class Simulator implements Serializable{
         return csParameterPool.getAllParameters();
     }
 
-    public UsParameterPool getUsParameters(){
+    public UsParameterPool getUsParameterPool(){
         adjustUsParameters();
         return globalParameterPool.getUsParameterPool();
     }
@@ -71,7 +71,7 @@ public class Simulator implements Serializable{
     }
 
     private GroupHistory createGroupHistory(Group group){
-        GroupHistory history = new GroupHistory(group, csParameterPool, getUsParameters());
+        GroupHistory history = new GroupHistory(group, csParameterPool, getGlobalParameters(), getUsParameterPool().getUsParameters());
         if(settings.ContextSimulation){
             history.setContextParameterPool(group.getContextParameterPool());;
         }
@@ -99,7 +99,7 @@ public class Simulator implements Serializable{
     }
 
     private void adjustUsParameters() {
-        if(settings.UseDifferentUs){
+        if(settings.UseDifferentUs && groups!=null && !groups.isEmpty()){
             globalParameterPool.getUsParameterPool().adjustLamdbas(groups);
         }
     }

@@ -19,14 +19,18 @@ public class UsParameter{
     public UsParameter(String name) {
         this.name = name;
         values = new ArrayList<>();
+        availability = new ArrayList<>();
     }
 
     public void setValue(int phaseId, double value){
-        values.set(phaseId - 1, value);
+        values.set(phaseId, value);
     }
 
     public double getValue(int phaseId){
-        return values.get(phaseId-1);
+        if(availability.size()<=phaseId || !availability.get(phaseId)){
+            return DefaultValuesConstants.LAMBDA;
+        }
+        return values.get(phaseId);
     }
 
     public boolean isAvailable(int phaseId){
@@ -41,6 +45,10 @@ public class UsParameter{
                 values.add(DefaultValuesConstants.LAMBDA);
             }
         }
+    }
+
+    public int getPhaseCount(){
+        return availability.size();
     }
 
     public String getDisplayName(){

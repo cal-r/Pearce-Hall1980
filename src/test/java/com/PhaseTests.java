@@ -131,7 +131,6 @@ public class PhaseTests extends junit.framework.TestCase {
     private GlobalParameterPool getGlobals(){
         GlobalParameterPool globals = new GlobalParameterPool();
         globals.getGamma().setValue(0.1);
-        globals.getLambda('+').setValue(1);
         return globals;
     }
 }
