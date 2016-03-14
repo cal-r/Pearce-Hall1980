@@ -7,7 +7,7 @@ import Models.Stimulus.ConditionalStimulus;
 import Models.Parameters.ConditionalStimulus.InitialAlphaParameter;
 import Models.Parameters.ConditionalStimulus.SalienceExcitatoryParameter;
 import Models.Parameters.ConditionalStimulus.SalienceInhibitoryParameter;
-import Models.Stimulus.Stimulus;
+import Models.Stimulus.IStimulus;
 import Models.Trail.LearningPeriod;
 import org.junit.Test;
 
@@ -114,7 +114,7 @@ public class LearningPeriodTests extends junit.framework.TestCase {
     }
 
     public static LearningPeriod createLearningPeriod(HashMap<String, ConditionalStimulus> allCues, String[] presentCss, boolean usPresent){
-        List<Stimulus> presentCues = new ArrayList<>();
+        List<IStimulus> presentCues = new ArrayList<>();
         for(String c : presentCss) {
             presentCues.add(allCues.get(c));
         }

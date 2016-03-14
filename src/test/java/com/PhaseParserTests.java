@@ -7,6 +7,8 @@ import Models.SimulatorSettings;
 import Models.Stimulus.ConditionalStimulus;
 import Models.GroupPhase;
 import Models.Parameters.Pools.CsParameterPool;
+import Models.Stimulus.IConditionalStimulus;
+import Models.Stimulus.IStimulus;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,7 +29,7 @@ public class PhaseParserTests extends junit.framework.TestCase {
         ArrayList<PhaseStringTokenizer.TrialTypeTokens> tokensArrayList = new ArrayList<>();
         tokensArrayList.add(trialTypeTokens);
         CsParameterPool cspPool = createCsParameterPool(trialTypeTokens.cueNames);
-        Map<String, ConditionalStimulus> csMap = getCsMap(trialTypeTokens.cueNames, cspPool);
+        Map<String, IConditionalStimulus> csMap = getCsMap(trialTypeTokens.cueNames, cspPool);
         GroupPhase groupPhase = PhaseParser.ParsePhase(tokensArrayList, csMap, 0, getTestSettings(), null, 0);
 
         assertTrue(groupPhase != null);
@@ -46,7 +48,7 @@ public class PhaseParserTests extends junit.framework.TestCase {
         tokensArrayList.add(trialTypeTokens);
 
         CsParameterPool cspPool = createCsParameterPool(trialTypeTokens.cueNames);
-        Map<String, ConditionalStimulus> csMap = getCsMap(trialTypeTokens.cueNames, cspPool);
+        Map<String, IConditionalStimulus> csMap = getCsMap(trialTypeTokens.cueNames, cspPool);
         GroupPhase groupPhase = PhaseParser.ParsePhase(tokensArrayList, csMap, 0, getTestSettings(), null, 0);
 
         assertTrue(groupPhase != null);
@@ -65,7 +67,7 @@ public class PhaseParserTests extends junit.framework.TestCase {
         tokensArrayList.add(trialTypeTokens);
 
         CsParameterPool cspPool = createCsParameterPool(trialTypeTokens.cueNames);
-        Map<String, ConditionalStimulus> csMap = getCsMap(trialTypeTokens.cueNames, cspPool);
+        Map<String, IConditionalStimulus> csMap = getCsMap(trialTypeTokens.cueNames, cspPool);
         GroupPhase groupPhase = PhaseParser.ParsePhase(tokensArrayList, csMap, 0, getTestSettings(), null, 0);
 
         assertTrue(groupPhase != null);
@@ -91,7 +93,7 @@ public class PhaseParserTests extends junit.framework.TestCase {
         tokensArrayList.add(trialTypeTokens2);
 
         CsParameterPool cspPool = createCsParameterPool(trialTypeTokens.cueNames);
-        Map<String, ConditionalStimulus> csMap = getCsMap(trialTypeTokens.cueNames, cspPool);
+        Map<String, IConditionalStimulus> csMap = getCsMap(trialTypeTokens.cueNames, cspPool);
         GroupPhase groupPhase = PhaseParser.ParsePhase(tokensArrayList, csMap, 0, getTestSettings(), null, 0);
 
         assertTrue(groupPhase != null);
@@ -118,7 +120,7 @@ public class PhaseParserTests extends junit.framework.TestCase {
         tokensArrayList.add(trialTypeTokens);
 
         CsParameterPool cspPool = createCsParameterPool(trialTypeTokens.cueNames);
-        Map<String, ConditionalStimulus> csMap = getCsMap(trialTypeTokens.cueNames, cspPool);
+        Map<String, IConditionalStimulus> csMap = getCsMap(trialTypeTokens.cueNames, cspPool);
         GroupPhase groupPhase = PhaseParser.ParsePhase(tokensArrayList, csMap, 0, getTestSettings(), null, 0);
 
         assertTrue(groupPhase != null);
@@ -145,7 +147,7 @@ public class PhaseParserTests extends junit.framework.TestCase {
         tokensArrayList.add(trialTypeTokens2);
 
         CsParameterPool cspPool = createCsParameterPool(trialTypeTokens.cueNames);
-        Map<String, ConditionalStimulus> csMap = getCsMap(trialTypeTokens.cueNames, cspPool);
+        Map<String, IConditionalStimulus> csMap = getCsMap(trialTypeTokens.cueNames, cspPool);
         GroupPhase groupPhase = PhaseParser.ParsePhase(tokensArrayList, csMap, 0, getTestSettings(), null, 0);
 
         assertEquals(groupPhase.trials.get(0).getStims().size(), 2);
@@ -159,8 +161,8 @@ public class PhaseParserTests extends junit.framework.TestCase {
         return pool;
     }
 
-    private Map<String, ConditionalStimulus> getCsMap(String[] cueNames, CsParameterPool csParameterPool){
-        Map<String, ConditionalStimulus> csMap = new HashMap<>();
+    private Map<String, IConditionalStimulus> getCsMap(String[] cueNames, CsParameterPool csParameterPool){
+        Map<String, IConditionalStimulus> csMap = new HashMap<>();
         for(String cueName : cueNames){
             csMap.put(cueName, new ConditionalStimulus(
                     cueName,

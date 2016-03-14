@@ -1,13 +1,11 @@
 package Helpers.ModelBuilding;
 
-import Models.Parameters.Pools.GlobalParameterPool;
 import Models.SimulatorSettings;
-import Models.Stimulus.ConditionalStimulus;
+import Models.Stimulus.*;
 import Models.Group;
 import Models.GroupPhase;
 import Models.Parameters.Pools.CsParameterPool;
 import Models.Simulator;
-import Models.Stimulus.ContextStimulus;
 import ViewModels.TableModels.TrialTableModel;
 import _from_RW_simulator.ContextConfig;
 
@@ -40,7 +38,7 @@ public class SimulatorBuilder {
         private CsParameterPool csParameterPool;
 
         private SimulatorSettings settings;
-        private Map<String, ConditionalStimulus> csMap;
+        private Map<String, IConditionalStimulus> csMap;
         private List<GroupPhase> groupPhases;
         private TrialTableModel tableModel;
 
@@ -70,7 +68,7 @@ public class SimulatorBuilder {
             for(int i=0;i<phaseDescriptions.size();i++){
                 String phaseDescription = phaseDescriptions.get(i);
                 List<PhaseStringTokenizer.TrialTypeTokens> phaseTokens = PhaseStringTokenizer.getPhaseTokens(settings, phaseDescription);
-                updateCsMaps(phaseTokens);
+                updateCsMaps(phaseTokens, PhaseParser.getPhaseReinforcer(phaseTokens));
                 GroupPhase groupPhase;
 
                 if(settings.ContextSimulation) {
@@ -94,15 +92,23 @@ public class SimulatorBuilder {
             return group;
         }
 
-        private void updateCsMaps(List<PhaseStringTokenizer.TrialTypeTokens> phaseTokens){
+        private void updateCsMaps(List<PhaseStringTokenizer.TrialTypeTokens> phaseTokens, char reinforcer){
             for(PhaseStringTokenizer.TrialTypeTokens trialTypeTokens : phaseTokens){
                 for(String cueName : trialTypeTokens.cueNames){
                     if(!csParameterPool.contains(cueName)){
                         csParameterPool.createParameters(cueName);
                     }
-                    if(!csMap.containsKey(cueName)){
-                        csMap.put(cueName, createCs(cueName));
+                    if(settings.UseDifferentUs) {
+                        if(!csMap.containsKey(cueName)){
+                            csMap.put(cueName, createMultipleStimulus(cueName));
+                        }
+                        ((MultipleStimulus)csMap.get(cueName)).addStimulus(reinforcer);
+                    }else {
+                        if (!csMap.containsKey(cueName)) {
+                            csMap.put(cueName, createCs(cueName));
+                        }
                     }
+
                 }
             }
         }
@@ -115,6 +121,14 @@ public class SimulatorBuilder {
 
         private ConditionalStimulus createCs(String cueName){
             return new ConditionalStimulus(
+                    cueName,
+                    csParameterPool.getInitialAlpha(cueName),
+                    csParameterPool.getSeParameter(cueName),
+                    csParameterPool.getSiParamter(cueName));
+        }
+
+        private MultipleStimulus createMultipleStimulus(String cueName){
+            return new MultipleStimulus(
                     cueName,
                     csParameterPool.getInitialAlpha(cueName),
                     csParameterPool.getSeParameter(cueName),

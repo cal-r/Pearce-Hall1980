@@ -8,6 +8,7 @@ import Models.GroupPhase;
 import Models.History.ConditionalStimulusState;
 import Models.History.GroupPhaseHistory;
 import Models.SimulatorSettings;
+import Models.Stimulus.IConditionalStimulus;
 import Models.Trail.LearningPeriod;
 import Models.Trail.Trial;
 
@@ -49,7 +50,7 @@ public class PhaseTests extends junit.framework.TestCase {
         //        excel gives 0.500433494
 
         //test state of cues after simulation
-        for(ConditionalStimulus cs : groupPhase.getPhaseCues()) {
+        for(IConditionalStimulus cs : groupPhase.getPhaseCues()) {
             assertEquals(expectedVnet, cs.getAssociationNet(), DefaultValuesConstants.ROUNDING_PRECISION);
         }
 
@@ -68,7 +69,7 @@ public class PhaseTests extends junit.framework.TestCase {
         GroupPhaseHistory hist = groupPhase.simulateTrials(globals, new SimulatorSettings());
 
         //test state of cues after simulation
-        for(ConditionalStimulus cs : groupPhase.getPhaseCues()) {
+        for(IConditionalStimulus cs : groupPhase.getPhaseCues()) {
             assertTrue(cs.getAssociationNet() > 0.2);
             assertTrue(cs.getAssociationNet() < 0.5);
         }
@@ -94,8 +95,8 @@ public class PhaseTests extends junit.framework.TestCase {
         GroupPhaseHistory histSeq = groupPhaseSeq.simulateTrials(globals, new SimulatorSettings());
 
         //test state of cues after simulation
-        ConditionalStimulus csRand = groupPhaseRand.getPhaseCues().get(0);
-        ConditionalStimulus csSeq = groupPhaseSeq.getPhaseCues().get(0);
+        IConditionalStimulus csRand = groupPhaseRand.getPhaseCues().get(0);
+        IConditionalStimulus csSeq = groupPhaseSeq.getPhaseCues().get(0);
         assertEquals(csSeq.getAssociationNet(), csRand.getAssociationNet(), DefaultValuesConstants.ROUNDING_PRECISION);
 
         //test return value
@@ -110,7 +111,7 @@ public class PhaseTests extends junit.framework.TestCase {
 
     //40AB+/40AB-
     private static GroupPhase CreatePhase40(boolean usPresent1, boolean usPresent2, boolean isRandom){
-        GroupPhase groupPhase = new GroupPhase(1);
+        GroupPhase groupPhase = new GroupPhase(1, usPresent1 || usPresent2 ? '+' : '-');
         HashMap<String, ConditionalStimulus> phaseCues = LearningPeriodTests.createCsMap(ListCaster.toStringArray("AB"));
         groupPhase.addTrials(createTrialType(phaseCues, "AB", 40, usPresent1));
         groupPhase.addTrials(createTrialType(phaseCues, "AB", 40, usPresent2));

@@ -2,7 +2,8 @@ package Models.History;
 
 
 import Models.Stimulus.ConditionalStimulus;
-import Models.Stimulus.Stimulus;
+import Models.Stimulus.IStimulus;
+import Models.Stimulus.MultipleStimulus;
 
 import java.io.Serializable;
 import java.util.*;
@@ -39,12 +40,23 @@ public class GroupPhaseHistory implements Serializable {
         return stimsHistoriesMap.get(stimName);
     }
 
-    public void recordState(Collection<Stimulus> stims){
-        for(Stimulus stim : stims) {
-            StimulusState state = createStimState(stim);
-            addToMap(stim.getName(), state);
+    public void recordState(Collection<IStimulus> stims){
+        for(IStimulus stim : stims) {
+            if(stim instanceof MultipleStimulus){
+                for(IStimulus cs : ((MultipleStimulus) stim).getStims('-')){
+                    recordStimState(cs);
+                }
+            }else
+            {
+                recordStimState(stim);
+            }
         }
         numberOfPeriods++;
+    }
+
+    private void recordStimState(IStimulus stim){
+        StimulusState state = createStimState(stim);
+        addToMap(stim.getName(), state);
     }
 
     private void addToMap(String stimName, StimulusState state){
@@ -54,7 +66,7 @@ public class GroupPhaseHistory implements Serializable {
         stimsHistoriesMap.get(stimName).add(state);
     }
 
-    private StimulusState createStimState(Stimulus stim){
+    private StimulusState createStimState(IStimulus stim){
         if(stim instanceof ConditionalStimulus){
             return new ConditionalStimulusState((ConditionalStimulus)stim);
         }

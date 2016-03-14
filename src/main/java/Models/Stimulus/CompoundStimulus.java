@@ -6,18 +6,18 @@ import java.util.List;
 /**
  * Created by Rokas on 14/02/2016.
  */
-public class CompoundStimulus implements Stimulus, Serializable {
+public class CompoundStimulus implements IStimulus, Serializable {
 
-    private List<Stimulus> compounded;
+    private List<IStimulus> compounded;
 
-    public CompoundStimulus(List<Stimulus> compounded){
+    public CompoundStimulus(List<IStimulus> compounded){
         this.compounded = compounded;
     }
 
     @Override
     public double getAssociationNet() {
         double vnet = 0;
-        for(Stimulus stim : compounded){
+        for(IStimulus stim : compounded){
             vnet += stim.getAssociationNet();
         }
         return vnet;
@@ -26,7 +26,7 @@ public class CompoundStimulus implements Stimulus, Serializable {
     @Override
     public String getName() {
         String name = "";
-        for(Stimulus stim : compounded){
+        for(IStimulus stim : compounded){
             name += stim.getName();
         }
         return name;

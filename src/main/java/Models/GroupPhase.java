@@ -7,7 +7,9 @@ import Models.History.ConditionalStimulusState;
 import Models.History.GroupPhaseHistory;
 import Models.Parameters.Pools.GlobalParameterPool;
 import Models.Stimulus.ConditionalStimulus;
-import Models.Stimulus.Stimulus;
+import Models.Stimulus.IConditionalStimulus;
+import Models.Stimulus.MultipleStimulus;
+import Models.Stimulus.IStimulus;
 import Models.Trail.Trial;
 
 import java.io.Serializable;
@@ -22,13 +24,14 @@ import java.util.Map;
 public class GroupPhase implements Serializable {
     public ArrayList<Trial> trials;
     private boolean random;
-    private Map<String, Stimulus> stimsMap;
-
+    private Map<String, IStimulus> stimsMap;
     private int phaseId;
+    private char phaseReinforcer;
     private String description;
 
-    public GroupPhase(int phaseId) {
+    public GroupPhase(int phaseId, char phaseReinforcer) {
         this.phaseId = phaseId;
+        this.phaseReinforcer = phaseReinforcer;
         trials = new ArrayList<>();
         stimsMap = new HashMap<>();
     }
@@ -54,7 +57,7 @@ public class GroupPhase implements Serializable {
     }
 
     private void simulateTrialsRandomly(GlobalParameterPool globalParams, SimulatorSettings simulatorSettings) {
-        List<ConditionalStimulus> csCopies = getCsCopies(); //preserve initial state of CSs
+        List<IConditionalStimulus> csCopies = getCsCopies(); //preserve initial state of CSs
         List<GroupPhaseHistory> tempHistories = new ArrayList<>(); //stores every simulation
         //sim phase 1000 times
         for(int simNum = 0;simNum< simulatorSettings.NumberOfRandomCombination; simNum++) {
@@ -71,12 +74,23 @@ public class GroupPhase implements Serializable {
         GroupPhaseHistory averageHistory = RandomSimulationHelper.getAverageHistory(tempHistories);
 
         //set cs properties to average values
-        for(ConditionalStimulus cs : getPhaseCues()) {
+        for(IStimulus stim : getPhaseCues()) {
             //get the last state of cs
-            ConditionalStimulusState conditionalStimulusState = (ConditionalStimulusState) averageHistory.getLastState(cs.getName());
-            cs.setAlpha(conditionalStimulusState.Alpha);
-            cs.setAssociationExcitatory(conditionalStimulusState.Ve);
-            cs.setAssociationInhibitory(conditionalStimulusState.Vi);
+            if(stim instanceof ConditionalStimulus) {
+                ConditionalStimulus cs = (ConditionalStimulus) stim;
+                ConditionalStimulusState conditionalStimulusState = (ConditionalStimulusState) averageHistory.getLastState(cs.getName());
+                cs.setAlpha(conditionalStimulusState.Alpha);
+                cs.setAssociationExcitatory(conditionalStimulusState.Ve);
+                cs.setAssociationInhibitory(conditionalStimulusState.Vi);
+            }
+            if (stim instanceof MultipleStimulus) {
+                for (ConditionalStimulus cs : ((MultipleStimulus) stim).getStims('-')) {
+                    ConditionalStimulusState conditionalStimulusState = (ConditionalStimulusState) averageHistory.getLastState(cs.getName());
+                    cs.setAlpha(conditionalStimulusState.Alpha);
+                    cs.setAssociationExcitatory(conditionalStimulusState.Ve);
+                    cs.setAssociationInhibitory(conditionalStimulusState.Vi);
+                }
+            }
         }
         history = averageHistory;
     }
@@ -85,7 +99,7 @@ public class GroupPhase implements Serializable {
         history.recordState(stimsMap.values());
     }
 
-    public void recordItiPeriod(List<Stimulus> context){
+    public void recordItiPeriod(List<IStimulus> context){
         history.recordState(context);
     }
 
@@ -103,21 +117,29 @@ public class GroupPhase implements Serializable {
     }
 
     public void reset(){
-        for(ConditionalStimulus cs : getPhaseCues()){
-            cs.reset();
+        for(IStimulus stim : getPhaseCues()){
+            if(stim instanceof ConditionalStimulus){
+                ((ConditionalStimulus)stim).reset();
+            }
+
+            if (stim instanceof MultipleStimulus) {
+                for (ConditionalStimulus cs : ((MultipleStimulus) stim).getStims('-')) {
+                    cs.reset();
+                }
+            }
         }
     }
 
-    private void resetCues(List<ConditionalStimulus> copies){
-        for(ConditionalStimulus copy : copies){
-            ConditionalStimulus cs = (ConditionalStimulus)stimsMap.get(copy.getName());
+    private void resetCues(List<IConditionalStimulus> copies){
+        for(IConditionalStimulus copy : copies){
+            IConditionalStimulus cs = (IConditionalStimulus)stimsMap.get(copy.getName());
             cs.reset(copy);
         }
     }
 
-    private List<ConditionalStimulus> getCsCopies(){
-        List<ConditionalStimulus> copies = new ArrayList<>();
-        for(ConditionalStimulus cs : getPhaseCues()){
+    private List<IConditionalStimulus> getCsCopies(){
+        List<IConditionalStimulus> copies = new ArrayList<>();
+        for(IConditionalStimulus cs : getPhaseCues()){
             copies.add(cs.getCopy());
         }
         return copies;
@@ -125,23 +147,23 @@ public class GroupPhase implements Serializable {
 
     public double calcVNetValue(){
         double vNet = 0;
-        for(ConditionalStimulus cs : getPhaseCues()){
-            vNet += cs.getAssociationNet();
+        for(IStimulus stim : getPhaseCues()){
+           vNet += stim.getAssociationNet();
         }
         return vNet;
     }
 
-    public List<ConditionalStimulus> getPhaseCues() {
-        List<ConditionalStimulus> cues = new ArrayList<>();
-        for(Stimulus stim : stimsMap.values()){
-            if(stim instanceof ConditionalStimulus)
-                cues.add((ConditionalStimulus) stim);
+    public List<IConditionalStimulus> getPhaseCues() {
+        List<IConditionalStimulus> cues = new ArrayList<>();
+        for (IStimulus stim : stimsMap.values()){
+            if(stim instanceof IConditionalStimulus)
+                cues.add((IConditionalStimulus)stim);
         }
         return cues;
     }
 
     private void updateStimsMap(Trial trial){
-        for(Stimulus stim : trial.getStims()){
+        for(IStimulus stim : trial.getStims()){
             if(!stimsMap.containsKey(stim.getName())){
                 stimsMap.put(stim.getName(), stim);
             }
@@ -166,5 +188,9 @@ public class GroupPhase implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public char getPhaseReinforcer() {
+        return phaseReinforcer;
     }
 }

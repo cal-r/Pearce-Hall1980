@@ -9,7 +9,7 @@ import java.io.Serializable;
 /**
  * Created by Rokas on 03/11/2015.
  */
-public class ConditionalStimulus implements Serializable, Stimulus {
+public class ConditionalStimulus implements Serializable, IConditionalStimulus {
 
     public InitialAlphaParameter InitialAlphaParameter;
     public SalienceExcitatoryParameter SalienceExcitatoryParameter;
@@ -80,7 +80,8 @@ public class ConditionalStimulus implements Serializable, Stimulus {
         return new ConditionalStimulus(name, InitialAlphaParameter, SalienceExcitatoryParameter, SalienceInhibitoryParameter, associationExcitatory, associationInhibitory, getAlpha());
     }
 
-    public void reset(ConditionalStimulus cs){
+    public void reset(IConditionalStimulus stim){
+        ConditionalStimulus cs = (ConditionalStimulus) stim;
         associationExcitatory = cs.getAssociationExcitatory();
         associationInhibitory = cs.getAssociationInhibitory();
         setAlpha(cs.getAlpha());

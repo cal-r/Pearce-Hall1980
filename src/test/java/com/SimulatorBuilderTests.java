@@ -5,6 +5,7 @@ import Helpers.ModelBuilding.SimulatorBuilder;
 import Models.Stimulus.ConditionalStimulus;
 import Models.Simulator;
 import Models.Stimulus.ContextStimulus;
+import Models.Stimulus.MultipleStimulus;
 import Models.Trail.ItiPeriod;
 import ViewModels.TableModels.TrialTableModel;
 import _from_RW_simulator.ContextConfig;
@@ -152,10 +153,104 @@ public class SimulatorBuilderTests extends junit.framework.TestCase {
         assertTrue(sim.getGroups().get(0).groupPhases.get(0).trials.get(0).getStims().get(2).getName().equals("B"));
 
         assertTrue(sim.getGroups().get(0).groupPhases.get(0).trials.get(0).getLearningPeriods().size() == 6);
+
         for(int i=0;i<5;i++){
             assertTrue(sim.getGroups().get(0).groupPhases.get(0).trials.get(0).getLearningPeriods().get(i) instanceof ItiPeriod);
         }
         assertFalse(sim.getGroups().get(0).groupPhases.get(0).trials.get(0).getLearningPeriods().get(5) instanceof ItiPeriod);
+    }
+
+    @Test
+    public void testSimBuilder5(){
+        //test different us per phase
+        Simulator sim = getSimulatorWithTestSettings();
+        sim.getSettings().UseDifferentUs = true;
+
+        TrialTableModel tableModel = new TrialTableModel(false);
+        //group 1
+        tableModel.setValueAt("group name test", 0, 0);
+        tableModel.setValueAt("2AAB+/5B-", 0, 1);
+
+        SimulatorBuilder.initSimulator(tableModel, sim);
+        assertTrue(sim.getGroups().get(0).groupPhases.get(0).getPhaseCues().size() == 2);
+        assertTrue(sim.getGroups().get(0).groupPhases.get(0).getPhaseCues().get(0).getName().equals("A"));
+        assertTrue(((MultipleStimulus)sim.getGroups().get(0).groupPhases.get(0).getPhaseCues().get(0)).getStims('-').size() == 1);
+        assertTrue(((MultipleStimulus) sim.getGroups().get(0).groupPhases.get(0).getPhaseCues().get(0)).getStims('-').get(0).getName().equals("A+"));
+        assertTrue(((MultipleStimulus)sim.getGroups().get(0).groupPhases.get(0).getPhaseCues().get(0)).getStims('+').size() == 1);
+        assertTrue(((MultipleStimulus) sim.getGroups().get(0).groupPhases.get(0).getPhaseCues().get(0)).getStims('+').get(0).getName().equals("A+"));
+
+        assertTrue(sim.getGroups().get(0).groupPhases.get(0).getPhaseCues().get(1).getName().equals("B"));
+        assertTrue(((MultipleStimulus)sim.getGroups().get(0).groupPhases.get(0).getPhaseCues().get(1)).getStims('-').size() == 1);
+        assertTrue(((MultipleStimulus) sim.getGroups().get(0).groupPhases.get(0).getPhaseCues().get(1)).getStims('-').get(0).getName().equals("B+"));
+        assertTrue(((MultipleStimulus)sim.getGroups().get(0).groupPhases.get(0).getPhaseCues().get(1)).getStims('+').size() == 1);
+        assertTrue(((MultipleStimulus) sim.getGroups().get(0).groupPhases.get(0).getPhaseCues().get(1)).getStims('+').get(0).getName().equals("B+"));
+    }
+
+    @Test
+    public void testSimBuilder6(){
+        //test different us per phase
+        Simulator sim = getSimulatorWithTestSettings();
+        sim.getSettings().UseDifferentUs = true;
+
+        TrialTableModel tableModel = new TrialTableModel(false);
+        tableModel.addPhase();
+        //group 1
+        tableModel.setValueAt("group name test", 0, 0);
+        tableModel.setValueAt("2AAB+/5B-", 0, 1);
+        tableModel.setValueAt("2AAB#/5B-", 0, 3);
+
+        SimulatorBuilder.initSimulator(tableModel, sim);
+
+        assertTrue(sim.getGroups().get(0).groupPhases.get(0).getPhaseReinforcer() == '+');
+        assertTrue(sim.getGroups().get(0).groupPhases.get(1).getPhaseReinforcer() == '#');
+
+        for(int phaseId = 0;phaseId<2;phaseId++) {
+            assertTrue(sim.getGroups().get(0).groupPhases.get(phaseId).getPhaseCues().size() == 2);
+            assertTrue(sim.getGroups().get(0).groupPhases.get(phaseId).getPhaseCues().get(0).getName().equals("A"));
+            assertTrue(((MultipleStimulus) sim.getGroups().get(0).groupPhases.get(phaseId).getPhaseCues().get(0)).getStims('-').get(0).getName().equals("A#"));
+            assertTrue(((MultipleStimulus) sim.getGroups().get(0).groupPhases.get(phaseId).getPhaseCues().get(0)).getStims('-').get(1).getName().equals("A+"));
+            assertTrue(((MultipleStimulus) sim.getGroups().get(0).groupPhases.get(phaseId).getPhaseCues().get(0)).getStims('-').size() == 2);
+            assertTrue(((MultipleStimulus) sim.getGroups().get(0).groupPhases.get(phaseId).getPhaseCues().get(0)).getStims('+').size() == 1);
+            assertTrue(((MultipleStimulus) sim.getGroups().get(0).groupPhases.get(phaseId).getPhaseCues().get(0)).getStims('+').get(0).getName().equals("A+"));
+            assertTrue(((MultipleStimulus) sim.getGroups().get(0).groupPhases.get(phaseId).getPhaseCues().get(0)).getStims('#').size() == 1);
+            assertTrue(((MultipleStimulus) sim.getGroups().get(0).groupPhases.get(phaseId).getPhaseCues().get(0)).getStims('#').get(0).getName().equals("A#"));
+
+            assertTrue(sim.getGroups().get(0).groupPhases.get(phaseId).getPhaseCues().get(1).getName().equals("B"));
+            assertTrue(((MultipleStimulus) sim.getGroups().get(0).groupPhases.get(phaseId).getPhaseCues().get(1)).getStims('-').size() == 2);
+            assertTrue(((MultipleStimulus) sim.getGroups().get(0).groupPhases.get(phaseId).getPhaseCues().get(1)).getStims('-').get(0).getName().equals("B#"));
+            assertTrue(((MultipleStimulus) sim.getGroups().get(0).groupPhases.get(phaseId).getPhaseCues().get(1)).getStims('-').get(1).getName().equals("B+"));
+            assertTrue(((MultipleStimulus) sim.getGroups().get(0).groupPhases.get(phaseId).getPhaseCues().get(1)).getStims('+').size() == 1);
+            assertTrue(((MultipleStimulus) sim.getGroups().get(0).groupPhases.get(phaseId).getPhaseCues().get(1)).getStims('+').get(0).getName().equals("B+"));
+            assertTrue(((MultipleStimulus) sim.getGroups().get(0).groupPhases.get(phaseId).getPhaseCues().get(1)).getStims('#').size() == 1);
+            assertTrue(((MultipleStimulus) sim.getGroups().get(0).groupPhases.get(phaseId).getPhaseCues().get(1)).getStims('#').get(0).getName().equals("B#"));
+        }
+    }
+
+    @Test
+    public void testSimBuilder7(){
+        //test different us per phase
+        Simulator sim = getSimulatorWithTestSettings();
+        sim.getSettings().UseDifferentUs = true;
+
+        TrialTableModel tableModel = new TrialTableModel(false);
+        tableModel.addPhase();
+        //group 1
+        tableModel.setValueAt("group name test", 0, 0);
+        tableModel.setValueAt("2A+", 0, 1);
+        tableModel.setValueAt("2A-", 0, 3);
+
+        SimulatorBuilder.initSimulator(tableModel, sim);
+
+        assertTrue(sim.getGroups().get(0).groupPhases.get(0).getPhaseReinforcer() == '+');
+
+        for(int phaseId = 0;phaseId<2;phaseId++) {
+            assertTrue(sim.getGroups().get(0).groupPhases.get(phaseId).getPhaseCues().size() == 2);
+            assertTrue(sim.getGroups().get(0).groupPhases.get(phaseId).getPhaseCues().get(0).getName().equals("A"));
+            assertTrue(((MultipleStimulus) sim.getGroups().get(0).groupPhases.get(phaseId).getPhaseCues().get(0)).getStims('-').size() == 1);
+            assertTrue(((MultipleStimulus) sim.getGroups().get(0).groupPhases.get(phaseId).getPhaseCues().get(0)).getStims('-').get(1).getName().equals("A+"));
+            assertTrue(((MultipleStimulus) sim.getGroups().get(0).groupPhases.get(phaseId).getPhaseCues().get(0)).getStims('+').size() == 1);
+            assertTrue(((MultipleStimulus) sim.getGroups().get(0).groupPhases.get(phaseId).getPhaseCues().get(0)).getStims('+').get(0).getName().equals("A+"));
+        }
     }
 
     private Simulator getSimulatorWithTestSettings(){

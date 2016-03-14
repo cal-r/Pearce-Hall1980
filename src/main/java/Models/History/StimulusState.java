@@ -1,6 +1,6 @@
 package Models.History;
 
-import Models.Stimulus.Stimulus;
+import Models.Stimulus.IStimulus;
 
 import java.io.Serializable;
 
@@ -12,7 +12,7 @@ public class StimulusState implements Serializable {
 
     public StimulusState(){}
 
-    public StimulusState(Stimulus stim){
+    public StimulusState(IStimulus stim){
         Vnet = stim.getAssociationNet();
     }
 

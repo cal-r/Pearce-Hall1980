@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
  *
   using same rules of describing the phase as per R&W simulator:
 
-    "Number of trials followed by Stimuli followed by Reinforcer(+ or –)
+    "Number of trials followed by Stimuli followed by Reinforcer(+ or ï¿½)
     Different trial types should be separated by a slash symbol (/).
     Note that no space should  appear  between  the characters. For instance,
     Phase  1 in Group  1 of  our biconditional discrimination example would read:
@@ -49,7 +49,20 @@ public class PhaseStringTokenizer {
             tokensList.add(trialTokens);
         }
 
+        validateReinforcers(tokensList);
+
         return tokensList;
+    }
+
+    private static void validateReinforcers(List<TrialTypeTokens> groupPhaseTokens){
+        for(TrialTypeTokens trialType1 : groupPhaseTokens){
+            for(TrialTypeTokens trialType2 : groupPhaseTokens) {
+                if(trialType1.reinforcer != '-' && trialType2.reinforcer != '-' && trialType1.reinforcer != trialType2.reinforcer){
+                    throw new IllegalArgumentException("Only one reinforcer symbol is permitted per phase");
+                }
+            }
+        }
+
     }
 
     private static int getNumberOfTrials(Matcher matcher) {

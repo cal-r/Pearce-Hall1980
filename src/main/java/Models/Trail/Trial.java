@@ -2,7 +2,7 @@ package Models.Trail;
 
 import Models.GroupPhase;
 import Models.Parameters.Pools.GlobalParameterPool;
-import Models.Stimulus.Stimulus;
+import Models.Stimulus.IStimulus;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -31,11 +31,11 @@ public class Trial implements Serializable{
         }
     }
 
-    public List<Stimulus> getStims(){
-        Map<Stimulus, Boolean> added = new HashMap<>();
-        List<Stimulus> cues = new ArrayList<>();
+    public List<IStimulus> getStims(){
+        Map<IStimulus, Boolean> added = new HashMap<>();
+        List<IStimulus> cues = new ArrayList<>();
         for(LearningPeriod period : learningPeriods){
-            for(Stimulus stim : period.stims){
+            for(IStimulus stim : period.stims){
                 if(!added.containsKey(stim)){
                     added.put(stim, true);
                     cues.add(stim);

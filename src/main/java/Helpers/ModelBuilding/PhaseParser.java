@@ -2,11 +2,8 @@ package Helpers.ModelBuilding;
 
 import Helpers.ListCaster;
 import Models.SimulatorSettings;
-import Models.Stimulus.CompoundStimulus;
-import Models.Stimulus.ConditionalStimulus;
+import Models.Stimulus.*;
 import Models.GroupPhase;
-import Models.Stimulus.ContextStimulus;
-import Models.Stimulus.Stimulus;
 import Models.Trail.ItiPeriod;
 import Models.Trail.LearningPeriod;
 import Models.Trail.Trial;
@@ -22,7 +19,7 @@ import java.util.Map;
 public class PhaseParser {
 
     public static GroupPhase ParsePhase(List<PhaseStringTokenizer.TrialTypeTokens> trialTypeTokensList,
-                                        Map<String, ConditionalStimulus> csMap,
+                                        Map<String, IConditionalStimulus> csMap,
                                         int phaseId,
                                         SimulatorSettings settings,
                                         ContextStimulus context,
@@ -30,7 +27,7 @@ public class PhaseParser {
 
         TrialTypeParser trialTypeParser = new TrialTypeParser(csMap, settings, context, itiRatio);
 
-        GroupPhase groupPhase = new GroupPhase(phaseId);
+        GroupPhase groupPhase = new GroupPhase(phaseId, getPhaseReinforcer(trialTypeTokensList));
 
         for(PhaseStringTokenizer.TrialTypeTokens trialType : trialTypeTokensList){
             groupPhase.addTrials(trialTypeParser.getTrials(trialType));
@@ -39,14 +36,23 @@ public class PhaseParser {
         return groupPhase;
     }
 
+    public static char getPhaseReinforcer(List<PhaseStringTokenizer.TrialTypeTokens> phaseTokens){
+        for(PhaseStringTokenizer.TrialTypeTokens trialType : phaseTokens){
+            if(trialType.reinforcer != '-'){
+                return trialType.reinforcer;
+            }
+        }
+        return '-';
+    }
+
     private static class TrialTypeParser {
 
-        private Map<String, ConditionalStimulus> csMap;
+        private Map<String, IConditionalStimulus> csMap;
         private SimulatorSettings settings;
         private ContextStimulus context;
         private int itiRatio;
 
-        private TrialTypeParser(Map<String, ConditionalStimulus> csMap, SimulatorSettings settings, ContextStimulus context, Integer itiRatio) {
+        private TrialTypeParser(Map<String, IConditionalStimulus> csMap, SimulatorSettings settings, ContextStimulus context, Integer itiRatio) {
             this.csMap = csMap;
             this.settings = settings;
             this.context = context;
@@ -62,14 +68,19 @@ public class PhaseParser {
             return trials;
         }
 
-        private Trial createTrial(char reinforcer, List<Stimulus> cues, boolean isLastTrial){
+        private Trial createTrial(char reinforcer, List<IStimulus> cues, boolean isLastTrial){
             List<LearningPeriod> learningPeriods = new ArrayList<>();
 
             if(settings.ContextSimulation){
                 addItiPeriods(learningPeriods);
             }
 
-            learningPeriods.add(new LearningPeriod(getUsPresent(reinforcer), reinforcer, cues));
+            List<IStimulus> trialCues = new ArrayList<>();
+            for(IStimulus stim : cues){
+                trialCues.add(stim);
+            }
+
+            learningPeriods.add(new LearningPeriod(getUsPresent(reinforcer), reinforcer, trialCues));
 
             if(isLastTrial && settings.ContextSimulation){
                 addItiPeriods(learningPeriods);
@@ -91,8 +102,8 @@ public class PhaseParser {
             return false;
         }
 
-        private List<Stimulus> getStims(PhaseStringTokenizer.TrialTypeTokens trialType) {
-            List<Stimulus> cuesPresent = new ArrayList<>();
+        private List<IStimulus> getStims(PhaseStringTokenizer.TrialTypeTokens trialType) {
+            List<IStimulus> cuesPresent = new ArrayList<>();
             Map<String, Boolean> added = new HashMap<>(); //to prevent same cs being added to trial twice, e.g. in case of AAB+
             for (String cueName : trialType.cueNames) {
                 if(!added.containsKey(cueName)) {
@@ -110,12 +121,12 @@ public class PhaseParser {
             return cuesPresent;
         }
 
-        private void addCompoundStim(List<Stimulus> stims){
+        private void addCompoundStim(List<IStimulus> stims){
             if(stims.size() < 2){
                 return;
             }
             //copy and cast
-            List<Stimulus> compounded = ListCaster.cast(new ArrayList<>(stims));
+            List<IStimulus> compounded = ListCaster.cast(new ArrayList<>(stims));
             CompoundStimulus compound = new CompoundStimulus(compounded);
             stims.add(compound);
         }

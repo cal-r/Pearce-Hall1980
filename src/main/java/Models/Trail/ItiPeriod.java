@@ -2,7 +2,7 @@ package Models.Trail;
 
 import Models.Parameters.Pools.GlobalParameterPool;
 import Models.Stimulus.ContextStimulus;
-import Models.Stimulus.Stimulus;
+import Models.Stimulus.IStimulus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,8 +19,8 @@ public class ItiPeriod extends LearningPeriod {
         this.context = context;
     }
 
-    private static List<Stimulus> makeList(ContextStimulus contextStimulus) { //stupid java syntax mad me do this
-        List<Stimulus> list = new ArrayList<>();
+    private static List<IStimulus> makeList(ContextStimulus contextStimulus) { //stupid java syntax mad me do this
+        List<IStimulus> list = new ArrayList<>();
         list.add(contextStimulus);
         return list;
     }

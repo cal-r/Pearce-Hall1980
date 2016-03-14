@@ -10,7 +10,7 @@ import Models.Parameters.Pools.GlobalParameterPool;
 import Models.SimulatorSettings;
 import Models.Stimulus.ConditionalStimulus;
 import Models.Stimulus.ContextStimulus;
-import Models.Stimulus.Stimulus;
+import Models.Stimulus.IStimulus;
 import Models.Trail.ItiPeriod;
 import Models.Trail.LearningPeriod;
 import Models.Trail.Trial;
@@ -29,7 +29,7 @@ public class TrialTests extends TestCase {
     public void testWithContext(){ //first 4 from P-H-MechanismContext.xlsx
         String contextName = "context";
         ContextStimulus contextStimulus = createContextStimulus(contextName);
-        List<Stimulus> allStims = new ArrayList<>();
+        List<IStimulus> allStims = new ArrayList<>();
         allStims.add(createConditionalStimulus("A"));
         allStims.add(createConditionalStimulus("B"));
 
@@ -38,7 +38,7 @@ public class TrialTests extends TestCase {
         trials.add(createTrial(true, getStims(allStims, "A"), contextStimulus));
         trials.add(createTrial(false, getStims(allStims, "A,B"), contextStimulus));
         trials.add(createTrial(true, getStims(allStims, "A"), contextStimulus));
-        GroupPhase groupPhase = new GroupPhase(1);
+        GroupPhase groupPhase = new GroupPhase(1, '+');
         groupPhase.addTrials(trials);
         GroupPhaseHistory history = groupPhase.simulateTrials(getGlobals(), getSimulatorSettings());
         assertEquals(history.getState(contextName, 1).Vnet, 0.0);
@@ -67,10 +67,10 @@ public class TrialTests extends TestCase {
         assertEquals(history.getState("B", 4).Vnet, -0.001336628, DefaultValuesConstants.ROUNDING_PRECISION);
     }
 
-    private List<Stimulus> getStims(List<Stimulus> allStims, String commaSeparated){
-        List<Stimulus> ret = new ArrayList<>();
+    private List<IStimulus> getStims(List<IStimulus> allStims, String commaSeparated){
+        List<IStimulus> ret = new ArrayList<>();
         for(String stimName : commaSeparated.split(",")){
-            for(Stimulus stim : allStims){
+            for(IStimulus stim : allStims){
                 if(stim.getName().equals(stimName)){
                     ret.add(stim);
                 }
@@ -91,7 +91,7 @@ public class TrialTests extends TestCase {
         return settings;
     }
 
-    private Trial createTrial(boolean usPresent, List<Stimulus> cs, ContextStimulus contextStim){
+    private Trial createTrial(boolean usPresent, List<IStimulus> cs, ContextStimulus contextStim){
         int itiRatio = 3;
         List<LearningPeriod> learningPeriods = new ArrayList<>();
         for(int i =0;i<itiRatio;i++){
