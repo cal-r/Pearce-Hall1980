@@ -5,6 +5,7 @@ import Models.History.*;
 import Models.Parameters.ConditionalStimulus.CsParameter;
 import Models.Parameters.Pools.CsParameterPool;
 import Models.Parameters.Parameter;
+import Models.Parameters.UsParameter;
 import ViewModels.GroupReportViewModel;
 
 import java.util.ArrayList;
@@ -31,7 +32,9 @@ public class ReportBuilder {
 
         rowId = insertCsParameterTable(report, rowId, groupHistory) +1;
 
-        rowId = insertGlobalParameterTable(report, rowId, groupHistory.globalParameters) + 2;
+        rowId = insertGlobalParameterTable(report, rowId, groupHistory.globalParameters) + 1;
+
+        rowId = insertUsParameterTable(report, rowId, groupHistory.usParameters) + 2;
 
         report.setCell(rowId++, 0, groupHistory.group.Name);
         for(int gpId = 0; gpId < groupHistory.getNumberOfPhases(); gpId++) {
@@ -46,6 +49,33 @@ public class ReportBuilder {
             }
         }
         return report;
+    }
+
+    private static int insertUsParameterTable(GroupReportViewModel report, int rowId, List<UsParameter> usParameters) {
+        report.setCell(rowId, 0, GuiStringConstants.US_PARAMETER);
+        if(usParameters.size()==1 && usParameters.get(0).getPhaseCount() == 0){
+            report.setCell(rowId, 1, GuiStringConstants.VALUE);
+            rowId++;
+            report.setCell(rowId, 0, usParameters.get(0).getDisplayName());
+            report.setCell(rowId, 1, usParameters.get(0).getValue(0));
+            rowId++;
+            return rowId;
+        }
+
+        for (int pid = 0; pid < usParameters.get(0).getPhaseCount(); pid++) {
+            report.setCell(rowId, pid + 1, GuiStringConstants.getPhaseTitle(pid));
+        }
+        rowId++;
+        for (UsParameter usParam : usParameters) {
+            report.setCell(rowId, 0, usParam.getDisplayName());
+            for (int pid = 0; pid < usParam.getPhaseCount(); pid++) {
+                if (usParam.isAvailable(pid)) {
+                    report.setCell(rowId, pid + 1, usParam.getValue(pid));
+                }
+            }
+            rowId++;
+        }
+        return rowId;
     }
 
     private static int insertCsParameterTable(GroupReportViewModel report, int rowId, GroupHistory groupHistory) {
