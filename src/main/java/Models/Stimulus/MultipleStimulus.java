@@ -34,7 +34,7 @@ public class MultipleStimulus implements IConditionalStimulus {
             stimsPerUs.put(us, createNewCs(us));
         }
 
-        if(!stimsPerUs.containsKey(us)){
+        if(!stimsPerUs.containsKey(us) && us != '-'){
             if(stimsPerUs.containsKey('-')){
                 stimsPerUs.remove('-');
             }
