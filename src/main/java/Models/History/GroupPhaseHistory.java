@@ -43,9 +43,11 @@ public class GroupPhaseHistory implements Serializable {
     public void recordState(Collection<IStimulus> stims){
         for(IStimulus stim : stims) {
             if(stim instanceof MultipleStimulus){
-                for(IStimulus cs : ((MultipleStimulus) stim).getStims('-')){
+                MultipleStimulus multipleStimulus = (MultipleStimulus) stim;
+                for(IStimulus cs : multipleStimulus.getStims('-')){
                     recordStimState(cs);
                 }
+                recordStimState(multipleStimulus);
             }else
             {
                 recordStimState(stim);

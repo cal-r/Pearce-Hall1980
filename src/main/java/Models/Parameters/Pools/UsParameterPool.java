@@ -63,6 +63,17 @@ public class UsParameterPool {
         }
     }
 
+    public Map<Character, Double> getPhaseLamdbaValues(int phaseNumber) {
+        Map<Character, Double> phaseLambdas = new HashMap<>();
+        phaseLambdas.put('-', 0.0);
+        for (char usSymbol : getUsSymbols()){
+            if(getLambda(usSymbol)!=null){
+                phaseLambdas.put(usSymbol, getLambda(usSymbol).getValue(phaseNumber));
+            }
+        }
+        return phaseLambdas;
+    }
+
     public List<UsParameter> getUsParameters(){
         return new ArrayList<>(usParameterMap.values());
     }
@@ -73,5 +84,14 @@ public class UsParameterPool {
 
     private String getLambdaName(char us){
         return String.format("%s %s", ParameterNamingConstants.LAMBDA, us);
+    }
+
+    private List<Character> getUsSymbols(){
+        List<Character> usSymbols = new ArrayList<>();
+        usSymbols.add('+');
+        usSymbols.add('#');
+        usSymbols.add('*');
+        usSymbols.add('$');
+        return usSymbols;
     }
 }

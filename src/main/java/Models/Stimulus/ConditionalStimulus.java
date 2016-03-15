@@ -3,8 +3,11 @@ package Models.Stimulus;
 import Models.Parameters.ConditionalStimulus.InitialAlphaParameter;
 import Models.Parameters.ConditionalStimulus.SalienceExcitatoryParameter;
 import Models.Parameters.ConditionalStimulus.SalienceInhibitoryParameter;
+import Models.Parameters.Parameter;
+import Models.Parameters.Pools.GlobalParameterPool;
 
 import java.io.Serializable;
+import java.util.Map;
 
 /**
  * Created by Rokas on 03/11/2015.
@@ -85,6 +88,34 @@ public class ConditionalStimulus implements Serializable, IConditionalStimulus {
         associationExcitatory = cs.getAssociationExcitatory();
         associationInhibitory = cs.getAssociationInhibitory();
         setAlpha(cs.getAlpha());
+    }
+
+    @Override
+    public void stimulate(GlobalParameterPool globalParams, Map<Character, Double> phaseLambdaValues, double vNet, char reinforcer) {
+        boolean usPresent = reinforcer != '-';
+        double lambda = phaseLambdaValues.get(reinforcer);
+        double capitalLambda = lambda - vNet;
+        double newAlpha = calcNewAlpha(globalParams.getGamma(), lambda, vNet, getAlpha());
+        if (usPresent && capitalLambda > 0) {
+            double newDeltaVe = calcNewDeltaVe(lambda);
+            updateAssociationExcitatory(newDeltaVe);
+        } else if (!usPresent && capitalLambda < 0) {
+            double newDeltaVi = calcNewDeltaVi(capitalLambda);
+            updateAssociationInhibitory(newDeltaVi);
+        }
+        setAlpha(newAlpha);
+    }
+
+    private double calcNewDeltaVe(double lambda){
+        return SalienceExcitatoryParameter.getValue() * getAlpha() * lambda;
+    }
+
+    private double calcNewDeltaVi(double capitalLambda){
+        return SalienceExcitatoryParameter.getValue() * getAlpha() * Math.abs(capitalLambda);
+    }
+
+    private double calcNewAlpha(Parameter gamma, double lambda, double vNet, double oldAlpha) {
+        return gamma.getValue() * Math.abs(lambda - vNet) + (1 - gamma.getValue()) * oldAlpha;
     }
 
     public void reset(){

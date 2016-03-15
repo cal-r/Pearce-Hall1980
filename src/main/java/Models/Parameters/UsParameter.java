@@ -34,7 +34,7 @@ public class UsParameter{
     }
 
     public boolean isAvailable(int phaseId){
-        return availability.get(phaseId);
+        return availability.size()> phaseId && availability.get(phaseId);
     }
 
     public void adjust(List<Integer> phasesWherePresent, int phaseCount){
