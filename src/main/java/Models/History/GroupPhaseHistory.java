@@ -1,10 +1,7 @@
 package Models.History;
 
 
-import Models.Stimulus.ConditionalStimulus;
-import Models.Stimulus.IConditionalStimulus;
-import Models.Stimulus.IStimulus;
-import Models.Stimulus.MultipleStimulus;
+import Models.Stimulus.*;
 
 import java.io.Serializable;
 import java.util.*;
@@ -34,7 +31,7 @@ public class GroupPhaseHistory implements Serializable {
 
     public StimulusState getLastState(String cueName){
         List<StimulusState> cueHistory = stimsHistoriesMap.get(cueName);
-        return cueHistory.get(cueHistory.size()-1);
+        return cueHistory.get(cueHistory.size() - 1);
     }
 
     public List<StimulusState> getStimHistory(String stimName){
@@ -46,10 +43,14 @@ public class GroupPhaseHistory implements Serializable {
             if(stim instanceof MultipleStimulus){
                 recordMultiStimState((MultipleStimulus)stim, phaseReinforcer);
             }else {
-                recordStimState(stim);
+                recordStimState(stim.getName(), stim);
             }
         }
         numberOfPeriods++;
+    }
+
+    public void recordProbeState(Probe probe) {
+        recordStimState(probe.getTrialTypeDescription(), probe.getStimulus());
     }
 
     private void recordMultiStimState(MultipleStimulus multipleStimulus, char phaseReinforcer){
@@ -61,7 +62,8 @@ public class GroupPhaseHistory implements Serializable {
                 recordStimStateWithNegativeLabel(multipleStimulus);
             }
         }else{
-            recordStimState(multipleStimulus.getStimsMap().get(phaseReinforcer));
+            IConditionalStimulus stim = multipleStimulus.getStimsMap().get(phaseReinforcer);
+            recordStimState(stim.getName(), stim);
             for(char usedReinforcer : multipleStimulus.getUsedStimsMap().keySet()){
                 if(usedReinforcer!=phaseReinforcer){
                     recordStimStateWithNegativeLabel(multipleStimulus.getStimsMap().get(usedReinforcer));
@@ -71,14 +73,13 @@ public class GroupPhaseHistory implements Serializable {
     }
     
     private void recordStimStateWithNegativeLabel(IStimulus stim){
-        StimulusState state = createStimState(stim);
         String label = String.format("(%s)-", stim.getName());
-        addToMap(label, state);
+        recordStimState(label, stim);
     }
        
-    private void recordStimState(IStimulus stim){
+    private void recordStimState(String name, IStimulus stim){
         StimulusState state = createStimState(stim);
-        addToMap(stim.getName(), state);
+        addToMap(name, state);
     }
 
     private void addToMap(String stimName, StimulusState state){

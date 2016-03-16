@@ -63,12 +63,12 @@ public class PhaseParser {
             List<Trial> trials = new ArrayList<>();
             for (int i = 0; i < trialType.numberOfTrials; i++) {
                 boolean isLastTrial = i == (trialType.numberOfTrials -1);
-                trials.add(createTrial(trialType.reinforcer, getStims(trialType), isLastTrial));
+                trials.add(createTrial(trialType.reinforcer, getStims(trialType), isLastTrial, trialType.description));
             }
             return trials;
         }
 
-        private Trial createTrial(char reinforcer, List<IStimulus> cues, boolean isLastTrial){
+        private Trial createTrial(char reinforcer, List<IStimulus> cues, boolean isLastTrial, String description){
             List<LearningPeriod> learningPeriods = new ArrayList<>();
 
             if(settings.ContextSimulation){
@@ -86,7 +86,13 @@ public class PhaseParser {
                 addItiPeriods(learningPeriods);
             }
 
-            return new Trial(learningPeriods);
+            Trial trial = new Trial(learningPeriods);
+
+            if(ProbeBuilder.containsProbe(description)){
+                trial.setProbe(ProbeBuilder.buildProbe(description, cues));
+            }
+
+            return trial;
         }
 
         private void addItiPeriods(List<LearningPeriod> learningPeriods){

@@ -6,10 +6,7 @@ import Helpers.Random.RandomSimulationHelper;
 import Models.History.ConditionalStimulusState;
 import Models.History.GroupPhaseHistory;
 import Models.Parameters.Pools.GlobalParameterPool;
-import Models.Stimulus.ConditionalStimulus;
-import Models.Stimulus.IConditionalStimulus;
-import Models.Stimulus.MultipleStimulus;
-import Models.Stimulus.IStimulus;
+import Models.Stimulus.*;
 import Models.Trail.Trial;
 
 import java.io.Serializable;
@@ -97,6 +94,10 @@ public class GroupPhase implements Serializable {
 
     public void recordPeriod(){
         history.recordState(stimsMap.values(), phaseReinforcer);
+    }
+
+    public void recordProbe(Probe probe) {
+        history.recordProbeState(probe);
     }
 
     public void recordItiPeriod(List<IStimulus> context){

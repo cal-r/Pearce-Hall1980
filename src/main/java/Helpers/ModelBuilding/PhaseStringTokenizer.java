@@ -26,8 +26,8 @@ import java.util.regex.Pattern;
  */
 public class PhaseStringTokenizer {
 
-    private static final String TRAIL_TYPE_REGEX = "(\\d*)([a-zA-Z]*)([\\+\\-])";
-    private static final String TRAIL_TYPE_REGEX_MULTIPLE_US = "(\\d*)([a-zA-Z]*)([\\+\\*\\#\\$\\-])";
+    private static final String TRAIL_TYPE_REGEX = "(\\d*)([a-zA-Z\\^]*)([\\+\\-])";
+    private static final String TRAIL_TYPE_REGEX_MULTIPLE_US = "(\\d*)([a-zA-Z\\^]*)([\\+\\*\\#\\$\\-])";
 
     public static List<TrialTypeTokens> getPhaseTokens(SimulatorSettings settings, String phaseDescription) throws IllegalArgumentException {
 
@@ -36,6 +36,8 @@ public class PhaseStringTokenizer {
         for(String trialTypeDescription : getTrialTypes(phaseDescription)) {
 
             TrialTypeTokens trialTokens = new TrialTypeTokens();
+
+            trialTokens.description = trialTypeDescription;
 
             if(!isEmpty(trialTypeDescription)) {
 
@@ -74,7 +76,7 @@ public class PhaseStringTokenizer {
     }
 
     private static String[] getCueNames(Matcher matcher){
-        return ListCaster.toStringArray(matcher.group(2).toCharArray());
+        return ListCaster.toStringArray(matcher.group(2).replace("^", ""));
     }
 
     private static char getReinforcer(Matcher matcher){
@@ -105,6 +107,7 @@ public class PhaseStringTokenizer {
         public int numberOfTrials;
         public String[] cueNames;
         public char reinforcer;
+        public String description;
         public TrialTypeTokens(){
             numberOfTrials = 0;
             cueNames = new String[0];

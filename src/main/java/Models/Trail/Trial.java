@@ -3,6 +3,7 @@ package Models.Trail;
 import Models.GroupPhase;
 import Models.Parameters.Pools.GlobalParameterPool;
 import Models.Stimulus.IStimulus;
+import Models.Stimulus.Probe;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ import java.util.Map;
  */
 public class Trial implements Serializable{
     private List<LearningPeriod> learningPeriods;
+    private Probe probe;
     public Trial(List<LearningPeriod> learningPeriods){
         this.learningPeriods = learningPeriods;
     }
@@ -26,6 +28,9 @@ public class Trial implements Serializable{
                 ((ItiPeriod)period).learn(globalParams);
             }else {
                 groupPhase.recordPeriod();
+                if(probe!=null){
+                    groupPhase.recordProbe(probe);
+                }
                 period.learn(groupPhase.calcVNetValue(), globalParams, groupPhase.getPhaseId());
             }
         }
@@ -47,5 +52,9 @@ public class Trial implements Serializable{
 
     public List<LearningPeriod> getLearningPeriods(){
         return learningPeriods;
+    }
+
+    public void setProbe(Probe probe) {
+        this.probe = probe;
     }
 }
