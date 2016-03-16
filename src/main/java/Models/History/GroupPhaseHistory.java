@@ -2,6 +2,7 @@ package Models.History;
 
 
 import Models.Stimulus.ConditionalStimulus;
+import Models.Stimulus.IConditionalStimulus;
 import Models.Stimulus.IStimulus;
 import Models.Stimulus.MultipleStimulus;
 
@@ -40,22 +41,41 @@ public class GroupPhaseHistory implements Serializable {
         return stimsHistoriesMap.get(stimName);
     }
 
-    public void recordState(Collection<IStimulus> stims){
+    public void recordState(Collection<IStimulus> stims, char phaseReinforcer){
         for(IStimulus stim : stims) {
             if(stim instanceof MultipleStimulus){
-                MultipleStimulus multipleStimulus = (MultipleStimulus) stim;
-                for(IStimulus cs : multipleStimulus.getStims('-')){
-                    recordStimState(cs);
-                }
-                recordStimState(multipleStimulus);
-            }else
-            {
+                recordMultiStimState((MultipleStimulus)stim, phaseReinforcer);
+            }else {
                 recordStimState(stim);
             }
         }
         numberOfPeriods++;
     }
 
+    private void recordMultiStimState(MultipleStimulus multipleStimulus, char phaseReinforcer){
+        if(phaseReinforcer == '-'){
+            for(IConditionalStimulus cs : multipleStimulus.getAllStims()){
+                recordStimStateWithNegativeLabel(cs);
+            }
+            if(multipleStimulus.getAllStims().size()>1) {
+                recordStimStateWithNegativeLabel(multipleStimulus);
+            }
+        }else{
+            recordStimState(multipleStimulus.getStimsMap().get(phaseReinforcer));
+            for(char usedReinforcer : multipleStimulus.getUsedStimsMap().keySet()){
+                if(usedReinforcer!=phaseReinforcer){
+                    recordStimStateWithNegativeLabel(multipleStimulus.getStimsMap().get(usedReinforcer));
+                }
+            }
+        }
+    }
+    
+    private void recordStimStateWithNegativeLabel(IStimulus stim){
+        StimulusState state = createStimState(stim);
+        String label = String.format("(%s)-", stim.getName());
+        addToMap(label, state);
+    }
+       
     private void recordStimState(IStimulus stim){
         StimulusState state = createStimState(stim);
         addToMap(stim.getName(), state);

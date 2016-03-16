@@ -84,7 +84,7 @@ public class GroupPhase implements Serializable {
                 cs.setAssociationInhibitory(conditionalStimulusState.Vi);
             }
             if (stim instanceof MultipleStimulus) {
-                for (ConditionalStimulus cs : ((MultipleStimulus) stim).getStims('-')) {
+                for (ConditionalStimulus cs : ((MultipleStimulus) stim).getAllStims()) {
                     ConditionalStimulusState conditionalStimulusState = (ConditionalStimulusState) averageHistory.getLastState(cs.getName());
                     cs.setAlpha(conditionalStimulusState.Alpha);
                     cs.setAssociationExcitatory(conditionalStimulusState.Ve);
@@ -96,11 +96,11 @@ public class GroupPhase implements Serializable {
     }
 
     public void recordPeriod(){
-        history.recordState(stimsMap.values());
+        history.recordState(stimsMap.values(), phaseReinforcer);
     }
 
     public void recordItiPeriod(List<IStimulus> context){
-        history.recordState(context);
+        history.recordState(context, phaseReinforcer);
     }
 
     private void addInfoToHistory(GroupPhaseHistory history){
@@ -123,7 +123,7 @@ public class GroupPhase implements Serializable {
             }
 
             if (stim instanceof MultipleStimulus) {
-                for (ConditionalStimulus cs : ((MultipleStimulus) stim).getStims('-')) {
+                for (ConditionalStimulus cs : ((MultipleStimulus) stim).getAllStims()) {
                     cs.reset();
                 }
             }

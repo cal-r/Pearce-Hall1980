@@ -20,41 +20,42 @@ public class MultipleStimulus implements IConditionalStimulus, Serializable {
     private final InitialAlphaParameter initialAlphaParameter;
     private final SalienceExcitatoryParameter salienceExcitatoryParameter;
     private final SalienceInhibitoryParameter salienceInhibitoryParameter;
-    private Map<Character, ConditionalStimulus> stimsPerUs;
+    private Map<Character, ConditionalStimulus> stimsMap;
     private Map<Character, Boolean> usedStims;
-
+    
     public MultipleStimulus(String name, InitialAlphaParameter initialAlphaParameter, SalienceExcitatoryParameter salienceExcitatoryParameter, SalienceInhibitoryParameter salienceInhibitoryParameter) {
         this.name = name;
         this.initialAlphaParameter = initialAlphaParameter;
         this.salienceExcitatoryParameter = salienceExcitatoryParameter;
         this.salienceInhibitoryParameter = salienceInhibitoryParameter;
-        stimsPerUs = new HashMap<>();
+        stimsMap = new HashMap<>();
         usedStims = new HashMap<>();
     }
 
     public void addStimulus(char us){
         //a cs for us '-' exists only when there are no positive reinforcers in the phase
-        if(us == '-' && stimsPerUs.isEmpty()) {
-            stimsPerUs.put(us, createNewCs(us));
+        if(us == '-' && stimsMap.isEmpty()) {
+            stimsMap.put(us, createNewCs(us));
         }
 
-        if(!stimsPerUs.containsKey(us) && us != '-'){
-            if(stimsPerUs.containsKey('-')){
-                stimsPerUs.remove('-');
+        if(!stimsMap.containsKey(us) && us != '-'){
+            if(stimsMap.containsKey('-')){
+                stimsMap.remove('-');
             }
-            stimsPerUs.put(us, createNewCs(us));
+            stimsMap.put(us, createNewCs(us));
         }
+    }
+
+    public List<ConditionalStimulus> getAllStims(){
+        return getStims('-');
     }
 
     public List<ConditionalStimulus> getStims(char us){
         if(us=='-'){
-            if(stimsPerUs.size()==1 && stimsPerUs.containsKey('-')){
-                return new ArrayList<>();
-            }
-            return new ArrayList<>(stimsPerUs.values());
+            return new ArrayList<>(stimsMap.values());
         }
         List<ConditionalStimulus> stims = new ArrayList<>();
-        stims.add(stimsPerUs.get(us));
+        stims.add(stimsMap.get(us));
         return stims;
     }
 
@@ -69,8 +70,8 @@ public class MultipleStimulus implements IConditionalStimulus, Serializable {
     @Override
     public IConditionalStimulus getCopy() {
         MultipleStimulus copy = new MultipleStimulus(name, initialAlphaParameter, salienceExcitatoryParameter, salienceInhibitoryParameter);
-        for(char key : stimsPerUs.keySet()){
-            copy.stimsPerUs.put(key, stimsPerUs.get(key).getCopy());
+        for(char key : stimsMap.keySet()){
+            copy.stimsMap.put(key, stimsMap.get(key).getCopy());
         }
         return copy;
     }
@@ -78,8 +79,8 @@ public class MultipleStimulus implements IConditionalStimulus, Serializable {
     @Override
     public void reset(IConditionalStimulus stim) {
         MultipleStimulus otherMs = (MultipleStimulus) stim;
-        for(IConditionalStimulus otherCs : otherMs.getStims('-')){
-            for(IConditionalStimulus myCs : getStims('-')){
+        for(IConditionalStimulus otherCs : otherMs.getAllStims()){
+            for(IConditionalStimulus myCs : getAllStims()){
                 if(myCs.getName().equals(otherCs.getName())){
                     myCs.reset(otherCs);
                 }
@@ -90,17 +91,17 @@ public class MultipleStimulus implements IConditionalStimulus, Serializable {
     @Override
     public void stimulate(GlobalParameterPool globalParams, Map<Character, Double> phaseLambdaValues, double vNet, char reinforcer) {
         if(reinforcer == '-'){
-            for(IConditionalStimulus cs : stimsPerUs.values()){
+            for(IConditionalStimulus cs : stimsMap.values()){
                 cs.stimulate(globalParams, phaseLambdaValues, vNet, reinforcer);
             }
         }else{
-            stimsPerUs.get(reinforcer).stimulate(globalParams, phaseLambdaValues, vNet, reinforcer);
+            stimsMap.get(reinforcer).stimulate(globalParams, phaseLambdaValues, vNet, reinforcer);
             if(!usedStims.containsKey(reinforcer)){
                 usedStims.put(reinforcer, true);
             }
             for(char us : usedStims.keySet()){
                 if(us != reinforcer){
-                    stimsPerUs.get(us).stimulate(globalParams, phaseLambdaValues, vNet, '-');
+                    stimsMap.get(us).stimulate(globalParams, phaseLambdaValues, vNet, '-');
                 }
             }
         }
@@ -109,14 +110,22 @@ public class MultipleStimulus implements IConditionalStimulus, Serializable {
     @Override
     public double getAssociationNet() {
         double sum = 0.0;
-        for(IConditionalStimulus stim : stimsPerUs.values()){
+        for(IConditionalStimulus stim : stimsMap.values()){
             sum += stim.getAssociationNet();
         }
-        return sum / stimsPerUs.size();
+        return sum / stimsMap.size();
     }
 
     @Override
     public String getName() {
         return name;
+    }
+
+    public Map<Character, ConditionalStimulus> getStimsMap() {
+        return stimsMap;
+    }
+
+    public Map<Character, Boolean> getUsedStimsMap() {
+        return usedStims;
     }
 }
