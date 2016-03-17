@@ -19,7 +19,7 @@ public class GraphLineGroup implements Comparable<GraphLineGroup> {
     }
 
     public void addLine(GraphLine line){
-        linesMap.put(line.getName(), line);
+        linesMap.put(GraphStringsHelper.getNameWithoutNegativeLabeling(line.getName()), line);
         line.setGroup(this);
     }
 

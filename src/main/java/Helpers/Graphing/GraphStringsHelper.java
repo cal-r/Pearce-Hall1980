@@ -17,7 +17,7 @@ public class GraphStringsHelper {
         return String.format("%s%s%s", line.getGroup().getName(), ActionCommands.GROUP_LINE_SEPARATOR, lineName);
     }
 
-    private static String getNameWithoutNegativeLabeling(String name){
+    public static String getNameWithoutNegativeLabeling(String name){
         if (name.endsWith(")-")){
             return name.substring(1, name.length()-2);
         }
