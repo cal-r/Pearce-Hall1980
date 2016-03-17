@@ -81,7 +81,7 @@ public class GroupPhase implements Serializable {
                 cs.setAssociationInhibitory(conditionalStimulusState.Vi);
             }
             if (stim instanceof MultipleStimulus) {
-                for (ConditionalStimulus cs : ((MultipleStimulus) stim).getAllStims()) {
+                for (ConditionalStimulus cs : ((MultipleStimulus) stim).getStims(phaseReinforcer)) {
                     ConditionalStimulusState conditionalStimulusState = (ConditionalStimulusState) averageHistory.getLastState(cs.getName());
                     cs.setAlpha(conditionalStimulusState.Alpha);
                     cs.setAssociationExcitatory(conditionalStimulusState.Ve);
