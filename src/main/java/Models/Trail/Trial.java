@@ -31,9 +31,17 @@ public class Trial implements Serializable{
                 if(probe!=null){
                     groupPhase.recordProbe(probe);
                 }
-                period.learn(groupPhase.calcVNetValue(), globalParams, groupPhase.getPhaseId());
+                period.learn(calcVNetValue(), globalParams, groupPhase.getPhaseId());
             }
         }
+    }
+
+    private double calcVNetValue(){
+        double vNet = 0;
+        for(IStimulus stim : getStims()){
+            vNet += stim.getAssociationNet();
+        }
+        return vNet;
     }
 
     public List<IStimulus> getStims(){

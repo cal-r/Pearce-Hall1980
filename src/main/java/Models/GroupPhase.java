@@ -56,7 +56,6 @@ public class GroupPhase implements Serializable {
     private void simulateTrialsRandomly(GlobalParameterPool globalParams, SimulatorSettings simulatorSettings) {
         List<IConditionalStimulus> csCopies = getCsCopies(); //preserve initial state of CSs
         List<GroupPhaseHistory> tempHistories = new ArrayList<>(); //stores every simulation
-        //sim phase 1000 times
         for(int simNum = 0;simNum< simulatorSettings.NumberOfRandomCombination; simNum++) {
             resetCues(csCopies);
             history = new GroupPhaseHistory();
@@ -70,25 +69,8 @@ public class GroupPhase implements Serializable {
         //get avg history
         GroupPhaseHistory averageHistory = RandomSimulationHelper.getAverageHistory(tempHistories);
 
-        //set cs properties to average values
-        for(IStimulus stim : getPhaseCues()) {
-            //get the last state of cs
-            if(stim instanceof ConditionalStimulus) {
-                ConditionalStimulus cs = (ConditionalStimulus) stim;
-                ConditionalStimulusState conditionalStimulusState = (ConditionalStimulusState) averageHistory.getLastState(cs.getName());
-                cs.setAlpha(conditionalStimulusState.Alpha);
-                cs.setAssociationExcitatory(conditionalStimulusState.Ve);
-                cs.setAssociationInhibitory(conditionalStimulusState.Vi);
-            }
-            if (stim instanceof MultipleStimulus) {
-                for (ConditionalStimulus cs : ((MultipleStimulus) stim).getStims(phaseReinforcer)) {
-                    ConditionalStimulusState conditionalStimulusState = (ConditionalStimulusState) averageHistory.getLastState(cs.getName());
-                    cs.setAlpha(conditionalStimulusState.Alpha);
-                    cs.setAssociationExcitatory(conditionalStimulusState.Ve);
-                    cs.setAssociationInhibitory(conditionalStimulusState.Vi);
-                }
-            }
-        }
+        RandomSimulationHelper.setCsPropertiesToAverageValues(getPhaseCues(), averageHistory, phaseReinforcer);
+
         history = averageHistory;
     }
 
@@ -144,14 +126,6 @@ public class GroupPhase implements Serializable {
             copies.add(cs.getCopy());
         }
         return copies;
-    }
-
-    public double calcVNetValue(){
-        double vNet = 0;
-        for(IStimulus stim : getPhaseCues()){
-           vNet += stim.getAssociationNet();
-        }
-        return vNet;
     }
 
     public List<IConditionalStimulus> getPhaseCues() {

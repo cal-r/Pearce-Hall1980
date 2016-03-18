@@ -1,7 +1,12 @@
 package Helpers.Random;
 
+import Models.History.ConditionalStimulusState;
 import Models.History.GroupPhaseHistory;
 import Models.History.StimulusState;
+import Models.Stimulus.ConditionalStimulus;
+import Models.Stimulus.IConditionalStimulus;
+import Models.Stimulus.IStimulus;
+import Models.Stimulus.MultipleStimulus;
 
 import java.util.List;
 
@@ -32,5 +37,27 @@ public class RandomSimulationHelper {
         }
 
         return avgHist;
+    }
+
+    public static void setCsPropertiesToAverageValues(List<IConditionalStimulus> activeStims, GroupPhaseHistory averageGroupPhaseHistory, char phaseReinforcer){
+        //set cs properties to average values
+        for(IStimulus stim : activeStims) {
+            //get the last state of cs
+            if(stim instanceof ConditionalStimulus) {
+                ConditionalStimulus cs = (ConditionalStimulus) stim;
+                ConditionalStimulusState conditionalStimulusState = (ConditionalStimulusState) averageGroupPhaseHistory.getLastState(cs.getName());
+                cs.setAlpha(conditionalStimulusState.Alpha);
+                cs.setAssociationExcitatory(conditionalStimulusState.Ve);
+                cs.setAssociationInhibitory(conditionalStimulusState.Vi);
+            }
+            if (stim instanceof MultipleStimulus) {
+                for (ConditionalStimulus cs : ((MultipleStimulus) stim).getStims(phaseReinforcer)) {
+                    ConditionalStimulusState conditionalStimulusState = (ConditionalStimulusState) averageGroupPhaseHistory.getLastState(cs.getName());
+                    cs.setAlpha(conditionalStimulusState.Alpha);
+                    cs.setAssociationExcitatory(conditionalStimulusState.Ve);
+                    cs.setAssociationInhibitory(conditionalStimulusState.Vi);
+                }
+            }
+        }
     }
 }

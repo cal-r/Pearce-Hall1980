@@ -26,6 +26,7 @@ public class PhaseParserTests extends junit.framework.TestCase {
         trialTypeTokens.cueNames = ListCaster.toStringArray("A");
         trialTypeTokens.numberOfTrials = 2;
         trialTypeTokens.reinforcer = '+';
+        trialTypeTokens.description = "2A+";
         ArrayList<PhaseStringTokenizer.TrialTypeTokens> tokensArrayList = new ArrayList<>();
         tokensArrayList.add(trialTypeTokens);
         CsParameterPool cspPool = createCsParameterPool(trialTypeTokens.cueNames);
@@ -44,6 +45,7 @@ public class PhaseParserTests extends junit.framework.TestCase {
         trialTypeTokens.cueNames = ListCaster.toStringArray("AB");
         trialTypeTokens.numberOfTrials = 2;
         trialTypeTokens.reinforcer = '+';
+        trialTypeTokens.description = "2BA+";
         ArrayList<PhaseStringTokenizer.TrialTypeTokens> tokensArrayList = new ArrayList<>();
         tokensArrayList.add(trialTypeTokens);
 
@@ -63,6 +65,7 @@ public class PhaseParserTests extends junit.framework.TestCase {
         trialTypeTokens.cueNames = ListCaster.toStringArray("AB");
         trialTypeTokens.numberOfTrials = 1;
         trialTypeTokens.reinforcer = '-';
+        trialTypeTokens.description = "BA-";
         ArrayList<PhaseStringTokenizer.TrialTypeTokens> tokensArrayList = new ArrayList<>();
         tokensArrayList.add(trialTypeTokens);
 
@@ -82,12 +85,12 @@ public class PhaseParserTests extends junit.framework.TestCase {
         trialTypeTokens.cueNames = ListCaster.toStringArray("AB");
         trialTypeTokens.numberOfTrials = 2;
         trialTypeTokens.reinforcer = '+';
-
+        trialTypeTokens.description = "2BA+";
         PhaseStringTokenizer.TrialTypeTokens trialTypeTokens2 = new PhaseStringTokenizer.TrialTypeTokens();
         trialTypeTokens2.cueNames = ListCaster.toStringArray("A");
         trialTypeTokens2.numberOfTrials = 1;
         trialTypeTokens2.reinforcer = '-';
-
+        trialTypeTokens2.description = "2A-";
         ArrayList<PhaseStringTokenizer.TrialTypeTokens> tokensArrayList = new ArrayList<>();
         tokensArrayList.add(trialTypeTokens);
         tokensArrayList.add(trialTypeTokens2);
@@ -115,7 +118,7 @@ public class PhaseParserTests extends junit.framework.TestCase {
         trialTypeTokens.cueNames = ListCaster.toStringArray("AAA");
         trialTypeTokens.numberOfTrials = 2;
         trialTypeTokens.reinforcer = '+';
-
+        trialTypeTokens.description = "2AAA+";
         ArrayList<PhaseStringTokenizer.TrialTypeTokens> tokensArrayList = new ArrayList<>();
         tokensArrayList.add(trialTypeTokens);
 
@@ -136,11 +139,13 @@ public class PhaseParserTests extends junit.framework.TestCase {
         trialTypeTokens.cueNames = ListCaster.toStringArray("AB");
         trialTypeTokens.numberOfTrials = 2;
         trialTypeTokens.reinforcer = '+';
+        trialTypeTokens.description = "2BA+";
 
         PhaseStringTokenizer.TrialTypeTokens trialTypeTokens2 = new PhaseStringTokenizer.TrialTypeTokens();
         trialTypeTokens2.cueNames = ListCaster.toStringArray("A");
         trialTypeTokens2.numberOfTrials = 1;
         trialTypeTokens2.reinforcer = '-';
+        trialTypeTokens2.description = "A-";
 
         ArrayList<PhaseStringTokenizer.TrialTypeTokens> tokensArrayList = new ArrayList<>();
         tokensArrayList.add(trialTypeTokens);

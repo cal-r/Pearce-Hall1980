@@ -15,7 +15,7 @@ public class ProbeBuilder {
     }
 
     public static Probe buildProbe(String trialTypeDescription, List<IStimulus> stims){
-        char csName = trialTypeDescription.charAt(trialTypeDescription.indexOf('^') - 1);
+        char csName = trialTypeDescription.charAt(trialTypeDescription.indexOf('^') - 1); // char with ^
         IStimulus probeCs = null;
         for(IStimulus stim : stims){
             if(stim.getName().equals(String.valueOf(csName))){
@@ -23,6 +23,8 @@ public class ProbeBuilder {
                 break;
             }
         }
-        return new Probe(probeCs, trialTypeDescription);
+
+        String probeName = trialTypeDescription.substring(0, trialTypeDescription.length()-1); //without reinforcer
+        return new Probe(probeCs, probeName);
     }
 }
