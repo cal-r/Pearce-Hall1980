@@ -92,14 +92,13 @@ public class ConditionalStimulus implements Serializable, IConditionalStimulus {
 
     @Override
     public void stimulate(GlobalParameterPool globalParams, Map<Character, Double> phaseLambdaValues, double vNet, char reinforcer) {
-        boolean usPresent = reinforcer != '-';
         double lambda = phaseLambdaValues.get(reinforcer);
         double capitalLambda = lambda - vNet;
         double newAlpha = calcNewAlpha(globalParams.getGamma(), lambda, vNet, getAlpha());
-        if (usPresent && capitalLambda > 0) {
+        if (capitalLambda > 0) {
             double newDeltaVe = calcNewDeltaVe(lambda);
             updateAssociationExcitatory(newDeltaVe);
-        } else if (!usPresent && capitalLambda < 0) {
+        } else if (capitalLambda < 0) {
             double newDeltaVi = calcNewDeltaVi(capitalLambda);
             updateAssociationInhibitory(newDeltaVi);
         }

@@ -100,7 +100,7 @@ public class LearningPeriodTests extends junit.framework.TestCase {
 
     @Test
     public void testSimulate200() throws Exception {
-        //Ve shouldn't go above 1
+        //vNet shouldn't go much above 1
         GlobalParameterPool globals = getGlobals();
         HashMap<String, ConditionalStimulus> allCues = createCsMap(ListCaster.toStringArray("A"));
         LearningPeriod period = createLearningPeriod(allCues, ListCaster.toStringArray("A"), true);
@@ -108,8 +108,6 @@ public class LearningPeriodTests extends junit.framework.TestCase {
             period.learn(allCues.get("A").getAssociationNet(), globals, 1);
         }
 
-        assertEquals(1, allCues.get("A").getAssociationExcitatory(), DefaultValuesConstants.ASYMPTOTE_EXCEED_ALLOWANCE);
-        assertEquals(0, allCues.get("A").getAssociationInhibitory(), DefaultValuesConstants.ROUNDING_PRECISION);
         assertEquals(1, allCues.get("A").getAssociationNet(), DefaultValuesConstants.ASYMPTOTE_EXCEED_ALLOWANCE);
     }
 
