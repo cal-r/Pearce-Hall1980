@@ -91,8 +91,10 @@ public class MultipleStimulus implements IConditionalStimulus, Serializable {
     @Override
     public void stimulate(GlobalParameterPool globalParams, Map<Character, Double> phaseLambdaValues, double vNet, char reinforcer) {
         if(reinforcer == '-'){
-            for(IConditionalStimulus cs : stimsMap.values()){
-                cs.stimulate(globalParams, phaseLambdaValues, vNet, reinforcer);
+            if(!usedStims.isEmpty()) {
+                for (char usedUs : usedStims.keySet()) {
+                    stimsMap.get(usedUs).stimulate(globalParams, phaseLambdaValues, vNet, reinforcer);
+                }
             }
         }else{
             stimsMap.get(reinforcer).stimulate(globalParams, phaseLambdaValues, vNet, reinforcer);
@@ -101,19 +103,30 @@ public class MultipleStimulus implements IConditionalStimulus, Serializable {
             }
             for(char us : usedStims.keySet()){
                 if(us != reinforcer){
-                    stimsMap.get(us).stimulate(globalParams, phaseLambdaValues, vNet, '-');
+                    stimsMap.get(us).stimulate(globalParams, phaseLambdaValues, stimsMap.get(us).getAssociationNet(), '-');
                 }
             }
         }
     }
 
+    public double getAssociationNet(char reinforcer){
+        if(reinforcer == '-'){
+            return getAssociationNet();
+        }
+        return stimsMap.get(reinforcer).getAssociationNet();
+    }
+
     @Override
     public double getAssociationNet() {
+        //gives a mean value
         double sum = 0.0;
-        for(IConditionalStimulus stim : stimsMap.values()){
-            sum += stim.getAssociationNet();
+        if(!usedStims.isEmpty()) {
+            for(char usedUs : usedStims.keySet()){
+                sum += stimsMap.get(usedUs).getAssociationNet();
+            }
+            sum /= usedStims.size();
         }
-        return sum / stimsMap.size();
+        return sum;
     }
 
     @Override

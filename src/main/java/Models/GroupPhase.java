@@ -40,13 +40,13 @@ public class GroupPhase implements Serializable {
         if(random) {
             simulateTrialsRandomly(globalParams, simulatorSettings);
         }else{
-            simulateTrialsSequentially(globalParams, simulatorSettings);
+            simulateTrialsSequentially(globalParams);
         }
         addInfoToHistory(history);
         return history;
     }
 
-    private void simulateTrialsSequentially(GlobalParameterPool globalParams, SimulatorSettings simulatorSettings){
+    private void simulateTrialsSequentially(GlobalParameterPool globalParams){
         for(int i=0;i<trials.size();i++){
             Trial trial = trials.get(i);
             trial.simulate(this, globalParams);

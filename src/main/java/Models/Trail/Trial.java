@@ -2,9 +2,7 @@ package Models.Trail;
 
 import Models.GroupPhase;
 import Models.Parameters.Pools.GlobalParameterPool;
-import Models.Stimulus.IConditionalStimulus;
-import Models.Stimulus.IStimulus;
-import Models.Stimulus.Probe;
+import Models.Stimulus.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -32,16 +30,19 @@ public class Trial implements Serializable{
                 if(probe!=null){
                     groupPhase.recordProbe(probe);
                 }
-                period.learn(calcVNetValue(), globalParams, groupPhase.getPhaseId());
+                period.learn(calcVNetValue(period.reinforcer), globalParams, groupPhase.getPhaseId());
             }
         }
     }
 
-    private double calcVNetValue(){
+    private double calcVNetValue(char reinforcer){
         double vNet = 0;
         for(IStimulus stim : getStims()){
-            if(stim instanceof IConditionalStimulus) {
+            if(stim instanceof ConditionalStimulus) {
                 vNet += stim.getAssociationNet();
+            }
+            if(stim instanceof MultipleStimulus){
+                vNet += ((MultipleStimulus) stim).getAssociationNet(reinforcer);
             }
         }
         return vNet;
