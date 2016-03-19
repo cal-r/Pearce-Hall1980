@@ -122,17 +122,31 @@ public class PhaseParser {
                 cuesPresent.add(context);
             }
             if(settings.CompoundResults) {
-                addCompoundStim(cuesPresent);
+                addCompoundStim(cuesPresent, trialType.reinforcer);
             }
             return cuesPresent;
         }
 
-        private void addCompoundStim(List<IStimulus> stims){
+        private void addCompoundStim(List<IStimulus> stims, char reinforcer){
             if(stims.size() < 2){
                 return;
             }
-            //copy and cast
-            List<IStimulus> compounded = ListCaster.cast(new ArrayList<>(stims));
+            List<IConditionalStimulus> compounded = new ArrayList<>();
+
+            for(IStimulus stim : stims){
+                if(stim instanceof ConditionalStimulus){
+                    compounded.add((ConditionalStimulus) stim);
+                }else if(stim instanceof MultipleStimulus){
+                    if(reinforcer == '-'){
+                        compounded.add((MultipleStimulus) stim);
+                    }else{
+                        for(IConditionalStimulus positiveStim : ((MultipleStimulus) stim).getStims(reinforcer)){
+                            compounded.add(positiveStim);
+                        }
+                    }
+                }
+            }
+
             CompoundStimulus compound = new CompoundStimulus(compounded);
             stims.add(compound);
         }

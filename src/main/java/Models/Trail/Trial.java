@@ -2,6 +2,7 @@ package Models.Trail;
 
 import Models.GroupPhase;
 import Models.Parameters.Pools.GlobalParameterPool;
+import Models.Stimulus.IConditionalStimulus;
 import Models.Stimulus.IStimulus;
 import Models.Stimulus.Probe;
 
@@ -39,7 +40,9 @@ public class Trial implements Serializable{
     private double calcVNetValue(){
         double vNet = 0;
         for(IStimulus stim : getStims()){
-            vNet += stim.getAssociationNet();
+            if(stim instanceof IConditionalStimulus) {
+                vNet += stim.getAssociationNet();
+            }
         }
         return vNet;
     }

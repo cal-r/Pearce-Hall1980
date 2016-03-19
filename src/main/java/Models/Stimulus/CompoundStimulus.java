@@ -8,9 +8,9 @@ import java.util.List;
  */
 public class CompoundStimulus implements IStimulus, Serializable {
 
-    private List<IStimulus> compounded;
+    private List<IConditionalStimulus> compounded;
 
-    public CompoundStimulus(List<IStimulus> compounded){
+    public CompoundStimulus(List<IConditionalStimulus> compounded){
         this.compounded = compounded;
     }
 
