@@ -60,11 +60,8 @@ public class TrialTests extends TestCase {
         assertEquals(history.getState("A", 1).Vnet, 0.0, DefaultValuesConstants.ROUNDING_PRECISION);
         assertEquals(history.getState("B", 1).Vnet, 0.0, DefaultValuesConstants.ROUNDING_PRECISION);
         assertEquals(history.getState("A", 2).Vnet, 0.025, DefaultValuesConstants.ROUNDING_PRECISION);
-        assertEquals(history.getState("B", 2).Vnet, 0.0, DefaultValuesConstants.ROUNDING_PRECISION);
         assertEquals(history.getState("A", 3).Vnet, 0.0525, DefaultValuesConstants.ROUNDING_PRECISION);
-        assertEquals(history.getState("B", 3).Vnet, 0.0, DefaultValuesConstants.ROUNDING_PRECISION);
         assertEquals(history.getState("A", 4).Vnet, 0.050916193, DefaultValuesConstants.ROUNDING_PRECISION);
-        assertEquals(history.getState("B", 4).Vnet, -0.001336628, DefaultValuesConstants.ROUNDING_PRECISION);
     }
 
     private List<IStimulus> getStims(List<IStimulus> allStims, String commaSeparated){

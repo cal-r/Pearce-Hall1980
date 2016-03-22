@@ -49,7 +49,7 @@ public class GroupPhase implements Serializable {
     private void simulateTrialsSequentially(GlobalParameterPool globalParams){
         for(int i=0;i<trials.size();i++){
             Trial trial = trials.get(i);
-            trial.simulate(this, globalParams);
+            trial.simulate(history, globalParams, phaseId);
         }
     }
 
@@ -62,7 +62,7 @@ public class GroupPhase implements Serializable {
             int[] randomArray = RandomArrayGenerator.createRandomDistinctArray(trials.size());
             for (int trialNo = 0; trialNo < trials.size(); trialNo++) {
                 Trial trial = trials.get(randomArray[trialNo]);
-                trial.simulate(this, globalParams);
+                trial.simulate(history, globalParams, phaseId);
             }
             tempHistories.add(history);
         }
@@ -72,18 +72,6 @@ public class GroupPhase implements Serializable {
         RandomSimulationHelper.setCsPropertiesToAverageValues(getPhaseCues(), averageHistory, phaseReinforcer);
 
         history = averageHistory;
-    }
-
-    public void recordPeriod(){
-        history.recordState(stimsMap.values(), phaseReinforcer);
-    }
-
-    public void recordProbe(Probe probe) {
-        history.recordProbeState(probe);
-    }
-
-    public void recordItiPeriod(List<IStimulus> context){
-        history.recordState(context, phaseReinforcer);
     }
 
     private void addInfoToHistory(GroupPhaseHistory history){
