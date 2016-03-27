@@ -4,6 +4,7 @@ import Constants.DefaultValuesConstants;
 import Constants.ParameterNamingConstants;
 import Helpers.DefaultValuesHelper;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.List;
 /**
  * Created by rokasg on 09/03/2016.
  */
-public class UsParameter{
+public class UsParameter implements Serializable{
     private String name;
     private List<Double> values;
     private List<Boolean> availability;

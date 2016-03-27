@@ -16,10 +16,8 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.geom.Arc2D;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.StreamHandler;
 
 /**
  * Created by Rokas on 03/11/2015.
@@ -231,17 +229,5 @@ public class MainWindowController implements ActionListener, TableModelListener 
 
     public void setSimulator(Simulator simulator) {
         this.simulator = simulator;
-    }
-
-    public void setTrialTableModel(TrialTableModel trialTableModel) {
-        this.trialTableModel.copyData(trialTableModel);
-    }
-
-    public void setCsParamsTableModel(CSParamsTableModel csParamsTableModel) {
-        this.csParamsTableModel.copyData(csParamsTableModel);
-    }
-
-    public void setGlobalParamsTableModel(GlobalPramsTableModel globalParamsTableModel) {
-        this.globalParamsTableModel.copyData(globalParamsTableModel);
     }
 }

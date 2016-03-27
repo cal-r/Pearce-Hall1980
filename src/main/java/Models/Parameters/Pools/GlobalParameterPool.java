@@ -4,12 +4,13 @@ import Constants.DefaultValuesConstants;
 import Constants.ParameterNamingConstants;
 import Models.Parameters.Parameter;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
  * Created by Rokas on 27/02/2016.
  */
-public class GlobalParameterPool {
+public class GlobalParameterPool implements Serializable {
 
     private List<Parameter> globalParameters;
 

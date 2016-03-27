@@ -8,6 +8,7 @@ import Models.Parameters.UsParameter;
 import Models.Trail.LearningPeriod;
 import Models.Trail.Trial;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,7 +17,7 @@ import java.util.Map;
 /**
  * Created by rokasg on 09/03/2016.
  */
-public class UsParameterPool {
+public class UsParameterPool implements Serializable {
     private Map<String, UsParameter> usParameterMap;
 
     public UsParameterPool(){

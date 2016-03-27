@@ -1,7 +1,9 @@
 package ViewModels.TableModels;
 
+import Models.DTOs.ParamsTableModelDto;
 import Models.Parameters.Parameter;
 
+import javax.swing.table.TableModel;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +13,7 @@ import java.util.List;
  */
 public abstract class BaseParamsTableModel extends BaseTableModel implements Serializable {
 
-    private List<Parameter> parameters;
+    public List<Parameter> parameters;
 
     @Override
     protected abstract List<String> getColumnHeaders();
@@ -34,7 +36,7 @@ public abstract class BaseParamsTableModel extends BaseTableModel implements Ser
         parameters.get(rowIndex).setValue((double) aValue);
     }
 
-    public void copyData(BaseParamsTableModel tableModel){
+    public void copyData(ParamsTableModelDto tableModel){
         super.copyData(tableModel);
         parameters = tableModel.parameters;
     }

@@ -1,5 +1,8 @@
 package ViewModels.TableModels;
 
+import Models.DTOs.TableModelDto;
+import Models.SimulatorSettings;
+
 import javax.swing.*;
 import javax.swing.event.TableModelEvent;
 import javax.swing.table.AbstractTableModel;
@@ -13,8 +16,9 @@ import java.util.List;
 
 public abstract class BaseTableModel extends AbstractTableModel  {
 
-    protected List<String> columnHeaders;
-    protected List<List<Object>> data;
+    public List<String> columnHeaders;
+
+    public List<List<Object>> data;
 
     protected BaseTableModel(){
         columnHeaders = getColumnHeaders();
@@ -54,9 +58,9 @@ public abstract class BaseTableModel extends AbstractTableModel  {
         return data.get(rowIndex).get(columnIndex);
     }
 
-    public void copyData(BaseTableModel tableModel){
+    public void copyData(TableModelDto tableModel){
         data = tableModel.data;
-        columnHeaders = tableModel.columnHeaders;
+        columnHeaders = tableModel.headers;
         fireTableStructureChanged();
     }
 

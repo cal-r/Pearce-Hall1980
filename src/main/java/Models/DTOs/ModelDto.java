@@ -12,31 +12,31 @@ import java.io.Serializable;
  */
 public class ModelDto implements Serializable {
     private Simulator simulator;
-    private CSParamsTableModel csParamsTableModel;
-    private GlobalPramsTableModel globalPramsTableModel;
-    private TrialTableModel trialTableModel;
+    private ParamsTableModelDto csParamsTableModel;
+    private ParamsTableModelDto globalPramsTableModel;
+    private TrialTableModelDto trialTableModel;
 
-    public TrialTableModel getTrialTableModel() {
+    public TrialTableModelDto getTrialTableModel() {
         return trialTableModel;
     }
 
-    public void setTrialTableModel(TrialTableModel trialTableModel) {
+    public void setTrialTableModel(TrialTableModelDto trialTableModel) {
         this.trialTableModel = trialTableModel;
     }
 
-    public GlobalPramsTableModel getGlobalPramsTableModel() {
+    public ParamsTableModelDto getGlobalPramsTableModel() {
         return globalPramsTableModel;
     }
 
-    public void setGlobalPramsTableModel(GlobalPramsTableModel globalPramsTableModel) {
+    public void setGlobalPramsTableModel(ParamsTableModelDto globalPramsTableModel) {
         this.globalPramsTableModel = globalPramsTableModel;
     }
 
-    public CSParamsTableModel getCsParamsTableModel() {
+    public ParamsTableModelDto getCsParamsTableModel() {
         return csParamsTableModel;
     }
 
-    public void setCsParamsTableModel(CSParamsTableModel csParamsTableModel) {
+    public void setCsParamsTableModel(ParamsTableModelDto csParamsTableModel) {
         this.csParamsTableModel = csParamsTableModel;
     }
 

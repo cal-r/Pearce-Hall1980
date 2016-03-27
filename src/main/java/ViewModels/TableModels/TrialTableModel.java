@@ -2,6 +2,8 @@ package ViewModels.TableModels;
 
 import Constants.DefaultValuesConstants;
 import Constants.GuiStringConstants;
+import Models.DTOs.ParamsTableModelDto;
+import Models.DTOs.TrialTableModelDto;
 import Models.SimulatorSettings;
 import _from_RW_simulator.ContextConfig;
 
@@ -16,7 +18,7 @@ import java.util.List;
  */
 public class TrialTableModel extends BaseTableModel implements Serializable {
 
-	private boolean simulateContext;
+	public boolean simulateContext;
 		
     public TrialTableModel(boolean simulateContext){
         this.simulateContext = simulateContext;
@@ -179,5 +181,10 @@ public class TrialTableModel extends BaseTableModel implements Serializable {
 				removeRighmostColumn();
 			}
         }
+    }
+
+    public void copyData(TrialTableModelDto tableModel) {
+        super.copyData(tableModel);
+        this.simulateContext = tableModel.simContext;
     }
 }
