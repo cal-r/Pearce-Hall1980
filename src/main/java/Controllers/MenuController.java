@@ -4,8 +4,10 @@ import Constants.GuiStringConstants;
 import Helpers.Export.ModelExportHelper;
 import Helpers.GuiHelper;
 import Helpers.ModelBuilding.ModelDtoHelper;
+import Launch.Launcher;
 import Models.DTOs.ModelDto;
 import Models.SimulatorSettings;
+import Views.MainWindow;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -22,6 +24,7 @@ public class MenuController implements ActionListener {
     private MainWindowController mainWindowController;
     private JMenuBar menuBar;
     private Map<String, JCheckBoxMenuItem> checkboxesMap;
+    private MainWindow.FrameCloser frameCloser;
 
     public MenuController(MainWindowController mainWindowController) {
         this.mainWindowController = mainWindowController;
@@ -35,8 +38,10 @@ public class MenuController implements ActionListener {
         menuBar = new JMenuBar();
         //file menu
         JMenu fileMenu = new JMenu(GuiStringConstants.FILE);
+        createMenuItem(fileMenu, GuiStringConstants.NEW, MenuItemType.BASIC);
         createMenuItem(fileMenu, GuiStringConstants.OPEN, MenuItemType.BASIC);
         createMenuItem(fileMenu, GuiStringConstants.SAVE, MenuItemType.BASIC);
+        createMenuItem(fileMenu, GuiStringConstants.EXIT, MenuItemType.BASIC);
         menuBar.add(fileMenu);
         //settings menu
         JMenu settingsMenu = new JMenu(GuiStringConstants.SETTINGS);
@@ -44,7 +49,12 @@ public class MenuController implements ActionListener {
         createMenuItem(settingsMenu, GuiStringConstants.COMPOUND_RESULTS_SETTING, MenuItemType.CHECKBOX);
         createMenuItem(settingsMenu, GuiStringConstants.SIMULATE_CONTEXT, MenuItemType.CHECKBOX);
         createMenuItem(settingsMenu, GuiStringConstants.USE_DIFFERENT_US, MenuItemType.CHECKBOX);
+
         menuBar.add(settingsMenu);
+    }
+
+    public void setFrameCloser(MainWindow.FrameCloser frameCloser) {
+        this.frameCloser = frameCloser;
     }
 
     private enum MenuItemType { BASIC, CHECKBOX }
@@ -94,15 +104,24 @@ public class MenuController implements ActionListener {
         mainWindowController.onUseDifferentUsChange();
     }
 
+    private void onExit() {
+        frameCloser.closeFrame();
+    }
+
+    private void onRestart(){
+        onExit();
+        Launcher.startSimulator();
+    }
+
     @Override
-    public void actionPerformed(ActionEvent e){
-        switch (e.getActionCommand()){
+    public void actionPerformed(ActionEvent e) {
+        switch (e.getActionCommand()) {
             case GuiStringConstants.COMPOUND_RESULTS_SETTING:
                 onCompoundResultsSettingTicked(GuiHelper.isMenuItemSelected(e));
                 break;
             case GuiStringConstants.SAVE:
                 onSaveModel();
-            break;
+                break;
             case GuiStringConstants.OPEN:
                 onLoadModel();
                 break;
@@ -113,7 +132,13 @@ public class MenuController implements ActionListener {
                 onSimulateContext(GuiHelper.isMenuItemSelected(e));
                 break;
             case GuiStringConstants.USE_DIFFERENT_US:
-               onUseDifferentUs(GuiHelper.isMenuItemSelected(e));
+                onUseDifferentUs(GuiHelper.isMenuItemSelected(e));
+                break;
+            case GuiStringConstants.EXIT:
+                onExit();
+                break;
+            case GuiStringConstants.NEW:
+                onRestart();
                 break;
             default:
                 GuiHelper.displayErrorMessage("Nicht implementiert!");

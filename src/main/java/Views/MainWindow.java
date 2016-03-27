@@ -6,6 +6,7 @@ import Controllers.MenuController;
 import Helpers.ResourceHelper;
 
 import javax.swing.*;
+import java.awt.event.WindowEvent;
 
 /**
  * Created by Rokas on 03/11/2015.
@@ -35,6 +36,7 @@ public class MainWindow extends JFrame{
         super();
         this.controller = controller;
         this.menuController = menuController;
+        menuController.setFrameCloser(new FrameCloser(this));
         setContentPane(rootPane);
         initMenuBar();
         initFooter();
@@ -71,5 +73,18 @@ public class MainWindow extends JFrame{
 
     private void initFooter(){
         footerPanel.add(new JLabel(ResourceHelper.getFooterImage()));
+    }
+
+    public class FrameCloser{
+        private JFrame frame;
+
+        private FrameCloser(JFrame frame) {
+            this.frame = frame;
+        }
+
+        public void closeFrame(){
+            frame.dispose();
+            //frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+        }
     }
 }

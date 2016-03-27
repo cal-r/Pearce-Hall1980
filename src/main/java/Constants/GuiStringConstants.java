@@ -19,6 +19,8 @@ public class GuiStringConstants {
     public static final String FILE = "File";
     public static final String SAVE = "Save";
     public static final String OPEN = "Open";
+    public static final String NEW = "New";
+    public static final String EXIT = "Exit";
     public static final String SETTINGS = "Settings";
     public static final String RANDOM_TRIALS_SETTING = "Number of Random Trials Combinations";
     public static final String COMPOUND_RESULTS_SETTING = "Show Compound Results";
@@ -38,4 +40,5 @@ public class GuiStringConstants {
 
     public static final String CHART_Y_AXIS_LABEL = "Vnet";
     public static final String CHART_X_AXIS_LABEL = "Trials";
+
 }

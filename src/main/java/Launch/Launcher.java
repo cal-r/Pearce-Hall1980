@@ -1,17 +1,21 @@
+package Launch;
+
 import Controllers.MainWindowController;
 import Controllers.MenuController;
 import Models.Simulator;
 import Views.MainWindow;
 
 import javax.swing.*;
-import java.awt.*;
-import java.io.IOException;
 
 /**
  * Created by Rokas on 03/11/2015.
  */
 public class Launcher {
     public static void main(String[] args) {
+        startSimulator();
+    }
+
+    public static void startSimulator(){
         Simulator simulator = new Simulator();
         MainWindowController mainWindowController = new MainWindowController(simulator);
         MenuController menuController = new MenuController(mainWindowController);
