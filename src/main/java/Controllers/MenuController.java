@@ -49,8 +49,11 @@ public class MenuController implements ActionListener {
         createMenuItem(settingsMenu, GuiStringConstants.COMPOUND_RESULTS_SETTING, MenuItemType.CHECKBOX);
         createMenuItem(settingsMenu, GuiStringConstants.SIMULATE_CONTEXT, MenuItemType.CHECKBOX);
         createMenuItem(settingsMenu, GuiStringConstants.USE_DIFFERENT_US, MenuItemType.CHECKBOX);
-
         menuBar.add(settingsMenu);
+
+        //help!!
+        JMenu helpMenu = new JMenu(GuiStringConstants.HELP);
+        menuBar.add(helpMenu);
     }
 
     public void setFrameCloser(MainWindow.FrameCloser frameCloser) {

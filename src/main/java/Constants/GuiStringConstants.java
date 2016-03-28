@@ -19,6 +19,7 @@ public class GuiStringConstants {
     public static final String ITI_CS_RATION = "ITI/CS Ratio";
 
     public static final String FILE = "File";
+    public static final String HELP = "Help";
     public static final String SAVE = "Save";
     public static final String OPEN = "Open";
     public static final String NEW = "New";
@@ -30,11 +31,12 @@ public class GuiStringConstants {
     public static final String USE_DIFFERENT_US_STRENGTHS = "Use Different US Strengts";
 	public static final String USE_DIFFERENT_US = "Use Different US";
 
-    public static final String DEFAULT_PHASE = "2A+";
+    public static final String DEFAULT_PHASE = "";
     public static final String TRAIL_TYPE_SEPARATOR = "/";
 
     private static final String DEFAULT_GROUP_NAME = "Group";
     private static final String PHASE = "Phase";
+
     public static String getPhaseTitle(int phaseId){return PHASE + " " + (phaseId+1);}
     public static String getDefaultGroupName(int groupNo) {
         return DEFAULT_GROUP_NAME + " " + (groupNo+1);
