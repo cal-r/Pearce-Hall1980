@@ -19,7 +19,9 @@
         <children>
           <component id="52432" class="javax.swing.JTable" binding="trialTable">
             <constraints/>
-            <properties/>
+            <properties>
+              <font size="12" style="1"/>
+            </properties>
           </component>
         </children>
       </scrollpane>
@@ -41,12 +43,16 @@
             <maximum-size width="-1" height="150"/>
           </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <font/>
+        </properties>
         <border type="none"/>
         <children>
           <component id="7be4a" class="javax.swing.JTable" binding="csParamsTable">
             <constraints/>
-            <properties/>
+            <properties>
+              <font size="12" style="1"/>
+            </properties>
           </component>
         </children>
       </scrollpane>
@@ -63,7 +69,9 @@
         <children>
           <component id="fdd3a" class="javax.swing.JTable" binding="globalParamsTable">
             <constraints/>
-            <properties/>
+            <properties>
+              <font size="12" style="1"/>
+            </properties>
           </component>
         </children>
       </scrollpane>
@@ -224,7 +232,9 @@
         <children>
           <component id="5fd9f" class="javax.swing.JTable" binding="usParamsTable">
             <constraints/>
-            <properties/>
+            <properties>
+              <font size="12" style="1"/>
+            </properties>
           </component>
         </children>
       </scrollpane>
