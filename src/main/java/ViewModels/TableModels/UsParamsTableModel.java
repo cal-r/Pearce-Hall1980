@@ -2,8 +2,7 @@ package ViewModels.TableModels;
 
 import Constants.GuiStringConstants;
 import Models.Parameters.Pools.UsParameterPool;
-import Models.Parameters.UsParameter;
-import sun.swing.DefaultLookup;
+import Models.Parameters.UnconditionalStimulus.UsParameter;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -65,17 +64,24 @@ public class UsParamsTableModel extends BaseTableModel implements Serializable {
             super.setValueAt(usParameters.get(row).getDisplayName(), row, 0);
         }
 
-        for(int phase =0;phase<getPhaseCount();phase++){
-            addColumn(GuiStringConstants.getPhaseTitle(phase));
-        }
+        if(getPhaseCount()==0) {
+            //single us parameter
+            addColumn(GuiStringConstants.VALUE);
+            super.setValueAt(usParameters.get(0).getValue(0), 0, 1);
+        }else {
+            //muliple us parameters
+            for (int phase = 0; phase < getPhaseCount(); phase++) {
+                addColumn(GuiStringConstants.getPhaseTitle(phase));
+            }
 
-        for(int row = 0;row<usParameters.size();row++){
-            for(int col =1;col<=getPhaseCount();col++) {
-                UsParameter rowParam = usParameters.get(row);
-                if(rowParam.isAvailable(colIdToPhaseId(col))) {
-                    super.setValueAt(rowParam.getValue(col - 1), row, col);
-                }else{
-                    super.setValueAt(0.0, row, col);
+            for (int row = 0; row < usParameters.size(); row++) {
+                for (int col = 1; col <= getPhaseCount(); col++) {
+                    UsParameter rowParam = usParameters.get(row);
+                    if (rowParam.isAvailable(colIdToPhaseId(col))) {
+                        super.setValueAt(rowParam.getValue(col - 1), row, col);
+                    } else {
+                        super.setValueAt(0.0, row, col);
+                    }
                 }
             }
         }

@@ -1,4 +1,4 @@
-package Models.Parameters;
+package Models.Parameters.UnconditionalStimulus;
 
 import Constants.DefaultValuesConstants;
 import Constants.ParameterNamingConstants;

@@ -1,16 +1,10 @@
 package Models.Trail;
 
-import Models.Parameters.Parameter;
 import Models.Parameters.Pools.GlobalParameterPool;
-import Models.Parameters.Pools.UsParameterPool;
-import Models.Parameters.UsParameter;
-import Models.Stimulus.ConditionalStimulus;
 import Models.Stimulus.IConditionalStimulus;
 import Models.Stimulus.IStimulus;
-import Models.Stimulus.MultipleStimulus;
 
 import java.io.Serializable;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 

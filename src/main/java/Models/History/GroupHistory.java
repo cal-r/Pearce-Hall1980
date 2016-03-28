@@ -3,7 +3,7 @@ package Models.History;
 import Models.Group;
 import Models.Parameters.Pools.CsParameterPool;
 import Models.Parameters.Parameter;
-import Models.Parameters.UsParameter;
+import Models.Parameters.UnconditionalStimulus.UsParameter;
 
 import java.io.Serializable;
 import java.util.ArrayList;

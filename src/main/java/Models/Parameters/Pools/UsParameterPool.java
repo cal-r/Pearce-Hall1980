@@ -2,9 +2,8 @@ package Models.Parameters.Pools;
 
 import Constants.ParameterNamingConstants;
 import Models.Group;
-import Models.GroupPhase;
-import Models.Parameters.Parameter;
-import Models.Parameters.UsParameter;
+import Models.Parameters.UnconditionalStimulus.SingleUsParamater;
+import Models.Parameters.UnconditionalStimulus.UsParameter;
 import Models.Trail.LearningPeriod;
 import Models.Trail.Trial;
 
@@ -31,6 +30,7 @@ public class UsParameterPool implements Serializable {
     }
 
     public void adjustLamdbas(List<Group> groups){
+        removeSingle();
         Map<String, List<Integer>> lambdaAvailabilityMap = new HashMap<>();
         for(Group group : groups){
             for(int phaseId = 0; phaseId < group.groupPhases.size(); phaseId++){
@@ -64,6 +64,12 @@ public class UsParameterPool implements Serializable {
         }
     }
 
+    private void removeSingle() {
+        if((getLambda('+') instanceof SingleUsParamater)) {
+            usParameterMap = new HashMap<>();
+        }
+    }
+
     public Map<Character, Double> getPhaseLamdbaValues(int phaseNumber) {
         Map<Character, Double> phaseLambdas = new HashMap<>();
         phaseLambdas.put('-', 0.0);
@@ -94,5 +100,13 @@ public class UsParameterPool implements Serializable {
         usSymbols.add('*');
         usSymbols.add('$');
         return usSymbols;
+    }
+
+    public void adjustSingleMode() {
+        String lambdaPlusName = getLambdaName('+');
+        if(!(getLambda('+') instanceof SingleUsParamater)){
+            usParameterMap = new HashMap<>();
+            usParameterMap.put(lambdaPlusName, new SingleUsParamater(lambdaPlusName));
+        }
     }
 }

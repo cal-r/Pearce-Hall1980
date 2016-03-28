@@ -5,7 +5,7 @@ import Models.History.*;
 import Models.Parameters.ConditionalStimulus.CsParameter;
 import Models.Parameters.Pools.CsParameterPool;
 import Models.Parameters.Parameter;
-import Models.Parameters.UsParameter;
+import Models.Parameters.UnconditionalStimulus.UsParameter;
 import ViewModels.GroupReportViewModel;
 
 import java.util.ArrayList;
