@@ -95,9 +95,7 @@ public class UsParamsTableModel extends BaseTableModel implements Serializable {
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int col) {
             JLabel l = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
             if (!table.getModel().isCellEditable(row, col)) {
-                l.setBackground(Color.darkGray);
-            }else {
-                l.setBackground(javax.swing.UIManager.getColor("Table.dropCellForeground"));
+                l.setText("");
             }
             return l;
 
