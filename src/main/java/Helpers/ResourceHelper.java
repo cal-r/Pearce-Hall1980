@@ -14,7 +14,7 @@ public class ResourceHelper {
     }
 
     public static Image getIconImage(){
-        return getImage("/images/P-Hisizes/P&H-16.png").getImage();
+        return getImage("/images/P-Hisizes/P&H-32.png").getImage();
     }
 
     private static ImageIcon getImage(String path){

@@ -4,6 +4,8 @@ package Constants;
  * Created by Rokas on 03/11/2015.
  */
 public class GuiStringConstants {
+    public static final String TOPBAR_TEXT = "PEARCE & HALL SIMULATOR ver. 1.0";
+
     public static final String ERROR = "ERROR";
     public static final String TRAIL_TABLE_ERROR = "ERROR: invalid input in trial table";
 

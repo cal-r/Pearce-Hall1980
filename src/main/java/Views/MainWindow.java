@@ -1,6 +1,7 @@
 package Views;
 
 import Constants.ActionCommands;
+import Constants.GuiStringConstants;
 import Controllers.MainWindowController;
 import Controllers.MenuController;
 import Helpers.ResourceHelper;
@@ -39,7 +40,7 @@ public class MainWindow extends JFrame{
         setContentPane(rootPane);
         initMenuBar();
         initFooter();
-        initIconImage();
+        initTopbar();
         pack();
         initSubElements();
     }
@@ -75,8 +76,9 @@ public class MainWindow extends JFrame{
         footerPanel.add(new JLabel(ResourceHelper.getFooterImage()));
     }
 
-    private void initIconImage(){
-        this.setIconImage(ResourceHelper.getIconImage());
+    private void initTopbar(){
+        setIconImage(ResourceHelper.getIconImage());
+        setTitle(GuiStringConstants.TOPBAR_TEXT);
     }
 
     public class FrameCloser{
