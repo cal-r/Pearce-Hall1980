@@ -6,6 +6,7 @@ import Models.Parameters.ConditionalStimulus.CsParameter;
 import Models.Parameters.Parameter;
 import Models.Parameters.Pools.CsPools.ICsParameterPool;
 import Models.Parameters.UnconditionalStimulus.UsParameter;
+import Models.SimulatorSettings;
 import ViewModels.GroupReportViewModel;
 
 import java.util.ArrayList;
@@ -17,15 +18,15 @@ import java.util.List;
  */
 public class ReportBuilder {
 
-    public static List<GroupReportViewModel> buildReport(SimulationHistory history){
+    public static List<GroupReportViewModel> buildReport(SimulationHistory history, SimulatorSettings settings){
         List<GroupReportViewModel> groupReports = new ArrayList<>();
         for(GroupHistory groupHistory : history){
-            groupReports.add(buildGroupReport(groupHistory));
+            groupReports.add(buildGroupReport(groupHistory, settings));
         }
         return groupReports;
     }
 
-    private static GroupReportViewModel buildGroupReport(GroupHistory groupHistory){
+    private static GroupReportViewModel buildGroupReport(GroupHistory groupHistory, SimulatorSettings settings){
         GroupReportViewModel report = new GroupReportViewModel(groupHistory.group.Name);
         int rowId = 0;
         report.setCell(rowId++, 0, "P&H parameters:");
@@ -43,7 +44,7 @@ public class ReportBuilder {
             rowId++;
             for(Variable variable : Variable.values())
             {
-                report.setCell(rowId++, 0, variable.toString());
+                report.setCell(rowId++, 0, getVariableDisplayName(variable, settings));
                 int lastRowId = insertVariableTable(report, rowId, groupPhaseHistory, variable);
                 rowId = lastRowId+1;
             }
@@ -168,5 +169,11 @@ public class ReportBuilder {
     private static boolean hasValue(GroupPhaseHistory gpHist, String stimName, Variable variable){
         StimulusState firstState = gpHist.getState(stimName, 1);
         return hasValue(firstState, variable);
+    }
+
+    private static String getVariableDisplayName(Variable variable, SimulatorSettings settings){
+        if(variable == Variable.VE && settings.RodriguezMode)
+            return "VnE";
+        return variable.toString();
     }
 }

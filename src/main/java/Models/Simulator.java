@@ -67,7 +67,7 @@ public class Simulator implements Serializable{
         }
 
         simulationHistory = simHistory;
-        report = ReportBuilder.buildReport(simHistory);
+        report = ReportBuilder.buildReport(simHistory, settings);
     }
 
     private GroupHistory createGroupHistory(Group group){

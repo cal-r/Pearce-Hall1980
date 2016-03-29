@@ -18,5 +18,6 @@ public class SimulatorSettings implements Serializable {
         ContextSimulation = DefaultValuesConstants.CONTEXT_SIMULATION;
         NumberOfRandomCombination = DefaultValuesConstants.NUMBER_OF_RANDOM_COMBINATIONS;
         UseDifferentUs = DefaultValuesConstants.USE_DIFFERENT_US;
+        RodriguezMode = DefaultValuesConstants.RODRIGUEZ_MODE;
     }
 }
