@@ -8,8 +8,4 @@ public class ContextStimulus extends ConditionalStimulus {
     public ContextStimulus(String name, Models.Parameters.ConditionalStimulus.InitialAlphaParameter initialAlphaParameter, Models.Parameters.ConditionalStimulus.SalienceExcitatoryParameter salienceExcitatoryParameter, Models.Parameters.ConditionalStimulus.SalienceInhibitoryParameter salienceInhibitoryParameter) {
         super(name, initialAlphaParameter, salienceExcitatoryParameter, salienceInhibitoryParameter);
     }
-
-    public ContextStimulus(String name, Models.Parameters.ConditionalStimulus.InitialAlphaParameter initialAlphaParameter, Models.Parameters.ConditionalStimulus.SalienceExcitatoryParameter salienceExcitatoryParameter, Models.Parameters.ConditionalStimulus.SalienceInhibitoryParameter salienceInhibitoryParameter, double associationExcitatory, double associationInhibitory, double alpha) {
-        super(name, initialAlphaParameter, salienceExcitatoryParameter, salienceInhibitoryParameter, associationExcitatory, associationInhibitory, alpha);
-    }
 }

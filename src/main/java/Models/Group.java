@@ -1,6 +1,6 @@
 package Models;
 
-import Models.Parameters.Pools.CsParameterPool;
+import Models.Parameters.Pools.CsPools.CsParameterPool;
 
 import java.io.Serializable;
 import java.util.List;

@@ -11,6 +11,7 @@ public class SimulatorSettings implements Serializable {
     public boolean CompoundResults;
     public boolean ContextSimulation;
     public boolean UseDifferentUs;
+    public boolean RodriguezMode;
     public int NumberOfRandomCombination;
     public SimulatorSettings(){
         CompoundResults = DefaultValuesConstants.COMPOUND_RESULTS;

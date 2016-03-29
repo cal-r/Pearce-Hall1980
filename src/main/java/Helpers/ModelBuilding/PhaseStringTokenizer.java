@@ -26,6 +26,7 @@ import java.util.regex.Pattern;
  */
 public class PhaseStringTokenizer {
 
+    private static final String RODRIGUEZ_TRAIL_TYPE_REGEX = "(\\d*)([a-zA-Z\\^]*)";
     private static final String TRAIL_TYPE_REGEX = "(\\d*)([a-zA-Z\\^]*)([\\+\\-])";
     private static final String TRAIL_TYPE_REGEX_MULTIPLE_US = "(\\d*)([a-zA-Z\\^]*)([\\+\\*\\#\\$\\-])";
 
@@ -45,13 +46,14 @@ public class PhaseStringTokenizer {
 
                 trialTokens.numberOfTrials = getNumberOfTrials(matcher);
                 trialTokens.cueNames = getCueNames(matcher);
-                trialTokens.reinforcer = getReinforcer(matcher);
+                if(!settings.RodriguezMode)
+                    trialTokens.reinforcer = getReinforcer(matcher);
             }
 
             tokensList.add(trialTokens);
         }
-
-        validateReinforcers(tokensList);
+        if(!settings.RodriguezMode)
+            validateReinforcers(tokensList);
 
         return tokensList;
     }
@@ -88,7 +90,9 @@ public class PhaseStringTokenizer {
     }
 
     private static Matcher matchTrialType(String trialTypeDescription, SimulatorSettings settings) throws IllegalArgumentException {
-        String regexToUse = settings.UseDifferentUs ? TRAIL_TYPE_REGEX_MULTIPLE_US : TRAIL_TYPE_REGEX;
+        String regexToUse = settings.RodriguezMode ?
+                RODRIGUEZ_TRAIL_TYPE_REGEX :
+                (settings.UseDifferentUs ? TRAIL_TYPE_REGEX_MULTIPLE_US : TRAIL_TYPE_REGEX);
         Pattern pattern = Pattern.compile(regexToUse);
         Matcher matcher = pattern.matcher(trialTypeDescription);
 

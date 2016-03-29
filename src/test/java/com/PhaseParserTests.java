@@ -6,9 +6,8 @@ import Helpers.ModelBuilding.PhaseStringTokenizer;
 import Models.SimulatorSettings;
 import Models.Stimulus.ConditionalStimulus;
 import Models.GroupPhase;
-import Models.Parameters.Pools.CsParameterPool;
+import Models.Parameters.Pools.CsPools.CsParameterPool;
 import Models.Stimulus.IConditionalStimulus;
-import Models.Stimulus.IStimulus;
 
 import java.util.ArrayList;
 import java.util.HashMap;

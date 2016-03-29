@@ -23,36 +23,22 @@ public class ConditionalStimulus implements Serializable, IConditionalStimulus {
     private double associationInhibitory;
     private double associationExcitatory;
 
-    private boolean alphaSet;
     private double alpha;
 
     public ConditionalStimulus(String name, InitialAlphaParameter initialAlphaParameter, SalienceExcitatoryParameter salienceExcitatoryParameter, SalienceInhibitoryParameter salienceInhibitoryParameter){
         this.name = name;
-        setInitialValues();
+        setInitialValues(initialAlphaParameter);
         InitialAlphaParameter = initialAlphaParameter;
         SalienceExcitatoryParameter = salienceExcitatoryParameter;
         SalienceInhibitoryParameter = salienceInhibitoryParameter;
     }
 
-    public ConditionalStimulus(String name, InitialAlphaParameter initialAlphaParameter,
-                               SalienceExcitatoryParameter salienceExcitatoryParameter,
-                               SalienceInhibitoryParameter salienceInhibitoryParameter,
-                               double associationExcitatory,
-                               double associationInhibitory,
-                               double alpha) {
-        this(name, initialAlphaParameter, salienceExcitatoryParameter, salienceInhibitoryParameter);
-        this.associationExcitatory = associationExcitatory;
-        this.associationInhibitory = associationInhibitory;
-        setAlpha(alpha);
-    }
-
     public double getAlpha(){
-        return alphaSet ? alpha : InitialAlphaParameter.getValue();
+        return alpha;
     }
 
     public void setAlpha(double value){
         alpha = value;
-        alphaSet = true;
     }
 
     public double getAssociationExcitatory(){
@@ -80,7 +66,11 @@ public class ConditionalStimulus implements Serializable, IConditionalStimulus {
     }
 
     public ConditionalStimulus getCopy(){
-        return new ConditionalStimulus(name, InitialAlphaParameter, SalienceExcitatoryParameter, SalienceInhibitoryParameter, associationExcitatory, associationInhibitory, getAlpha());
+        ConditionalStimulus copy = new ConditionalStimulus(name, InitialAlphaParameter, SalienceExcitatoryParameter, SalienceInhibitoryParameter);
+        copy.associationExcitatory = associationExcitatory;
+        copy.associationInhibitory = associationInhibitory;
+        copy.alpha = alpha;
+        return copy;
     }
 
     public void reset(IConditionalStimulus stim){
@@ -110,7 +100,7 @@ public class ConditionalStimulus implements Serializable, IConditionalStimulus {
     }
 
     private double calcNewDeltaVi(double capitalLambda){
-        return SalienceExcitatoryParameter.getValue() * getAlpha() * Math.abs(capitalLambda);
+        return SalienceInhibitoryParameter.getValue() * getAlpha() * Math.abs(capitalLambda);
     }
 
     private double calcNewAlpha(Parameter gamma, double lambda, double vNet, double oldAlpha) {
@@ -118,13 +108,13 @@ public class ConditionalStimulus implements Serializable, IConditionalStimulus {
     }
 
     public void reset(){
-        setInitialValues();
+        setInitialValues(InitialAlphaParameter);
     }
 
-    private void setInitialValues(){
+    private void setInitialValues(InitialAlphaParameter initialAlphaParameter){
         associationExcitatory = 0;
         associationInhibitory = 0;
-        alphaSet = false;
+        setAlpha(initialAlphaParameter.getValue());
     }
 
     @Override

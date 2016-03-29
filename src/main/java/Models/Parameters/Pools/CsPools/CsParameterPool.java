@@ -1,4 +1,4 @@
-package Models.Parameters.Pools;
+package Models.Parameters.Pools.CsPools;
 
 import Models.Parameters.ConditionalStimulus.CsParameter;
 import Models.Parameters.ConditionalStimulus.InitialAlphaParameter;
@@ -14,7 +14,7 @@ import java.util.Map;
 /**
  * Created by Rokas on 13/11/2015.
  */
-public class CsParameterPool implements Serializable {
+public class CsParameterPool implements ICsParameterPool, Serializable {
     Map<String, InitialAlphaParameter> initialAlphaParameterMap;
     Map<String, SalienceExcitatoryParameter> salienceExcitatoryParameterMap;
     Map<String, SalienceInhibitoryParameter> salienceInhibitoryParameterMap;

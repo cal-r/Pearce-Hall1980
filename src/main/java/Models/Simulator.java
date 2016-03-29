@@ -5,8 +5,8 @@ import Models.History.GroupHistory;
 import Models.History.SimulationHistory;
 import Models.Parameters.ConditionalStimulus.CsParameter;
 import Models.Parameters.Parameter;
-import Models.Parameters.Pools.CsParameterPool;
 import Models.Parameters.Pools.GlobalParameterPool;
+import Models.Parameters.Pools.CsPools.ICsParameterPool;
 import Models.Parameters.Pools.UsParameterPool;
 import ViewModels.GroupReportViewModel;
 
@@ -19,7 +19,7 @@ import java.util.List;
 public class Simulator implements Serializable{
     private SimulatorSettings settings;
     private List<Group> groups;
-    private CsParameterPool csParameterPool;
+    private ICsParameterPool csParameterPool;
     private GlobalParameterPool globalParameterPool;
     private List<GroupReportViewModel> report;
     private SimulationHistory simulationHistory;
@@ -29,7 +29,7 @@ public class Simulator implements Serializable{
         globalParameterPool = new GlobalParameterPool();
     }
 
-    public void setCsParameterPool(CsParameterPool csParameterPool){
+    public void setCsParameterPool(ICsParameterPool csParameterPool){
         this.csParameterPool = csParameterPool;
     }
 

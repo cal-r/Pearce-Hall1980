@@ -1,8 +1,9 @@
 package Models.History;
 
 import Models.Group;
-import Models.Parameters.Pools.CsParameterPool;
+import Models.Parameters.Pools.CsPools.CsParameterPool;
 import Models.Parameters.Parameter;
+import Models.Parameters.Pools.CsPools.ICsParameterPool;
 import Models.Parameters.UnconditionalStimulus.UsParameter;
 
 import java.io.Serializable;
@@ -15,11 +16,11 @@ import java.util.List;
 public class GroupHistory implements Serializable {
     public Group group;
     private List<GroupPhaseHistory> phaseHistories;
-    public CsParameterPool csParameterPool;
+    public ICsParameterPool csParameterPool;
     public CsParameterPool contextParameterPool;
     public List<Parameter> globalParameters;
     public List<UsParameter> usParameters;
-    public GroupHistory(Group group, CsParameterPool csParameterPool, List<Parameter> globalParameters, List<UsParameter> usParameters){
+    public GroupHistory(Group group, ICsParameterPool csParameterPool, List<Parameter> globalParameters, List<UsParameter> usParameters){
         this.group = group;
         this.csParameterPool = csParameterPool;
         this.globalParameters = globalParameters;

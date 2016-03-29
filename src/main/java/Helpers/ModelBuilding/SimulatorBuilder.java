@@ -1,10 +1,12 @@
 package Helpers.ModelBuilding;
 
+import Models.Parameters.Pools.CsPools.ICsParameterPool;
+import Models.Parameters.Pools.CsPools.RodriguezCsParameterPool;
 import Models.SimulatorSettings;
 import Models.Stimulus.*;
 import Models.Group;
 import Models.GroupPhase;
-import Models.Parameters.Pools.CsParameterPool;
+import Models.Parameters.Pools.CsPools.CsParameterPool;
 import Models.Simulator;
 import ViewModels.TableModels.TrialTableModel;
 import _from_RW_simulator.ContextConfig;
@@ -21,7 +23,7 @@ public class SimulatorBuilder {
 
     public static void initSimulator(TrialTableModel tableModel, Simulator simulator){
         SimulatorSettings settings = simulator.getSettings();
-        CsParameterPool csParameterPool = new CsParameterPool();
+        ICsParameterPool csParameterPool = settings.RodriguezMode ? new RodriguezCsParameterPool() : new CsParameterPool();
         GroupBuilder groupBuilder = new GroupBuilder(csParameterPool, settings, tableModel);
         List<Group> groups = new ArrayList<>();
         for(int gi=0;gi<tableModel.getGroupCount();gi++){
@@ -35,14 +37,14 @@ public class SimulatorBuilder {
 
     private static class GroupBuilder{
         private CsParameterPool contextParameters;
-        private CsParameterPool csParameterPool;
+        private ICsParameterPool csParameterPool;
 
         private SimulatorSettings settings;
         private Map<String, IConditionalStimulus> csMap;
         private List<GroupPhase> groupPhases;
         private TrialTableModel tableModel;
 
-        private GroupBuilder(CsParameterPool csParameterPool, SimulatorSettings settings, TrialTableModel tableModel){
+        private GroupBuilder(ICsParameterPool csParameterPool, SimulatorSettings settings, TrialTableModel tableModel){
             this.csParameterPool = csParameterPool;
             this.settings = settings;
             this.tableModel = tableModel;
@@ -95,20 +97,20 @@ public class SimulatorBuilder {
         private void updateCsMaps(List<PhaseStringTokenizer.TrialTypeTokens> phaseTokens, char reinforcer){
             for(PhaseStringTokenizer.TrialTypeTokens trialTypeTokens : phaseTokens){
                 for(String cueName : trialTypeTokens.cueNames){
-                    if(!csParameterPool.contains(cueName)){
-                        csParameterPool.createParameters(cueName);
-                    }
-                    if(settings.UseDifferentUs) {
-                        if(!csMap.containsKey(cueName)){
-                            csMap.put(cueName, createMultipleStimulus(cueName));
+                    if (!csMap.containsKey(cueName)) {
+                        if (!csParameterPool.contains(cueName)) {
+                            csParameterPool.createParameters(cueName);
                         }
-                        ((MultipleStimulus)csMap.get(cueName)).addStimulus(reinforcer);
-                    }else {
-                        if (!csMap.containsKey(cueName)) {
+                        if (settings.UseDifferentUs) {
+                            csMap.put(cueName, createMultipleStimulus(cueName));
+                        } else if (settings.RodriguezMode) {
+                            csMap.put(cueName, createRodriguezParameter(cueName));
+                        } else {
                             csMap.put(cueName, createCs(cueName));
                         }
                     }
-
+                    if (settings.UseDifferentUs)
+                        ((MultipleStimulus) csMap.get(cueName)).addStimulus(reinforcer);
                 }
             }
         }
@@ -122,17 +124,25 @@ public class SimulatorBuilder {
         private ConditionalStimulus createCs(String cueName){
             return new ConditionalStimulus(
                     cueName,
-                    csParameterPool.getInitialAlpha(cueName),
-                    csParameterPool.getSeParameter(cueName),
-                    csParameterPool.getSiParamter(cueName));
+                    ((CsParameterPool)csParameterPool).getInitialAlpha(cueName),
+                    ((CsParameterPool)csParameterPool).getSeParameter(cueName),
+                    ((CsParameterPool)csParameterPool).getSiParamter(cueName));
         }
 
         private MultipleStimulus createMultipleStimulus(String cueName){
             return new MultipleStimulus(
                     cueName,
-                    csParameterPool.getInitialAlpha(cueName),
-                    csParameterPool.getSeParameter(cueName),
-                    csParameterPool.getSiParamter(cueName));
+                    ((CsParameterPool)csParameterPool).getInitialAlpha(cueName),
+                    ((CsParameterPool)csParameterPool).getSeParameter(cueName),
+                    ((CsParameterPool)csParameterPool).getSiParamter(cueName));
+        }
+
+        private RodriguezStimulus createRodriguezParameter(String cueName) {
+            return new RodriguezStimulus(
+                    ((RodriguezCsParameterPool)csParameterPool).getInitialAlphaParameter(cueName),
+                    ((RodriguezCsParameterPool)csParameterPool).getInitialAssociationParameter(cueName),
+                    ((RodriguezCsParameterPool)csParameterPool).getSalienceParameter(cueName),
+                    cueName);
         }
     }
 }

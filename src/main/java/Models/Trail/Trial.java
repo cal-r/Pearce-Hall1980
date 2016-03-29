@@ -39,7 +39,7 @@ public class Trial implements Serializable{
     private double calcVNetValue(char reinforcer){
         double vNet = 0;
         for(IStimulus stim : getStims()){
-            if(stim instanceof ConditionalStimulus) {
+            if(stim instanceof ConditionalStimulus || stim instanceof RodriguezStimulus) {
                 vNet += stim.getAssociationNet();
             }
             if(stim instanceof MultipleStimulus){

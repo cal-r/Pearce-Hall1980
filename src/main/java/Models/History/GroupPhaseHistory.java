@@ -93,6 +93,9 @@ public class GroupPhaseHistory implements Serializable {
         if(stim instanceof ConditionalStimulus){
             return new ConditionalStimulusState((ConditionalStimulus)stim);
         }
+        if(stim instanceof RodriguezStimulus){
+            return new ConditionalStimulusState((RodriguezStimulus)stim);
+        }
         return new StimulusState(stim);
     }
 

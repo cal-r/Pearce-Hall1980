@@ -1,6 +1,6 @@
 package Helpers.ModelBuilding;
 
-import Models.Parameters.Pools.CsParameterPool;
+import Models.Parameters.Pools.CsPools.CsParameterPool;
 import Models.Stimulus.ContextStimulus;
 import _from_RW_simulator.ContextConfig;
 

@@ -3,8 +3,8 @@ package Helpers;
 import Constants.GuiStringConstants;
 import Models.History.*;
 import Models.Parameters.ConditionalStimulus.CsParameter;
-import Models.Parameters.Pools.CsParameterPool;
 import Models.Parameters.Parameter;
+import Models.Parameters.Pools.CsPools.ICsParameterPool;
 import Models.Parameters.UnconditionalStimulus.UsParameter;
 import ViewModels.GroupReportViewModel;
 
@@ -89,7 +89,7 @@ public class ReportBuilder {
         return rowId;
     }
 
-    private static int insertCsParameterTable(GroupReportViewModel report, int rowId, CsParameterPool pool){
+    private static int insertCsParameterTable(GroupReportViewModel report, int rowId, ICsParameterPool pool){
         for(CsParameter csParameter : pool.getAllParameters()){
             report.setCell(rowId, 0, csParameter.getDisplayName());
             report.setCell(rowId, 1, csParameter.getValue());

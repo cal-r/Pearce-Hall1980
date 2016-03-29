@@ -1,6 +1,7 @@
 package Models.History;
 
 import Models.Stimulus.ConditionalStimulus;
+import Models.Stimulus.RodriguezStimulus;
 
 import java.io.Serializable;
 
@@ -19,6 +20,13 @@ public class ConditionalStimulusState extends StimulusState implements Serializa
         Ve = cs.getAssociationExcitatory();
         Vi = cs.getAssociationInhibitory();
         Alpha = cs.getAlpha();
+    }
+
+    public ConditionalStimulusState(RodriguezStimulus rs){
+        super(rs);
+        Ve = rs.getAssociationEvent();
+        Vi = rs.getAssociationNoEvent();
+        Alpha = rs.getAlpha();
     }
 
     public void addValues(StimulusState stateToAdd){

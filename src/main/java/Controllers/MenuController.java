@@ -49,6 +49,7 @@ public class MenuController implements ActionListener {
         createMenuItem(settingsMenu, GuiStringConstants.COMPOUND_RESULTS_SETTING, MenuItemType.CHECKBOX);
         createMenuItem(settingsMenu, GuiStringConstants.SIMULATE_CONTEXT, MenuItemType.CHECKBOX);
         createMenuItem(settingsMenu, GuiStringConstants.USE_DIFFERENT_US, MenuItemType.CHECKBOX);
+        createMenuItem(settingsMenu, GuiStringConstants.RODRIGUEZ_MODE, MenuItemType.CHECKBOX);
         menuBar.add(settingsMenu);
 
         //help!!
@@ -103,6 +104,11 @@ public class MenuController implements ActionListener {
     }
 
     private void onUseDifferentUs(boolean menuItemSelected) {
+        if(settings.RodriguezMode) {
+            GuiHelper.displayErrorMessage(GuiStringConstants.RODRIGUEZ_MULTIPLE_US_ERROR);
+            setSettings(settings);
+            return;
+        }
         settings.UseDifferentUs = menuItemSelected;
         mainWindowController.onUseDifferentUsChange();
     }
@@ -114,6 +120,15 @@ public class MenuController implements ActionListener {
     private void onRestart(){
         onExit();
         Launcher.startSimulator();
+    }
+
+    private void onRodriguez(boolean menuItemSelected){
+        if(settings.UseDifferentUs) {
+            GuiHelper.displayErrorMessage(GuiStringConstants.RODRIGUEZ_MULTIPLE_US_ERROR);
+            setSettings(settings);
+            return;
+        }
+        settings.RodriguezMode = menuItemSelected;
     }
 
     @Override
@@ -143,6 +158,9 @@ public class MenuController implements ActionListener {
             case GuiStringConstants.NEW:
                 onRestart();
                 break;
+            case GuiStringConstants.RODRIGUEZ_MODE:
+                onRodriguez(GuiHelper.isMenuItemSelected(e));
+                break;
             default:
                 GuiHelper.displayErrorMessage("Nicht implementiert!");
         }
@@ -154,6 +172,7 @@ public class MenuController implements ActionListener {
         checkboxesMap.get(GuiStringConstants.COMPOUND_RESULTS_SETTING).setState(settings.CompoundResults);
         checkboxesMap.get(GuiStringConstants.SIMULATE_CONTEXT).setState(settings.ContextSimulation);
         checkboxesMap.get(GuiStringConstants.USE_DIFFERENT_US).setState(settings.UseDifferentUs);
+        checkboxesMap.get(GuiStringConstants.RODRIGUEZ_MODE).setState(settings.RodriguezMode);
     }
 
     //getters
