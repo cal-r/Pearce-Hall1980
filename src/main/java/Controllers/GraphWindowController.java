@@ -10,6 +10,7 @@ import Models.Graphing.Graph;
 import Models.Graphing.GraphLine;
 import Models.Graphing.GraphLineGroup;
 import Models.History.SimulationHistory;
+import Models.SimulatorSettings;
 import Views.GraphWindow;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
@@ -147,9 +148,9 @@ public class GraphWindowController implements ActionListener {
         return (NumberAxis) chart.getXYPlot().getDomainAxis();
     }
 
-    static void showGraphs(SimulationHistory history){
+    static void showGraphs(SimulationHistory history, SimulatorSettings settings){
         Map<Paint, Boolean> interGraphColorMap = new HashMap<>();
-        for(Graph graph : GraphBuilder.BuildGraphs(history)){
+        for(Graph graph : GraphBuilder.BuildGraphs(history, settings.RodriguezMode)){
             new GraphWindowController(graph, interGraphColorMap);
         }
     }

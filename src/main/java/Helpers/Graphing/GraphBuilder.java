@@ -3,10 +3,7 @@ package Helpers.Graphing;
 import Helpers.StimulusOrderingHelper;
 import Models.Graphing.Graph;
 import Models.Graphing.GraphLine;
-import Models.History.GroupPhaseHistory;
-import Models.History.PhaseHistory;
-import Models.History.SimulationHistory;
-import Models.History.StimulusState;
+import Models.History.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,19 +15,15 @@ import java.util.Map;
  */
 public class GraphBuilder {
 
-    public static List<Graph> BuildGraphs(SimulationHistory history){
+    public static List<Graph> BuildGraphs(SimulationHistory history, boolean rodriguezMode){
         Map<String, List<GraphLine>> linkedLinesMap = new HashMap<>();
         List<Graph> graphs = new ArrayList<>();
         for(PhaseHistory phaseHistory : history.getPhases()){
-            int lineDisplayId = 0;
+            LineDisplayIdCounter lineCounter = new LineDisplayIdCounter();
             Graph graph = new Graph(phaseHistory.getPhaseName());
             for(GroupPhaseHistory gpHist : phaseHistory){
                 for(String stimName : StimulusOrderingHelper.orderStimNamesByDescription(gpHist.getStimsNames(), gpHist.getDescription())){
-                    GraphLine line = new GraphLine(String.valueOf(stimName));
-                    addLinePoints(line, stimName, gpHist);
-                    graph.addLine(gpHist.getGroupName(), line);
-                    setLink(linkedLinesMap, line);
-                    line.setDisplayId(lineDisplayId++);
+                   addLines(stimName, gpHist, graph, linkedLinesMap, lineCounter, rodriguezMode);
                 }
             }
             graphs.add(graph);
@@ -38,11 +31,46 @@ public class GraphBuilder {
         return graphs;
     }
 
-    private static void addLinePoints(GraphLine line, String stimName, GroupPhaseHistory gpHist){
+
+    private static void addLines(String stimName, GroupPhaseHistory gpHist, Graph graph, Map<String, List<GraphLine>> linkedLinesMap, LineDisplayIdCounter lineCounter, boolean rodriguezMode){
+        addGraphLine(stimName, gpHist, graph, linkedLinesMap, lineCounter, Variable.VNET);
+        if(rodriguezMode){
+            addGraphLine(stimName, gpHist, graph, linkedLinesMap, lineCounter, Variable.VE);
+            addGraphLine(stimName, gpHist, graph, linkedLinesMap, lineCounter, Variable.VnO);
+        }
+    }
+
+    private static void addGraphLine(String stimName, GroupPhaseHistory gpHist, Graph graph, Map<String, List<GraphLine>> linkedLinesMap, LineDisplayIdCounter lineCounter, Variable variable){
+        GraphLine line = new GraphLine(getLineName(stimName, variable));
+        addLinePoints(line, stimName, gpHist, variable);
+        graph.addLine(gpHist.getGroupName(), line);
+        setLink(linkedLinesMap, line);
+        line.setDisplayId(lineCounter.getDisplayId());
+    }
+
+    private static String getLineName(String stimName, Variable variable){
+        if(variable == Variable.VNET){
+            return stimName;
+        }
+        return String.format("%s(%s)", stimName, variable);
+    }
+
+
+    enum Variable { VNET, VnO, VE }
+    private static void addLinePoints(GraphLine line, String stimName, GroupPhaseHistory gpHist, Variable variable){
         for(int periodNo = 1; periodNo<=gpHist.getNumberOfPeriods(); periodNo++){
             StimulusState state = gpHist.getState(stimName, periodNo);
             if(state!=null) {
-                line.addPoint(periodNo, state.Vnet);
+                if(variable == Variable.VNET) {
+                    line.addPoint(periodNo, state.Vnet);
+                }else{
+                    //only for rodriguez
+                    ConditionalStimulusState csState = (ConditionalStimulusState) state;
+                    if(variable == Variable.VE)
+                        line.addPoint(periodNo, csState.Ve);
+                    if(variable == Variable.VnO)
+                        line.addPoint(periodNo, csState.Vi);
+                }
             }
         }
     }
@@ -56,5 +84,15 @@ public class GraphBuilder {
         List<GraphLine> linkedLines = linkedLinesMap.get(lineCommand);
         linkedLines.add(line);
         line.setLinkedLines(linkedLines);
+    }
+
+    private static class LineDisplayIdCounter {
+        private int currCount;
+        public LineDisplayIdCounter(){
+            currCount = 0;
+        }
+        public int getDisplayId(){
+            return currCount++;
+        }
     }
 }

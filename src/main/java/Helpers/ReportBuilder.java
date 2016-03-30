@@ -152,7 +152,7 @@ public class ReportBuilder {
         report.setCell(rowId, colId++, GuiStringConstants.RANDOM + ": " + groupPhaseHistory.isRandom());
     }
 
-    private enum Variable { ALPHA, VE, VI, VNET };
+    public enum Variable { ALPHA, VE, VI, VNET };
     private static double getValue(StimulusState state, Variable variable){
         switch (variable){
             case ALPHA: return ((ConditionalStimulusState)state).Alpha;
@@ -171,7 +171,7 @@ public class ReportBuilder {
         return hasValue(firstState, variable);
     }
 
-    private static String getVariableDisplayName(Variable variable, SimulatorSettings settings){
+    public static String getVariableDisplayName(Variable variable, SimulatorSettings settings){
         if(variable == Variable.VE && settings.RodriguezMode)
             return "VnE";
         return variable.toString();

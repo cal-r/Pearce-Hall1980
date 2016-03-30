@@ -13,8 +13,6 @@ public class ConditionalStimulusState extends StimulusState implements Serializa
     public double Vi;
     public double Alpha;
 
-    public ConditionalStimulusState(){}
-
     public ConditionalStimulusState(ConditionalStimulus cs){
         super(cs);
         Ve = cs.getAssociationExcitatory();

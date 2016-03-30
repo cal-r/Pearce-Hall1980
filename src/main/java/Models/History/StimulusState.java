@@ -10,8 +10,6 @@ import java.io.Serializable;
 public class StimulusState implements Serializable {
     public double Vnet;
 
-    public StimulusState(){}
-
     public StimulusState(IStimulus stim){
         Vnet = stim.getAssociationNet();
     }
