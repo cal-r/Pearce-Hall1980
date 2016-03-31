@@ -61,7 +61,7 @@ public class RodriguezTests extends TestCase {
     }
 
     private GlobalParameterPool getGlobals(){
-        GlobalParameterPool globals = new GlobalParameterPool();
+        GlobalParameterPool globals = new GlobalParameterPool(new SimulatorSettings());
         globals.getGamma().setValue(1);
         return globals;
     }

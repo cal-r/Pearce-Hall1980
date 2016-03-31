@@ -103,6 +103,7 @@ public class UsParamsTableModel extends BaseTableModel implements Serializable {
             if (!table.getModel().isCellEditable(row, col)) {
                 l.setText("");
             }
+            l.setHorizontalAlignment(RIGHT);
             return l;
 
         }

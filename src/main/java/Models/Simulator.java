@@ -26,7 +26,7 @@ public class Simulator implements Serializable{
 
     public Simulator(){
         settings = new SimulatorSettings();
-        globalParameterPool = new GlobalParameterPool();
+        globalParameterPool = new GlobalParameterPool(settings);
     }
 
     public void setCsParameterPool(ICsParameterPool csParameterPool){

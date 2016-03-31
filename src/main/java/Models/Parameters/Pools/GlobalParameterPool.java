@@ -3,6 +3,7 @@ package Models.Parameters.Pools;
 import Constants.DefaultValuesConstants;
 import Constants.ParameterNamingConstants;
 import Models.Parameters.Parameter;
+import Models.SimulatorSettings;
 
 import java.io.Serializable;
 import java.util.*;
@@ -15,8 +16,10 @@ public class GlobalParameterPool implements Serializable {
     private List<Parameter> globalParameters;
 
     private UsParameterPool usParameterPool;
+    private SimulatorSettings settings;
 
-    public GlobalParameterPool(){
+    public GlobalParameterPool(SimulatorSettings settings){
+        this.settings = settings;
         globalParameters = new ArrayList<>();
         globalParameters.add(createGamma());
         usParameterPool = new UsParameterPool();
@@ -31,7 +34,7 @@ public class GlobalParameterPool implements Serializable {
     }
 
     private Parameter createGamma(){
-        return createParameter(ParameterNamingConstants.GAMMA, DefaultValuesConstants.GAMMA);
+        return createParameter(ParameterNamingConstants.GAMMA, settings.RodriguezMode ? DefaultValuesConstants.RODRIGUEZ_GAMMA : DefaultValuesConstants.GAMMA);
     }
 
     private Parameter createParameter(String name, double value){

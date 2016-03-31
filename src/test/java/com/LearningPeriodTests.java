@@ -3,6 +3,7 @@ package com;
 import Constants.DefaultValuesConstants;
 import Helpers.ListCaster;
 import Models.Parameters.Pools.GlobalParameterPool;
+import Models.SimulatorSettings;
 import Models.Stimulus.ConditionalStimulus;
 import Models.Parameters.ConditionalStimulus.InitialAlphaParameter;
 import Models.Parameters.ConditionalStimulus.SalienceExcitatoryParameter;
@@ -130,7 +131,7 @@ public class LearningPeriodTests extends junit.framework.TestCase {
     }
 
     private GlobalParameterPool getGlobals(){
-        GlobalParameterPool globals = new GlobalParameterPool();
+        GlobalParameterPool globals = new GlobalParameterPool(new SimulatorSettings());
         globals.getGamma().setValue(0.1);
         return globals;
     }
