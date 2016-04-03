@@ -50,7 +50,7 @@ public class GroupPhaseHistory implements Serializable {
     }
 
     public void recordProbeState(Probe probe) {
-        recordStimState(probe.getTrialTypeDescription(), probe.getStimulus());
+        recordStimState(probe.getLabel(), probe.getStimulus());
     }
 
     private void recordMultiStimState(MultipleStimulus multipleStimulus, char phaseReinforcer){

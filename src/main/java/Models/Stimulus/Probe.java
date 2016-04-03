@@ -5,18 +5,18 @@ package Models.Stimulus;
  */
 public class Probe {
     private IStimulus stimulus;
-    private String trialTypeDescription;
+    private String label;
 
-    public Probe(IStimulus stimulus, String trialTypeDescription) {
+    public Probe(IStimulus stimulus, String probeLabel) {
         this.stimulus = stimulus;
-        this.trialTypeDescription = trialTypeDescription;
+        this.label = probeLabel;
     }
 
     public IStimulus getStimulus() {
         return stimulus;
     }
 
-    public String getTrialTypeDescription() {
-        return trialTypeDescription;
+    public String getLabel() {
+        return label;
     }
 }
