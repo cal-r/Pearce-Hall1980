@@ -134,8 +134,8 @@ public class PhaseParser {
             List<IConditionalStimulus> compounded = new ArrayList<>();
 
             for(IStimulus stim : stims){
-                if(stim instanceof ConditionalStimulus){
-                    compounded.add((ConditionalStimulus) stim);
+                if(stim instanceof ConditionalStimulus || stim instanceof RodriguezStimulus){
+                    compounded.add((IConditionalStimulus) stim);
                 }else if(stim instanceof MultipleStimulus){
                     if(reinforcer == '-'){
                         compounded.add((MultipleStimulus) stim);

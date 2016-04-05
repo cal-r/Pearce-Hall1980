@@ -1,9 +1,11 @@
 package Models.Stimulus;
 
+import java.io.Serializable;
+
 /**
  * Created by Rokas on 16/03/2016.
  */
-public class Probe {
+public class Probe implements Serializable{
     private IStimulus stimulus;
     private String label;
 

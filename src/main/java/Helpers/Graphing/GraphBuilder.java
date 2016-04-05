@@ -34,7 +34,7 @@ public class GraphBuilder {
 
     private static void addLines(String stimName, GroupPhaseHistory gpHist, Graph graph, Map<String, List<GraphLine>> linkedLinesMap, LineDisplayIdCounter lineCounter, boolean rodriguezMode){
         addGraphLine(stimName, gpHist, graph, linkedLinesMap, lineCounter, Variable.VNET);
-        if(rodriguezMode){
+        if(rodriguezMode && gpHist.getState(stimName, 1) instanceof ConditionalStimulusState){
             addGraphLine(stimName, gpHist, graph, linkedLinesMap, lineCounter, Variable.VE);
             addGraphLine(stimName, gpHist, graph, linkedLinesMap, lineCounter, Variable.VnO);
         }
