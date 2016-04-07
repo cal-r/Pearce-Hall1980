@@ -1,0 +1,29 @@
+
+all_v_net = <sum of Vnet values of all cues present in the trial>
+
+IF unconditional_stimulus_is_present THEN
+	lambda = 1
+ELSE
+	lambda = 0
+END IF
+
+capital_lambda = lambda - all_v_net
+
+new_alpha = gamma * absolute_value(lambda - all_v_net) + (1 - gamma) * alpha
+
+IF capital_lambda > 0 THEN
+	//possitive learning
+	update = salience_excitatory_parameter * alpha * lambda
+	association_excitatory = association_excitatory + update
+ELSE IF capitalLambda < 0 THEN
+	//negative learning
+	update = return salience_inhibitory_parameter * alpha * absolute_value(capital_lambda);
+	association_inhibitory = association_inhibitory + update
+END IF
+
+alpha = new_alpha
+
+
+
+
+
