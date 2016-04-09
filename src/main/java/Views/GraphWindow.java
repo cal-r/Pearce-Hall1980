@@ -5,6 +5,7 @@ import javax.swing.*;
 //demo
 import javax.swing.JPanel;
 
+import Helpers.ResourceHelper;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 
@@ -23,6 +24,7 @@ public class GraphWindow extends JFrame{
         this.chart = chart;
         setVisible(true);
         setContentPane(rootPane);
+        setIconImage(ResourceHelper.getIconImage());
         pack();
     }
 

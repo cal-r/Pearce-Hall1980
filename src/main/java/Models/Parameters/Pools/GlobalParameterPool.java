@@ -2,6 +2,7 @@ package Models.Parameters.Pools;
 
 import Constants.DefaultValuesConstants;
 import Constants.ParameterNamingConstants;
+import Models.Parameters.GammaParameter;
 import Models.Parameters.Parameter;
 import Models.SimulatorSettings;
 
@@ -34,13 +35,7 @@ public class GlobalParameterPool implements Serializable {
     }
 
     private Parameter createGamma(){
-        return createParameter(ParameterNamingConstants.GAMMA, settings.RodriguezMode ? DefaultValuesConstants.RODRIGUEZ_GAMMA : DefaultValuesConstants.GAMMA);
-    }
-
-    private Parameter createParameter(String name, double value){
-        Parameter param = new Parameter(name);
-        param.setValue(value);
-        return param;
+        return new GammaParameter(settings);
     }
 
     public UsParameterPool getUsParameterPool() {

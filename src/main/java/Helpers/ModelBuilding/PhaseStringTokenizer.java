@@ -26,7 +26,7 @@ import java.util.regex.Pattern;
  */
 public class PhaseStringTokenizer {
 
-    private static final String RODRIGUEZ_TRAIL_TYPE_REGEX = "(\\d*)([a-zA-Z\\^]*)";
+    private static final String RODRIGUEZ_TRAIL_TYPE_REGEX = "(\\d*)([a-zA-Z\\^]*)(\\-)";
     private static final String TRAIL_TYPE_REGEX = "(\\d*)([a-zA-Z\\^]*)([\\+\\-])";
     private static final String TRAIL_TYPE_REGEX_MULTIPLE_US = "(\\d*)([a-zA-Z\\^]*)([\\+\\*\\#\\$\\-])";
 
@@ -97,10 +97,17 @@ public class PhaseStringTokenizer {
         Matcher matcher = pattern.matcher(trialTypeDescription);
 
         if (!matcher.matches()) {
-            throw new IllegalArgumentException();
+            if(settings.RodriguezMode && matchesNormalRegex(trialTypeDescription)){
+                throw new IllegalArgumentException(GuiStringConstants.RODRIGUEZ_TRIAL_TABLE_ERROR);
+            }
+            throw new IllegalArgumentException(GuiStringConstants.TRAIL_TABLE_ERROR);
         }
 
         return matcher;
+    }
+    
+    private static boolean matchesNormalRegex(String trialTypeDescription){
+        return Pattern.compile(TRAIL_TYPE_REGEX).matcher(trialTypeDescription).matches();
     }
 
     private static boolean isEmpty(String trialTypeDescription){

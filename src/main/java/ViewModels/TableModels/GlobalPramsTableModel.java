@@ -1,6 +1,7 @@
 package ViewModels.TableModels;
 
 import Constants.GuiStringConstants;
+import Models.Parameters.Parameter;
 import ViewModels.TableModels.BaseParamsTableModel;
 
 import java.io.Serializable;
@@ -17,5 +18,10 @@ public class GlobalPramsTableModel extends BaseParamsTableModel implements Seria
         columnHeaders.add(GuiStringConstants.GLOBAL_PARAMETER);
         columnHeaders.add(GuiStringConstants.VALUE);
         return columnHeaders;
+    }
+
+    public void overrideParameters(List<Parameter> parameters){
+        this.parameters = null;
+        setUpParameters(parameters);
     }
 }

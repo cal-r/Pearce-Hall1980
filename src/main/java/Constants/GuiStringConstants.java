@@ -8,7 +8,9 @@ public class GuiStringConstants {
 
     public static final String ERROR = "ERROR";
     public static final String TRAIL_TABLE_ERROR = "ERROR: invalid input in trial table";
-    public static final String RODRIGUEZ_MULTIPLE_US_ERROR = "ERROR: combination of multple US and Rodriguez mode is not allowed, please unselect one of them";
+    public static final String RODRIGUEZ_TRIAL_TABLE_ERROR = "Your design includes a reinforcer. Hall & Rodriguez model does not envisage reinforced trials";
+    public static final String RODRIGUEZ_MULTIPLE_US_ERROR = "ERROR: multiple USs are not allowed in Hall & Rodriguez model";
+    public static final String RODRIGUEZ_CONTEXT = "ERROR: Context is not defined in Hall & Rodriguez model";
 
     public static final String GROUP_NAME = "Group Name";
     public static final String CS_PARAMETER = "Cs Parameter";
@@ -30,7 +32,7 @@ public class GuiStringConstants {
     public static final String COMPOUND_RESULTS_SETTING = "Show Compound Results";
     public static final String SIMULATE_CONTEXT = "Context Simulation";
     public static final String USE_DIFFERENT_US_STRENGTHS = "Use Different US Strengts";
-	public static final String USE_DIFFERENT_US = "Use Different US";
+	public static final String USE_DIFFERENT_US = "Use Different USs";
     public static final String RODRIGUEZ_MODE = "Model Elaborations/Hall & Rodriguez";
 
     public static final String DEFAULT_PHASE = "";

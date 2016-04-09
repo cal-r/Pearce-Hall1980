@@ -97,7 +97,7 @@ public class MainWindowController implements ActionListener, TableModelListener 
             usParamsTableModel.setUpParameters(simulator.getUsParameterPool());
             runSimButton.setEnabled(true);
         }catch (IllegalArgumentException ex){
-            GuiHelper.displayErrorMessage(GuiStringConstants.TRAIL_TABLE_ERROR);
+            GuiHelper.displayErrorMessage(ex.getMessage());
         }
     }
 
@@ -207,6 +207,10 @@ public class MainWindowController implements ActionListener, TableModelListener 
             usParamsTableModel.clearTable();
             usParamsTableModel.setUpParameters(simulator.getUsParameterPool());
         }
+    }
+
+    public void onRodriguezChange(){
+        globalParamsTableModel.overrideParameters(simulator.getGlobalParameters());
     }
 
     //getters

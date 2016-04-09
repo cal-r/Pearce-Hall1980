@@ -80,6 +80,11 @@ public class MenuController implements ActionListener {
     }
 
     private void onSimulateContext(boolean isSelected){
+        if(settings.RodriguezMode) {
+            GuiHelper.displayErrorMessage(GuiStringConstants.RODRIGUEZ_CONTEXT);
+            setSettings(settings);
+            return;
+        }
         settings.ContextSimulation = isSelected;
         mainWindowController.onSimulateContextChange();
     }
@@ -123,12 +128,17 @@ public class MenuController implements ActionListener {
     }
 
     private void onRodriguez(boolean menuItemSelected){
-        if(settings.UseDifferentUs) {
-            GuiHelper.displayErrorMessage(GuiStringConstants.RODRIGUEZ_MULTIPLE_US_ERROR);
+        if(settings.UseDifferentUs || settings.ContextSimulation) {
+            if(settings.UseDifferentUs) {
+                GuiHelper.displayErrorMessage(GuiStringConstants.RODRIGUEZ_MULTIPLE_US_ERROR);
+            }else{
+                GuiHelper.displayErrorMessage(GuiStringConstants.RODRIGUEZ_CONTEXT);
+            }
             setSettings(settings);
             return;
         }
         settings.RodriguezMode = menuItemSelected;
+        mainWindowController.onRodriguezChange();
     }
 
     @Override
