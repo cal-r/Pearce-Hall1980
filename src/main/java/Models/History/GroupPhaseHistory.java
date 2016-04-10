@@ -2,6 +2,7 @@ package Models.History;
 
 
 import Models.Stimulus.*;
+import Models.Stimulus.Rodriguez.RodriguezStimulus;
 
 import java.io.Serializable;
 import java.util.*;

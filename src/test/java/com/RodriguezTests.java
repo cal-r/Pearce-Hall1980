@@ -9,7 +9,7 @@ import Models.Parameters.ConditionalStimulus.Rodriguez.SalienceParameter;
 import Models.Parameters.Pools.GlobalParameterPool;
 import Models.SimulatorSettings;
 import Models.Stimulus.IStimulus;
-import Models.Stimulus.RodriguezStimulus;
+import Models.Stimulus.Rodriguez.RodriguezStimulus;
 import Models.Trail.LearningPeriod;
 import Models.Trail.Trial;
 import junit.framework.TestCase;

@@ -1,9 +1,9 @@
 package Helpers.ModelBuilding;
 
-import Helpers.ListCaster;
 import Models.SimulatorSettings;
 import Models.Stimulus.*;
 import Models.GroupPhase;
+import Models.Stimulus.Rodriguez.RodriguezStimulus;
 import Models.Trail.ItiPeriod;
 import Models.Trail.LearningPeriod;
 import Models.Trail.Trial;

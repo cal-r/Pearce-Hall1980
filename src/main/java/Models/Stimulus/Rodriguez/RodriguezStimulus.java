@@ -1,10 +1,11 @@
-package Models.Stimulus;
+package Models.Stimulus.Rodriguez;
 
 import Models.Parameters.ConditionalStimulus.InitialAlphaParameter;
 import Models.Parameters.ConditionalStimulus.Rodriguez.InitialAssociationParameter;
 import Models.Parameters.ConditionalStimulus.Rodriguez.SalienceParameter;
 import Models.Parameters.Parameter;
 import Models.Parameters.Pools.GlobalParameterPool;
+import Models.Stimulus.IConditionalStimulus;
 
 import java.io.Serializable;
 import java.util.Map;

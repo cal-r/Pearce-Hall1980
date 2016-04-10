@@ -8,6 +8,7 @@ import Models.Group;
 import Models.GroupPhase;
 import Models.Parameters.Pools.CsPools.CsParameterPool;
 import Models.Simulator;
+import Models.Stimulus.Rodriguez.RodriguezStimulus;
 import ViewModels.TableModels.TrialTableModel;
 import _from_RW_simulator.ContextConfig;
 

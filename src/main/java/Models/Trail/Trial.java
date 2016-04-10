@@ -1,9 +1,9 @@
 package Models.Trail;
 
-import Models.GroupPhase;
 import Models.History.GroupPhaseHistory;
 import Models.Parameters.Pools.GlobalParameterPool;
 import Models.Stimulus.*;
+import Models.Stimulus.Rodriguez.RodriguezStimulus;
 
 import java.io.Serializable;
 import java.util.ArrayList;

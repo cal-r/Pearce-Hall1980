@@ -33,7 +33,10 @@ public class GuiStringConstants {
     public static final String SIMULATE_CONTEXT = "Context Simulation";
     public static final String USE_DIFFERENT_US_STRENGTHS = "Use Different US Strengts";
 	public static final String USE_DIFFERENT_US = "Use Different USs";
-    public static final String RODRIGUEZ_MODE = "Model Elaborations/Hall & Rodriguez";
+    public static final String RODRIGUEZ_MODE = "Hall & Rodriguez";
+    public static final String ELABORATIONS_MENU = "Model Elaborations";
+    public static final String INITIAL_V_FOR_PH = "Set initial V excitatory for P&H";
+
 
     public static final String DEFAULT_PHASE = "";
     public static final String TRAIL_TYPE_SEPARATOR = "/";

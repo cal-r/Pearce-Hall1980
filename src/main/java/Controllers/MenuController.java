@@ -49,8 +49,13 @@ public class MenuController implements ActionListener {
         createMenuItem(settingsMenu, GuiStringConstants.COMPOUND_RESULTS_SETTING, MenuItemType.CHECKBOX);
         createMenuItem(settingsMenu, GuiStringConstants.SIMULATE_CONTEXT, MenuItemType.CHECKBOX);
         createMenuItem(settingsMenu, GuiStringConstants.USE_DIFFERENT_US, MenuItemType.CHECKBOX);
-        createMenuItem(settingsMenu, GuiStringConstants.RODRIGUEZ_MODE, MenuItemType.CHECKBOX);
         menuBar.add(settingsMenu);
+
+        //rodriguez menu
+        JMenu elaborationsMenu = new JMenu(GuiStringConstants.ELABORATIONS_MENU);
+        createMenuItem(elaborationsMenu, GuiStringConstants.RODRIGUEZ_MODE, MenuItemType.CHECKBOX);
+        createMenuItem(elaborationsMenu, GuiStringConstants.INITIAL_V_FOR_PH, MenuItemType.CHECKBOX);
+        menuBar.add(elaborationsMenu);
 
         //help!!
         JMenu helpMenu = new JMenu(GuiStringConstants.HELP);
