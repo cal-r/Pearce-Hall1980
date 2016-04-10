@@ -132,7 +132,7 @@ public class PhaseParser {
                 return;
             }
             List<IConditionalStimulus> compounded = new ArrayList<>();
-
+            boolean reinforcerSpecificCues = false;
             for(IStimulus stim : stims){
                 if(stim instanceof ConditionalStimulus || stim instanceof RodriguezStimulus){
                     compounded.add((IConditionalStimulus) stim);
@@ -143,12 +143,13 @@ public class PhaseParser {
                         for(IConditionalStimulus positiveStim : ((MultipleStimulus) stim).getStims(reinforcer)){
                             compounded.add(positiveStim);
                         }
+                        reinforcerSpecificCues = true;
                     }
                 }
             }
 
-            CompoundStimulus compound = new CompoundStimulus(compounded);
+            CompoundStimulus compound = new CompoundStimulus(compounded, reinforcerSpecificCues);
             stims.add(compound);
         }
-    }
+}
 }
