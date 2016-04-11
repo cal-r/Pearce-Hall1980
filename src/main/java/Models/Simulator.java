@@ -72,9 +72,6 @@ public class Simulator implements Serializable{
 
     private GroupHistory createGroupHistory(Group group){
         GroupHistory history = new GroupHistory(group, csParameterPool, getGlobalParameters(), getUsParameterPool().getUsParameters());
-        if(settings.ContextSimulation){
-            history.setContextParameterPool(group.getContextParameterPool());;
-        }
         return history;
     }
 

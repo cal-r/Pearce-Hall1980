@@ -37,7 +37,6 @@ public class SimulatorBuilder {
     }
 
     private static class GroupBuilder{
-        private CsParameterPool contextParameters;
         private ICsParameterPool csParameterPool;
 
         private SimulatorSettings settings;
@@ -54,7 +53,6 @@ public class SimulatorBuilder {
         private Group buildGroup(int gi){
             List<ContextConfig> contextConfigs = new ArrayList<>();
             List<Integer> itiRatios = new ArrayList<>();
-            contextParameters = new CsParameterPool();
 
             String groupName = tableModel.getGroupName(gi);
             List<String> phaseDescriptions = tableModel.getPhaseDescriptions(gi);
@@ -71,13 +69,15 @@ public class SimulatorBuilder {
             for(int i=0;i<phaseDescriptions.size();i++){
                 String phaseDescription = phaseDescriptions.get(i);
                 List<PhaseStringTokenizer.TrialTypeTokens> phaseTokens = PhaseStringTokenizer.getPhaseTokens(settings, phaseDescription);
-                updateCsMaps(phaseTokens, PhaseParser.getPhaseReinforcer(phaseTokens));
-                GroupPhase groupPhase;
+                updateCsMapsForCues(phaseTokens);
 
+                GroupPhase groupPhase;
                 if(settings.ContextSimulation) {
                     ContextConfig contextConfig = contextConfigs.get(i);
-                    updateCsMap(contextConfig);
-                    groupPhase = PhaseParser.ParsePhase(phaseTokens, csMap, i, settings, csMap.get(contextConfig.getSymbol()), itiRatios.get(i));
+                    String contextName = contextConfig.getSymbol();
+                    ContextParameterHelper.setContextConfigInParamsPool(contextConfig, (CsParameterPool)csParameterPool);
+                    updateCsMaps(contextName, PhaseParser.getPhaseReinforcer(phaseTokens));
+                    groupPhase = PhaseParser.ParsePhase(phaseTokens, csMap, i, settings, csMap.get(contextName), itiRatios.get(i));
                 }else{
                     groupPhase = PhaseParser.ParsePhase(phaseTokens, csMap, i, settings, null, 0);
                 }
@@ -88,37 +88,32 @@ public class SimulatorBuilder {
             }
 
             Group group = new Group(groupName, groupPhases);
-            if(settings.ContextSimulation){
-                group.setContextParameterPool(contextParameters);
-            }
             return group;
         }
 
-        private void updateCsMaps(List<PhaseStringTokenizer.TrialTypeTokens> phaseTokens, char reinforcer){
-            for(PhaseStringTokenizer.TrialTypeTokens trialTypeTokens : phaseTokens){
-                for(String cueName : trialTypeTokens.cueNames){
-                    if (!csMap.containsKey(cueName)) {
-                        if (!csParameterPool.contains(cueName)) {
-                            csParameterPool.createParameters(cueName);
-                        }
-                        if (settings.UseDifferentUs) {
-                            csMap.put(cueName, createMultipleStimulus(cueName));
-                        } else if (settings.RodriguezMode) {
-                            csMap.put(cueName, createRodriguezParameter(cueName));
-                        } else {
-                            csMap.put(cueName, createCs(cueName));
-                        }
-                    }
-                    if (settings.UseDifferentUs)
-                        ((MultipleStimulus) csMap.get(cueName)).addStimulus(reinforcer);
+        private void updateCsMapsForCues(List<PhaseStringTokenizer.TrialTypeTokens> phaseTokens){
+            for(PhaseStringTokenizer.TrialTypeTokens trialTypeTokens : phaseTokens) {
+                for(String cueName : trialTypeTokens.cueNames) {
+                    updateCsMaps(cueName, PhaseParser.getPhaseReinforcer(phaseTokens));
                 }
             }
         }
 
-        private void updateCsMap(ContextConfig contextConfig){
-            if(!csMap.containsKey(contextConfig.getSymbol())){
-                csMap.put(contextConfig.getSymbol(), ContextBuilder.buildContext(contextConfig, contextParameters));
+        private void updateCsMaps(String cueName, char reinforcer){
+            if (!csMap.containsKey(cueName)) {
+                if (!csParameterPool.contains(cueName)) {
+                    csParameterPool.createParameters(cueName);
+                }
+                if (settings.UseDifferentUs) {
+                    csMap.put(cueName, createMultipleStimulus(cueName));
+                } else if (settings.RodriguezMode) {
+                    csMap.put(cueName, createRodriguezParameter(cueName));
+                } else {
+                    csMap.put(cueName, createCs(cueName));
+                }
             }
+            if (settings.UseDifferentUs)
+                ((MultipleStimulus) csMap.get(cueName)).addStimulus(reinforcer);
         }
 
         private ConditionalStimulus createCs(String cueName){

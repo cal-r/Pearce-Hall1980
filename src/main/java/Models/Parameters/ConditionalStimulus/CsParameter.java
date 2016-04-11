@@ -10,10 +10,14 @@ import java.io.Serializable;
 public abstract class CsParameter extends Parameter implements Serializable {
 
     public String CueName;
+    //context is treated just like any other stimulus,
+    //however, for some fucking reason context params appear in trial table and not in CS params table
+    public boolean visibleInCsParamsTable;
 
     public CsParameter(String cueName, String name) {
         super(name);
         CueName = cueName;
+        visibleInCsParamsTable = true;
     }
 
     @Override

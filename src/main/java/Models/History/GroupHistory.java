@@ -39,12 +39,4 @@ public class GroupHistory implements Serializable {
     public int getNumberOfPhases(){
         return phaseHistories.size();
     }
-
-    public CsParameterPool getContextParameterPool() {
-        return contextParameterPool;
-    }
-
-    public void setContextParameterPool(CsParameterPool contextParameterPool) {
-        this.contextParameterPool = contextParameterPool;
-    }
 }

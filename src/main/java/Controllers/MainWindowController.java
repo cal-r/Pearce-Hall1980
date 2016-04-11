@@ -91,8 +91,7 @@ public class MainWindowController implements ActionListener, TableModelListener 
     private void onSetParams(){
         try {
             SimulatorBuilder.initSimulator(trialTableModel, simulator);
-            List<Parameter> csParameters = ListCaster.cast(simulator.getCsParameters());
-            csParamsTableModel.setUpParameters(csParameters);
+            csParamsTableModel.setUpCsParameters(simulator.getCsParameters());
             globalParamsTableModel.setUpParameters(simulator.getGlobalParameters());
             usParamsTableModel.setUpParameters(simulator.getUsParameterPool());
             runSimButton.setEnabled(true);
