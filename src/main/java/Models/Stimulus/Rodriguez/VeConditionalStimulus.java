@@ -19,7 +19,10 @@ public class VeConditionalStimulus extends ConditionalStimulus{
                                  InitialAssociationParameter initialAssociationParameter) {
         super(name, initialAlphaParameter, salienceExcitatoryParameter, salienceInhibitoryParameter);
         this.initialAssociationParameter = initialAssociationParameter;
+        associationExcitatory = initialAssociationParameter.getValue();
     }
 
-
+    public void reset() {
+        associationExcitatory = initialAssociationParameter.getValue();
+    }
 }

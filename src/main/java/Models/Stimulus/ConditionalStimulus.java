@@ -21,7 +21,7 @@ public class ConditionalStimulus implements Serializable, IConditionalStimulus {
     private String name;
 
     private double associationInhibitory;
-    private double associationExcitatory;
+    protected double associationExcitatory;
 
     private double alpha;
 
