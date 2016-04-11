@@ -22,6 +22,7 @@ public class MultipleStimulus implements IConditionalStimulus, Serializable {
     private final SalienceInhibitoryParameter salienceInhibitoryParameter;
     private Map<Character, ConditionalStimulus> stimsMap;
     private Map<Character, Boolean> usedStims;
+    private double alpha;
     
     public MultipleStimulus(String name, InitialAlphaParameter initialAlphaParameter, SalienceExcitatoryParameter salienceExcitatoryParameter, SalienceInhibitoryParameter salienceInhibitoryParameter) {
         this.name = name;
@@ -79,6 +80,7 @@ public class MultipleStimulus implements IConditionalStimulus, Serializable {
     @Override
     public void reset(IConditionalStimulus stim) {
         MultipleStimulus otherMs = (MultipleStimulus) stim;
+        alpha = otherMs.alpha;
         for(IConditionalStimulus otherCs : otherMs.getAllStims()){
             for(IConditionalStimulus myCs : getAllStims()){
                 if(myCs.getName().equals(otherCs.getName())){
@@ -93,20 +95,26 @@ public class MultipleStimulus implements IConditionalStimulus, Serializable {
         if(reinforcer == '-'){
             if(!usedStims.isEmpty()) {
                 for (char usedUs : usedStims.keySet()) {
-                    stimsMap.get(usedUs).stimulate(globalParams, phaseLambdaValues, vNet, reinforcer);
+                    simulateStim(stimsMap.get(usedUs), globalParams, phaseLambdaValues, vNet, reinforcer);
                 }
             }
         }else{
-            stimsMap.get(reinforcer).stimulate(globalParams, phaseLambdaValues, vNet, reinforcer);
+            simulateStim(stimsMap.get(reinforcer), globalParams, phaseLambdaValues, vNet, reinforcer);
             if(!usedStims.containsKey(reinforcer)){
                 usedStims.put(reinforcer, true);
             }
-            for(char us : usedStims.keySet()){
-                if(us != reinforcer){
-                    stimsMap.get(us).stimulate(globalParams, phaseLambdaValues, stimsMap.get(us).getAssociationNet(), '-');
+            for(char us : usedStims.keySet()) {
+                if (us != reinforcer) {
+                    simulateStim(stimsMap.get(us), globalParams, phaseLambdaValues, stimsMap.get(us).getAssociationNet(), '-');
                 }
             }
         }
+    }
+
+    private void simulateStim(ConditionalStimulus cs, GlobalParameterPool globalParams, Map<Character, Double> phaseLambdaValues, double vNet, char reinforcer){
+        cs.setAlpha(alpha);
+        cs.stimulate(globalParams, phaseLambdaValues, vNet, reinforcer);
+        alpha = cs.getAlpha();
     }
 
     public double getAssociationNet(char reinforcer){
@@ -140,5 +148,9 @@ public class MultipleStimulus implements IConditionalStimulus, Serializable {
 
     public Map<Character, Boolean> getUsedStimsMap() {
         return usedStims;
+    }
+
+    public double getAlpha() {
+        return alpha;
     }
 }
