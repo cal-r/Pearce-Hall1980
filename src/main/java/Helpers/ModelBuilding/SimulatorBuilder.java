@@ -77,8 +77,7 @@ public class SimulatorBuilder {
                 if(settings.ContextSimulation) {
                     ContextConfig contextConfig = contextConfigs.get(i);
                     updateCsMap(contextConfig);
-                    ContextStimulus context = (ContextStimulus)csMap.get(contextConfig.getSymbol());
-                    groupPhase = PhaseParser.ParsePhase(phaseTokens, csMap, i, settings, context, itiRatios.get(i));
+                    groupPhase = PhaseParser.ParsePhase(phaseTokens, csMap, i, settings, csMap.get(contextConfig.getSymbol()), itiRatios.get(i));
                 }else{
                     groupPhase = PhaseParser.ParsePhase(phaseTokens, csMap, i, settings, null, 0);
                 }

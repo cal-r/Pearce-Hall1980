@@ -41,10 +41,6 @@ public class CompoundStimulus implements IStimulus, Serializable {
         String name = "";
         Character reinforcer = null;
         for(IStimulus stim : compounded){
-            if(stim instanceof ContextStimulus){
-                name += stim.getName();
-                continue;
-            }
             String stimNameWithReinforcer = stim.getName();
             String stimNameWithoutReinforcer = stimNameWithReinforcer.substring(0, stimNameWithReinforcer.length()-1);
             reinforcer = stimNameWithReinforcer.charAt(stimNameWithReinforcer.length()-1);

@@ -9,7 +9,7 @@ import Models.Parameters.ConditionalStimulus.SalienceInhibitoryParameter;
 import Models.Parameters.Pools.GlobalParameterPool;
 import Models.SimulatorSettings;
 import Models.Stimulus.ConditionalStimulus;
-import Models.Stimulus.ContextStimulus;
+import Models.Stimulus.IConditionalStimulus;
 import Models.Stimulus.IStimulus;
 import Models.Trail.ItiPeriod;
 import Models.Trail.LearningPeriod;
@@ -28,7 +28,7 @@ public class TrialTests extends TestCase {
     @Test
     public void testWithContext(){ //first 4 from P-H-MechanismContext.xlsx
         String contextName = "context";
-        ContextStimulus contextStimulus = createContextStimulus(contextName);
+        IConditionalStimulus contextStimulus = createContextStimulus(contextName);
         List<IStimulus> allStims = new ArrayList<>();
         allStims.add(createConditionalStimulus("A"));
         allStims.add(createConditionalStimulus("B"));
@@ -88,7 +88,7 @@ public class TrialTests extends TestCase {
         return settings;
     }
 
-    private Trial createTrial(boolean usPresent, List<IStimulus> cs, ContextStimulus contextStim){
+    private Trial createTrial(boolean usPresent, List<IStimulus> cs, IConditionalStimulus contextStim){
         int itiRatio = 3;
         List<LearningPeriod> learningPeriods = new ArrayList<>();
         for(int i =0;i<itiRatio;i++){
@@ -99,14 +99,14 @@ public class TrialTests extends TestCase {
         return new Trial(learningPeriods);
     }
 
-    private ContextStimulus createContextStimulus(String contextName){
+    private IConditionalStimulus createContextStimulus(String contextName){
         InitialAlphaParameter alphaParameter = new InitialAlphaParameter(contextName);
         alphaParameter.setValue(0.1);
         SalienceExcitatoryParameter salienceExcitatoryParameter = new SalienceExcitatoryParameter(contextName);
         salienceExcitatoryParameter.setValue(0.005);
         SalienceInhibitoryParameter salienceInhibitoryParameter = new SalienceInhibitoryParameter(contextName);
         salienceInhibitoryParameter.setValue(0.005);
-        return new ContextStimulus(contextName, alphaParameter, salienceExcitatoryParameter, salienceInhibitoryParameter);
+        return new ConditionalStimulus(contextName, alphaParameter, salienceExcitatoryParameter, salienceInhibitoryParameter);
     }
 
     private ConditionalStimulus createConditionalStimulus(String name){

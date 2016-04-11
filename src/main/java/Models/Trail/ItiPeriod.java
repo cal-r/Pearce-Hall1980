@@ -1,7 +1,8 @@
 package Models.Trail;
 
 import Models.Parameters.Pools.GlobalParameterPool;
-import Models.Stimulus.ContextStimulus;
+import Models.Stimulus.ConditionalStimulus;
+import Models.Stimulus.IConditionalStimulus;
 import Models.Stimulus.IStimulus;
 
 import java.util.ArrayList;
@@ -12,14 +13,14 @@ import java.util.List;
  */
 public class ItiPeriod extends LearningPeriod {
 
-    private ContextStimulus context;
+    private IConditionalStimulus context;
 
-    public ItiPeriod(ContextStimulus context){
+    public ItiPeriod(IConditionalStimulus context){
         super(false, '-', makeList(context));
         this.context = context;
     }
 
-    private static List<IStimulus> makeList(ContextStimulus contextStimulus) { //stupid java syntax mad me do this
+    private static List<IStimulus> makeList(IConditionalStimulus contextStimulus) { //stupid java syntax mad me do this
         List<IStimulus> list = new ArrayList<>();
         list.add(contextStimulus);
         return list;

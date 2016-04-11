@@ -22,7 +22,7 @@ public class PhaseParser {
                                         Map<String, IConditionalStimulus> csMap,
                                         int phaseId,
                                         SimulatorSettings settings,
-                                        ContextStimulus context,
+                                        IConditionalStimulus context,
                                         Integer itiRatio) {
 
         TrialTypeParser trialTypeParser = new TrialTypeParser(csMap, settings, context, itiRatio);
@@ -49,10 +49,10 @@ public class PhaseParser {
 
         private Map<String, IConditionalStimulus> csMap;
         private SimulatorSettings settings;
-        private ContextStimulus context;
+        private IConditionalStimulus context;
         private int itiRatio;
 
-        private TrialTypeParser(Map<String, IConditionalStimulus> csMap, SimulatorSettings settings, ContextStimulus context, Integer itiRatio) {
+        private TrialTypeParser(Map<String, IConditionalStimulus> csMap, SimulatorSettings settings, IConditionalStimulus context, Integer itiRatio) {
             this.csMap = csMap;
             this.settings = settings;
             this.context = context;

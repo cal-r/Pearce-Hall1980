@@ -4,7 +4,7 @@ import Constants.DefaultValuesConstants;
 import Helpers.ModelBuilding.SimulatorBuilder;
 import Models.Stimulus.ConditionalStimulus;
 import Models.Simulator;
-import Models.Stimulus.ContextStimulus;
+import Models.Stimulus.IConditionalStimulus;
 import Models.Stimulus.MultipleStimulus;
 import Models.Trail.ItiPeriod;
 import ViewModels.TableModels.TrialTableModel;
@@ -143,7 +143,7 @@ public class SimulatorBuilderTests extends junit.framework.TestCase {
 
         assertTrue(sim.getGroups().get(0).groupPhases.get(0).trials.get(0).getStims().size() == 3); //AB + context
 
-        assertTrue(sim.getGroups().get(0).groupPhases.get(0).trials.get(0).getStims().get(0) instanceof ContextStimulus);
+        assertTrue(sim.getGroups().get(0).groupPhases.get(0).trials.get(0).getStims().get(0) instanceof IConditionalStimulus);
         assertTrue(sim.getGroups().get(0).groupPhases.get(0).trials.get(0).getStims().get(0).getName().equals(contextConfig.getSymbol()));
 
         assertTrue(sim.getGroups().get(0).groupPhases.get(0).trials.get(0).getStims().get(1) instanceof ConditionalStimulus);
