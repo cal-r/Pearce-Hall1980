@@ -7,6 +7,7 @@ import Models.Parameters.Parameter;
 import Models.Parameters.Pools.CsPools.ICsParameterPool;
 import Models.Parameters.UnconditionalStimulus.UsParameter;
 import Models.SimulatorSettings;
+import Models.Stimulus.ConditionalStimulus;
 import ViewModels.GroupReportViewModel;
 
 import java.util.ArrayList;
@@ -117,10 +118,20 @@ public class ReportBuilder {
         currRowId++;
         Collection<String> orderedStimNames = StimulusOrderingHelper.orderStimNamesByDescription(groupPhaseHistory.getStimsNames(), groupPhaseHistory.getDescription());
         List<String> tableStimNames = new ArrayList<>();
+        List<String> alphaLinks = new ArrayList<>();
         for(String stimName : orderedStimNames) {
             if(hasValue(groupPhaseHistory, stimName, variable)) {
-                report.setCell(currRowId++, 0, stimName);
-                tableStimNames.add(stimName);
+                if(isMultiAlphaCase(groupPhaseHistory, stimName, variable)){
+                    String alphaLink = getAlphaLink(groupPhaseHistory, stimName);
+                    if(!alphaLinks.contains(alphaLink)){
+                        report.setCell(currRowId++, 0, alphaLink);
+                        alphaLinks.add(alphaLink);
+                        tableStimNames.add(stimName);
+                    }
+                }else {
+                    report.setCell(currRowId++, 0, stimName);
+                    tableStimNames.add(stimName);
+                }
             }
         }
 
@@ -161,6 +172,17 @@ public class ReportBuilder {
             case VI: return ((ConditionalStimulusState)state).Vi;
             default: return state.Vnet;
         }
+    }
+
+    private static boolean isMultiAlphaCase(GroupPhaseHistory groupPhaseHistory, String stimName, Variable variable) {
+        StimulusState stimState = groupPhaseHistory.getLastState(stimName);
+        return variable == Variable.ALPHA
+                && stimState instanceof ConditionalStimulusState
+                && ((ConditionalStimulusState) stimState).AlphaLink != null;
+    }
+
+    private static String getAlphaLink(GroupPhaseHistory groupPhaseHistory, String stimName){
+        return ((ConditionalStimulusState)groupPhaseHistory.getLastState(stimName)).AlphaLink;
     }
 
     private static boolean hasValue(StimulusState state, Variable variable){

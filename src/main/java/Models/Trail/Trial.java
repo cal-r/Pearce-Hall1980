@@ -21,13 +21,13 @@ public class Trial implements Serializable{
         this.learningPeriods = learningPeriods;
     }
 
-    public void simulate(GroupPhaseHistory history, GlobalParameterPool globalParams, int phaseId) {
+    public void simulate(GroupPhaseHistory history, GlobalParameterPool globalParams, char phaseReinforcer, int phaseId) {
         for(LearningPeriod period : learningPeriods){
             if(period instanceof ItiPeriod) {
-                history.recordState(period.stims, period.reinforcer);
+                history.recordState(period.stims, period.reinforcer, phaseReinforcer);
                 ((ItiPeriod)period).learn(globalParams);
             }else {
-                history.recordState(period.stims, period.reinforcer);
+                history.recordState(period.stims, period.reinforcer, phaseReinforcer);
                 if(probe!=null){
                     history.recordProbeState(probe);
                 }

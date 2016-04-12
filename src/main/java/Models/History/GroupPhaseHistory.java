@@ -39,10 +39,10 @@ public class GroupPhaseHistory implements Serializable {
         return stimsHistoriesMap.get(stimName);
     }
 
-    public void recordState(Collection<IStimulus> stims, char phaseReinforcer){
+    public void recordState(Collection<IStimulus> stims, char trialReinforcer, char phaseReinforcer){
         for(IStimulus stim : stims) {
             if(stim instanceof MultipleStimulus){
-                recordMultiStimState((MultipleStimulus)stim, phaseReinforcer);
+                recordMultiStimState((MultipleStimulus)stim, trialReinforcer, phaseReinforcer);
             }else {
                 recordStimState(stim.getName(), stim);
             }
@@ -54,28 +54,38 @@ public class GroupPhaseHistory implements Serializable {
         recordStimState(probe.getLabel(), probe.getStimulus());
     }
 
-    private void recordMultiStimState(MultipleStimulus multipleStimulus, char phaseReinforcer){
+    private void recordMultiStimState(MultipleStimulus multipleStimulus, char trialReinforcer, char phaseReinforcer){
         if(phaseReinforcer == '-'){
-            for(IConditionalStimulus cs : multipleStimulus.getAllStims()){
-                recordStimStateWithNegativeLabel(cs);
-            }
-            if(multipleStimulus.getAllStims().size()>1) {
-                recordStimStateWithNegativeLabel(multipleStimulus);
-            }
+            recordStimState(multipleStimulus.getName(), multipleStimulus);
         }else{
-            IConditionalStimulus stim = multipleStimulus.getStimsMap().get(phaseReinforcer);
+            IConditionalStimulus stim = trialReinforcer != '-'
+                    ? multipleStimulus.getStimsMap().get(trialReinforcer)
+                    : multipleStimulus.getStimsMap().get(phaseReinforcer);
             recordStimState(stim.getName(), stim);
+            setAlphaLink(stim.getName(), multipleStimulus.getName());
             for(char usedReinforcer : multipleStimulus.getUsedStimsMap().keySet()){
                 if(usedReinforcer!=phaseReinforcer){
-                    recordStimStateWithNegativeLabel(multipleStimulus.getStimsMap().get(usedReinforcer));
+                    ConditionalStimulus decliningStim = multipleStimulus.getStimsMap().get(usedReinforcer);
+                    recordStimStateWithNegativeLabel(decliningStim);
+                    setAlphaLink(getNegativeLabel(decliningStim), multipleStimulus.getName());
                 }
             }
         }
     }
+
+    private void setAlphaLink(String cueNameWithReinforcer, String cueName){
+        List<StimulusState> list = stimsHistoriesMap.get(cueNameWithReinforcer);
+        StimulusState stimulusState = list.get(list.size() - 1);
+        ((ConditionalStimulusState)stimulusState).AlphaLink = cueName;
+    }
     
     private void recordStimStateWithNegativeLabel(IStimulus stim){
-        String label = String.format("(%s)-", stim.getName());
+        String label = getNegativeLabel(stim);
         recordStimState(label, stim);
+    }
+
+    private String getNegativeLabel(IStimulus stim){
+        return String.format("(%s)-", stim.getName());
     }
        
     private void recordStimState(String name, IStimulus stim){

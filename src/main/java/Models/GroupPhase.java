@@ -49,7 +49,7 @@ public class GroupPhase implements Serializable {
     private void simulateTrialsSequentially(GlobalParameterPool globalParams){
         for(int i=0;i<trials.size();i++){
             Trial trial = trials.get(i);
-            trial.simulate(history, globalParams, phaseId);
+            trial.simulate(history, globalParams, phaseReinforcer, phaseId);
         }
     }
 
@@ -62,7 +62,7 @@ public class GroupPhase implements Serializable {
             int[] randomArray = RandomArrayGenerator.createRandomDistinctArray(trials.size());
             for (int trialNo = 0; trialNo < trials.size(); trialNo++) {
                 Trial trial = trials.get(randomArray[trialNo]);
-                trial.simulate(history, globalParams, phaseId);
+                trial.simulate(history, globalParams, phaseReinforcer, phaseId);
             }
             tempHistories.add(history);
         }

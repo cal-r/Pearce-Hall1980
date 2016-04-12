@@ -12,6 +12,7 @@ public class ConditionalStimulusState extends StimulusState implements Serializa
     public double Ve;
     public double Vi;
     public double Alpha;
+    public String AlphaLink;
 
     public ConditionalStimulusState(ConditionalStimulus cs){
         super(cs);
