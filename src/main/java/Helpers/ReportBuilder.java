@@ -116,25 +116,26 @@ public class ReportBuilder {
 
         currRowId++;
         Collection<String> orderedStimNames = StimulusOrderingHelper.orderStimNamesByDescription(groupPhaseHistory.getStimsNames(), groupPhaseHistory.getDescription());
+        List<String> tableStimNames = new ArrayList<>();
         for(String stimName : orderedStimNames) {
             if(hasValue(groupPhaseHistory, stimName, variable)) {
                 report.setCell(currRowId++, 0, stimName);
+                tableStimNames.add(stimName);
             }
         }
+
+        int maxRow = currRowId;
         currRowId = rowId;
         int colId = 1;
-        int maxRow = currRowId;
 
         for(int periodNo=1;periodNo<= groupPhaseHistory.getNumberOfPeriods();periodNo++) {
             report.setCell(currRowId++, colId, String.format("trial %1$d", periodNo));
-            for(String stimName : orderedStimNames) {
+            for(String stimName : tableStimNames) {
                 StimulusState stimState = groupPhaseHistory.getState(stimName, periodNo);
                 if(stimState == null) {
                     currRowId++;
-                    maxRow = Math.max(maxRow, currRowId);
-                }else if(hasValue(stimState, variable)){
+                }else{
                     report.setCell(currRowId++, colId, getValue(stimState, variable));
-                    maxRow = Math.max(maxRow, currRowId);
                 }
             }
             currRowId = rowId;
