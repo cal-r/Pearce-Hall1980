@@ -74,6 +74,8 @@ public class MultipleStimulus implements IConditionalStimulus, Serializable {
         for(char key : stimsMap.keySet()){
             copy.stimsMap.put(key, stimsMap.get(key).getCopy());
         }
+        copy.alpha = alpha;
+        copy.usedStims = usedStims;
         return copy;
     }
 
@@ -81,6 +83,7 @@ public class MultipleStimulus implements IConditionalStimulus, Serializable {
     public void reset(IConditionalStimulus stim) {
         MultipleStimulus otherMs = (MultipleStimulus) stim;
         alpha = otherMs.alpha;
+        usedStims = otherMs.usedStims;
         for(IConditionalStimulus otherCs : otherMs.getAllStims()){
             for(IConditionalStimulus myCs : getAllStims()){
                 if(myCs.getName().equals(otherCs.getName())){
@@ -92,6 +95,7 @@ public class MultipleStimulus implements IConditionalStimulus, Serializable {
 
     @Override
     public void stimulate(GlobalParameterPool globalParams, Map<Character, Double> phaseLambdaValues, double vNet, char reinforcer) {
+        alpha = getAnyAlpha();
         if(reinforcer == '-'){
             if(!usedStims.isEmpty()) {
                 for (char usedUs : usedStims.keySet()) {
@@ -109,10 +113,20 @@ public class MultipleStimulus implements IConditionalStimulus, Serializable {
                 }
             }
         }
+        setAlphas();
+    }
+
+    private double getAnyAlpha(){
+        return ((ConditionalStimulus)stimsMap.values().toArray()[0]).getAlpha();
+    }
+
+    private void setAlphas(){
+        for(ConditionalStimulus cs : stimsMap.values()){
+            cs.setAlpha(alpha);
+        }
     }
 
     private void simulateStim(ConditionalStimulus cs, GlobalParameterPool globalParams, Map<Character, Double> phaseLambdaValues, double vNet, char reinforcer){
-        cs.setAlpha(alpha);
         cs.stimulate(globalParams, phaseLambdaValues, vNet, reinforcer);
         alpha = cs.getAlpha();
     }
