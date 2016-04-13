@@ -133,17 +133,28 @@ public class MenuController implements ActionListener {
     }
 
     private void onRodriguez(boolean menuItemSelected){
-        if(settings.UseDifferentUs || settings.ContextSimulation) {
+        if(settings.UseDifferentUs || settings.ContextSimulation || settings.UseInitialVe) {
             if(settings.UseDifferentUs) {
                 GuiHelper.displayErrorMessage(GuiStringConstants.RODRIGUEZ_MULTIPLE_US_ERROR);
-            }else{
+            }else if(settings.ContextSimulation){
                 GuiHelper.displayErrorMessage(GuiStringConstants.RODRIGUEZ_CONTEXT);
+            }else {
+                GuiHelper.displayErrorMessage(GuiStringConstants.INITIAL_V_FOR_PH);
             }
             setSettings(settings);
             return;
         }
         settings.RodriguezMode = menuItemSelected;
         mainWindowController.onRodriguezChange();
+    }
+
+    private void onInitialVe(boolean menuItemSelected) {
+        if(settings.RodriguezMode){
+            GuiHelper.displayErrorMessage(GuiStringConstants.RODRIGUEZ_MODE);
+            setSettings(settings);
+            return;
+        }
+        settings.UseInitialVe = menuItemSelected;
     }
 
     @Override
@@ -176,6 +187,9 @@ public class MenuController implements ActionListener {
             case GuiStringConstants.RODRIGUEZ_MODE:
                 onRodriguez(GuiHelper.isMenuItemSelected(e));
                 break;
+            case GuiStringConstants.INITIAL_V_FOR_PH:
+                onInitialVe(GuiHelper.isMenuItemSelected(e));
+                break;
             default:
                 GuiHelper.displayErrorMessage("Nicht implementiert!");
         }
@@ -188,6 +202,7 @@ public class MenuController implements ActionListener {
         checkboxesMap.get(GuiStringConstants.SIMULATE_CONTEXT).setState(settings.ContextSimulation);
         checkboxesMap.get(GuiStringConstants.USE_DIFFERENT_US).setState(settings.UseDifferentUs);
         checkboxesMap.get(GuiStringConstants.RODRIGUEZ_MODE).setState(settings.RodriguezMode);
+        checkboxesMap.get(GuiStringConstants.INITIAL_V_FOR_PH).setState(settings.UseInitialVe);
     }
 
     //getters

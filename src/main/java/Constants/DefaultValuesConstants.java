@@ -18,6 +18,7 @@ public class DefaultValuesConstants {
     public static final double SALIENCE = 0.4;
     public static boolean COMPOUND_RESULTS = true;
     public static boolean RODRIGUEZ_MODE = false;
+    public static boolean USE_INITIAL_VE = false;
     public static boolean CONTEXT_SIMULATION = false;
     public static boolean USE_DIFFERENT_US = false;
     public static final int NUMBER_OF_RANDOM_COMBINATIONS = 1000;

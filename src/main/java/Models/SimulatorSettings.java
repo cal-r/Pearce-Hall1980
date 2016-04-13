@@ -12,12 +12,15 @@ public class SimulatorSettings implements Serializable {
     public boolean ContextSimulation;
     public boolean UseDifferentUs;
     public boolean RodriguezMode;
+    public boolean UseInitialVe;
     public int NumberOfRandomCombination;
+
     public SimulatorSettings(){
         CompoundResults = DefaultValuesConstants.COMPOUND_RESULTS;
         ContextSimulation = DefaultValuesConstants.CONTEXT_SIMULATION;
         NumberOfRandomCombination = DefaultValuesConstants.NUMBER_OF_RANDOM_COMBINATIONS;
         UseDifferentUs = DefaultValuesConstants.USE_DIFFERENT_US;
         RodriguezMode = DefaultValuesConstants.RODRIGUEZ_MODE;
+        UseInitialVe = DefaultValuesConstants.USE_INITIAL_VE;
     }
 }

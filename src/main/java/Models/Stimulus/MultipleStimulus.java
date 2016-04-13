@@ -1,9 +1,11 @@
 package Models.Stimulus;
 
 import Models.Parameters.ConditionalStimulus.InitialAlphaParameter;
+import Models.Parameters.ConditionalStimulus.Rodriguez.InitialAssociationParameter;
 import Models.Parameters.ConditionalStimulus.SalienceExcitatoryParameter;
 import Models.Parameters.ConditionalStimulus.SalienceInhibitoryParameter;
 import Models.Parameters.Pools.GlobalParameterPool;
+import Models.Stimulus.Rodriguez.VeConditionalStimulus;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -20,15 +22,21 @@ public class MultipleStimulus implements IConditionalStimulus, Serializable {
     private final InitialAlphaParameter initialAlphaParameter;
     private final SalienceExcitatoryParameter salienceExcitatoryParameter;
     private final SalienceInhibitoryParameter salienceInhibitoryParameter;
+    private InitialAssociationParameter initialAssociationParameter;
     private Map<Character, ConditionalStimulus> stimsMap;
     private Map<Character, Boolean> usedStims;
     private double alpha;
     
-    public MultipleStimulus(String name, InitialAlphaParameter initialAlphaParameter, SalienceExcitatoryParameter salienceExcitatoryParameter, SalienceInhibitoryParameter salienceInhibitoryParameter) {
+    public MultipleStimulus(String name,
+                            InitialAlphaParameter initialAlphaParameter,
+                            SalienceExcitatoryParameter salienceExcitatoryParameter,
+                            SalienceInhibitoryParameter salienceInhibitoryParameter,
+                            InitialAssociationParameter initialAssociationParameter) {
         this.name = name;
         this.initialAlphaParameter = initialAlphaParameter;
         this.salienceExcitatoryParameter = salienceExcitatoryParameter;
         this.salienceInhibitoryParameter = salienceInhibitoryParameter;
+        this.initialAssociationParameter = initialAssociationParameter;
         stimsMap = new HashMap<>();
         usedStims = new HashMap<>();
     }
@@ -61,7 +69,19 @@ public class MultipleStimulus implements IConditionalStimulus, Serializable {
     }
 
     private ConditionalStimulus createNewCs(char us){
-        return new ConditionalStimulus(createCueName(us), initialAlphaParameter, salienceExcitatoryParameter, salienceInhibitoryParameter);
+        if(initialAssociationParameter == null) {
+            return new ConditionalStimulus(
+                    createCueName(us),
+                    initialAlphaParameter,
+                    salienceExcitatoryParameter,
+                    salienceInhibitoryParameter);
+        }
+        return new VeConditionalStimulus(
+                createCueName(us),
+                initialAlphaParameter,
+                salienceExcitatoryParameter,
+                salienceInhibitoryParameter,
+                initialAssociationParameter);
     }
 
     private String createCueName(char us){
@@ -70,7 +90,13 @@ public class MultipleStimulus implements IConditionalStimulus, Serializable {
 
     @Override
     public IConditionalStimulus getCopy() {
-        MultipleStimulus copy = new MultipleStimulus(name, initialAlphaParameter, salienceExcitatoryParameter, salienceInhibitoryParameter);
+        MultipleStimulus copy = new MultipleStimulus(
+                name,
+                initialAlphaParameter,
+                salienceExcitatoryParameter,
+                salienceInhibitoryParameter,
+                initialAssociationParameter);
+
         for(char key : stimsMap.keySet()){
             copy.stimsMap.put(key, stimsMap.get(key).getCopy());
         }
