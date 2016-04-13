@@ -10,6 +10,7 @@ import Models.GroupPhase;
 import Models.Parameters.Pools.CsPools.CsParameterPool;
 import Models.Simulator;
 import Models.Stimulus.Rodriguez.RodriguezStimulus;
+import Models.Stimulus.Rodriguez.VeConditionalStimulus;
 import ViewModels.TableModels.TrialTableModel;
 import _from_RW_simulator.ContextConfig;
 
@@ -119,11 +120,20 @@ public class SimulatorBuilder {
         }
 
         private ConditionalStimulus createCs(String cueName){
-            return new ConditionalStimulus(
-                    cueName,
-                    ((CsParameterPool)csParameterPool).getInitialAlpha(cueName),
-                    ((CsParameterPool)csParameterPool).getSeParameter(cueName),
-                    ((CsParameterPool)csParameterPool).getSiParamter(cueName));
+            if(!settings.UseInitialVe) {
+                return new ConditionalStimulus(
+                        cueName,
+                        ((CsParameterPool) csParameterPool).getInitialAlpha(cueName),
+                        ((CsParameterPool) csParameterPool).getSeParameter(cueName),
+                        ((CsParameterPool) csParameterPool).getSiParamter(cueName));
+            }else{
+                return new VeConditionalStimulus(
+                        cueName,
+                        ((CsParameterPool) csParameterPool).getInitialAlpha(cueName),
+                        ((CsParameterPool) csParameterPool).getSeParameter(cueName),
+                        ((CsParameterPool) csParameterPool).getSiParamter(cueName),
+                        ((ElaboratorCsParameterPool) csParameterPool).getVeParameter(cueName));
+            }
         }
 
         private MultipleStimulus createMultipleStimulus(String cueName){
