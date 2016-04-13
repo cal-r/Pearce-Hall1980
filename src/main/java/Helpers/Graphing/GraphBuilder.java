@@ -36,7 +36,7 @@ public class GraphBuilder {
         addGraphLine(stimName, gpHist, graph, linkedLinesMap, lineCounter, Variable.VNET);
         if(rodriguezMode && gpHist.getState(stimName, 1) instanceof ConditionalStimulusState){
             addGraphLine(stimName, gpHist, graph, linkedLinesMap, lineCounter, Variable.VE);
-            addGraphLine(stimName, gpHist, graph, linkedLinesMap, lineCounter, Variable.VnO);
+            addGraphLine(stimName, gpHist, graph, linkedLinesMap, lineCounter, Variable.VnE);
         }
     }
 
@@ -56,7 +56,7 @@ public class GraphBuilder {
     }
 
 
-    enum Variable { VNET, VnO, VE }
+    enum Variable { VNET, VnE, VE }
     private static void addLinePoints(GraphLine line, String stimName, GroupPhaseHistory gpHist, Variable variable){
         for(int periodNo = 1; periodNo<=gpHist.getNumberOfPeriods(); periodNo++){
             StimulusState state = gpHist.getState(stimName, periodNo);
@@ -68,7 +68,7 @@ public class GraphBuilder {
                     ConditionalStimulusState csState = (ConditionalStimulusState) state;
                     if(variable == Variable.VE)
                         line.addPoint(periodNo, csState.Ve);
-                    if(variable == Variable.VnO)
+                    if(variable == Variable.VnE)
                         line.addPoint(periodNo, csState.Vi);
                 }
             }
