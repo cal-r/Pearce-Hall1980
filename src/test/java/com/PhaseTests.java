@@ -27,7 +27,7 @@ public class PhaseTests extends junit.framework.TestCase {
 
         //40AB+/40AB-
         GroupPhase groupPhase = CreatePhase40(true, false, false);
-        GroupPhaseHistory hist = groupPhase.simulateTrials(globals, new SimulatorSettings());
+        GroupPhaseHistory hist = groupPhase.simulateTrials(globals, new SimulatorSettings(), 1);
 
         double expectedVnet = 0.08747151;
 
@@ -43,7 +43,7 @@ public class PhaseTests extends junit.framework.TestCase {
 
         //40AB+/40AB-
         GroupPhase groupPhase = CreatePhase40(false, true, false);
-        GroupPhaseHistory hist = groupPhase.simulateTrials(globals, new SimulatorSettings());
+        GroupPhaseHistory hist = groupPhase.simulateTrials(globals, new SimulatorSettings(), 1);
 
         double expectedVnet = 0.500430759;
         //        excel gives 0.500433494
@@ -60,7 +60,7 @@ public class PhaseTests extends junit.framework.TestCase {
 
         //random test
         GroupPhase groupPhase = CreatePhase40(false, true, true);
-        GroupPhaseHistory hist = groupPhase.simulateTrials(globals, new SimulatorSettings());
+        GroupPhaseHistory hist = groupPhase.simulateTrials(globals, new SimulatorSettings(), 1);
 
         //test state of cues after simulation
         for(IConditionalStimulus cs : groupPhase.getPhaseCues()) {
@@ -85,8 +85,8 @@ public class PhaseTests extends junit.framework.TestCase {
         //should be the same
         GroupPhase groupPhaseRand = CreatePhase40(true, true, true);
         GroupPhase groupPhaseSeq = CreatePhase40(true, true, false);
-        GroupPhaseHistory histRand = groupPhaseRand.simulateTrials(globals, new SimulatorSettings());
-        GroupPhaseHistory histSeq = groupPhaseSeq.simulateTrials(globals, new SimulatorSettings());
+        GroupPhaseHistory histRand = groupPhaseRand.simulateTrials(globals, new SimulatorSettings(), 1);
+        GroupPhaseHistory histSeq = groupPhaseSeq.simulateTrials(globals, new SimulatorSettings(), 1);
 
         //test state of cues after simulation
         IConditionalStimulus csRand = groupPhaseRand.getPhaseCues().get(0);

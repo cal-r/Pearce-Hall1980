@@ -22,12 +22,11 @@ public class LearningPeriod implements Serializable {
         this.reinforcer = reinforcer;
     }
 
-    public void learn(double vNet, GlobalParameterPool globalParams, int phaseNumber) {
+    public void learn(double vNet, GlobalParameterPool globalParams, double lambda) {
         for (IStimulus stimulus : stims) {
             if (stimulus instanceof IConditionalStimulus) {
                 IConditionalStimulus cs = (IConditionalStimulus) stimulus;
-                Map<Character, Double> phaseLambdaValues = globalParams.getUsParameterPool().getPhaseLamdbaValues(phaseNumber);
-                cs.stimulate(globalParams, phaseLambdaValues, vNet, reinforcer);
+                cs.stimulate(globalParams, lambda, vNet, reinforcer);
             }
         }
     }

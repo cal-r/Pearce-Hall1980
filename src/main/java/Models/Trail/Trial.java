@@ -2,6 +2,7 @@ package Models.Trail;
 
 import Models.History.GroupPhaseHistory;
 import Models.Parameters.Pools.GlobalParameterPool;
+import Models.Parameters.Pools.UsParameterPool;
 import Models.Stimulus.*;
 import Models.Stimulus.Rodriguez.RodriguezStimulus;
 
@@ -21,7 +22,7 @@ public class Trial implements Serializable{
         this.learningPeriods = learningPeriods;
     }
 
-    public void simulate(GroupPhaseHistory history, GlobalParameterPool globalParams, char phaseReinforcer, int phaseId) {
+    public void simulate(GroupPhaseHistory history, GlobalParameterPool globalParams, char phaseReinforcer, double lambda) {
         for(LearningPeriod period : learningPeriods){
             if(period instanceof ItiPeriod) {
                 history.recordState(period.stims, period.reinforcer, phaseReinforcer);
@@ -31,7 +32,7 @@ public class Trial implements Serializable{
                 if(probe!=null){
                     history.recordProbeState(probe);
                 }
-                period.learn(calcVNetValue(period.reinforcer), globalParams, phaseId);
+                period.learn(calcVNetValue(period.reinforcer), globalParams, UsParameterPool.lambdaIfPositive(period.reinforcer, lambda));
             }
         }
     }

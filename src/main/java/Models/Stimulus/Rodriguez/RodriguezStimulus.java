@@ -8,7 +8,6 @@ import Models.Parameters.Pools.GlobalParameterPool;
 import Models.Stimulus.IConditionalStimulus;
 
 import java.io.Serializable;
-import java.util.Map;
 
 /**
  * Created by Rokas on 29/03/2016.
@@ -59,8 +58,7 @@ public class RodriguezStimulus implements IConditionalStimulus, Serializable {
     }
 
     @Override
-    public void stimulate(GlobalParameterPool globalParams, Map<Character, Double> phaseLambdaValues, double vNet, char reinforcer) {
-        double lambda = phaseLambdaValues.get('-');
+    public void stimulate(GlobalParameterPool globalParams, double lambda, double vNet, char reinforcer) {
         double capitalLambda = lambda - vNet;
         double newAlpha = calcNewAlpha(globalParams.getGamma(), lambda, vNet, getAlpha());
         double newDeltaVi = calcNewDeltaVi(capitalLambda);

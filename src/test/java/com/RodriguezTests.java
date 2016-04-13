@@ -35,11 +35,11 @@ public class RodriguezTests extends TestCase {
         trials.add(createTrial(false, getStims(allStims, "A")));
         GroupPhase groupPhase = new GroupPhase(1, '+');
         groupPhase.addTrials(trials);
-        GroupPhaseHistory history = groupPhase.simulateTrials(getGlobals(), getSimulatorSettings());
+        GroupPhaseHistory history = groupPhase.simulateTrials(getGlobals(), getSimulatorSettings(), 1);
         assertEquals(history.getState("A", 1).Vnet, 0.4, DefaultValuesConstants.ROUNDING_PRECISION);
         assertEquals(history.getState("A", 2).Vnet, 0.24, DefaultValuesConstants.ROUNDING_PRECISION);
         assertEquals(history.getState("A", 3).Vnet, 0.2016, DefaultValuesConstants.ROUNDING_PRECISION);
-        assertEquals(history.getState("A", 4).Vnet, 0.182246, DefaultValuesConstants.ROUNDING_PRECISION);
+        assertEquals(history.getState("A", 4).Vnet, 0.1822464, DefaultValuesConstants.ROUNDING_PRECISION);
     }
 
     private Trial createTrial(boolean usPresent, List<IStimulus> cs){

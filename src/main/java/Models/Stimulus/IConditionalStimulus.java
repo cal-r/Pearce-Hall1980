@@ -10,5 +10,5 @@ import java.util.Map;
 public interface IConditionalStimulus extends IStimulus {
     IConditionalStimulus getCopy();
     void reset(IConditionalStimulus cs);
-    void stimulate(GlobalParameterPool globalParams, Map<Character, Double> phaseLambdaValues, double vNet, char reinforcer);
+    void stimulate(GlobalParameterPool globalParams, double phaseLambdaValues, double vNet, char reinforcer);
 }

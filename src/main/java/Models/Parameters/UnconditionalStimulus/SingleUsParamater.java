@@ -25,6 +25,7 @@ public class SingleUsParamater extends UsParameter implements Serializable {
     }
 
     public boolean isAvailable(int phaseId){
+
         return true;
     }
 }

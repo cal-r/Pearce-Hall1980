@@ -120,22 +120,22 @@ public class MultipleStimulus implements IConditionalStimulus, Serializable {
     }
 
     @Override
-    public void stimulate(GlobalParameterPool globalParams, Map<Character, Double> phaseLambdaValues, double vNet, char reinforcer) {
+    public void stimulate(GlobalParameterPool globalParams, double lambda, double vNet, char reinforcer) {
         alpha = getAnyAlpha();
         if(reinforcer == '-'){
             if(!usedStims.isEmpty()) {
                 for (char usedUs : usedStims.keySet()) {
-                    simulateStim(stimsMap.get(usedUs), globalParams, phaseLambdaValues, vNet, reinforcer);
+                    simulateStim(stimsMap.get(usedUs), globalParams, lambda, vNet, reinforcer);
                 }
             }
         }else{
-            simulateStim(stimsMap.get(reinforcer), globalParams, phaseLambdaValues, vNet, reinforcer);
+            simulateStim(stimsMap.get(reinforcer), globalParams, lambda, vNet, reinforcer);
             if(!usedStims.containsKey(reinforcer)){
                 usedStims.put(reinforcer, true);
             }
             for(char us : usedStims.keySet()) {
                 if (us != reinforcer) {
-                    simulateStim(stimsMap.get(us), globalParams, phaseLambdaValues, stimsMap.get(us).getAssociationNet(), '-');
+                    simulateStim(stimsMap.get(us), globalParams, lambda, stimsMap.get(us).getAssociationNet(), '-');
                 }
             }
         }
@@ -152,8 +152,8 @@ public class MultipleStimulus implements IConditionalStimulus, Serializable {
         }
     }
 
-    private void simulateStim(ConditionalStimulus cs, GlobalParameterPool globalParams, Map<Character, Double> phaseLambdaValues, double vNet, char reinforcer){
-        cs.stimulate(globalParams, phaseLambdaValues, vNet, reinforcer);
+    private void simulateStim(ConditionalStimulus cs, GlobalParameterPool globalParams, double lambda, double vNet, char reinforcer){
+        cs.stimulate(globalParams, lambda, vNet, reinforcer);
         alpha = cs.getAlpha();
     }
 

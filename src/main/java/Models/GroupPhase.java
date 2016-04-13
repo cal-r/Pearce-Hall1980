@@ -6,6 +6,7 @@ import Helpers.Random.RandomSimulationHelper;
 import Models.History.ConditionalStimulusState;
 import Models.History.GroupPhaseHistory;
 import Models.Parameters.Pools.GlobalParameterPool;
+import Models.Parameters.Pools.UsParameterPool;
 import Models.Stimulus.*;
 import Models.Trail.Trial;
 
@@ -35,25 +36,25 @@ public class GroupPhase implements Serializable {
 
     private GroupPhaseHistory history;
 
-    public GroupPhaseHistory simulateTrials(GlobalParameterPool globalParams, SimulatorSettings simulatorSettings) {
+    public GroupPhaseHistory simulateTrials(GlobalParameterPool globalParams, SimulatorSettings simulatorSettings, double lambda) {
         history = new GroupPhaseHistory();
         if(random) {
-            simulateTrialsRandomly(globalParams, simulatorSettings);
+            simulateTrialsRandomly(globalParams, simulatorSettings, lambda);
         }else{
-            simulateTrialsSequentially(globalParams);
+            simulateTrialsSequentially(globalParams, lambda);
         }
         addInfoToHistory(history);
         return history;
     }
 
-    private void simulateTrialsSequentially(GlobalParameterPool globalParams){
+    private void simulateTrialsSequentially(GlobalParameterPool globalParams, double lambda){
         for(int i=0;i<trials.size();i++){
             Trial trial = trials.get(i);
-            trial.simulate(history, globalParams, phaseReinforcer, phaseId);
+            trial.simulate(history, globalParams, phaseReinforcer, lambda);
         }
     }
 
-    private void simulateTrialsRandomly(GlobalParameterPool globalParams, SimulatorSettings simulatorSettings) {
+    private void simulateTrialsRandomly(GlobalParameterPool globalParams, SimulatorSettings simulatorSettings, double lambda) {
         List<IConditionalStimulus> csCopies = getCsCopies(); //preserve initial state of CSs
         List<GroupPhaseHistory> tempHistories = new ArrayList<>(); //stores every simulation
         for(int simNum = 0;simNum< simulatorSettings.NumberOfRandomCombination; simNum++) {
@@ -62,7 +63,7 @@ public class GroupPhase implements Serializable {
             int[] randomArray = RandomArrayGenerator.createRandomDistinctArray(trials.size());
             for (int trialNo = 0; trialNo < trials.size(); trialNo++) {
                 Trial trial = trials.get(randomArray[trialNo]);
-                trial.simulate(history, globalParams, phaseReinforcer, phaseId);
+                trial.simulate(history, globalParams, phaseReinforcer, lambda);
             }
             tempHistories.add(history);
         }

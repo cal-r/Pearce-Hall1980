@@ -7,7 +7,6 @@ import Models.Parameters.Parameter;
 import Models.Parameters.Pools.GlobalParameterPool;
 
 import java.io.Serializable;
-import java.util.Map;
 
 /**
  * Created by Rokas on 03/11/2015.
@@ -81,8 +80,7 @@ public class ConditionalStimulus implements Serializable, IConditionalStimulus {
     }
 
     @Override
-    public void stimulate(GlobalParameterPool globalParams, Map<Character, Double> phaseLambdaValues, double vNet, char reinforcer) {
-        double lambda = phaseLambdaValues.get(reinforcer);
+    public void stimulate(GlobalParameterPool globalParams, double lambda, double vNet, char reinforcer) {
         double capitalLambda = lambda - vNet;
         double newAlpha = calcNewAlpha(globalParams.getGamma(), lambda, vNet, getAlpha());
         if (capitalLambda > 0) {

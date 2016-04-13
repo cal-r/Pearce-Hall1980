@@ -40,7 +40,7 @@ public class TrialTests extends TestCase {
         trials.add(createTrial(true, getStims(allStims, "A"), contextStimulus));
         GroupPhase groupPhase = new GroupPhase(1, '+');
         groupPhase.addTrials(trials);
-        GroupPhaseHistory history = groupPhase.simulateTrials(getGlobals(), getSimulatorSettings());
+        GroupPhaseHistory history = groupPhase.simulateTrials(getGlobals(), getSimulatorSettings(), 1);
         assertEquals(history.getState(contextName, 1).Vnet, 0.0);
         assertEquals(history.getState(contextName, 2).Vnet, 0.0);
         assertEquals(history.getState(contextName, 3).Vnet, 0.0);
