@@ -60,9 +60,9 @@ public class Simulator implements Serializable{
         for(Group group : groups){
             GroupHistory groupHistory = createGroupHistory(group);
             for(GroupPhase groupPhase : group.groupPhases) {
-                double lambda = globalParameterPool.getUsParameterPool().getLamdbaValue(groupPhase.getPhaseReinforcer(), group, groupPhase.getPhaseId());
+                double lambdaParameter = globalParameterPool.getUsParameterPool().getLamdbaValue(groupPhase.getPhaseReinforcer(), group, groupPhase.getPhaseId());
                 groupHistory.add(
-                        groupPhase.simulateTrials(globalParameterPool, settings, lambda));
+                        groupPhase.simulateTrials(globalParameterPool, settings, lambdaParameter));
             }
             simHistory.add(groupHistory);
         }

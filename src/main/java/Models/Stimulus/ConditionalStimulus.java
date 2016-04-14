@@ -5,6 +5,7 @@ import Models.Parameters.ConditionalStimulus.SalienceExcitatoryParameter;
 import Models.Parameters.ConditionalStimulus.SalienceInhibitoryParameter;
 import Models.Parameters.Parameter;
 import Models.Parameters.Pools.GlobalParameterPool;
+import Models.Parameters.Pools.UsParameterPool;
 
 import java.io.Serializable;
 
@@ -80,7 +81,8 @@ public class ConditionalStimulus implements Serializable, IConditionalStimulus {
     }
 
     @Override
-    public void stimulate(GlobalParameterPool globalParams, double lambda, double vNet, char reinforcer) {
+    public void stimulate(GlobalParameterPool globalParams, double lambdaParameter, double vNet, char reinforcer) {
+        double lambda = reinforcer == '-' ? 0 : lambdaParameter;
         double capitalLambda = lambda - vNet;
         double newAlpha = calcNewAlpha(globalParams.getGamma(), lambda, vNet, getAlpha());
         if (capitalLambda > 0) {

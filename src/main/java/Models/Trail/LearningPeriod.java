@@ -22,11 +22,11 @@ public class LearningPeriod implements Serializable {
         this.reinforcer = reinforcer;
     }
 
-    public void learn(double vNet, GlobalParameterPool globalParams, double lambda) {
+    public void learn(double vNet, GlobalParameterPool globalParams, double lambdaParameter) {
         for (IStimulus stimulus : stims) {
             if (stimulus instanceof IConditionalStimulus) {
                 IConditionalStimulus cs = (IConditionalStimulus) stimulus;
-                cs.stimulate(globalParams, lambda, vNet, reinforcer);
+                cs.stimulate(globalParams, lambdaParameter, vNet, reinforcer);
             }
         }
     }

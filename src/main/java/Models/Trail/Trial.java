@@ -32,7 +32,7 @@ public class Trial implements Serializable{
                 if(probe!=null){
                     history.recordProbeState(probe);
                 }
-                period.learn(calcVNetValue(period.reinforcer), globalParams, UsParameterPool.lambdaIfPositive(period.reinforcer, lambda));
+                period.learn(calcVNetValue(period.reinforcer), globalParams, lambda);
             }
         }
     }

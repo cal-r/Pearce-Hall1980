@@ -36,25 +36,25 @@ public class GroupPhase implements Serializable {
 
     private GroupPhaseHistory history;
 
-    public GroupPhaseHistory simulateTrials(GlobalParameterPool globalParams, SimulatorSettings simulatorSettings, double lambda) {
+    public GroupPhaseHistory simulateTrials(GlobalParameterPool globalParams, SimulatorSettings simulatorSettings, double lambdaParameter) {
         history = new GroupPhaseHistory();
         if(random) {
-            simulateTrialsRandomly(globalParams, simulatorSettings, lambda);
+            simulateTrialsRandomly(globalParams, simulatorSettings, lambdaParameter);
         }else{
-            simulateTrialsSequentially(globalParams, lambda);
+            simulateTrialsSequentially(globalParams, lambdaParameter);
         }
         addInfoToHistory(history);
         return history;
     }
 
-    private void simulateTrialsSequentially(GlobalParameterPool globalParams, double lambda){
+    private void simulateTrialsSequentially(GlobalParameterPool globalParams, double lambdaParameter){
         for(int i=0;i<trials.size();i++){
             Trial trial = trials.get(i);
-            trial.simulate(history, globalParams, phaseReinforcer, lambda);
+            trial.simulate(history, globalParams, phaseReinforcer, lambdaParameter);
         }
     }
 
-    private void simulateTrialsRandomly(GlobalParameterPool globalParams, SimulatorSettings simulatorSettings, double lambda) {
+    private void simulateTrialsRandomly(GlobalParameterPool globalParams, SimulatorSettings simulatorSettings, double lambdaParameter) {
         List<IConditionalStimulus> csCopies = getCsCopies(); //preserve initial state of CSs
         List<GroupPhaseHistory> tempHistories = new ArrayList<>(); //stores every simulation
         for(int simNum = 0;simNum< simulatorSettings.NumberOfRandomCombination; simNum++) {
@@ -63,7 +63,7 @@ public class GroupPhase implements Serializable {
             int[] randomArray = RandomArrayGenerator.createRandomDistinctArray(trials.size());
             for (int trialNo = 0; trialNo < trials.size(); trialNo++) {
                 Trial trial = trials.get(randomArray[trialNo]);
-                trial.simulate(history, globalParams, phaseReinforcer, lambda);
+                trial.simulate(history, globalParams, phaseReinforcer, lambdaParameter);
             }
             tempHistories.add(history);
         }

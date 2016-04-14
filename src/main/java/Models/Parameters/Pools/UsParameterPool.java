@@ -105,8 +105,4 @@ public class UsParameterPool implements Serializable {
             usParameterMap.put(lambdaPlusName, new SingleUsParamater(lambdaPlusName));
         }
     }
-
-    public static double lambdaIfPositive(char reinforcer, double val){
-        return reinforcer == '-' ? 0.0 : val;
-    }
 }
