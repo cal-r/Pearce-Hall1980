@@ -13,8 +13,15 @@ public class GraphStringsHelper {
     }
 
     public static String getLineCommand(GraphLine line){
-        String lineName = line.getName();
+        String lineName = getNameWithoutNegativeLabeling(line.getName());
         return String.format("%s%s%s", line.getGroup().getName(), ActionCommands.GROUP_LINE_SEPARATOR, lineName);
+    }
+
+    private static String getNameWithoutNegativeLabeling(String name){
+        if (name.endsWith(")-")){
+            return name.substring(1, name.length()-2);
+        }
+        return name;
     }
 
     public static String getGroupCommand(GraphLineGroup group){
@@ -23,10 +30,6 @@ public class GraphStringsHelper {
 
     public static String getGroupNameFromCommand(String command){
         return splitCommand(command)[0];
-    }
-
-    public static String getLineNameFromCommand(String command){
-        return splitCommand(command)[1];
     }
 
     public static boolean isGroupCommand(String command){

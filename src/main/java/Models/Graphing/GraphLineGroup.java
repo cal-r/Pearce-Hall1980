@@ -19,8 +19,8 @@ public class GraphLineGroup implements Comparable<GraphLineGroup> {
     }
 
     public void addLine(GraphLine line){
-        linesMap.put(line.getName(), line);
         line.setGroup(this);
+        linesMap.put(GraphStringsHelper.getLineCommand(line), line);
     }
 
     public List<GraphLine> getLines() {
@@ -35,7 +35,7 @@ public class GraphLineGroup implements Comparable<GraphLineGroup> {
                 line.setVisible(visible);
             }
         }else {
-            linesMap.get(GraphStringsHelper.getLineNameFromCommand(command)).setVisible(visible);
+            linesMap.get(command).setVisible(visible);
         }
     }
 
