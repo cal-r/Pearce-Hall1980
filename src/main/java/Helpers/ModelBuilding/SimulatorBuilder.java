@@ -80,6 +80,7 @@ public class SimulatorBuilder {
                     ContextParameterHelper.setContextConfigInParamsPool(contextConfig, (CsParameterPool)csParameterPool);
                     updateCsMaps(contextName, PhaseParser.getPhaseReinforcer(phaseTokens));
                     groupPhase = PhaseParser.ParsePhase(phaseTokens, csMap, i, settings, csMap.get(contextName), itiRatios.get(i));
+                    phaseDescription = String.format("%s: %s", contextName, phaseDescription);
                 }else{
                     groupPhase = PhaseParser.ParsePhase(phaseTokens, csMap, i, settings, null, 0);
                 }
