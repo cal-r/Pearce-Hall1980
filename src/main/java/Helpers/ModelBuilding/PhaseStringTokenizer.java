@@ -51,7 +51,7 @@ public class PhaseStringTokenizer {
 
             tokensList.add(trialTokens);
         }
-        if(!settings.RodriguezMode)
+        if(!settings.isRodriguezMode())
             validateReinforcers(tokensList);
 
         return tokensList;
@@ -89,14 +89,14 @@ public class PhaseStringTokenizer {
     }
 
     private static Matcher matchTrialType(String trialTypeDescription, SimulatorSettings settings) throws IllegalArgumentException {
-        String regexToUse = settings.RodriguezMode ?
+        String regexToUse = settings.isRodriguezMode() ?
                 RODRIGUEZ_TRAIL_TYPE_REGEX :
-                (settings.UseDifferentUs ? TRAIL_TYPE_REGEX_MULTIPLE_US : TRAIL_TYPE_REGEX);
+                (settings.isUseDifferentUs() ? TRAIL_TYPE_REGEX_MULTIPLE_US : TRAIL_TYPE_REGEX);
         Pattern pattern = Pattern.compile(regexToUse);
         Matcher matcher = pattern.matcher(trialTypeDescription);
 
         if (!matcher.matches()) {
-            if(settings.RodriguezMode && matchesNormalRegex(trialTypeDescription)){
+            if(settings.isRodriguezMode() && matchesNormalRegex(trialTypeDescription)){
                 throw new IllegalArgumentException(GuiStringConstants.RODRIGUEZ_TRIAL_TABLE_ERROR);
             }
             throw new IllegalArgumentException(GuiStringConstants.TRAIL_TABLE_ERROR);

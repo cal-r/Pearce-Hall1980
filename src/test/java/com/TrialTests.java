@@ -84,7 +84,7 @@ public class TrialTests extends TestCase {
 
     private SimulatorSettings getSimulatorSettings(){
         SimulatorSettings settings = new SimulatorSettings();
-        settings.ContextSimulation = true;
+        settings.setContextSimulation(true);
         return settings;
     }
 

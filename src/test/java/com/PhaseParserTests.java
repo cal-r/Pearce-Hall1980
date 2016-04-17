@@ -179,8 +179,8 @@ public class PhaseParserTests extends junit.framework.TestCase {
 
     private SimulatorSettings getTestSettings(){
         SimulatorSettings testSettings = new SimulatorSettings();
-        testSettings.CompoundResults = false;
-        testSettings.ContextSimulation = false;
+        testSettings.setCompoundResults(false);
+        testSettings.setContextSimulation(false);
         return testSettings;
     }
 }

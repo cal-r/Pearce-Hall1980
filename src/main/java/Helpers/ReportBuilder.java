@@ -192,7 +192,7 @@ public class ReportBuilder {
     }
 
     public static String getVariableDisplayName(Variable variable, SimulatorSettings settings){
-        if(variable == Variable.VI && settings.RodriguezMode)
+        if(variable == Variable.VI && settings.isRodriguezMode())
             return "VnE";
         return variable.toString();
     }

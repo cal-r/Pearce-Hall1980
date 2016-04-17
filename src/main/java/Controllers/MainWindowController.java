@@ -57,7 +57,7 @@ public class MainWindowController implements ActionListener, TableModelListener 
     }
 
     public void initTrialTable(JTable table) {
-        trialTableModel = new TrialTableModel(simulator.getSettings().ContextSimulation);
+        trialTableModel = new TrialTableModel(simulator.getSettings().isContextSimulation());
         initTableModel(table, trialTableModel);
         table.setDefaultEditor(ContextConfig.class, new ContextEditor());
     }
@@ -196,11 +196,11 @@ public class MainWindowController implements ActionListener, TableModelListener 
     }
 
     public void onSimulateContextChange(){
-        trialTableModel.setSimulateContext(simulator.getSettings().ContextSimulation);
+        trialTableModel.setSimulateContext(simulator.getSettings().isContextSimulation());
     }
 
     public void onUseDifferentUsChange() {
-        if(simulator.getSettings().UseDifferentUs) {
+        if(simulator.getSettings().isUseDifferentUs()) {
             usParamsTableModel.setUpParameters(simulator.getUsParameterPool());
         }else{
             usParamsTableModel.clearTable();

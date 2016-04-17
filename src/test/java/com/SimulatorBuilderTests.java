@@ -117,7 +117,7 @@ public class SimulatorBuilderTests extends junit.framework.TestCase {
     public void testSimBuilder4() throws Exception {
         //test context
         Simulator sim = getSimulatorWithTestSettings();
-        sim.getSettings().ContextSimulation = true;
+        sim.getSettings().setContextSimulation(true);
 
         ContextConfig contextConfig = new ContextConfig();
 
@@ -164,7 +164,7 @@ public class SimulatorBuilderTests extends junit.framework.TestCase {
     public void testSimBuilder5(){
         //test different us per phase
         Simulator sim = getSimulatorWithTestSettings();
-        sim.getSettings().UseDifferentUs = true;
+        sim.getSettings().setUseDifferentUs(true);
 
         TrialTableModel tableModel = new TrialTableModel(false);
         //group 1
@@ -190,7 +190,7 @@ public class SimulatorBuilderTests extends junit.framework.TestCase {
     public void testSimBuilder6(){
         //test different us per phase
         Simulator sim = getSimulatorWithTestSettings();
-        sim.getSettings().UseDifferentUs = true;
+        sim.getSettings().setUseDifferentUs(true);
 
         TrialTableModel tableModel = new TrialTableModel(false);
         tableModel.addPhase();
@@ -230,7 +230,7 @@ public class SimulatorBuilderTests extends junit.framework.TestCase {
     public void testSimBuilder7(){
         //test different us per phase
         Simulator sim = getSimulatorWithTestSettings();
-        sim.getSettings().UseDifferentUs = true;
+        sim.getSettings().setUseDifferentUs(true);
 
         TrialTableModel tableModel = new TrialTableModel(false);
         tableModel.addPhase();
@@ -255,8 +255,8 @@ public class SimulatorBuilderTests extends junit.framework.TestCase {
 
     private Simulator getSimulatorWithTestSettings(){
         Simulator testSimulator = new Simulator();
-        testSimulator.getSettings().CompoundResults = false;
-        testSimulator.getSettings().ContextSimulation = false;
+        testSimulator.getSettings().setCompoundResults(false);
+        testSimulator.getSettings().setContextSimulation(false);
         return testSimulator;
     }
 }

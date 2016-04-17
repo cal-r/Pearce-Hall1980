@@ -71,7 +71,7 @@ public class PhaseParser {
         private Trial createTrial(char reinforcer, List<IStimulus> cues, boolean isLastTrial, String description){
             List<LearningPeriod> learningPeriods = new ArrayList<>();
 
-            if(settings.ContextSimulation){
+            if(settings.isContextSimulation()){
                 addItiPeriods(learningPeriods);
             }
 
@@ -82,7 +82,7 @@ public class PhaseParser {
 
             learningPeriods.add(new LearningPeriod(getUsPresent(reinforcer), reinforcer, trialCues));
 
-            if(isLastTrial && settings.ContextSimulation){
+            if(isLastTrial && settings.isContextSimulation()){
                 addItiPeriods(learningPeriods);
             }
 
@@ -118,10 +118,10 @@ public class PhaseParser {
                 }
             }
 
-            if(settings.ContextSimulation){
+            if(settings.isContextSimulation()){
                 cuesPresent.add(context);
             }
-            if(settings.CompoundResults) {
+            if(settings.isCompoundResults()) {
                 addCompoundStim(cuesPresent, trialType.reinforcer);
             }
             return cuesPresent;

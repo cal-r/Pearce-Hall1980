@@ -150,7 +150,7 @@ public class GraphWindowController implements ActionListener {
 
     static void showGraphs(SimulationHistory history, SimulatorSettings settings){
         Map<Paint, Boolean> interGraphColorMap = new HashMap<>();
-        for(Graph graph : GraphBuilder.BuildGraphs(history, settings.RodriguezMode)){
+        for(Graph graph : GraphBuilder.BuildGraphs(history, settings.isRodriguezMode())){
             new GraphWindowController(graph, interGraphColorMap);
         }
     }

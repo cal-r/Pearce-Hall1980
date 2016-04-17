@@ -80,17 +80,16 @@ public class MenuController implements ActionListener {
 
     //action events
     private void onCompoundResultsSettingTicked(boolean isSelected){
-        settings.CompoundResults = isSelected;
+        settings.setCompoundResults(isSelected);
         mainWindowController.disableAllButtons();
     }
 
     private void onSimulateContext(boolean isSelected){
-        if(settings.RodriguezMode) {
+        if(settings.isRodriguezMode()) {
             GuiHelper.displayErrorMessage(GuiStringConstants.RODRIGUEZ_CONTEXT);
-            setSettings(settings);
             return;
         }
-        settings.ContextSimulation = isSelected;
+        settings.setContextSimulation(isSelected);
         mainWindowController.onSimulateContextChange();
     }
 
@@ -110,16 +109,15 @@ public class MenuController implements ActionListener {
     }
 
     private void onRandomTrialsSetting(){
-        settings.NumberOfRandomCombination = GuiHelper.getIntFromUser(GuiStringConstants.RANDOM_TRIALS_SETTING, settings.NumberOfRandomCombination);
+        settings.setNumberOfRandomCombination(GuiHelper.getIntFromUser(GuiStringConstants.RANDOM_TRIALS_SETTING, settings.getNumberOfRandomCombination()));
     }
 
     private void onUseDifferentUs(boolean menuItemSelected) {
-        if(settings.RodriguezMode) {
+        if(settings.isRodriguezMode()) {
             GuiHelper.displayErrorMessage(GuiStringConstants.RODRIGUEZ_MULTIPLE_US_ERROR);
-            setSettings(settings);
             return;
         }
-        settings.UseDifferentUs = menuItemSelected;
+        settings.setUseDifferentUs(menuItemSelected);
         mainWindowController.onUseDifferentUsChange();
     }
 
@@ -133,28 +131,12 @@ public class MenuController implements ActionListener {
     }
 
     private void onRodriguez(boolean menuItemSelected){
-        if(settings.UseDifferentUs || settings.ContextSimulation || settings.UseInitialVe) {
-            if(settings.UseDifferentUs) {
-                GuiHelper.displayErrorMessage(GuiStringConstants.RODRIGUEZ_MULTIPLE_US_ERROR);
-            }else if(settings.ContextSimulation){
-                GuiHelper.displayErrorMessage(GuiStringConstants.RODRIGUEZ_CONTEXT);
-            }else {
-                GuiHelper.displayErrorMessage(GuiStringConstants.INITIAL_V_FOR_PH);
-            }
-            setSettings(settings);
-            return;
-        }
-        settings.RodriguezMode = menuItemSelected;
+        settings.setRodriguezMode(menuItemSelected);
         mainWindowController.onRodriguezChange();
     }
 
     private void onInitialVe(boolean menuItemSelected) {
-        if(settings.RodriguezMode){
-            GuiHelper.displayErrorMessage(GuiStringConstants.RODRIGUEZ_MODE);
-            setSettings(settings);
-            return;
-        }
-        settings.UseInitialVe = menuItemSelected;
+        settings.setUseInitialVe(menuItemSelected);
     }
 
     @Override
@@ -193,16 +175,17 @@ public class MenuController implements ActionListener {
             default:
                 GuiHelper.displayErrorMessage("Nicht implementiert!");
         }
+        setSettings(settings);
     }
 
     public void setSettings(SimulatorSettings settings) {
         this.settings = settings;
         //set up checkboxes states
-        checkboxesMap.get(GuiStringConstants.COMPOUND_RESULTS_SETTING).setState(settings.CompoundResults);
-        checkboxesMap.get(GuiStringConstants.SIMULATE_CONTEXT).setState(settings.ContextSimulation);
-        checkboxesMap.get(GuiStringConstants.USE_DIFFERENT_US).setState(settings.UseDifferentUs);
-        checkboxesMap.get(GuiStringConstants.RODRIGUEZ_MODE).setState(settings.RodriguezMode);
-        checkboxesMap.get(GuiStringConstants.INITIAL_V_FOR_PH).setState(settings.UseInitialVe);
+        checkboxesMap.get(GuiStringConstants.COMPOUND_RESULTS_SETTING).setState(settings.isCompoundResults());
+        checkboxesMap.get(GuiStringConstants.SIMULATE_CONTEXT).setState(settings.isContextSimulation());
+        checkboxesMap.get(GuiStringConstants.USE_DIFFERENT_US).setState(settings.isUseDifferentUs());
+        checkboxesMap.get(GuiStringConstants.RODRIGUEZ_MODE).setState(settings.isRodriguezMode());
+        checkboxesMap.get(GuiStringConstants.INITIAL_V_FOR_PH).setState(settings.isUseInitialVe());
     }
 
     //getters

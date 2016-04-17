@@ -68,7 +68,7 @@ public class RodriguezTests extends TestCase {
 
     private SimulatorSettings getSimulatorSettings(){
         SimulatorSettings settings = new SimulatorSettings();
-        settings.RodriguezMode = true;
+        settings.setRodriguezMode(true);
         return settings;
     }
 

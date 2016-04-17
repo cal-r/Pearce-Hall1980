@@ -21,6 +21,6 @@ public class GammaParameter extends Parameter {
         if(isSet)
             return super.getValue();
 
-        return settings.RodriguezMode ? DefaultValuesConstants.RODRIGUEZ_GAMMA : DefaultValuesConstants.GAMMA;
+        return settings.isRodriguezMode() ? DefaultValuesConstants.RODRIGUEZ_GAMMA : DefaultValuesConstants.GAMMA;
     }
 }

@@ -98,7 +98,7 @@ public class Simulator implements Serializable{
 
     private void adjustUsParameters() {
         if(groups!=null && !groups.isEmpty()){
-            if(settings.UseDifferentUs) {
+            if(settings.isUseDifferentUs()) {
                 globalParameterPool.getUsParameterPool().adjustLamdbas(groups);
             }else{
                 globalParameterPool.getUsParameterPool().adjustSingleMode();

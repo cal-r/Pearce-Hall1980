@@ -140,7 +140,7 @@ public class PhaseStringTokenizerTests extends junit.framework.TestCase {
 
     private SimulatorSettings getTestSettings(){
         SimulatorSettings settings = new SimulatorSettings();
-        settings.UseDifferentUs = true;
+        settings.setUseDifferentUs(true);
         return settings;
     }
 }

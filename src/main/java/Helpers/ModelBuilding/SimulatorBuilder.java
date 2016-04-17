@@ -60,7 +60,7 @@ public class SimulatorBuilder {
             List<String> phaseDescriptions = tableModel.getPhaseDescriptions(gi);
             List<Boolean> randomSelections = tableModel.getRandomSelections(gi);
 
-            if(settings.ContextSimulation) {
+            if(settings.isContextSimulation()) {
                 contextConfigs = tableModel.getContextConfigs(gi);
                 itiRatios = tableModel.getItiRatios(gi);
             }
@@ -74,7 +74,7 @@ public class SimulatorBuilder {
                 updateCsMapsForCues(phaseTokens);
 
                 GroupPhase groupPhase;
-                if(settings.ContextSimulation) {
+                if(settings.isContextSimulation()) {
                     ContextConfig contextConfig = contextConfigs.get(i);
                     String contextName = contextConfig.getSymbol();
                     ContextParameterHelper.setContextConfigInParamsPool(contextConfig, (CsParameterPool)csParameterPool);
@@ -106,21 +106,21 @@ public class SimulatorBuilder {
                 if (!csParameterPool.contains(cueName)) {
                     csParameterPool.createParameters(cueName);
                 }
-                if (settings.UseDifferentUs) {
+                if (settings.isUseDifferentUs()) {
                     csMap.put(cueName, createMultipleStimulus(cueName));
-                } else if (settings.RodriguezMode) {
+                } else if (settings.isRodriguezMode()) {
                     csMap.put(cueName, createRodriguezParameter(cueName));
                 }
                 else {
                     csMap.put(cueName, createCs(cueName));
                 }
             }
-            if (settings.UseDifferentUs)
+            if (settings.isUseDifferentUs())
                 ((MultipleStimulus) csMap.get(cueName)).addStimulus(reinforcer);
         }
 
         private ConditionalStimulus createCs(String cueName){
-            if(!settings.UseInitialVe) {
+            if(!settings.isUseInitialVe()) {
                 return new ConditionalStimulus(
                         cueName,
                         ((CsParameterPool) csParameterPool).getInitialAlpha(cueName),
@@ -137,7 +137,7 @@ public class SimulatorBuilder {
         }
 
         private MultipleStimulus createMultipleStimulus(String cueName){
-            if(!settings.UseInitialVe) {
+            if(!settings.isUseInitialVe()) {
                 return new MultipleStimulus(
                         cueName,
                         ((CsParameterPool) csParameterPool).getInitialAlpha(cueName),
@@ -163,7 +163,7 @@ public class SimulatorBuilder {
     }
 
     private static ICsParameterPool getCsParameterPool(SimulatorSettings settings){
-        return settings.RodriguezMode ? new RodriguezCsParameterPool() :
-                settings.UseInitialVe ? new ElaboratorCsParameterPool() : new CsParameterPool();
+        return settings.isRodriguezMode() ? new RodriguezCsParameterPool() :
+                settings.isUseInitialVe() ? new ElaboratorCsParameterPool() : new CsParameterPool();
     }
 }

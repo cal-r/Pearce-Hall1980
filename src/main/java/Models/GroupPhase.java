@@ -57,7 +57,7 @@ public class GroupPhase implements Serializable {
     private void simulateTrialsRandomly(GlobalParameterPool globalParams, SimulatorSettings simulatorSettings, double lambdaParameter) {
         List<IConditionalStimulus> csCopies = getCsCopies(); //preserve initial state of CSs
         List<GroupPhaseHistory> tempHistories = new ArrayList<>(); //stores every simulation
-        for(int simNum = 0;simNum< simulatorSettings.NumberOfRandomCombination; simNum++) {
+        for(int simNum = 0;simNum< simulatorSettings.getNumberOfRandomCombination(); simNum++) {
             resetCues(csCopies);
             history = new GroupPhaseHistory();
             int[] randomArray = RandomArrayGenerator.createRandomDistinctArray(trials.size());
