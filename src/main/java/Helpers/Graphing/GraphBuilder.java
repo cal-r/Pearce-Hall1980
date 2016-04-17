@@ -34,9 +34,6 @@ public class GraphBuilder {
 
     private static void addLines(String stimName, GroupPhaseHistory gpHist, Graph graph, Map<String, List<GraphLine>> linkedLinesMap, LineDisplayIdCounter lineCounter, boolean rodriguezMode){
         addGraphLine(stimName, gpHist, graph, linkedLinesMap, lineCounter, Variable.VNET);
-        if(gpHist.getState(stimName, 1) instanceof ConditionalStimulusState) {
-            addGraphLine(stimName, gpHist, graph, linkedLinesMap, lineCounter, Variable.ALPHA);
-        }
         if(rodriguezMode && gpHist.getState(stimName, 1) instanceof ConditionalStimulusState){
             addGraphLine(stimName, gpHist, graph, linkedLinesMap, lineCounter, Variable.VE);
             addGraphLine(stimName, gpHist, graph, linkedLinesMap, lineCounter, Variable.VnE);
@@ -55,31 +52,24 @@ public class GraphBuilder {
         if(variable == Variable.VNET){
             return stimName;
         }
-
-        String varName = variable.toString();
-        if(variable == Variable.ALPHA){
-            varName = "\u03B1";
-        }
-
-        return String.format("%s(%s)", stimName, varName);
+        return String.format("%s(%s)", stimName, variable);
     }
 
 
-    enum Variable { VNET, VnE, VE, ALPHA }
+    enum Variable { VNET, VnE, VE }
     private static void addLinePoints(GraphLine line, String stimName, GroupPhaseHistory gpHist, Variable variable){
         for(int periodNo = 1; periodNo<=gpHist.getNumberOfPeriods(); periodNo++){
             StimulusState state = gpHist.getState(stimName, periodNo);
             if(state!=null) {
                 if(variable == Variable.VNET) {
                     line.addPoint(periodNo, state.Vnet);
-                }else if(state instanceof ConditionalStimulusState) {
+                }else{
+                    //only for rodriguez
                     ConditionalStimulusState csState = (ConditionalStimulusState) state;
-                    if (variable == Variable.VE)
+                    if(variable == Variable.VE)
                         line.addPoint(periodNo, csState.Ve);
-                    if (variable == Variable.VnE)
+                    if(variable == Variable.VnE)
                         line.addPoint(periodNo, csState.Vi);
-                    if (variable == Variable.ALPHA)
-                        line.addPoint(periodNo, csState.Alpha);
                 }
             }
         }
