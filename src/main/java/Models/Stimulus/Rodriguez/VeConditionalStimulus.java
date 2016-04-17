@@ -23,6 +23,7 @@ public class VeConditionalStimulus extends ConditionalStimulus{
     }
 
     public void reset() {
+        super.reset();
         associationExcitatory = initialAssociationParameter.getValue();
     }
 }

@@ -89,16 +89,8 @@ public class GroupPhase implements Serializable {
     }
 
     public void reset(){
-        for(IStimulus stim : getPhaseCues()){
-            if(stim instanceof ConditionalStimulus){
-                ((ConditionalStimulus)stim).reset();
-            }
-
-            if (stim instanceof MultipleStimulus) {
-                for (ConditionalStimulus cs : ((MultipleStimulus) stim).getAllStims()) {
-                    cs.reset();
-                }
-            }
+        for(IConditionalStimulus stim : getPhaseCues()){
+            stim.reset();
         }
     }
 

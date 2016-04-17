@@ -120,6 +120,14 @@ public class MultipleStimulus implements IPHConditionalStimulus, Serializable {
     }
 
     @Override
+    public void reset() {
+        for(IConditionalStimulus cs : getAllStims()){
+            cs.reset();
+        }
+        alpha = getAnyAlpha();
+    }
+
+    @Override
     public void stimulate(GlobalParameterPool globalParams, double lambdaParameter, double vNet, char reinforcer) {
         alpha = getAnyAlpha();
         if(reinforcer == '-'){

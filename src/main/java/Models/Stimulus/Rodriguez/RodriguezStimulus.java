@@ -58,6 +58,11 @@ public class RodriguezStimulus implements IConditionalStimulus, Serializable {
     }
 
     @Override
+    public void reset() {
+        setInitialValues(InitialAlphaParameter, InitialAssociationParamater);
+    }
+
+    @Override
     public void stimulate(GlobalParameterPool globalParams, double lambda, double vNet, char reinforcer) {
         double capitalLambda = lambda - vNet;
         double newAlpha = calcNewAlpha(globalParams.getGamma(), lambda, vNet, getAlpha());
