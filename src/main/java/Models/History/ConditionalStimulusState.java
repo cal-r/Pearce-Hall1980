@@ -1,6 +1,7 @@
 package Models.History;
 
 import Models.Stimulus.ConditionalStimulus;
+import Models.Stimulus.IPHConditionalStimulus;
 import Models.Stimulus.Rodriguez.RodriguezStimulus;
 
 import java.io.Serializable;
@@ -14,7 +15,7 @@ public class ConditionalStimulusState extends StimulusState implements Serializa
     public double Alpha;
     public String AlphaLink;
 
-    public ConditionalStimulusState(ConditionalStimulus cs){
+    public ConditionalStimulusState(IPHConditionalStimulus cs){
         super(cs);
         Ve = cs.getAssociationExcitatory();
         Vi = cs.getAssociationInhibitory();

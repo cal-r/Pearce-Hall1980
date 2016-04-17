@@ -74,7 +74,7 @@ public class GroupReportViewModel implements Serializable {
         rows.add(new ArrayList<Cell>());
     }
 
-    public class Cell{
+    public class Cell implements Serializable{
         private Object content;
         private Format format;
 
@@ -109,7 +109,7 @@ public class GroupReportViewModel implements Serializable {
         }
     }
 
-    public static class Format{
+    public static class Format implements Serializable{
         public int FontSize;
         public boolean IsBold;
         public boolean IsUnderlined;

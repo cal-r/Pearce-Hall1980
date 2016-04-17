@@ -16,7 +16,7 @@ import java.util.Map;
 /**
  * Created by Rokas on 13/03/2016.
  */
-public class MultipleStimulus implements IConditionalStimulus, Serializable {
+public class MultipleStimulus implements IPHConditionalStimulus, Serializable {
 
     private final String name;
     private final InitialAlphaParameter initialAlphaParameter;
@@ -171,6 +171,32 @@ public class MultipleStimulus implements IConditionalStimulus, Serializable {
         if(!usedStims.isEmpty()) {
             for(char usedUs : usedStims.keySet()){
                 sum += stimsMap.get(usedUs).getAssociationNet();
+            }
+            sum /= usedStims.size();
+        }
+        return sum;
+    }
+
+    @Override
+    public double getAssociationExcitatory() {
+        //gives a mean value
+        double sum = 0.0;
+        if(!usedStims.isEmpty()) {
+            for(char usedUs : usedStims.keySet()){
+                sum += stimsMap.get(usedUs).getAssociationExcitatory();
+            }
+            sum /= usedStims.size();
+        }
+        return sum;
+    }
+
+    @Override
+    public double getAssociationInhibitory() {
+        //gives a mean value
+        double sum = 0.0;
+        if(!usedStims.isEmpty()) {
+            for(char usedUs : usedStims.keySet()){
+                sum += stimsMap.get(usedUs).getAssociationInhibitory();
             }
             sum /= usedStims.size();
         }

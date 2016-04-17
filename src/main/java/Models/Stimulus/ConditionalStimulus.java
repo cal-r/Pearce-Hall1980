@@ -12,7 +12,7 @@ import java.io.Serializable;
 /**
  * Created by Rokas on 03/11/2015.
  */
-public class ConditionalStimulus implements Serializable, IConditionalStimulus {
+public class ConditionalStimulus implements Serializable, IPHConditionalStimulus {
 
     public InitialAlphaParameter InitialAlphaParameter;
     public SalienceExcitatoryParameter SalienceExcitatoryParameter;

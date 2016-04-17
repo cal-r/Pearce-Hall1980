@@ -101,8 +101,8 @@ public class GroupPhaseHistory implements Serializable {
     }
 
     private StimulusState createStimState(IStimulus stim){
-        if(stim instanceof ConditionalStimulus){
-            return new ConditionalStimulusState((ConditionalStimulus)stim);
+        if(stim instanceof IPHConditionalStimulus){
+            return new ConditionalStimulusState((IPHConditionalStimulus)stim);
         }
         if(stim instanceof RodriguezStimulus){
             return new ConditionalStimulusState((RodriguezStimulus)stim);
