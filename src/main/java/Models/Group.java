@@ -1,6 +1,7 @@
 package Models;
 
 import Models.Parameters.Pools.CsPools.CsParameterPool;
+import Models.Stimulus.IConditionalStimulus;
 
 import java.io.Serializable;
 import java.util.List;
@@ -17,4 +18,11 @@ public class Group implements Serializable {
         Name = name;
         this.groupPhases = groupPhases;
     }
+
+//    public List<IConditionalStimulus> getGroupCues(){
+//        List<IConditionalStimulus> li
+//        for (GroupPhase groupPhase : groupPhases){
+//
+//        }
+//    }
 }

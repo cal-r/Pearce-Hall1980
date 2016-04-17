@@ -1,5 +1,6 @@
 package Models.Parameters.Pools.CsPools;
 
+import Models.Group;
 import Models.Parameters.ConditionalStimulus.CsParameter;
 import Models.Parameters.ConditionalStimulus.InitialAlphaParameter;
 import Models.Parameters.ConditionalStimulus.Rodriguez.InitialAssociationParameter;
@@ -56,5 +57,10 @@ public class RodriguezCsParameterPool implements ICsParameterPool, Serializable 
         list.addAll(salienceParameterMap.values());
         list.addAll(initialAssociationParameterMap.values());
         return list;
+    }
+
+    @Override
+    public List<CsParameter> getGroupParameters(Group group) {
+        return null;
     }
 }

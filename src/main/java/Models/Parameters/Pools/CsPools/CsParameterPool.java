@@ -1,5 +1,6 @@
 package Models.Parameters.Pools.CsPools;
 
+import Models.Group;
 import Models.Parameters.ConditionalStimulus.CsParameter;
 import Models.Parameters.ConditionalStimulus.InitialAlphaParameter;
 import Models.Parameters.ConditionalStimulus.SalienceExcitatoryParameter;
@@ -52,5 +53,10 @@ public class CsParameterPool implements ICsParameterPool, Serializable {
         list.addAll(salienceExcitatoryParameterMap.values());
         list.addAll(salienceInhibitoryParameterMap.values());
         return list;
+    }
+
+    @Override
+    public List<CsParameter> getGroupParameters(Group group) {
+        return null;
     }
 }
