@@ -3,10 +3,10 @@ package Helpers.Export;
 
 import Controllers.FilePickerController;
 import ViewModels.GroupReportViewModel;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.*;
 
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.IOException;
@@ -39,15 +39,29 @@ public class ExcelExportHelper {
                 Row excelRow = sheet.createRow(rowId);
                 for (int colId = 0; colId < reportVM.getColumnCount(); colId++) {
                     Cell cell = excelRow.createCell(colId);
-                    Object content = reportVM.getCell(rowId, colId);
-                    if (content instanceof Double) {
-                        cell.setCellValue((Double) content);
+                    GroupReportViewModel.Cell vmCell = reportVM.getCell(rowId, colId);
+                    if (vmCell.isNumeric()) {
+                        cell.setCellValue(vmCell.getDouble());
                     } else {
-                        cell.setCellValue(content.toString());
+                        cell.setCellValue(vmCell.toString());
                     }
+                    formatCell(workbook, cell, vmCell.getFormat());
                 }
             }
         }
         return workbook;
+    }
+
+    private static void formatCell(XSSFWorkbook workbook, Cell cell, GroupReportViewModel.Format format){
+        XSSFFont font = workbook.createFont();
+        font.setBold(format.IsBold);
+        font.setItalic(format.IsItalic);
+        if(format.IsUnderlined) {
+            font.setUnderline(XSSFFont.U_SINGLE);
+        }
+        font.setFontHeight(format.FontSize);
+        XSSFCellStyle style = workbook.createCellStyle();
+        style.setFont(font);
+        cell.setCellStyle(style);
     }
 }

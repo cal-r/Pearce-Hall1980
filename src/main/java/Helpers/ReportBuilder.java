@@ -30,6 +30,9 @@ public class ReportBuilder {
     private static GroupReportViewModel buildGroupReport(GroupHistory groupHistory, SimulatorSettings settings){
         GroupReportViewModel report = new GroupReportViewModel(groupHistory.group.Name);
         int rowId = 0;
+
+        report.setLargeCell(rowId++, 0, groupHistory.group.Name);
+
         report.setCell(rowId++, 0, "P&H parameters:");
 
         rowId = insertCsParameterTable(report, rowId, groupHistory) +1;
@@ -38,14 +41,13 @@ public class ReportBuilder {
 
         rowId = insertUsParameterTable(report, rowId, groupHistory.usParameters) + 2;
 
-        report.setCell(rowId++, 0, groupHistory.group.Name);
         for(int gpId = 0; gpId < groupHistory.getNumberOfPhases(); gpId++) {
             GroupPhaseHistory groupPhaseHistory = groupHistory.getGroupPhaseHistory(gpId);
             insertPhaseDescription(report, rowId++, groupPhaseHistory);
             rowId++;
             for(Variable variable : Variable.values())
             {
-                report.setCell(rowId++, 0, getVariableDisplayName(variable, settings));
+                report.setBoldCell(rowId++, 0, getVariableDisplayName(variable, settings));
                 int lastRowId = insertVariableTable(report, rowId, groupPhaseHistory, variable);
                 rowId = lastRowId+1;
             }
@@ -155,7 +157,7 @@ public class ReportBuilder {
 
     private static void insertPhaseDescription(GroupReportViewModel report, int rowId, GroupPhaseHistory groupPhaseHistory){
         int colId = 0;
-        report.setCell(rowId, colId++, groupPhaseHistory.getPhaseName()); //append name ("Phase 69")
+        report.setBoldUnderlinedCell(rowId, colId++, groupPhaseHistory.getPhaseName()); //append name ("Phase 69")
         report.setCell(rowId, colId++, groupPhaseHistory.getDescription());
         colId++;
         report.setCell(rowId, colId++, GuiStringConstants.RANDOM + ": " + groupPhaseHistory.isRandom());

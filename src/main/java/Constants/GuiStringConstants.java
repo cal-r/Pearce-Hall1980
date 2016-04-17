@@ -13,7 +13,7 @@ public class GuiStringConstants {
     public static final String RODRIGUEZ_CONTEXT = "ERROR: Context is not defined in Hall & Rodriguez model";
 
     public static final String GROUP_NAME = "Group Name";
-    public static final String CS_PARAMETER = "Cs Parameter";
+    public static final String CS_PARAMETER = "CS Parameter";
     public static final String GLOBAL_PARAMETER = "Global Parameter";
     public static final String US_PARAMETER = "US Parameter";
     public static final String VALUE = "Value";
