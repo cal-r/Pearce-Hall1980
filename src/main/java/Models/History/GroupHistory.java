@@ -1,6 +1,7 @@
 package Models.History;
 
 import Models.Group;
+import Models.Parameters.ConditionalStimulus.CsParameter;
 import Models.Parameters.Pools.CsPools.CsParameterPool;
 import Models.Parameters.Parameter;
 import Models.Parameters.Pools.CsPools.ICsParameterPool;
@@ -37,5 +38,9 @@ public class GroupHistory implements Serializable {
 
     public int getNumberOfPhases(){
         return phaseHistories.size();
+    }
+
+    public List<CsParameter> getGroupParameters(){
+        return csParameterPool.getGroupParameters(group);
     }
 }

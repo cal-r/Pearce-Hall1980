@@ -84,12 +84,12 @@ public class ReportBuilder {
         report.setCell(rowId, 0, GuiStringConstants.CS_PARAMETER);
         report.setCell(rowId, 1, GuiStringConstants.VALUE);
         rowId++;
-        rowId = insertCsParameterTable(report, rowId, groupHistory.csParameterPool);
+        rowId = insertCsParameterTable(report, rowId, groupHistory.getGroupParameters());
         return rowId;
     }
 
-    private static int insertCsParameterTable(GroupReportViewModel report, int rowId, ICsParameterPool pool){
-        for(CsParameter csParameter : pool.getAllParameters()){
+    private static int insertCsParameterTable(GroupReportViewModel report, int rowId, List<CsParameter> parameters){
+        for(CsParameter csParameter : parameters){
             report.setCell(rowId, 0, csParameter.getDisplayName());
             report.setCell(rowId, 1, csParameter.getValue());
             rowId++;

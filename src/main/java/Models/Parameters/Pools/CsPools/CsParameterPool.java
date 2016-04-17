@@ -5,6 +5,7 @@ import Models.Parameters.ConditionalStimulus.CsParameter;
 import Models.Parameters.ConditionalStimulus.InitialAlphaParameter;
 import Models.Parameters.ConditionalStimulus.SalienceExcitatoryParameter;
 import Models.Parameters.ConditionalStimulus.SalienceInhibitoryParameter;
+import Models.Stimulus.IConditionalStimulus;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -57,6 +58,12 @@ public class CsParameterPool implements ICsParameterPool, Serializable {
 
     @Override
     public List<CsParameter> getGroupParameters(Group group) {
-        return null;
+        List<CsParameter> list = new ArrayList<>();
+        for(IConditionalStimulus cs : group.getGroupCues()){
+            list.add(initialAlphaParameterMap.get(cs.getName()));
+            list.add(salienceExcitatoryParameterMap.get(cs.getName()));
+            list.add(salienceInhibitoryParameterMap.get(cs.getName()));
+        }
+        return list;
     }
 }

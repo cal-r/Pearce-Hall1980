@@ -5,6 +5,7 @@ import Models.Parameters.ConditionalStimulus.CsParameter;
 import Models.Parameters.ConditionalStimulus.InitialAlphaParameter;
 import Models.Parameters.ConditionalStimulus.Rodriguez.InitialAssociationParameter;
 import Models.Parameters.ConditionalStimulus.Rodriguez.SalienceParameter;
+import Models.Stimulus.IConditionalStimulus;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -61,6 +62,12 @@ public class RodriguezCsParameterPool implements ICsParameterPool, Serializable 
 
     @Override
     public List<CsParameter> getGroupParameters(Group group) {
-        return null;
+        List<CsParameter> list = new ArrayList<>();
+        for(IConditionalStimulus cs : group.getGroupCues()){
+            list.add(initialAlphaParameterMap.get(cs.getName()));
+            list.add(salienceParameterMap.get(cs.getName()));
+            list.add(initialAssociationParameterMap.get(cs.getName()));
+        }
+        return list;
     }
 }

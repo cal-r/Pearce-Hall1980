@@ -4,6 +4,7 @@ import Models.Parameters.Pools.CsPools.CsParameterPool;
 import Models.Stimulus.IConditionalStimulus;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,10 +20,14 @@ public class Group implements Serializable {
         this.groupPhases = groupPhases;
     }
 
-//    public List<IConditionalStimulus> getGroupCues(){
-//        List<IConditionalStimulus> li
-//        for (GroupPhase groupPhase : groupPhases){
-//
-//        }
-//    }
+    public List<IConditionalStimulus> getGroupCues(){
+        List<IConditionalStimulus> list = new ArrayList<>();
+        for (GroupPhase groupPhase : groupPhases){
+            for(IConditionalStimulus cs : groupPhase.getPhaseCues()){
+                if(!list.contains(cs))
+                    list.add(cs);
+            }
+        }
+        return list;
+    }
 }
