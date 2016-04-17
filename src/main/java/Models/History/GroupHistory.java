@@ -17,7 +17,6 @@ public class GroupHistory implements Serializable {
     public Group group;
     private List<GroupPhaseHistory> phaseHistories;
     public ICsParameterPool csParameterPool;
-    public CsParameterPool contextParameterPool;
     public List<Parameter> globalParameters;
     public List<UsParameter> usParameters;
     public GroupHistory(Group group, ICsParameterPool csParameterPool, List<Parameter> globalParameters, List<UsParameter> usParameters){

@@ -85,9 +85,6 @@ public class ReportBuilder {
         report.setCell(rowId, 1, GuiStringConstants.VALUE);
         rowId++;
         rowId = insertCsParameterTable(report, rowId, groupHistory.csParameterPool);
-        if(groupHistory.contextParameterPool != null){
-            rowId = insertCsParameterTable(report, rowId, groupHistory.contextParameterPool);
-        }
         return rowId;
     }
 

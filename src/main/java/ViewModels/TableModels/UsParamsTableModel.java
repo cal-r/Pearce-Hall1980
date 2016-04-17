@@ -69,7 +69,7 @@ public class UsParamsTableModel extends BaseTableModel implements Serializable {
             addColumn(GuiStringConstants.VALUE);
             super.setValueAt(usParameters.get(0).getValue(0), 0, 1);
         }else {
-            //muliple us parameters
+            //multiple us parameters
             for (int phase = 0; phase < getPhaseCount(); phase++) {
                 addColumn(GuiStringConstants.getPhaseTitle(phase));
             }

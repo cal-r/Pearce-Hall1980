@@ -46,8 +46,7 @@ public class PhaseStringTokenizer {
 
                 trialTokens.numberOfTrials = getNumberOfTrials(matcher);
                 trialTokens.cueNames = getCueNames(matcher);
-                if(!settings.RodriguezMode)
-                    trialTokens.reinforcer = getReinforcer(matcher);
+                trialTokens.reinforcer = getReinforcer(matcher);
             }
 
             tokensList.add(trialTokens);

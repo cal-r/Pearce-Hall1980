@@ -62,6 +62,9 @@ public class UsParameterPool implements Serializable {
         for(String key : keysToRemove){
             usParameterMap.remove(key);
         }
+
+        if(usParameterMap.isEmpty())
+            addLambdaPlus();
     }
 
     private void removeSingle() {
@@ -71,6 +74,8 @@ public class UsParameterPool implements Serializable {
     }
 
     public double getLamdbaValue(char reinforcer, Group group, int phaseId) {
+        if(reinforcer == '-')
+            return 0;
         return getLambda(reinforcer, group).getValue(phaseId);
     }
 
@@ -79,7 +84,12 @@ public class UsParameterPool implements Serializable {
     }
 
     public UsParameter getLambda(char usSymbol, Group group){
-        return usParameterMap.get(getLambdaName(usSymbol, group));
+        String lambdaName = getLambdaName(usSymbol, group);
+        String singleLambdaName = getLambdaName(usSymbol, null);
+        if(usParameterMap.containsKey(lambdaName))
+            return usParameterMap.get(lambdaName);
+
+        return usParameterMap.get(singleLambdaName);
     }
 
     private String getLambdaName(char us, Group group){
@@ -87,15 +97,6 @@ public class UsParameterPool implements Serializable {
             return String.format("%s %s", ParameterNamingConstants.LAMBDA, us);
         }
         return String.format("%s %s (%s)", ParameterNamingConstants.LAMBDA, us, group.Name);
-    }
-
-    private List<Character> getUsSymbols(){
-        List<Character> usSymbols = new ArrayList<>();
-        usSymbols.add('+');
-        usSymbols.add('#');
-        usSymbols.add('*');
-        usSymbols.add('$');
-        return usSymbols;
     }
 
     public void adjustSingleMode() {
