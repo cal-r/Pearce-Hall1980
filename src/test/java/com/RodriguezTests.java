@@ -27,15 +27,14 @@ public class RodriguezTests extends TestCase {
     public void testSimulate(){
         List<IStimulus> allStims = new ArrayList<>();
         allStims.add(createStimulus("A", 0.4));
-        allStims.add(createStimulus("B", 0.1));
         List<Trial> trials = new ArrayList<>();
         trials.add(createTrial(false, getStims(allStims, "A")));
         trials.add(createTrial(false, getStims(allStims, "A")));
         trials.add(createTrial(false, getStims(allStims, "A")));
         trials.add(createTrial(false, getStims(allStims, "A")));
-        GroupPhase groupPhase = new GroupPhase(1, '+');
+        GroupPhase groupPhase = new GroupPhase(1, '-');
         groupPhase.addTrials(trials);
-        GroupPhaseHistory history = groupPhase.simulateTrials(getGlobals(), getSimulatorSettings(), 1);
+        GroupPhaseHistory history = groupPhase.simulateTrials(getGlobals(), getSimulatorSettings(), 0);
         assertEquals(history.getState("A", 1).Vnet, 0.4, DefaultValuesConstants.ROUNDING_PRECISION);
         assertEquals(history.getState("A", 2).Vnet, 0.24, DefaultValuesConstants.ROUNDING_PRECISION);
         assertEquals(history.getState("A", 3).Vnet, 0.2016, DefaultValuesConstants.ROUNDING_PRECISION);

@@ -55,6 +55,7 @@ public class RodriguezStimulus implements IConditionalStimulus, Serializable {
         RodriguezStimulus rs = (RodriguezStimulus) stim;
         associationEvent = rs.associationEvent;
         associationNoEvent = rs.associationNoEvent;
+        alpha = rs.alpha;
     }
 
     @Override

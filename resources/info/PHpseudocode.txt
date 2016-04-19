@@ -11,8 +11,8 @@ capital_lambda = lambda - all_v_net
 
 new_alpha = gamma * absolute_value(lambda - all_v_net) + (1 - gamma) * alpha
 
-IF capital_lambda > 0 THEN
-	//possitive learning
+IF capital_lambda >= 0 THEN
+	//positive learning
 	update = salience_excitatory_parameter * alpha * lambda
 	association_excitatory = association_excitatory + update
 ELSE IF capitalLambda < 0 THEN
