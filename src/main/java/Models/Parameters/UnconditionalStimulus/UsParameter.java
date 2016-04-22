@@ -3,6 +3,7 @@ package Models.Parameters.UnconditionalStimulus;
 import Constants.DefaultValuesConstants;
 import Constants.ParameterNamingConstants;
 import Helpers.DefaultValuesHelper;
+import Models.Group;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -16,9 +17,11 @@ public class UsParameter implements Serializable{
     private String name;
     private List<Double> values;
     private List<Boolean> availability;
+    private Group group;
 
-    public UsParameter(String name) {
+    public UsParameter(String name, Group group) {
         this.name = name;
+        this.group = group;
         values = new ArrayList<>();
         availability = new ArrayList<>();
     }
@@ -54,5 +57,9 @@ public class UsParameter implements Serializable{
 
     public String getDisplayName(){
         return name;
+    }
+
+    public Group getGroup() {
+        return group;
     }
 }
