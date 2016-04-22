@@ -135,6 +135,10 @@ public class MultipleStimulus implements IPHConditionalStimulus, Serializable {
                 for (char usedUs : usedStims.keySet()) {
                     simulateStim(stimsMap.get(usedUs), globalParams, lambdaParameter, vNet, reinforcer);
                 }
+            }else{
+                for (ConditionalStimulus stim : stimsMap.values()){
+                    simulateStim(stim, globalParams, lambdaParameter, vNet, reinforcer);
+                }
             }
         }else{
             simulateStim(stimsMap.get(reinforcer), globalParams, lambdaParameter, vNet, reinforcer);
