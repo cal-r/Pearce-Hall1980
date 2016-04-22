@@ -25,7 +25,7 @@ public class UsParameterPool implements Serializable {
     }
 
     private void addLambdaPlus(){
-        String name = getLambdaKey('+', null);
+        String name = getLambdaName('+', null);
         usParameterMap.put(name, new SingleUsParamater(name));
     }
 
@@ -37,14 +37,14 @@ public class UsParameterPool implements Serializable {
                 for(Trial trial : group.groupPhases.get(phaseId).trials){
                     for(LearningPeriod period : trial.getLearningPeriods()){
                         if(period.usPresent){
-                            String lambdaKey = getLambdaKey(period.reinforcer, group);
-                            if(!usParameterMap.containsKey(lambdaKey)){
-                                usParameterMap.put(lambdaKey, new UsParameter(getLambdaName(period.reinforcer), group));
+                            String lamdbaName = getLambdaName(period.reinforcer, group);
+                            if(!usParameterMap.containsKey(lamdbaName)){
+                                usParameterMap.put(lamdbaName, new UsParameter(lamdbaName));
                             }
-                            if(!lambdaAvailabilityMap.containsKey(lambdaKey)){
-                                lambdaAvailabilityMap.put(lambdaKey, new ArrayList<Integer>());
+                            if(!lambdaAvailabilityMap.containsKey(lamdbaName)){
+                                lambdaAvailabilityMap.put(lamdbaName, new ArrayList<Integer>());
                             }
-                            lambdaAvailabilityMap.get(lambdaKey).add(phaseId);
+                            lambdaAvailabilityMap.get(lamdbaName).add(phaseId);
                         }
                     }
                 }
@@ -52,11 +52,11 @@ public class UsParameterPool implements Serializable {
         }
 
         List<String> keysToRemove = new ArrayList<>();
-        for(String lambdaKey : usParameterMap.keySet()){
-            if(lambdaAvailabilityMap.containsKey(lambdaKey)) {
-                usParameterMap.get(lambdaKey).adjust(lambdaAvailabilityMap.get(lambdaKey), groups.get(0).groupPhases.size());
+        for(UsParameter usParameter : usParameterMap.values()){
+            if(lambdaAvailabilityMap.containsKey(usParameter.getDisplayName())) {
+                usParameter.adjust(lambdaAvailabilityMap.get(usParameter.getDisplayName()), groups.get(0).groupPhases.size());
             }else {
-                keysToRemove.add(lambdaKey);
+                keysToRemove.add(usParameter.getDisplayName());
             }
         }
         for(String key : keysToRemove){
@@ -84,27 +84,23 @@ public class UsParameterPool implements Serializable {
     }
 
     public UsParameter getLambda(char usSymbol, Group group){
-        String lambdaName = getLambdaKey(usSymbol, group);
-        String singleLambdaName = getLambdaKey(usSymbol, null);
+        String lambdaName = getLambdaName(usSymbol, group);
+        String singleLambdaName = getLambdaName(usSymbol, null);
         if(usParameterMap.containsKey(lambdaName))
             return usParameterMap.get(lambdaName);
 
         return usParameterMap.get(singleLambdaName);
     }
 
-    private String getLambdaKey(char us, Group group){
+    private String getLambdaName(char us, Group group){
         if(group == null) {
             return String.format("%s %s", ParameterNamingConstants.LAMBDA, us);
         }
         return String.format("%s %s (%s)", ParameterNamingConstants.LAMBDA, us, group.Name);
     }
 
-    private String getLambdaName(char us){
-        return getLambdaKey(us, null);
-    }
-
     public void adjustSingleMode() {
-        String lambdaPlusName = getLambdaKey('+', null);
+        String lambdaPlusName = getLambdaName('+', null);
         if(!usParameterMap.containsKey(lambdaPlusName)) {
             usParameterMap = new HashMap<>();
             usParameterMap.put(lambdaPlusName, new SingleUsParamater(lambdaPlusName));
