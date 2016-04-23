@@ -15,7 +15,7 @@ import java.util.Map;
  */
 public class GraphBuilder {
 
-    public static List<Graph> BuildGraphs(SimulationHistory history, boolean rodriguezMode){
+    public static List<Graph> BuildGraphs(SimulationHistory history, List<Variable> variablesToDisplay){
         Map<String, List<GraphLine>> linkedLinesMap = new HashMap<>();
         List<Graph> graphs = new ArrayList<>();
         for(PhaseHistory phaseHistory : history.getPhases()){
@@ -23,20 +23,23 @@ public class GraphBuilder {
             Graph graph = new Graph(phaseHistory.getPhaseName());
             for(GroupPhaseHistory gpHist : phaseHistory){
                 for(String stimName : StimulusOrderingHelper.orderStimNamesByDescription(gpHist.getStimsNames(), gpHist.getDescription())){
-                   addLines(stimName, gpHist, graph, linkedLinesMap, lineCounter, rodriguezMode);
+                   addLines(stimName, gpHist, graph, linkedLinesMap, lineCounter, variablesToDisplay);
                 }
             }
+            graph.setYUnits(UnitsHelper.getYUnits(variablesToDisplay));
             graphs.add(graph);
         }
         return graphs;
     }
 
 
-    private static void addLines(String stimName, GroupPhaseHistory gpHist, Graph graph, Map<String, List<GraphLine>> linkedLinesMap, LineDisplayIdCounter lineCounter, boolean rodriguezMode){
-        addGraphLine(stimName, gpHist, graph, linkedLinesMap, lineCounter, Variable.VNET);
-        if(rodriguezMode && gpHist.getState(stimName, 1) instanceof ConditionalStimulusState){
-            addGraphLine(stimName, gpHist, graph, linkedLinesMap, lineCounter, Variable.VE);
-            addGraphLine(stimName, gpHist, graph, linkedLinesMap, lineCounter, Variable.VnE);
+    private static void addLines(String stimName, GroupPhaseHistory gpHist, Graph graph, Map<String, List<GraphLine>> linkedLinesMap, LineDisplayIdCounter lineCounter, List<Variable> variablesToDisplay){
+        for(Variable var : variablesToDisplay){
+            if(var == Variable.VNET){
+                addGraphLine(stimName, gpHist, graph, linkedLinesMap, lineCounter, var);
+            }else if(gpHist.getState(stimName, 1) instanceof ConditionalStimulusState){
+                addGraphLine(stimName, gpHist, graph, linkedLinesMap, lineCounter, var);
+            }
         }
     }
 
@@ -49,14 +52,14 @@ public class GraphBuilder {
     }
 
     private static String getLineName(String stimName, Variable variable){
-        if(variable == Variable.VNET){
+        if(variable == Variable.VNET || variable == Variable.Alpha){
             return stimName;
         }
         return String.format("%s(%s)", stimName, variable);
     }
 
 
-    enum Variable { VNET, VnE, VE }
+    public enum Variable { VNET, VnE, VE, Alpha }
     private static void addLinePoints(GraphLine line, String stimName, GroupPhaseHistory gpHist, Variable variable){
         for(int periodNo = 1; periodNo<=gpHist.getNumberOfPeriods(); periodNo++){
             StimulusState state = gpHist.getState(stimName, periodNo);
@@ -70,6 +73,8 @@ public class GraphBuilder {
                         line.addPoint(periodNo, csState.Ve);
                     if(variable == Variable.VnE)
                         line.addPoint(periodNo, csState.Vi);
+                    if(variable == Variable.Alpha)
+                        line.addPoint(periodNo, csState.Alpha);
                 }
             }
         }

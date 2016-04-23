@@ -23,6 +23,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.*;
+import java.util.List;
 
 /**
  * Created by Rokas on 22/01/2016.
@@ -78,7 +79,7 @@ public class GraphWindowController implements ActionListener {
         JFreeChart chart = ChartFactory.createXYLineChart(
                 graphData.getName(),
                 GuiStringConstants.CHART_X_AXIS_LABEL,
-                GuiStringConstants.CHART_Y_AXIS_LABEL,
+                graphData.getYUnits(),
                 GraphDatasetHelper.createDataset(graphData),
                 PlotOrientation.VERTICAL,
                 true,   //legend
@@ -150,8 +151,20 @@ public class GraphWindowController implements ActionListener {
 
     static void showGraphs(SimulationHistory history, SimulatorSettings settings){
         Map<Paint, Boolean> interGraphColorMap = new HashMap<>();
-        for(Graph graph : GraphBuilder.BuildGraphs(history, settings.isRodriguezMode())){
+        for(Graph graph : GraphBuilder.BuildGraphs(history, getVariables(settings.isRodriguezMode()))){
             new GraphWindowController(graph, interGraphColorMap);
         }
+
+        interGraphColorMap = new HashMap<>();
+        for(Graph graph : GraphBuilder.BuildGraphs(history, new ArrayList<>(Arrays.asList(GraphBuilder.Variable.Alpha)))){
+            new GraphWindowController(graph, interGraphColorMap);
+        }
+    }
+
+    private static List<GraphBuilder.Variable> getVariables(boolean isRodriguezMode) {
+        if (isRodriguezMode) {
+            return new ArrayList<>(Arrays.asList(GraphBuilder.Variable.VNET, GraphBuilder.Variable.VE, GraphBuilder.Variable.VnE));
+        }
+        return new ArrayList<>(Arrays.asList(GraphBuilder.Variable.VNET));
     }
 }

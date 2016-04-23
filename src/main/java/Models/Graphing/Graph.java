@@ -10,6 +10,7 @@ import java.util.*;
 public class Graph {
     private Map<String, GraphLineGroup> linesGroupsMap;
     private String name;
+    private String YUnits;
 
     public Graph(String name){
         linesGroupsMap = new HashMap<>();
@@ -48,5 +49,13 @@ public class Graph {
 
     public String getName() {
         return name;
+    }
+
+    public String getYUnits() {
+        return YUnits;
+    }
+
+    public void setYUnits(String YUnits) {
+        this.YUnits = YUnits;
     }
 }

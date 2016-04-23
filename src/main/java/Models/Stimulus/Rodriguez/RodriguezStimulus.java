@@ -99,8 +99,4 @@ public class RodriguezStimulus implements IConditionalStimulus, Serializable {
     public double getAlpha(){
         return alpha;
     }
-
-    public void setAlpha(double value){
-        alpha = value;
-    }
 }
