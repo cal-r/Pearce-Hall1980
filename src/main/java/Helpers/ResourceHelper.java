@@ -9,6 +9,10 @@ import java.awt.*;
  * Created by Rokas on 07/02/2016.
  */
 public class ResourceHelper {
+    public static ImageIcon getAboutImage(){
+        return getImage("/images/About.png");
+    }
+
     public static ImageIcon getFooterImage(){
         return getImage("/images/Foot.png");
     }
@@ -17,7 +21,7 @@ public class ResourceHelper {
         return getImage("/images/P-Hisizes/P&H-32.png").getImage();
     }
 
-    private static ImageIcon getImage(String path){
+    public static ImageIcon getImage(String path){
         return new ImageIcon(Launcher.class.getResource(path));
     }
 }

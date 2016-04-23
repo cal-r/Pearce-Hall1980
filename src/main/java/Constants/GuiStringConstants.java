@@ -36,7 +36,9 @@ public class GuiStringConstants {
     public static final String RODRIGUEZ_MODE = "Hall & Rodriguez";
     public static final String ELABORATIONS_MENU = "Model Elaborations";
     public static final String INITIAL_V_FOR_PH = "Set initial V excitatory for P&H";
-
+    public static final String GUIDE = "Guide (ALT + G)";
+    public static final String ABOUT = "About";
+    public static final String GUIDE_URL = "https://www.cal-r.org/PHSimulator/PH_Simulator_Guide.pdf";
 
     public static final String DEFAULT_PHASE = "";
     public static final String TRAIL_TYPE_SEPARATOR = "/";

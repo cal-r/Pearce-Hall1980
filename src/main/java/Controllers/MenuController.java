@@ -1,6 +1,7 @@
 package Controllers;
 
 import Constants.GuiStringConstants;
+import Helpers.BrowserHelper;
 import Helpers.Export.ModelExportHelper;
 import Helpers.GUI.FrameCloser;
 import Helpers.GUI.GuiHelper;
@@ -10,6 +11,7 @@ import Launch.Launcher;
 import Models.DTOs.ModelDto;
 import Models.SimulatorSettings;
 import Views.MainWindow;
+import _from_RW_simulator.SplasherHelper;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -61,8 +63,10 @@ public class MenuController implements ActionListener {
         createMenuItem(elaborationsMenu, GuiStringConstants.INITIAL_V_FOR_PH, MenuItemType.CHECKBOX);
         menuBar.add(elaborationsMenu);
 
-        //help!!
+        //help
         JMenu helpMenu = new JMenu(GuiStringConstants.HELP);
+        createMenuItem(helpMenu, GuiStringConstants.GUIDE, MenuItemType.BASIC);
+        createMenuItem(helpMenu, GuiStringConstants.ABOUT, MenuItemType.BASIC);
         menuBar.add(helpMenu);
     }
 
@@ -145,6 +149,14 @@ public class MenuController implements ActionListener {
         settings.setUseInitialVe(menuItemSelected);
     }
 
+    private void onGuide() {
+        BrowserHelper.GoToGuide();
+    }
+
+    private void onAbout() {
+        SplasherHelper.showAboutLogo();
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
@@ -177,6 +189,12 @@ public class MenuController implements ActionListener {
                 break;
             case GuiStringConstants.INITIAL_V_FOR_PH:
                 onInitialVe(GuiHelper.isMenuItemSelected(e));
+                break;
+            case GuiStringConstants.GUIDE:
+                onGuide();
+                break;
+            case GuiStringConstants.ABOUT:
+                onAbout();
                 break;
             default:
                 GuiHelper.displayErrorMessage("Nicht implementiert!");

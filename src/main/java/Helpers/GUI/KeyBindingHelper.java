@@ -48,6 +48,8 @@ public class KeyBindingHelper {
                 return KeyEvent.VK_S;
             case GuiStringConstants.OPEN:
                 return KeyEvent.VK_O;
+            case GuiStringConstants.GUIDE:
+                return KeyEvent.VK_G;
         }
         return null;
     }

@@ -85,7 +85,7 @@ public class ConditionalStimulus implements Serializable, IPHConditionalStimulus
         double lambda = reinforcer == '-' ? 0 : lambdaParameter;
         double capitalLambda = lambda - vNet;
         double newAlpha = calcNewAlpha(globalParams.getGamma(), lambda, vNet, getAlpha());
-        if (capitalLambda > 0) {
+        if (capitalLambda >= 0) {
             double newDeltaVe = calcNewDeltaVe(lambda);
             updateAssociationExcitatory(newDeltaVe);
         } else if (capitalLambda < 0) {
