@@ -1,6 +1,6 @@
 package Helpers.Graphing;
 
-import Helpers.StimulusOrderingHelper;
+import Helpers.Ordering.StimulusOrderingHelper;
 import Models.Graphing.Graph;
 import Models.Graphing.GraphLine;
 import Models.History.*;

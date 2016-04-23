@@ -1,4 +1,4 @@
-package Helpers;
+package Helpers.Ordering;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -20,7 +20,7 @@ public class StimulusOrderingHelper {
             }
         }
 
-        //order remainder by lenght
+        //order remainder by length
         int len = 0;
         List<String> stimNamesRemainderList = new ArrayList<>(stimNamesList);
         while(!stimNamesRemainderList.isEmpty()){

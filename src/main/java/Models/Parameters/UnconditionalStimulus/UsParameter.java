@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Created by rokasg on 09/03/2016.
  */
-public class UsParameter implements Serializable{
+public class UsParameter implements Serializable, Comparable<UsParameter>{
     private String name;
     private List<Double> values;
     private List<Boolean> availability;
@@ -61,5 +61,13 @@ public class UsParameter implements Serializable{
 
     public Group getGroup() {
         return group;
+    }
+
+    @Override
+    public int compareTo(UsParameter o) {
+        if(!group.equals(o.group)){
+            return group.Name.compareTo(o.group.Name);
+        }
+        return name.compareTo(o.name);
     }
 }

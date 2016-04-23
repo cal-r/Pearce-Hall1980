@@ -1,13 +1,12 @@
 package Helpers;
 
 import Constants.GuiStringConstants;
+import Helpers.Ordering.StimulusOrderingHelper;
 import Models.History.*;
 import Models.Parameters.ConditionalStimulus.CsParameter;
 import Models.Parameters.Parameter;
-import Models.Parameters.Pools.CsPools.ICsParameterPool;
 import Models.Parameters.UnconditionalStimulus.UsParameter;
 import Models.SimulatorSettings;
-import Models.Stimulus.ConditionalStimulus;
 import ViewModels.GroupReportViewModel;
 
 import java.util.ArrayList;

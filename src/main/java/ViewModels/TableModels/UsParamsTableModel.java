@@ -39,7 +39,8 @@ public class UsParamsTableModel extends BaseTableModel implements Serializable {
     }
 
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-        return columnIndex > 0 && usParameterPool.getUsParameters().get(rowIndex).isAvailable(colIdToPhaseId(columnIndex));
+        int firstValueColumn = getPhaseCount() == 0 ? 1 : 2;
+        return columnIndex >= firstValueColumn && usParameterPool.getUsParameters().get(rowIndex).isAvailable(colIdToPhaseId(columnIndex));
     }
 
     public void clearTable(){
@@ -59,37 +60,56 @@ public class UsParamsTableModel extends BaseTableModel implements Serializable {
         clearTable();
 
         List<UsParameter> usParameters =usParameterPool.getUsParameters();
-        for(int row = 0;row<usParameters.size();row++) {
-            super.addRow();
-            super.setValueAt(usParameters.get(row).getDisplayName(), row, 0);
-        }
 
         if(getPhaseCount()==0) {
-            //single us parameter
+            //single phase parameters
+            columnHeaders.set(0, GuiStringConstants.US_PARAMETER);
             addColumn(GuiStringConstants.VALUE);
-            super.setValueAt(usParameters.get(0).getValue(0), 0, 1);
+
+            populateSinglePhaseParameters(usParameters);
         }else {
             //multiple us parameters
+            columnHeaders.set(0, GuiStringConstants.GROUP_NAME);
+            addColumn(GuiStringConstants.US_PARAMETER);
+
             for (int phase = 0; phase < getPhaseCount(); phase++) {
                 addColumn(GuiStringConstants.getPhaseTitle(phase));
             }
 
-            for (int row = 0; row < usParameters.size(); row++) {
-                for (int col = 1; col <= getPhaseCount(); col++) {
-                    UsParameter rowParam = usParameters.get(row);
-                    if (rowParam.isAvailable(colIdToPhaseId(col))) {
-                        super.setValueAt(rowParam.getValue(col - 1), row, col);
-                    } else {
-                        super.setValueAt(0.0, row, col);
-                    }
-                }
-            }
+            populateMultiPhaseParameters(usParameters);
         }
         fireTableDataChanged();
     }
 
+    private void populateMultiPhaseParameters(List<UsParameter> usParameters){
+        for(int row = 0;row<usParameters.size();row++) {
+            addRow();
+            super.setValueAt(usParameters.get(row).getGroup().Name, row, 0);
+            super.setValueAt(usParameters.get(row).getDisplayName(), row, 1);
+        }
+
+        for (int row = 0; row < usParameters.size(); row++) {
+            for (int col = 2; colIdToPhaseId(col) < getPhaseCount(); col++) {
+                UsParameter rowParam = usParameters.get(row);
+                if (rowParam.isAvailable(colIdToPhaseId(col))) {
+                    super.setValueAt(rowParam.getValue(colIdToPhaseId(col)), row, col);
+                } else {
+                    super.setValueAt(0.0, row, col);
+                }
+            }
+        }
+    }
+
+    private void populateSinglePhaseParameters(List<UsParameter> usParameters){
+        for(int row = 0;row<usParameters.size();row++) {
+            addRow();
+            super.setValueAt(usParameters.get(row).getDisplayName(), row, 0);
+            super.setValueAt(usParameters.get(row).getValue(0), 0, 1);
+        }
+    }
+
     private static int colIdToPhaseId(int colId){
-        return colId-1;
+        return colId-2;
     }
 
     public TableCellRenderer getRenderer() {
@@ -102,6 +122,9 @@ public class UsParamsTableModel extends BaseTableModel implements Serializable {
             JLabel l = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
             if (!table.getModel().isCellEditable(row, col)) {
                 l.setText("");
+                l.setBackground(new Color(240, 240, 240));
+            }else{
+                l.setBackground(javax.swing.UIManager.getColor("Table.dropCellForeground"));
             }
             l.setHorizontalAlignment(RIGHT);
             return l;

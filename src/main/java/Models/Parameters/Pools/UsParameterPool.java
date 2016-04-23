@@ -8,10 +8,7 @@ import Models.Trail.LearningPeriod;
 import Models.Trail.Trial;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by rokasg on 09/03/2016.
@@ -74,13 +71,17 @@ public class UsParameterPool implements Serializable {
     }
 
     public double getLamdbaValue(char reinforcer, Group group, int phaseId) {
-        if(reinforcer == '-')
+        UsParameter lambda = getLambda(reinforcer, group);
+
+        if(lambda == null)
             return 0;
-        return getLambda(reinforcer, group).getValue(phaseId);
+        return lambda.getValue(phaseId);
     }
 
     public List<UsParameter> getUsParameters(){
-        return new ArrayList<>(usParameterMap.values());
+        List<UsParameter> paramsList = new ArrayList<>(usParameterMap.values());
+        Collections.sort(paramsList);
+        return paramsList;
     }
 
     public UsParameter getLambda(char usSymbol, Group group){
