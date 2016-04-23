@@ -4,6 +4,7 @@ import Constants.GuiStringConstants;
 import Helpers.Export.ModelExportHelper;
 import Helpers.GUI.FrameCloser;
 import Helpers.GUI.GuiHelper;
+import Helpers.GUI.KeyBindingHelper;
 import Helpers.ModelBuilding.ModelDtoHelper;
 import Launch.Launcher;
 import Models.DTOs.ModelDto;
@@ -26,6 +27,7 @@ public class MenuController implements ActionListener {
     private JMenuBar menuBar;
     private Map<String, JCheckBoxMenuItem> checkboxesMap;
     private FrameCloser frameCloser;
+    private KeyBindingHelper keyBindingHelper;
 
     public MenuController(MainWindowController mainWindowController) {
         this.mainWindowController = mainWindowController;
@@ -37,6 +39,7 @@ public class MenuController implements ActionListener {
     private void initMenuBar(){
         checkboxesMap = new HashMap<>();
         menuBar = new JMenuBar();
+        keyBindingHelper = new KeyBindingHelper(menuBar, this);
         //file menu
         JMenu fileMenu = new JMenu(GuiStringConstants.FILE);
         createMenuItem(fileMenu, GuiStringConstants.NEW, MenuItemType.BASIC);
@@ -76,6 +79,8 @@ public class MenuController implements ActionListener {
         menu.add(menuItem);
         if(type == MenuItemType.CHECKBOX){
             checkboxesMap.put(nameAndCommand, (JCheckBoxMenuItem)menuItem);
+        }else{
+            keyBindingHelper.bind(nameAndCommand);
         }
     }
 
