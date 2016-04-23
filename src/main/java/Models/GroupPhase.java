@@ -1,12 +1,10 @@
 package Models;
 
 import Constants.GuiStringConstants;
-import Helpers.Random.RandomArrayGenerator;
-import Helpers.Random.RandomSimulationHelper;
-import Models.History.ConditionalStimulusState;
+import Helpers.RandomSimulation.RandomArrayGenerator;
+import Helpers.RandomSimulation.RandomSimulationHelper;
 import Models.History.GroupPhaseHistory;
 import Models.Parameters.Pools.GlobalParameterPool;
-import Models.Parameters.Pools.UsParameterPool;
 import Models.Stimulus.*;
 import Models.Trail.Trial;
 

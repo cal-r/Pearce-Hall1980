@@ -1,4 +1,4 @@
-package Helpers.Random;
+package Helpers.RandomSimulation;
 
 import Models.History.ConditionalStimulusState;
 import Models.History.GroupPhaseHistory;

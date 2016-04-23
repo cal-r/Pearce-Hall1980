@@ -1,6 +1,6 @@
 package com;
 
-import Helpers.Random.RandomArrayGenerator;
+import Helpers.RandomSimulation.RandomArrayGenerator;
 import org.junit.Test;
 
 /**

@@ -1,9 +1,7 @@
-package Helpers.Random;
+package Helpers.RandomSimulation;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Random;
-import java.util.Set;
 
 /**
  * Created by Rokas on 24/12/2015.
