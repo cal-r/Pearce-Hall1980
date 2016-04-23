@@ -18,10 +18,12 @@ public class UsParameter implements Serializable, Comparable<UsParameter>{
     private List<Double> values;
     private List<Boolean> availability;
     private Group group;
+    private int displayId;
 
-    public UsParameter(String name, Group group) {
+    public UsParameter(String name, Group group, int displayId) {
         this.name = name;
         this.group = group;
+        this.displayId = displayId;
         values = new ArrayList<>();
         availability = new ArrayList<>();
     }
@@ -65,9 +67,9 @@ public class UsParameter implements Serializable, Comparable<UsParameter>{
 
     @Override
     public int compareTo(UsParameter o) {
-        if(!group.equals(o.group)){
+        if(group != null && !group.equals(o.group)){
             return group.Name.compareTo(o.group.Name);
         }
-        return name.compareTo(o.name);
+        return Integer.compare(displayId, o.displayId);
     }
 }

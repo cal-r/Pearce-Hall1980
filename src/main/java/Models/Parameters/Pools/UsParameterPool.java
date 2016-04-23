@@ -27,8 +27,10 @@ public class UsParameterPool implements Serializable {
     }
 
     public void adjustLamdbas(List<Group> groups){
+        //whatever works..
         removeSingle();
         Map<String, List<Integer>> lambdaAvailabilityMap = new HashMap<>();
+        int displayId = 0;
         for(Group group : groups){
             for(int phaseId = 0; phaseId < group.groupPhases.size(); phaseId++){
                 for(Trial trial : group.groupPhases.get(phaseId).trials){
@@ -36,7 +38,7 @@ public class UsParameterPool implements Serializable {
                         if(period.usPresent){
                             String lambdaKey = getLambdaKey(period.reinforcer, group);
                             if(!usParameterMap.containsKey(lambdaKey)){
-                                usParameterMap.put(lambdaKey, new UsParameter(getLambdaName(period.reinforcer), group));
+                                usParameterMap.put(lambdaKey, new UsParameter(getLambdaName(period.reinforcer), group, displayId++));
                             }
                             if(!lambdaAvailabilityMap.containsKey(lambdaKey)){
                                 lambdaAvailabilityMap.put(lambdaKey, new ArrayList<Integer>());
