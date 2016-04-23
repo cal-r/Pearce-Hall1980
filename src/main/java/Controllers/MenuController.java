@@ -2,7 +2,8 @@ package Controllers;
 
 import Constants.GuiStringConstants;
 import Helpers.Export.ModelExportHelper;
-import Helpers.GuiHelper;
+import Helpers.GUI.FrameCloser;
+import Helpers.GUI.GuiHelper;
 import Helpers.ModelBuilding.ModelDtoHelper;
 import Launch.Launcher;
 import Models.DTOs.ModelDto;
@@ -24,7 +25,7 @@ public class MenuController implements ActionListener {
     private MainWindowController mainWindowController;
     private JMenuBar menuBar;
     private Map<String, JCheckBoxMenuItem> checkboxesMap;
-    private MainWindow.FrameCloser frameCloser;
+    private FrameCloser frameCloser;
 
     public MenuController(MainWindowController mainWindowController) {
         this.mainWindowController = mainWindowController;
@@ -62,7 +63,7 @@ public class MenuController implements ActionListener {
         menuBar.add(helpMenu);
     }
 
-    public void setFrameCloser(MainWindow.FrameCloser frameCloser) {
+    public void setFrameCloser(FrameCloser frameCloser) {
         this.frameCloser = frameCloser;
     }
 

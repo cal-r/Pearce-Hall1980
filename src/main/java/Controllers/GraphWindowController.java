@@ -5,7 +5,7 @@ import Helpers.Graphing.GraphBuilder;
 import Helpers.Graphing.GraphDatasetHelper;
 import Helpers.Graphing.GraphStringsHelper;
 import Helpers.Graphing.ChartPainer;
-import Helpers.GuiHelper;
+import Helpers.GUI.GuiHelper;
 import Models.Graphing.Graph;
 import Models.Graphing.GraphLine;
 import Models.Graphing.GraphLineGroup;

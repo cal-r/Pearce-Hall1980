@@ -4,6 +4,7 @@ import Constants.ActionCommands;
 import Constants.GuiStringConstants;
 import Controllers.MainWindowController;
 import Controllers.MenuController;
+import Helpers.GUI.FrameCloser;
 import Helpers.ResourceHelper;
 
 import javax.swing.*;
@@ -79,18 +80,5 @@ public class MainWindow extends JFrame{
     private void initTopbar(){
         setIconImage(ResourceHelper.getIconImage());
         setTitle(GuiStringConstants.TOPBAR_TEXT);
-    }
-
-    public class FrameCloser{
-        private JFrame frame;
-
-        private FrameCloser(JFrame frame) {
-            this.frame = frame;
-        }
-
-        public void closeFrame(){
-            frame.dispose();
-            //frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
-        }
     }
 }

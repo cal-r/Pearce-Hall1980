@@ -1,4 +1,4 @@
-package Helpers;
+package Helpers.GUI;
 
 import Constants.GuiStringConstants;
 import ViewModels.GroupReportViewModel;
