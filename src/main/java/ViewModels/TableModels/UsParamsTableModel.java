@@ -84,7 +84,7 @@ public class UsParamsTableModel extends BaseTableModel implements Serializable {
     private void populateMultiPhaseParameters(List<UsParameter> usParameters){
         for(int row = 0;row<usParameters.size();row++) {
             addRow();
-            super.setValueAt(usParameters.get(row).getGroup().Name, row, 0);
+            super.setValueAt(usParameters.get(row).getGroupName(), row, 0);
             super.setValueAt(usParameters.get(row).getDisplayName(), row, 1);
         }
 

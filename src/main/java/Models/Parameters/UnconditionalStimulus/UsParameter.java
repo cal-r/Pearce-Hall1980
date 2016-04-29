@@ -17,15 +17,15 @@ public class UsParameter implements Serializable, Comparable<UsParameter>{
     private String name;
     private List<Double> values;
     private List<Boolean> availability;
-    private Group group;
+    private String groupName;
     private int displayId;
 
-    public UsParameter(String name, Group group, int displayId) {
+    public UsParameter(String name, String groupName) {
         this.name = name;
-        this.group = group;
-        this.displayId = displayId;
+        this.groupName = groupName;
         values = new ArrayList<>();
         availability = new ArrayList<>();
+        displayId = 0;
     }
 
     public void setValue(int phaseId, double value){
@@ -61,15 +61,19 @@ public class UsParameter implements Serializable, Comparable<UsParameter>{
         return name;
     }
 
-    public Group getGroup() {
-        return group;
+    public String getGroupName() {
+        return groupName;
     }
 
     @Override
     public int compareTo(UsParameter o) {
-        if(group != null && !group.equals(o.group)){
-            return group.Name.compareTo(o.group.Name);
+        if(groupName != null && !groupName.equals(o.groupName)){
+            return groupName.compareTo(o.groupName);
         }
         return Integer.compare(displayId, o.displayId);
+    }
+
+    public void setDisplayId(int displayId) {
+        this.displayId = displayId;
     }
 }

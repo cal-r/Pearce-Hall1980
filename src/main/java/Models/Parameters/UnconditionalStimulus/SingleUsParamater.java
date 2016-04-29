@@ -12,7 +12,7 @@ public class SingleUsParamater extends UsParameter implements Serializable {
     private double value;
 
     public SingleUsParamater(String name) {
-        super(name, null, 0);
+        super(name, null);
         value = DefaultValuesConstants.LAMBDA;
     }
 

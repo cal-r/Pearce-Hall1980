@@ -38,8 +38,9 @@ public class UsParameterPool implements Serializable {
                         if(period.usPresent){
                             String lambdaKey = getLambdaKey(period.reinforcer, group);
                             if(!usParameterMap.containsKey(lambdaKey)){
-                                usParameterMap.put(lambdaKey, new UsParameter(getLambdaName(period.reinforcer), group, displayId++));
+                                usParameterMap.put(lambdaKey, new UsParameter(getLambdaName(period.reinforcer), group.Name));
                             }
+                            usParameterMap.get(lambdaKey).setDisplayId(displayId++);
                             if(!lambdaAvailabilityMap.containsKey(lambdaKey)){
                                 lambdaAvailabilityMap.put(lambdaKey, new ArrayList<Integer>());
                             }
