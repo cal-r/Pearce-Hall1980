@@ -1,6 +1,7 @@
 package Models.History;
 
 
+import Helpers.MultipleUsLabelingHelper;
 import Models.Stimulus.*;
 import Models.Stimulus.Rodriguez.RodriguezStimulus;
 
@@ -67,7 +68,7 @@ public class GroupPhaseHistory implements Serializable {
                 if(usedReinforcer!=phaseReinforcer){
                     ConditionalStimulus decliningStim = multipleStimulus.getStimsMap().get(usedReinforcer);
                     recordStimStateWithNegativeLabel(decliningStim);
-                    setAlphaLink(getNegativeLabel(decliningStim), multipleStimulus.getName());
+                    setAlphaLink(MultipleUsLabelingHelper.getNegativeLabel(decliningStim.getName()), multipleStimulus.getName());
                 }
             }
         }
@@ -80,12 +81,8 @@ public class GroupPhaseHistory implements Serializable {
     }
     
     private void recordStimStateWithNegativeLabel(IStimulus stim){
-        String label = getNegativeLabel(stim);
+        String label = MultipleUsLabelingHelper.getNegativeLabel(stim.getName());
         recordStimState(label, stim);
-    }
-
-    private String getNegativeLabel(IStimulus stim){
-        return String.format("(%s)-", stim.getName());
     }
        
     private void recordStimState(String name, IStimulus stim){

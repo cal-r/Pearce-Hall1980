@@ -1,6 +1,9 @@
 package Models.Stimulus;
 
+import Helpers.MultipleUsLabelingHelper;
+
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,25 +30,22 @@ public class CompoundStimulus implements IStimulus, Serializable {
 
     @Override
     public String getName() {
-        if(reinforcerSpecificCues){
-            return getNameWithReinforcerAtTheEnd();
+        if (reinforcerSpecificCues) {
+            return MultipleUsLabelingHelper.getCompoundName(getCompoundedNames());
         }
+
         String name = "";
-        for(IStimulus stim : compounded){
+        for (IStimulus stim : compounded) {
             name += stim.getName();
         }
         return name;
     }
 
-    private String getNameWithReinforcerAtTheEnd(){
-        String name = "";
-        Character reinforcer = null;
+    private List<String> getCompoundedNames(){
+        List<String> names = new ArrayList<>();
         for(IStimulus stim : compounded){
-            String stimNameWithReinforcer = stim.getName();
-            String stimNameWithoutReinforcer = stimNameWithReinforcer.substring(0, stimNameWithReinforcer.length()-1);
-            reinforcer = stimNameWithReinforcer.charAt(stimNameWithReinforcer.length()-1);
-            name += stimNameWithoutReinforcer;
+            names.add(stim.getName());
         }
-        return name + reinforcer;
+        return names;
     }
 }

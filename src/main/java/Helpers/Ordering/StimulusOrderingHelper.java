@@ -1,5 +1,7 @@
 package Helpers.Ordering;
 
+import Helpers.MultipleUsLabelingHelper;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -13,7 +15,19 @@ public class StimulusOrderingHelper {
         Collection<String> orderedNames = new ArrayList();
         for(int i=0;i<description.length();i++){
             for(int j=0;j<stimNamesList.size();j++){
-                if(description.substring(i,i+1).equals(stimNamesList.get(j))){
+                if(description.substring(i,i+1).equals(MultipleUsLabelingHelper.getOriginalName(stimNamesList.get(j)))){
+                    orderedNames.add(stimNamesList.get(j));
+                    stimNamesList.remove(j);
+                }
+            }
+        }
+
+        //order stims with negative labels
+        for(int i=0;i<description.length();i++){
+            for(int j=0;j<stimNamesList.size();j++){
+                if(description.substring(i,i+1).equals(
+                        MultipleUsLabelingHelper.getOriginalName(
+                                MultipleUsLabelingHelper.getNameWithoutNegativeLabeling(stimNamesList.get(j))))){
                     orderedNames.add(stimNamesList.get(j));
                     stimNamesList.remove(j);
                 }

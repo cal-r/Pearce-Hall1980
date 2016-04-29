@@ -1,5 +1,6 @@
 package Models.Stimulus;
 
+import Helpers.MultipleUsLabelingHelper;
 import Models.Parameters.ConditionalStimulus.InitialAlphaParameter;
 import Models.Parameters.ConditionalStimulus.Rodriguez.InitialAssociationParameter;
 import Models.Parameters.ConditionalStimulus.SalienceExcitatoryParameter;
@@ -85,7 +86,7 @@ public class MultipleStimulus implements IPHConditionalStimulus, Serializable {
     }
 
     private String createCueName(char us){
-        return String.format("%s%s", name, us);
+        return MultipleUsLabelingHelper.getCueName(name, us);
     }
 
     @Override
