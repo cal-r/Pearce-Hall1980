@@ -4,6 +4,7 @@ import Constants.ActionCommands;
 import Helpers.Export.ExcelExportHelper;
 import Helpers.GUI.GuiHelper;
 import Helpers.ModelBuilding.SimulatorBuilder;
+import Helpers.SimRunner;
 import Models.Simulator;
 import ViewModels.TableModels.*;
 import _from_RW_simulator.ContextConfig;
@@ -103,9 +104,7 @@ public class MainWindowController implements ActionListener, TableModelListener 
     }
 
     private void onRunSim(){
-        simulator.runSimulation();
-        GuiHelper.outputHistory(simulator.getLatestReport(), simOutputArea);
-        enableExportButtons(true);
+        new SimRunner().RunAndOutput(simulator, simOutputArea, this);
     }
 
     private void enableExportButtons(boolean enable){
@@ -208,6 +207,10 @@ public class MainWindowController implements ActionListener, TableModelListener 
 
     public void onRodriguezChange(){
         globalParamsTableModel.overrideParameters(simulator.getGlobalParameters());
+    }
+
+    public void onSimulationComplete(){
+        enableExportButtons(true);
     }
 
     //getters

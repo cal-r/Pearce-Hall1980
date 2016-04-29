@@ -5,9 +5,11 @@ import Constants.GuiStringConstants;
 import Controllers.MainWindowController;
 import Controllers.MenuController;
 import Helpers.GUI.FrameCloser;
+import Helpers.GUI.GuiHelper;
 import Helpers.ResourceHelper;
 
 import javax.swing.*;
+import java.awt.*;
 
 /**
  * Created by Rokas on 03/11/2015.
@@ -43,6 +45,7 @@ public class MainWindow extends JFrame{
         initFooter();
         initTopbar();
         pack();
+        GuiHelper.centerFrame(this);
         initSubElements();
     }
 

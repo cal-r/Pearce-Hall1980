@@ -12,7 +12,11 @@ import javax.swing.*;
  */
 public class Launcher {
     public static void main(String[] args) {
-        startSimulator();
+        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                startSimulator();
+            }
+        });
     }
 
     public static void startSimulator(){
