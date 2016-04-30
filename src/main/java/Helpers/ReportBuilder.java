@@ -38,7 +38,7 @@ public class ReportBuilder {
 
         rowId = insertGlobalParameterTable(report, rowId, groupHistory.globalParameters) + 1;
 
-        rowId = insertUsParameterTable(report, rowId, groupHistory.usParameters) + 2;
+        rowId = insertUsParameterTable(report, rowId, groupHistory.usParameters, groupHistory.group.Name) + 2;
 
         for(int gpId = 0; gpId < groupHistory.getNumberOfPhases(); gpId++) {
             GroupPhaseHistory groupPhaseHistory = groupHistory.getGroupPhaseHistory(gpId);
@@ -54,7 +54,7 @@ public class ReportBuilder {
         return report;
     }
 
-    private static int insertUsParameterTable(GroupReportViewModel report, int rowId, List<UsParameter> usParameters) {
+    private static int insertUsParameterTable(GroupReportViewModel report, int rowId, List<UsParameter> usParameters, String groupName) {
         report.setCell(rowId, 0, GuiStringConstants.US_PARAMETER);
         if(usParameters.size()==1 && usParameters.get(0).getPhaseCount() == 0){
             report.setCell(rowId, 1, GuiStringConstants.VALUE);
@@ -65,18 +65,26 @@ public class ReportBuilder {
             return rowId;
         }
 
-        for (int pid = 0; pid < usParameters.get(0).getPhaseCount(); pid++) {
-            report.setCell(rowId, pid + 1, GuiStringConstants.getPhaseTitle(pid));
+        List<UsParameter> usParametersForGroup = new ArrayList<>();
+        for (UsParameter usParam : usParameters){
+            if(usParam.getGroupName().equals(groupName)){
+                usParametersForGroup.add(usParam);
+            }
         }
-        rowId++;
-        for (UsParameter usParam : usParameters) {
-            report.setCell(rowId, 0, usParam.getDisplayName());
-            for (int pid = 0; pid < usParam.getPhaseCount(); pid++) {
-                if (usParam.isAvailable(pid)) {
-                    report.setCell(rowId, pid + 1, usParam.getValue(pid));
-                }
+        if(usParametersForGroup.size()>0) {
+            for (int pid = 0; pid < usParametersForGroup.get(0).getPhaseCount(); pid++) {
+                report.setCell(rowId, pid + 1, GuiStringConstants.getPhaseTitle(pid));
             }
             rowId++;
+            for (UsParameter usParam : usParametersForGroup) {
+                report.setCell(rowId, 0, usParam.getDisplayName());
+                for (int pid = 0; pid < usParam.getPhaseCount(); pid++) {
+                    if (usParam.isAvailable(pid)) {
+                        report.setCell(rowId, pid + 1, usParam.getValue(pid));
+                    }
+                }
+                rowId++;
+            }
         }
         return rowId;
     }

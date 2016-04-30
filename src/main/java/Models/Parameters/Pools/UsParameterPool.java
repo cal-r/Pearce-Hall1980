@@ -22,8 +22,8 @@ public class UsParameterPool implements Serializable {
     }
 
     private void addLambdaPlus(){
-        String name = getLambdaKey('+', null);
-        usParameterMap.put(name, new SingleUsParamater(name));
+        String singleLambdaKey = getLambdaKey('+', null);
+        usParameterMap.put(singleLambdaKey, new SingleUsParamater(ParameterNamingConstants.LAMBDA));
     }
 
     public void adjustLamdbas(List<Group> groups){
@@ -108,10 +108,10 @@ public class UsParameterPool implements Serializable {
     }
 
     public void adjustSingleMode() {
-        String lambdaPlusName = getLambdaKey('+', null);
-        if(!usParameterMap.containsKey(lambdaPlusName)) {
+        String singleLambdaKey = getLambdaKey('+', null);
+        if(!usParameterMap.containsKey(singleLambdaKey)) {
             usParameterMap = new HashMap<>();
-            usParameterMap.put(lambdaPlusName, new SingleUsParamater(lambdaPlusName));
+            usParameterMap.put(singleLambdaKey, new SingleUsParamater(ParameterNamingConstants.LAMBDA));
         }
     }
 }
