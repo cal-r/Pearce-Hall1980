@@ -20,7 +20,7 @@
           <component id="52432" class="javax.swing.JTable" binding="trialTable">
             <constraints/>
             <properties>
-              <font size="12" style="1"/>
+              <font size="16" style="1"/>
             </properties>
           </component>
         </children>

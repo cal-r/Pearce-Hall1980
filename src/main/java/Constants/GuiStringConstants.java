@@ -12,14 +12,14 @@ public class GuiStringConstants {
     public static final String RODRIGUEZ_MULTIPLE_US_ERROR = "ERROR: multiple USs are not allowed in Hall & Rodriguez model";
     public static final String RODRIGUEZ_CONTEXT = "ERROR: Context is not defined in Hall & Rodriguez model";
 
-    public static final String GROUP_NAME = "Group Name";
+    public static final String GROUP_NAME = "Group";
     public static final String CS_PARAMETER = "CS Parameter";
     public static final String GLOBAL_PARAMETER = "Global Parameter";
     public static final String US_PARAMETER = "US Parameter";
     public static final String VALUE = "Value";
     public static final String RANDOM = "Random";
     public static final String CONTEXT = "Context";
-    public static final String ITI_CS_RATION = "ITI/CS Ratio";
+    public static final String ITI_CS_RATION = "ITI/CS";
 
     public static final String FILE = "File";
     public static final String HELP = "Help";

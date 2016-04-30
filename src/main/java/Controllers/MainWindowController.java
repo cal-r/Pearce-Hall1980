@@ -3,6 +3,7 @@ package Controllers;
 import Constants.ActionCommands;
 import Helpers.Export.ExcelExportHelper;
 import Helpers.GUI.GuiHelper;
+import Helpers.GUI.TrialTableColumnWidthHelper;
 import Helpers.ModelBuilding.SimulatorBuilder;
 import Helpers.SimRunner;
 import Models.Simulator;
@@ -56,6 +57,7 @@ public class MainWindowController implements ActionListener, TableModelListener 
     }
 
     public void initTrialTable(JTable table) {
+        table.getColumnModel().addColumnModelListener(new TrialTableColumnWidthHelper(table.getColumnModel(), table, simulator.getSettings()));
         trialTableModel = new TrialTableModel(simulator.getSettings().isContextSimulation());
         initTableModel(table, trialTableModel);
         table.setDefaultEditor(ContextConfig.class, new ContextEditor());
