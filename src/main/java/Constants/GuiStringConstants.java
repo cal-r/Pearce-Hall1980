@@ -23,10 +23,10 @@ public class GuiStringConstants {
 
     public static final String FILE = "File";
     public static final String HELP = "Help";
-    public static final String SAVE = "Save (ALT + S)";
-    public static final String OPEN = "Open (ALT + O)";
-    public static final String NEW = "New (ALT + N)";
-    public static final String EXIT = "Exit (ALT + Q)";
+    public static final String SAVE = "Save";
+    public static final String OPEN = "Open";
+    public static final String NEW = "New";
+    public static final String EXIT = "Quit";
     public static final String SETTINGS = "Settings";
     public static final String RANDOM_TRIALS_SETTING = "Number of Random Trials Combinations";
     public static final String COMPOUND_RESULTS_SETTING = "Show Compound Results";
@@ -36,7 +36,7 @@ public class GuiStringConstants {
     public static final String RODRIGUEZ_MODE = "Hall & Rodriguez";
     public static final String ELABORATIONS_MENU = "Model Elaborations";
     public static final String INITIAL_V_FOR_PH = "Set initial V excitatory for P&H";
-    public static final String GUIDE = "Guide (ALT + G)";
+    public static final String GUIDE = "Guide";
     public static final String ABOUT = "About";
     public static final String GUIDE_URL = "https://www.cal-r.org/PHSimulator/PH_Simulator_Guide.pdf";
 

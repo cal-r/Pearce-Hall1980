@@ -84,7 +84,7 @@ public class MenuController implements ActionListener {
         if(type == MenuItemType.CHECKBOX){
             checkboxesMap.put(nameAndCommand, (JCheckBoxMenuItem)menuItem);
         }else{
-            keyBindingHelper.bind(nameAndCommand);
+            keyBindingHelper.bind(menuItem, nameAndCommand);
         }
     }
 

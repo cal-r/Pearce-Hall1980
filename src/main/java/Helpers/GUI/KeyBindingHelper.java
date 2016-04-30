@@ -21,20 +21,10 @@ public class KeyBindingHelper {
         this.menuController = menuController;
     }
 
-    public void bind(final String action){
-
+    public void bind(JMenuItem menuItem, final String action){
         Integer secondKey = getSecondKeyForAction(action);
-
-        if(secondKey != null){
-            component.getInputMap().put(KeyStroke.getKeyStroke(secondKey, InputEvent.ALT_DOWN_MASK),
-                    action);
-            component.getActionMap().put(action,
-                    new AbstractAction() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            menuController.actionPerformed(new ActionEvent(component, 0, action));
-                        }
-                    });
+        if(secondKey != null) {
+            menuItem.setAccelerator(KeyStroke.getKeyStroke(secondKey, InputEvent.ALT_MASK));
         }
     }
 
@@ -50,6 +40,8 @@ public class KeyBindingHelper {
                 return KeyEvent.VK_O;
             case GuiStringConstants.GUIDE:
                 return KeyEvent.VK_G;
+            case GuiStringConstants.ABOUT:
+                return KeyEvent.VK_A;
         }
         return null;
     }
