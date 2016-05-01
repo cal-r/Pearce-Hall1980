@@ -30,8 +30,7 @@ public class SplasherHelper {
         about.getContentPane().add(aboutPanel);
         about.pack();
         about.setLocation(200, 200);
-        //about.setSize(520,320);
-        about.setSize(596,435);//EMP 11 Oct. 2012
+        about.setSize(icon.getIconWidth(), icon.getIconHeight());
         about.setVisible(true);//EMP 11 Oct. 2012
 
 
