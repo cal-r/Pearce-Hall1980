@@ -24,7 +24,7 @@ public class SplasherHelper {
         //ImageIcon icon = createImageIcon(path, "About");
 
 
-        ImageIcon icon = ResourceHelper.getAboutImage();
+        ImageIcon icon = ResourceHelper.getAboutImageIcon();
 
         aboutPanel.setBorder(new SimBackgroundBorder(icon.getImage(), true));
         about.getContentPane().add(aboutPanel);
@@ -37,7 +37,7 @@ public class SplasherHelper {
 
 
 
-        Image icon2 = ResourceHelper.getIconImage();
+        Image icon2 = ResourceHelper.getTopleftImage();
         about.setIconImage(icon2);//E.Mondragon 30 Sept 2011
 
 

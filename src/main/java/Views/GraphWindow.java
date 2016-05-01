@@ -46,7 +46,7 @@ public class GraphWindow extends JFrame{
 
 
         setContentPane(rootPane);
-        setIconImage(ResourceHelper.getIconImage());
+        setIconImage(ResourceHelper.getTopleftImage());
         pack();
         setVisible(true);
     }

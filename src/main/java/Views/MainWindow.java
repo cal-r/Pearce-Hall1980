@@ -9,7 +9,6 @@ import Helpers.GUI.GuiHelper;
 import Helpers.ResourceHelper;
 
 import javax.swing.*;
-import java.awt.*;
 
 /**
  * Created by Rokas on 03/11/2015.
@@ -77,11 +76,11 @@ public class MainWindow extends JFrame{
     }
 
     private void initFooter(){
-        footerPanel.add(new JLabel(ResourceHelper.getFooterImage()));
+        footerPanel.add(new JLabel(ResourceHelper.getFooterImageIcon()));
     }
 
     private void initTopbar(){
-        setIconImage(ResourceHelper.getIconImage());
+        setIconImage(ResourceHelper.getTopleftImage());
         setTitle(GuiStringConstants.TOPBAR_TEXT);
     }
 }

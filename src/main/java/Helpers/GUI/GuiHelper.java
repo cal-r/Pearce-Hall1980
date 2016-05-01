@@ -1,6 +1,7 @@
 package Helpers.GUI;
 
 import Constants.GuiStringConstants;
+import Helpers.ResourceHelper;
 import ViewModels.GroupReportViewModel;
 
 import javax.swing.*;
@@ -32,12 +33,33 @@ public class GuiHelper {
                 new JFrame(),
                 error,
                 GuiStringConstants.ERROR,
-                JOptionPane.ERROR_MESSAGE);
+                JOptionPane.ERROR_MESSAGE,
+                ResourceHelper.getForbiddenImageIcon());
     }
 
     public static int getIntFromUser(String message, int defaultValue){
+
+        JOptionPane pane = new JOptionPane();
+        pane.setIcon(ResourceHelper.getRandomImageIcon());
+
         try {
-            return Integer.parseInt(JOptionPane.showInputDialog(message, defaultValue));
+//            showInputDialog(Component parentComponent,
+//                    Object message,
+//                    String title,
+//            int messageType,
+//            Icon icon,
+//            Object[] selectionValues,
+//            Object initialSelectionValue)
+
+            return Integer.parseInt(
+                    (String) JOptionPane.showInputDialog(
+                                    new JFrame(),
+                                    message,
+                                    "title",
+                                    JOptionPane.QUESTION_MESSAGE,
+                                    ResourceHelper.getRandomImageIcon(),
+                                    null,
+                                    defaultValue));
         }catch (Exception ex){
             return defaultValue;
         }
