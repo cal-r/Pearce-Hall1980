@@ -43,14 +43,6 @@ public class GuiHelper {
         pane.setIcon(ResourceHelper.getRandomImageIcon());
 
         try {
-//            showInputDialog(Component parentComponent,
-//                    Object message,
-//                    String title,
-//            int messageType,
-//            Icon icon,
-//            Object[] selectionValues,
-//            Object initialSelectionValue)
-
             return Integer.parseInt(
                     (String) JOptionPane.showInputDialog(
                                     new JFrame(),

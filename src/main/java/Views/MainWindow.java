@@ -30,6 +30,7 @@ public class MainWindow extends JFrame{
     private JButton graphsButton;
     private JPanel footerPanel;
     private JTable usParamsTable;
+    private JPanel marginsPanel;
 
     private MainWindowController controller;
     private MenuController menuController;
