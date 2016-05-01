@@ -17,8 +17,20 @@ public class GammaParameter extends Parameter {
         this.settings = settings;
     }
 
+    public void setValue(double value){
+        super.setValue(value);
+    }
+
+    boolean lastSettingValue;
+
     public double getValue(){
-        if(isSet)
+        double val = getValueInner();
+        lastSettingValue = settings.isRodriguezMode();
+        return val;
+    }
+
+    private double getValueInner(){
+        if(isSet && lastSettingValue == settings.isRodriguezMode())
             return super.getValue();
 
         return settings.isRodriguezMode() ? DefaultValuesConstants.RODRIGUEZ_GAMMA : DefaultValuesConstants.GAMMA;

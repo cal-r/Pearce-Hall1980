@@ -4,6 +4,7 @@ import Constants.ParameterNamingConstants;
 import Models.Group;
 import Models.Parameters.UnconditionalStimulus.SingleUsParamater;
 import Models.Parameters.UnconditionalStimulus.UsParameter;
+import Models.SimulatorSettings;
 import Models.Trail.LearningPeriod;
 import Models.Trail.Trial;
 
@@ -15,15 +16,18 @@ import java.util.*;
  */
 public class UsParameterPool implements Serializable {
     private Map<String, UsParameter> usParameterMap;
+    private SimulatorSettings settings;
 
-    public UsParameterPool(){
+    public UsParameterPool(SimulatorSettings settings){
+        this.settings = settings;
         usParameterMap = new HashMap<>();
         addLambdaPlus();
     }
 
     private void addLambdaPlus(){
         String singleLambdaKey = getLambdaKey('+', null);
-        usParameterMap.put(singleLambdaKey, new SingleUsParamater(ParameterNamingConstants.LAMBDA));
+        usParameterMap.put(singleLambdaKey,
+                new SingleUsParamater(ParameterNamingConstants.LAMBDA, settings));
     }
 
     public void adjustLamdbas(List<Group> groups){
@@ -111,7 +115,7 @@ public class UsParameterPool implements Serializable {
         String singleLambdaKey = getLambdaKey('+', null);
         if(!usParameterMap.containsKey(singleLambdaKey)) {
             usParameterMap = new HashMap<>();
-            usParameterMap.put(singleLambdaKey, new SingleUsParamater(ParameterNamingConstants.LAMBDA));
+            usParameterMap.put(singleLambdaKey, new SingleUsParamater(ParameterNamingConstants.LAMBDA, settings));
         }
     }
 }

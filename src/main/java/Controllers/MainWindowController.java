@@ -207,10 +207,6 @@ public class MainWindowController implements ActionListener, TableModelListener 
         }
     }
 
-    public void onRodriguezChange(){
-        globalParamsTableModel.overrideParameters(simulator.getGlobalParameters());
-    }
-
     public void onSimulationComplete(){
         enableExportButtons(true);
     }

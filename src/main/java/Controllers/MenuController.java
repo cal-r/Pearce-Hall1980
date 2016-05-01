@@ -142,7 +142,6 @@ public class MenuController implements ActionListener {
 
     private void onRodriguez(boolean menuItemSelected){
         settings.setRodriguezMode(menuItemSelected);
-        mainWindowController.onRodriguezChange();
     }
 
     private void onInitialVe(boolean menuItemSelected) {

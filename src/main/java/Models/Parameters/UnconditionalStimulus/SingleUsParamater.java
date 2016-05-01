@@ -1,6 +1,7 @@
 package Models.Parameters.UnconditionalStimulus;
 
 import Constants.DefaultValuesConstants;
+import Models.SimulatorSettings;
 
 import java.io.Serializable;
 
@@ -10,18 +11,26 @@ import java.io.Serializable;
 public class SingleUsParamater extends UsParameter implements Serializable {
 
     private double value;
+    private boolean isSet;
+    private SimulatorSettings settings;
 
-    public SingleUsParamater(String name) {
+    public SingleUsParamater(String name, SimulatorSettings settings) {
         super(name, null);
-        value = DefaultValuesConstants.LAMBDA;
+        this.settings = settings;
+        isSet = false;
     }
 
     public void setValue(int phaseId, double value){
         this.value = value;
+        isSet = true;
     }
 
     public double getValue(int phaseId){
-        return value;
+        if(isSet) {
+            return value;
+        }else{
+            return settings.isRodriguezMode() ? 0 : DefaultValuesConstants.LAMBDA;
+        }
     }
 
     public boolean isAvailable(int phaseId){

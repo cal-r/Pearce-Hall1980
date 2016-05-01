@@ -60,7 +60,7 @@ public abstract class BaseParamsTableModel extends BaseTableModel implements Ser
             preserveExistingValues(parameters, newParameters);
         }
         this.parameters = newParameters;
-    }
+  }
 
     private static void preserveExistingValues(List<Parameter> oldParameters, List<Parameter> newParameters) {
         for (Parameter oldParam : oldParameters) {

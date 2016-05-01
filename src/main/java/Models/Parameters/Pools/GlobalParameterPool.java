@@ -23,7 +23,7 @@ public class GlobalParameterPool implements Serializable {
         this.settings = settings;
         globalParameters = new ArrayList<>();
         globalParameters.add(createGamma());
-        usParameterPool = new UsParameterPool();
+        usParameterPool = new UsParameterPool(settings);
     }
 
     public List<Parameter> getGlobalParameters(){
