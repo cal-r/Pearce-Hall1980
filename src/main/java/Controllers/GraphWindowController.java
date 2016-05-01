@@ -151,12 +151,12 @@ public class GraphWindowController implements ActionListener {
 
     static void showGraphs(SimulationHistory history, SimulatorSettings settings){
         Map<Paint, Boolean> interGraphColorMap = new HashMap<>();
-        for(Graph graph : GraphBuilder.BuildGraphs(history, getVariables(settings.isRodriguezMode()))){
+        for(Graph graph : GraphBuilder.BuildGraphs(history, new ArrayList<>(Arrays.asList(GraphBuilder.Variable.Alpha)))){
             new GraphWindowController(graph, interGraphColorMap);
         }
 
         interGraphColorMap = new HashMap<>();
-        for(Graph graph : GraphBuilder.BuildGraphs(history, new ArrayList<>(Arrays.asList(GraphBuilder.Variable.Alpha)))){
+        for(Graph graph : GraphBuilder.BuildGraphs(history, getVariables(settings.isRodriguezMode()))){
             new GraphWindowController(graph, interGraphColorMap);
         }
     }
