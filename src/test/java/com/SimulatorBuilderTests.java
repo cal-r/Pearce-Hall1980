@@ -175,15 +175,15 @@ public class SimulatorBuilderTests extends junit.framework.TestCase {
         assertTrue(sim.getGroups().get(0).groupPhases.get(0).getPhaseCues().size() == 2);
         assertTrue(sim.getGroups().get(0).groupPhases.get(0).getPhaseCues().get(0).getName().equals("A"));
         assertTrue(((MultipleStimulus)sim.getGroups().get(0).groupPhases.get(0).getPhaseCues().get(0)).getStims('-').size() == 1);
-        assertTrue(((MultipleStimulus) sim.getGroups().get(0).groupPhases.get(0).getPhaseCues().get(0)).getStims('-').get(0).getName().equals("A+"));
+        assertTrue(((MultipleStimulus) sim.getGroups().get(0).groupPhases.get(0).getPhaseCues().get(0)).getStims('-').get(0).getName().equals("(A+)"));
         assertTrue(((MultipleStimulus)sim.getGroups().get(0).groupPhases.get(0).getPhaseCues().get(0)).getStims('+').size() == 1);
-        assertTrue(((MultipleStimulus) sim.getGroups().get(0).groupPhases.get(0).getPhaseCues().get(0)).getStims('+').get(0).getName().equals("A+"));
+        assertTrue(((MultipleStimulus) sim.getGroups().get(0).groupPhases.get(0).getPhaseCues().get(0)).getStims('+').get(0).getName().equals("(A+)"));
 
         assertTrue(sim.getGroups().get(0).groupPhases.get(0).getPhaseCues().get(1).getName().equals("B"));
         assertTrue(((MultipleStimulus)sim.getGroups().get(0).groupPhases.get(0).getPhaseCues().get(1)).getStims('-').size() == 1);
-        assertTrue(((MultipleStimulus) sim.getGroups().get(0).groupPhases.get(0).getPhaseCues().get(1)).getStims('-').get(0).getName().equals("B+"));
+        assertTrue(((MultipleStimulus) sim.getGroups().get(0).groupPhases.get(0).getPhaseCues().get(1)).getStims('-').get(0).getName().equals("(B+)"));
         assertTrue(((MultipleStimulus)sim.getGroups().get(0).groupPhases.get(0).getPhaseCues().get(1)).getStims('+').size() == 1);
-        assertTrue(((MultipleStimulus) sim.getGroups().get(0).groupPhases.get(0).getPhaseCues().get(1)).getStims('+').get(0).getName().equals("B+"));
+        assertTrue(((MultipleStimulus) sim.getGroups().get(0).groupPhases.get(0).getPhaseCues().get(1)).getStims('+').get(0).getName().equals("(B+)"));
     }
 
     @Test
@@ -207,22 +207,22 @@ public class SimulatorBuilderTests extends junit.framework.TestCase {
         for(int phaseId = 0;phaseId<2;phaseId++) {
             assertTrue(sim.getGroups().get(0).groupPhases.get(phaseId).getPhaseCues().size() == 2);
             assertTrue(sim.getGroups().get(0).groupPhases.get(phaseId).getPhaseCues().get(0).getName().equals("A"));
-            assertTrue(((MultipleStimulus) sim.getGroups().get(0).groupPhases.get(phaseId).getPhaseCues().get(0)).getStims('-').get(0).getName().equals("A#"));
-            assertTrue(((MultipleStimulus) sim.getGroups().get(0).groupPhases.get(phaseId).getPhaseCues().get(0)).getStims('-').get(1).getName().equals("A+"));
+            assertTrue(((MultipleStimulus) sim.getGroups().get(0).groupPhases.get(phaseId).getPhaseCues().get(0)).getStims('-').get(0).getName().equals("(A#)"));
+            assertTrue(((MultipleStimulus) sim.getGroups().get(0).groupPhases.get(phaseId).getPhaseCues().get(0)).getStims('-').get(1).getName().equals("(A+)"));
             assertTrue(((MultipleStimulus) sim.getGroups().get(0).groupPhases.get(phaseId).getPhaseCues().get(0)).getStims('-').size() == 2);
             assertTrue(((MultipleStimulus) sim.getGroups().get(0).groupPhases.get(phaseId).getPhaseCues().get(0)).getStims('+').size() == 1);
-            assertTrue(((MultipleStimulus) sim.getGroups().get(0).groupPhases.get(phaseId).getPhaseCues().get(0)).getStims('+').get(0).getName().equals("A+"));
+            assertTrue(((MultipleStimulus) sim.getGroups().get(0).groupPhases.get(phaseId).getPhaseCues().get(0)).getStims('+').get(0).getName().equals("(A+)"));
             assertTrue(((MultipleStimulus) sim.getGroups().get(0).groupPhases.get(phaseId).getPhaseCues().get(0)).getStims('#').size() == 1);
-            assertTrue(((MultipleStimulus) sim.getGroups().get(0).groupPhases.get(phaseId).getPhaseCues().get(0)).getStims('#').get(0).getName().equals("A#"));
+            assertTrue(((MultipleStimulus) sim.getGroups().get(0).groupPhases.get(phaseId).getPhaseCues().get(0)).getStims('#').get(0).getName().equals("(A#)"));
 
             assertTrue(sim.getGroups().get(0).groupPhases.get(phaseId).getPhaseCues().get(1).getName().equals("B"));
             assertTrue(((MultipleStimulus) sim.getGroups().get(0).groupPhases.get(phaseId).getPhaseCues().get(1)).getStims('-').size() == 2);
-            assertTrue(((MultipleStimulus) sim.getGroups().get(0).groupPhases.get(phaseId).getPhaseCues().get(1)).getStims('-').get(0).getName().equals("B#"));
-            assertTrue(((MultipleStimulus) sim.getGroups().get(0).groupPhases.get(phaseId).getPhaseCues().get(1)).getStims('-').get(1).getName().equals("B+"));
+            assertTrue(((MultipleStimulus) sim.getGroups().get(0).groupPhases.get(phaseId).getPhaseCues().get(1)).getStims('-').get(0).getName().equals("(B#)"));
+            assertTrue(((MultipleStimulus) sim.getGroups().get(0).groupPhases.get(phaseId).getPhaseCues().get(1)).getStims('-').get(1).getName().equals("(B+)"));
             assertTrue(((MultipleStimulus) sim.getGroups().get(0).groupPhases.get(phaseId).getPhaseCues().get(1)).getStims('+').size() == 1);
-            assertTrue(((MultipleStimulus) sim.getGroups().get(0).groupPhases.get(phaseId).getPhaseCues().get(1)).getStims('+').get(0).getName().equals("B+"));
+            assertTrue(((MultipleStimulus) sim.getGroups().get(0).groupPhases.get(phaseId).getPhaseCues().get(1)).getStims('+').get(0).getName().equals("(B+)"));
             assertTrue(((MultipleStimulus) sim.getGroups().get(0).groupPhases.get(phaseId).getPhaseCues().get(1)).getStims('#').size() == 1);
-            assertTrue(((MultipleStimulus) sim.getGroups().get(0).groupPhases.get(phaseId).getPhaseCues().get(1)).getStims('#').get(0).getName().equals("B#"));
+            assertTrue(((MultipleStimulus) sim.getGroups().get(0).groupPhases.get(phaseId).getPhaseCues().get(1)).getStims('#').get(0).getName().equals("(B#)"));
         }
     }
 
@@ -247,9 +247,9 @@ public class SimulatorBuilderTests extends junit.framework.TestCase {
             assertTrue(sim.getGroups().get(0).groupPhases.get(phaseId).getPhaseCues().size() == 1);
             assertTrue(sim.getGroups().get(0).groupPhases.get(phaseId).getPhaseCues().get(0).getName().equals("A"));
             assertTrue(((MultipleStimulus) sim.getGroups().get(0).groupPhases.get(phaseId).getPhaseCues().get(0)).getStims('-').size() == 1);
-            assertTrue(((MultipleStimulus) sim.getGroups().get(0).groupPhases.get(phaseId).getPhaseCues().get(0)).getStims('-').get(0).getName().equals("A+"));
+            assertTrue(((MultipleStimulus) sim.getGroups().get(0).groupPhases.get(phaseId).getPhaseCues().get(0)).getStims('-').get(0).getName().equals("(A+)"));
             assertTrue(((MultipleStimulus) sim.getGroups().get(0).groupPhases.get(phaseId).getPhaseCues().get(0)).getStims('+').size() == 1);
-            assertTrue(((MultipleStimulus) sim.getGroups().get(0).groupPhases.get(phaseId).getPhaseCues().get(0)).getStims('+').get(0).getName().equals("A+"));
+            assertTrue(((MultipleStimulus) sim.getGroups().get(0).groupPhases.get(phaseId).getPhaseCues().get(0)).getStims('+').get(0).getName().equals("(A+)"));
         }
     }
 
