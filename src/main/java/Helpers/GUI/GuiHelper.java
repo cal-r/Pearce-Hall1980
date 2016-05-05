@@ -47,7 +47,7 @@ public class GuiHelper {
                     (String) JOptionPane.showInputDialog(
                                     new JFrame(),
                                     message,
-                                    "title",
+                                    "",
                                     JOptionPane.QUESTION_MESSAGE,
                                     ResourceHelper.getRandomImageIcon(),
                                     null,
