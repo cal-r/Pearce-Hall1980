@@ -170,9 +170,7 @@ public class PhaseParserTests extends junit.framework.TestCase {
         for(String cueName : cueNames){
             csMap.put(cueName, new ConditionalStimulus(
                     cueName,
-                    csParameterPool.getInitialAlpha(cueName),
-                    csParameterPool.getSeParameter(cueName),
-                    csParameterPool.getSiParamter(cueName)));
+                    csParameterPool.getInitialAlpha(cueName)));
         }
         return csMap;
     }

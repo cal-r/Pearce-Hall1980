@@ -16,9 +16,5 @@ public class ContextParameterHelper {
         }
         csParameterPool.getInitialAlpha(contextName).setValue(config.getAlpha());
         csParameterPool.getInitialAlpha(contextName).visibleInCsParamsTable = false;
-        csParameterPool.getSeParameter(contextName).setValue(config.getSe());
-        csParameterPool.getSeParameter(contextName).visibleInCsParamsTable = false;
-        csParameterPool.getSiParamter(contextName).setValue(config.getSi());
-        csParameterPool.getSiParamter(contextName).visibleInCsParamsTable = false;
     }
 }

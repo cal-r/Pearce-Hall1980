@@ -15,8 +15,8 @@ public class DefaultValuesHelper {
     static {
         map = new HashMap<>();
         map.put(ParameterNamingConstants.INITIAL_ALPHA, DefaultValuesConstants.INITIAL_ALPHA);
-        map.put(ParameterNamingConstants.SALIENCE_INHIBATORY, DefaultValuesConstants.SALIENCE_INHIBATORY);
-        map.put(ParameterNamingConstants.SALIENCE_EXCITATORY, DefaultValuesConstants.SALIENCE_EXCITATORY);
+        map.put(ParameterNamingConstants.BETA_INHIBITORY, DefaultValuesConstants.SALIENCE_INHIBATORY);
+        map.put(ParameterNamingConstants.BETA_EXCITATORY, DefaultValuesConstants.SALIENCE_EXCITATORY);
         map.put(ParameterNamingConstants.GAMMA, DefaultValuesConstants.GAMMA);
         map.put(ParameterNamingConstants.INITIAL_ASSOCIATION, DefaultValuesConstants.INITIAL_ASSOCIATION);
         map.put(ParameterNamingConstants.SALIENCE, DefaultValuesConstants.SALIENCE);

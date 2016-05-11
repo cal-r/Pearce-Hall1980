@@ -26,7 +26,7 @@ public class SimulatorBuilderTests extends junit.framework.TestCase {
         assertTrue(sim != null);
         assertTrue(sim.getGroups().size() == 1);
         assertTrue(sim.getGroups().get(0).Name == "group name test");
-        assertTrue(sim.getCsParameters().size()==2*3);
+        assertTrue(sim.getCsParameters().size()==2);
         assertTrue(sim.getCsParameters().get(0).CueName.equals("A"));
         assertTrue(sim.getCsParameters().get(1).CueName.equals("B"));
         assertTrue(sim.getGroups().get(0).groupPhases.size()==1);
@@ -47,7 +47,7 @@ public class SimulatorBuilderTests extends junit.framework.TestCase {
         assertTrue(sim!=null);
         assertTrue(sim.getGroups().size() == 1);
         assertTrue(sim.getGroups().get(0).Name == "group name test");
-        assertTrue(sim.getCsParameters().size() == 2 * 3);
+        assertTrue(sim.getCsParameters().size() == 2);
         assertTrue(sim.getCsParameters().get(0).CueName.equals("A"));
         assertTrue(sim.getCsParameters().get(1).CueName.equals("B"));
         assertTrue(sim.getGroups().get(0).groupPhases.size() == 2);
@@ -81,7 +81,7 @@ public class SimulatorBuilderTests extends junit.framework.TestCase {
         assertTrue(sim.getGroups().size() == 2);
         assertTrue(sim.getGroups().get(0).Name == "group name test");
         assertTrue(sim.getGroups().get(1).Name == "group2 name test");
-        assertTrue(sim.getCsParameters().size()==3*3);
+        assertTrue(sim.getCsParameters().size()==3);
         assertTrue(sim.getCsParameters().get(0).CueName.equals("A"));
         assertTrue(sim.getCsParameters().get(1).CueName.equals("B"));
         //group 1
@@ -109,8 +109,6 @@ public class SimulatorBuilderTests extends junit.framework.TestCase {
         assertTrue(csB_fromP1G1 != csB_fromP1G2);
         assertTrue(csB_fromP2G1 != csB_fromP2G2);
         assertTrue(csB_fromP1G1.InitialAlphaParameter == csB_fromP1G1.InitialAlphaParameter);
-        assertTrue(csB_fromP1G1.SalienceExcitatoryParameter == csB_fromP1G1.SalienceExcitatoryParameter);
-        assertTrue(csB_fromP1G1.SalienceInhibitoryParameter == csB_fromP1G1.SalienceInhibitoryParameter);
     }
 
     @Test

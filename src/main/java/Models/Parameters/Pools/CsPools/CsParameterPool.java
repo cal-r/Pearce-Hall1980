@@ -3,8 +3,6 @@ package Models.Parameters.Pools.CsPools;
 import Models.Group;
 import Models.Parameters.ConditionalStimulus.CsParameter;
 import Models.Parameters.ConditionalStimulus.InitialAlphaParameter;
-import Models.Parameters.ConditionalStimulus.SalienceExcitatoryParameter;
-import Models.Parameters.ConditionalStimulus.SalienceInhibitoryParameter;
 import Models.Stimulus.IConditionalStimulus;
 
 import java.io.Serializable;
@@ -18,18 +16,12 @@ import java.util.Map;
  */
 public class CsParameterPool implements ICsParameterPool, Serializable {
     Map<String, InitialAlphaParameter> initialAlphaParameterMap;
-    Map<String, SalienceExcitatoryParameter> salienceExcitatoryParameterMap;
-    Map<String, SalienceInhibitoryParameter> salienceInhibitoryParameterMap;
     public CsParameterPool(){
         initialAlphaParameterMap = new HashMap<>();
-        salienceExcitatoryParameterMap = new HashMap<>();
-        salienceInhibitoryParameterMap = new HashMap<>();
     }
 
     public void createParameters(String cueName){
         initialAlphaParameterMap.put(cueName, new InitialAlphaParameter(cueName));
-        salienceExcitatoryParameterMap.put(cueName, new SalienceExcitatoryParameter(cueName));
-        salienceInhibitoryParameterMap.put(cueName, new SalienceInhibitoryParameter(cueName));
     }
 
     public boolean contains(String cueName){
@@ -40,19 +32,9 @@ public class CsParameterPool implements ICsParameterPool, Serializable {
         return initialAlphaParameterMap.get(cueName);
     }
 
-    public SalienceExcitatoryParameter getSeParameter(String cueName){
-        return salienceExcitatoryParameterMap.get(cueName);
-    }
-
-    public SalienceInhibitoryParameter getSiParamter(String cueName){
-        return salienceInhibitoryParameterMap.get(cueName);
-    }
-
     public List<CsParameter> getAllParameters(){
         List<CsParameter> list = new ArrayList<>();
         list.addAll(initialAlphaParameterMap.values());
-        list.addAll(salienceExcitatoryParameterMap.values());
-        list.addAll(salienceInhibitoryParameterMap.values());
         return list;
     }
 
@@ -61,8 +43,6 @@ public class CsParameterPool implements ICsParameterPool, Serializable {
         List<CsParameter> list = new ArrayList<>();
         for(IConditionalStimulus cs : group.getGroupCues()){
             list.add(initialAlphaParameterMap.get(cs.getName()));
-            list.add(salienceExcitatoryParameterMap.get(cs.getName()));
-            list.add(salienceInhibitoryParameterMap.get(cs.getName()));
         }
         return list;
     }

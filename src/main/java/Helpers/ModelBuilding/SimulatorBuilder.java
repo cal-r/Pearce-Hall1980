@@ -124,15 +124,11 @@ public class SimulatorBuilder {
             if(!settings.isUseInitialVe()) {
                 return new ConditionalStimulus(
                         cueName,
-                        ((CsParameterPool) csParameterPool).getInitialAlpha(cueName),
-                        ((CsParameterPool) csParameterPool).getSeParameter(cueName),
-                        ((CsParameterPool) csParameterPool).getSiParamter(cueName));
+                        ((CsParameterPool) csParameterPool).getInitialAlpha(cueName));
             }else{
                 return new VeConditionalStimulus(
                         cueName,
                         ((CsParameterPool) csParameterPool).getInitialAlpha(cueName),
-                        ((CsParameterPool) csParameterPool).getSeParameter(cueName),
-                        ((CsParameterPool) csParameterPool).getSiParamter(cueName),
                         ((ElaboratorCsParameterPool) csParameterPool).getVeParameter(cueName));
             }
         }
@@ -142,15 +138,11 @@ public class SimulatorBuilder {
                 return new MultipleStimulus(
                         cueName,
                         ((CsParameterPool) csParameterPool).getInitialAlpha(cueName),
-                        ((CsParameterPool) csParameterPool).getSeParameter(cueName),
-                        ((CsParameterPool) csParameterPool).getSiParamter(cueName),
                         null);
             }
             return new MultipleStimulus(
                     cueName,
                     ((CsParameterPool) csParameterPool).getInitialAlpha(cueName),
-                    ((CsParameterPool) csParameterPool).getSeParameter(cueName),
-                    ((CsParameterPool) csParameterPool).getSiParamter(cueName),
                     ((ElaboratorCsParameterPool) csParameterPool).getVeParameter(cueName));
         }
 

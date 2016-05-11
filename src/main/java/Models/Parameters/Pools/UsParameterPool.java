@@ -31,7 +31,6 @@ public class UsParameterPool implements Serializable {
     }
 
     public void adjustLamdbas(List<Group> groups){
-        //whatever works..
         removeSingle();
         Map<String, List<Integer>> lambdaAvailabilityMap = new HashMap<>();
         int displayId = 0;

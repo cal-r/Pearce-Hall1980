@@ -2,6 +2,8 @@ package Models.Parameters.Pools;
 
 import Constants.DefaultValuesConstants;
 import Constants.ParameterNamingConstants;
+import Models.Parameters.BetaExcitatoryParameter;
+import Models.Parameters.BetaInhibitoryParameter;
 import Models.Parameters.GammaParameter;
 import Models.Parameters.Parameter;
 import Models.SimulatorSettings;
@@ -23,15 +25,27 @@ public class GlobalParameterPool implements Serializable {
         this.settings = settings;
         globalParameters = new ArrayList<>();
         globalParameters.add(createGamma());
+        globalParameters.add(new BetaInhibitoryParameter());
+        globalParameters.add(new BetaExcitatoryParameter());
         usParameterPool = new UsParameterPool(settings);
     }
 
     public List<Parameter> getGlobalParameters(){
-        return globalParameters;
+        if(!settings.isRodriguezMode())
+            return globalParameters;
+        return Arrays.asList((Parameter)getGamma());
     }
 
-    public Parameter getGamma(){
-        return globalParameters.get(0);
+    public GammaParameter getGamma(){
+        return (GammaParameter) globalParameters.get(0);
+    }
+
+    public BetaInhibitoryParameter getBetaI(){
+        return (BetaInhibitoryParameter) globalParameters.get(1);
+    }
+
+    public BetaExcitatoryParameter getBetaE(){
+        return (BetaExcitatoryParameter) globalParameters.get(2);
     }
 
     private Parameter createGamma(){

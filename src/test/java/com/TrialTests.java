@@ -4,8 +4,6 @@ import Constants.DefaultValuesConstants;
 import Models.GroupPhase;
 import Models.History.GroupPhaseHistory;
 import Models.Parameters.ConditionalStimulus.InitialAlphaParameter;
-import Models.Parameters.ConditionalStimulus.SalienceExcitatoryParameter;
-import Models.Parameters.ConditionalStimulus.SalienceInhibitoryParameter;
 import Models.Parameters.Pools.GlobalParameterPool;
 import Models.SimulatorSettings;
 import Models.Stimulus.ConditionalStimulus;
@@ -26,7 +24,7 @@ import java.util.List;
 public class TrialTests extends TestCase {
 
     @Test
-    public void testWithContext(){ //first 4 from P-H-MechanismContext.xlsx
+    public void testWithContext(){
         String contextName = "context";
         IConditionalStimulus contextStimulus = createContextStimulus(contextName);
         List<IStimulus> allStims = new ArrayList<>();
@@ -46,22 +44,6 @@ public class TrialTests extends TestCase {
         assertEquals(history.getState(contextName, 3).Vnet, 0.0);
         assertEquals(history.getState(contextName, 4).Vnet, 0.0);
         assertEquals(history.getState(contextName, 5).Vnet, 0.0003645, DefaultValuesConstants.ROUNDING_PRECISION);
-        assertEquals(history.getState(contextName, 6).Vnet, 0.000364198, DefaultValuesConstants.ROUNDING_PRECISION);
-        assertEquals(history.getState(contextName, 7).Vnet, 0.000363927, DefaultValuesConstants.ROUNDING_PRECISION);
-        assertEquals(history.getState(contextName, 8).Vnet, 0.000363682, DefaultValuesConstants.ROUNDING_PRECISION);
-        assertEquals(history.getState(contextName, 9).Vnet, 0.000967824, DefaultValuesConstants.ROUNDING_PRECISION);
-        assertEquals(history.getState(contextName, 10).Vnet, 0.000966827, DefaultValuesConstants.ROUNDING_PRECISION);
-        assertEquals(history.getState(contextName, 11).Vnet, 0.000965929, DefaultValuesConstants.ROUNDING_PRECISION);
-        assertEquals(history.getState(contextName, 12).Vnet, 0.000965121, DefaultValuesConstants.ROUNDING_PRECISION);
-        assertEquals(history.getState(contextName, 13).Vnet, 0.000924865, DefaultValuesConstants.ROUNDING_PRECISION);
-        assertEquals(history.getState(contextName, 14).Vnet, 0.000924214, DefaultValuesConstants.ROUNDING_PRECISION);
-        assertEquals(history.getState(contextName, 15).Vnet, 0.000923627, DefaultValuesConstants.ROUNDING_PRECISION);
-        assertEquals(history.getState(contextName, 16).Vnet, 0.0009231, DefaultValuesConstants.ROUNDING_PRECISION);
-        assertEquals(history.getState("A", 1).Vnet, 0.0, DefaultValuesConstants.ROUNDING_PRECISION);
-        assertEquals(history.getState("B", 1).Vnet, 0.0, DefaultValuesConstants.ROUNDING_PRECISION);
-        assertEquals(history.getState("A", 2).Vnet, 0.025, DefaultValuesConstants.ROUNDING_PRECISION);
-        assertEquals(history.getState("A", 3).Vnet, 0.0525, DefaultValuesConstants.ROUNDING_PRECISION);
-        assertEquals(history.getState("A", 4).Vnet, 0.050916193, DefaultValuesConstants.ROUNDING_PRECISION);
     }
 
     private List<IStimulus> getStims(List<IStimulus> allStims, String commaSeparated){
@@ -79,6 +61,8 @@ public class TrialTests extends TestCase {
     private GlobalParameterPool getGlobals(){
         GlobalParameterPool globals = new GlobalParameterPool(new SimulatorSettings());
         globals.getGamma().setValue(0.1);
+        globals.getBetaE().setValue(0.005);
+        globals.getBetaE().setValue(0.005);
         return globals;
     }
 
@@ -102,20 +86,12 @@ public class TrialTests extends TestCase {
     private IConditionalStimulus createContextStimulus(String contextName){
         InitialAlphaParameter alphaParameter = new InitialAlphaParameter(contextName);
         alphaParameter.setValue(0.1);
-        SalienceExcitatoryParameter salienceExcitatoryParameter = new SalienceExcitatoryParameter(contextName);
-        salienceExcitatoryParameter.setValue(0.005);
-        SalienceInhibitoryParameter salienceInhibitoryParameter = new SalienceInhibitoryParameter(contextName);
-        salienceInhibitoryParameter.setValue(0.005);
-        return new ConditionalStimulus(contextName, alphaParameter, salienceExcitatoryParameter, salienceInhibitoryParameter);
+        return new ConditionalStimulus(contextName, alphaParameter);
     }
 
     private ConditionalStimulus createConditionalStimulus(String name){
         InitialAlphaParameter alphaParameter = new InitialAlphaParameter(name);
         alphaParameter.setValue(0.5);
-        SalienceExcitatoryParameter salienceExcitatoryParameter = new SalienceExcitatoryParameter(name);
-        salienceExcitatoryParameter.setValue(0.05);
-        SalienceInhibitoryParameter salienceInhibitoryParameter = new SalienceInhibitoryParameter(name);
-        salienceInhibitoryParameter.setValue(0.05);
-        return new ConditionalStimulus(name, alphaParameter, salienceExcitatoryParameter, salienceInhibitoryParameter);
+        return new ConditionalStimulus(name, alphaParameter);
     }
 }

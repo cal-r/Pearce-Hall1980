@@ -3,8 +3,6 @@ package Models.Stimulus;
 import Helpers.MultipleUsLabelingHelper;
 import Models.Parameters.ConditionalStimulus.InitialAlphaParameter;
 import Models.Parameters.ConditionalStimulus.Rodriguez.InitialAssociationParameter;
-import Models.Parameters.ConditionalStimulus.SalienceExcitatoryParameter;
-import Models.Parameters.ConditionalStimulus.SalienceInhibitoryParameter;
 import Models.Parameters.Pools.GlobalParameterPool;
 import Models.Stimulus.Rodriguez.VeConditionalStimulus;
 
@@ -21,8 +19,6 @@ public class MultipleStimulus implements IPHConditionalStimulus, Serializable {
 
     private final String name;
     private final InitialAlphaParameter initialAlphaParameter;
-    private final SalienceExcitatoryParameter salienceExcitatoryParameter;
-    private final SalienceInhibitoryParameter salienceInhibitoryParameter;
     private InitialAssociationParameter initialAssociationParameter;
     private Map<Character, ConditionalStimulus> stimsMap;
     private Map<Character, Boolean> usedStims;
@@ -30,13 +26,9 @@ public class MultipleStimulus implements IPHConditionalStimulus, Serializable {
     
     public MultipleStimulus(String name,
                             InitialAlphaParameter initialAlphaParameter,
-                            SalienceExcitatoryParameter salienceExcitatoryParameter,
-                            SalienceInhibitoryParameter salienceInhibitoryParameter,
                             InitialAssociationParameter initialAssociationParameter) {
         this.name = name;
         this.initialAlphaParameter = initialAlphaParameter;
-        this.salienceExcitatoryParameter = salienceExcitatoryParameter;
-        this.salienceInhibitoryParameter = salienceInhibitoryParameter;
         this.initialAssociationParameter = initialAssociationParameter;
         stimsMap = new HashMap<>();
         usedStims = new HashMap<>();
@@ -73,15 +65,11 @@ public class MultipleStimulus implements IPHConditionalStimulus, Serializable {
         if(initialAssociationParameter == null) {
             return new ConditionalStimulus(
                     createCueName(us),
-                    initialAlphaParameter,
-                    salienceExcitatoryParameter,
-                    salienceInhibitoryParameter);
+                    initialAlphaParameter);
         }
         return new VeConditionalStimulus(
                 createCueName(us),
                 initialAlphaParameter,
-                salienceExcitatoryParameter,
-                salienceInhibitoryParameter,
                 initialAssociationParameter);
     }
 
@@ -94,8 +82,6 @@ public class MultipleStimulus implements IPHConditionalStimulus, Serializable {
         MultipleStimulus copy = new MultipleStimulus(
                 name,
                 initialAlphaParameter,
-                salienceExcitatoryParameter,
-                salienceInhibitoryParameter,
                 initialAssociationParameter);
 
         for(char key : stimsMap.keySet()){

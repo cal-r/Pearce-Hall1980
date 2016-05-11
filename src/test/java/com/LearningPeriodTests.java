@@ -6,8 +6,6 @@ import Models.Parameters.Pools.GlobalParameterPool;
 import Models.SimulatorSettings;
 import Models.Stimulus.ConditionalStimulus;
 import Models.Parameters.ConditionalStimulus.InitialAlphaParameter;
-import Models.Parameters.ConditionalStimulus.SalienceExcitatoryParameter;
-import Models.Parameters.ConditionalStimulus.SalienceInhibitoryParameter;
 import Models.Stimulus.IStimulus;
 import Models.Trail.LearningPeriod;
 import org.junit.Test;
@@ -125,7 +123,7 @@ public class LearningPeriodTests extends junit.framework.TestCase {
         for(String c : chars){
             InitialAlphaParameter alphaParam = new InitialAlphaParameter(c);
             alphaParam.setValue(0.5);
-            map.put(c, new ConditionalStimulus(c, alphaParam, new SalienceExcitatoryParameter(c), new SalienceInhibitoryParameter(c)));
+            map.put(c, new ConditionalStimulus(c, alphaParam));
         }
         return map;
     }

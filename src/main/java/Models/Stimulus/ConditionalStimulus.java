@@ -1,11 +1,11 @@
 package Models.Stimulus;
 
+import Models.Parameters.BetaExcitatoryParameter;
+import Models.Parameters.BetaInhibitoryParameter;
 import Models.Parameters.ConditionalStimulus.InitialAlphaParameter;
-import Models.Parameters.ConditionalStimulus.SalienceExcitatoryParameter;
-import Models.Parameters.ConditionalStimulus.SalienceInhibitoryParameter;
+import Models.Parameters.GammaParameter;
 import Models.Parameters.Parameter;
 import Models.Parameters.Pools.GlobalParameterPool;
-import Models.Parameters.Pools.UsParameterPool;
 
 import java.io.Serializable;
 
@@ -15,9 +15,6 @@ import java.io.Serializable;
 public class ConditionalStimulus implements Serializable, IPHConditionalStimulus {
 
     public InitialAlphaParameter InitialAlphaParameter;
-    public SalienceExcitatoryParameter SalienceExcitatoryParameter;
-    public SalienceInhibitoryParameter SalienceInhibitoryParameter;
-
     private String name;
 
     private double associationInhibitory;
@@ -25,12 +22,10 @@ public class ConditionalStimulus implements Serializable, IPHConditionalStimulus
 
     private double alpha;
 
-    public ConditionalStimulus(String name, InitialAlphaParameter initialAlphaParameter, SalienceExcitatoryParameter salienceExcitatoryParameter, SalienceInhibitoryParameter salienceInhibitoryParameter){
+    public ConditionalStimulus(String name, InitialAlphaParameter initialAlphaParameter){
         this.name = name;
         setInitialValues(initialAlphaParameter);
         InitialAlphaParameter = initialAlphaParameter;
-        SalienceExcitatoryParameter = salienceExcitatoryParameter;
-        SalienceInhibitoryParameter = salienceInhibitoryParameter;
     }
 
     public double getAlpha(){
@@ -66,7 +61,7 @@ public class ConditionalStimulus implements Serializable, IPHConditionalStimulus
     }
 
     public ConditionalStimulus getCopy(){
-        ConditionalStimulus copy = new ConditionalStimulus(name, InitialAlphaParameter, SalienceExcitatoryParameter, SalienceInhibitoryParameter);
+        ConditionalStimulus copy = new ConditionalStimulus(name, InitialAlphaParameter);
         copy.associationExcitatory = associationExcitatory;
         copy.associationInhibitory = associationInhibitory;
         copy.alpha = alpha;
@@ -86,24 +81,24 @@ public class ConditionalStimulus implements Serializable, IPHConditionalStimulus
         double capitalLambda = lambda - vNet;
         double newAlpha = calcNewAlpha(globalParams.getGamma(), lambda, vNet, getAlpha());
         if (capitalLambda >= 0) {
-            double newDeltaVe = calcNewDeltaVe(lambda);
+            double newDeltaVe = calcNewDeltaVe(globalParams.getBetaE(), lambda);
             updateAssociationExcitatory(newDeltaVe);
         } else if (capitalLambda < 0) {
-            double newDeltaVi = calcNewDeltaVi(capitalLambda);
+            double newDeltaVi = calcNewDeltaVi(globalParams.getBetaI(), capitalLambda);
             updateAssociationInhibitory(newDeltaVi);
         }
         setAlpha(newAlpha);
     }
 
-    private double calcNewDeltaVe(double lambda){
-        return SalienceExcitatoryParameter.getValue() * getAlpha() * lambda;
+    private double calcNewDeltaVe(BetaExcitatoryParameter betaE, double lambda){
+        return betaE.getValue() * getAlpha() * lambda;
     }
 
-    private double calcNewDeltaVi(double capitalLambda){
-        return SalienceInhibitoryParameter.getValue() * getAlpha() * Math.abs(capitalLambda);
+    private double calcNewDeltaVi(BetaInhibitoryParameter betaI, double capitalLambda){
+        return betaI.getValue() * getAlpha() * Math.abs(capitalLambda);
     }
 
-    private double calcNewAlpha(Parameter gamma, double lambda, double vNet, double oldAlpha) {
+    private double calcNewAlpha(GammaParameter gamma, double lambda, double vNet, double oldAlpha) {
         return gamma.getValue() * Math.abs(lambda - vNet) + (1 - gamma.getValue()) * oldAlpha;
     }
 
