@@ -15,13 +15,11 @@ public class GroupPhaseHistory implements Serializable {
     private Map<String, List<StimulusState>> stimsHistoriesMap;
     private String groupName;
     private String phaseName;
-    private int numberOfPeriods;
     private String description;
     private boolean isRandom;
 
     public GroupPhaseHistory(){
         stimsHistoriesMap = new HashMap<>();
-        numberOfPeriods = 0;
     }
 
     public StimulusState getState(String cueName, int trialNumber) {
@@ -48,7 +46,6 @@ public class GroupPhaseHistory implements Serializable {
                 recordStimState(stim.getName(), stim);
             }
         }
-        numberOfPeriods++;
     }
 
     public void recordProbeState(Probe probe) {
@@ -112,7 +109,11 @@ public class GroupPhaseHistory implements Serializable {
     }
 
     public int getNumberOfPeriods(){
-        return numberOfPeriods;
+        int maxNumberOfPeriods = 0;
+        for (List<StimulusState> stimHist : stimsHistoriesMap.values()){
+            maxNumberOfPeriods = Math.max(maxNumberOfPeriods, stimHist.size());
+        }
+        return maxNumberOfPeriods;
     }
 
     public String getGroupName() {

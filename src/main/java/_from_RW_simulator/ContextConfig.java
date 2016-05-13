@@ -91,26 +91,8 @@ public class ContextConfig implements Serializable {
     /** Alpha for this context. **/
     private double alpha;
 
-    public double getSe() {
-        return se;
-    }
-
-    public void setSe(double se) {
-        this.se = se;
-    }
-
-    public double getSi() {
-        return si;
-    }
-
-    public void setSi(double si) {
-        this.si = si;
-    }
-
-    private double se;
-    private double si;
     /** Empty context. **/
-    public static final ContextConfig EMPTY = new ContextConfig(Context.EMPTY, 0, 0, 0);
+    public static final ContextConfig EMPTY = new ContextConfig(Context.EMPTY, 0);
     /** Default alpha. **/
     private static double defaultAlpha = 0.15;
     /** Default context. **/
@@ -122,15 +104,11 @@ public class ContextConfig implements Serializable {
     public ContextConfig() {
         context = defaultContext;
         alpha = DefaultValuesConstants.INITIAL_ALPHA_FOR_CONTEXT;
-        se = DefaultValuesConstants.SALIENCE_EXCITATORY;
-        si = DefaultValuesConstants.SALIENCE_INHIBATORY;
     }
 
-    public ContextConfig(final Context context, final double alpha, final double se, final double si) {
+    public ContextConfig(final Context context, final double alpha) {
         this.context = context;
         this.alpha = alpha;
-        this.se = se;
-        this.si = si;
     }
 
     /**
@@ -171,7 +149,7 @@ public class ContextConfig implements Serializable {
     }
 
     public String toString() {
-        return context + "("+getAlpha().floatValue()+";"+getSe()+";"+getSi()+")";
+        return context + "("+getAlpha().floatValue()+")";
     }
 
     public static void clearDefault() {

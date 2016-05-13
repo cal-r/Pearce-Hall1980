@@ -2,12 +2,12 @@ package _from_RW_simulator;
 /**
  * The Centre for Computational and Animal Learning Research (CAL-R)
  * @title Rescorla & Wagner Model Simulator
- * @author Esther Mondragón, Eduardo Alonso, Alberto Fernández & Jonathan Gray
+ * @author Esther Mondragï¿½n, Eduardo Alonso, Alberto Fernï¿½ndez & Jonathan Gray
 
- * Preliminary version 10-Mar-2005 Esther Mondragón, Eduardo Alonso & Dioysios Skordoulis.
- * Modified October 2009  Esther Mondragón, Eduardo Alonso & Rocío García Durán.
- * Modified July 2011 Esther Mondragón, Eduardo Alonso & Alberto Fernández.
- * Modified October 2012 Esther Mondragón, Eduardo Alonso, Alberto Fernández & Jonathan Gray.
+ * Preliminary version 10-Mar-2005 Esther Mondragï¿½n, Eduardo Alonso & Dioysios Skordoulis.
+ * Modified October 2009  Esther Mondragï¿½n, Eduardo Alonso & Rocï¿½o Garcï¿½a Durï¿½n.
+ * Modified July 2011 Esther Mondragï¿½n, Eduardo Alonso & Alberto Fernï¿½ndez.
+ * Modified October 2012 Esther Mondragï¿½n, Eduardo Alonso, Alberto Fernï¿½ndez & Jonathan Gray.
  */
 
 import java.awt.BorderLayout;
@@ -168,8 +168,6 @@ public class ContextDialog extends JDialog {
         TableModel model = table.getModel();
         context.setContext((ContextConfig.Context) model.getValueAt(0, 0));
         context.setAlpha(Double.parseDouble((String) model.getValueAt(0, 1)));
-        context.setSe((double) model.getValueAt(0, 2));
-        context.setSi((double) model.getValueAt(0, 3));
         return context;
     }
 
@@ -219,11 +217,11 @@ public class ContextDialog extends JDialog {
 
             try {
                 row = 1;
-                col = 4;
-                columnNames = new String[]{"Context","\u03B1", "Se", "Si"};
+                col = 2;
+                columnNames = new String[]{"Context","\u03B1"};
 
 
-                data1.add(new Object[]{context.getContext(), context.getAlpha().floatValue() + "", context.getSe(), context.getSi()});
+                data1.add(new Object[]{context.getContext(), context.getAlpha().floatValue() + ""});
                 setData(data1);
                 fireTableChanged(null); // notify everyone that we have a new table.
             }
